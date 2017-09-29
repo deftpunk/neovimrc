@@ -1,0 +1,85 @@
+snippet foro
+for org_id, api_key in self.api_keys.items():
+	${0}
+endsnippet
+
+snippet print
+print("${1} ".format(${2}))${0}
+endsnippet
+
+snippet deftest
+def test_${1}(self):
+	""" ${2} """
+	${0}
+endsnippet
+
+snippet deflib
+def ${1}(api_key: str, ${2}):
+	""" ${3}
+	:param api_key: str API Key for the Organization we are hitting.
+
+	:raise APIHelperError: If problem arises using the API.
+	"""
+	${0}
+endsnippet
+
+snippet raisex
+raise ${1}("${2}".format(${3}))${0}
+endsnippet
+
+snippet parx
+:param ${1}: ${2}${0}
+endsnippet
+
+snippet raix
+:raise ${1}: ${2}${0}
+endsnippet
+
+snippet raiselib
+raise APIHelperError("${1}".format(ahe${0}))
+endsnippet
+
+snippet rex
+:return: ${1}${0}
+endsnippet
+
+snippet nox
+# NOTE: ${1}${0}
+endsnippet
+
+snippet todox
+# TODO: ${1}${0}
+endsnippet
+
+snippet bugx
+# BUG: ${1}${0}
+endsnippet
+
+snippet sysx
+import sys
+sys.exit(-1)
+endsnippet
+
+snippet lcx
+log.critical("${1}")${0}
+endsnippet
+
+snippet lex
+log.error("${1}")${0}
+endsnippet
+
+snippet lwx
+log.warning("${1}")${0}
+endsnippet
+
+snippet lnx
+log.notice("${1}")${0}
+endsnippet
+
+snippet lix
+log.info("${1}")${0}
+endsnippet
+
+snippet ldx
+log.debug("${1}")${0}
+endsnippet
