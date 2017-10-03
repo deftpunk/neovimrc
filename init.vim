@@ -255,7 +255,7 @@ let g:ctrlp_user_command='ag %s -i --nocolor --nogroup --hidden
 " let g:ctrlp_root_markers = ['makepythontags']
 " let g:ctrlp_extensions=['smarttabs']
 
-let g:ctrlp_map = ''
+" let g:ctrlp_map = ''
 nnoremap <leader>o :CtrlP<cr>
 nnoremap <leader>i :CtrlPMixed<cr>
 
