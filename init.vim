@@ -86,7 +86,7 @@ set incsearch
 set nohlsearch
 
 " live substitution previews
-set inccommand=nosplit
+set inccommand=split
 
 " When a bracket is inserted, briefly jump to the matching one.  The time to
 " show the match is set by matchtime, which is in tenths of seconds.
@@ -108,6 +108,9 @@ if !isdirectory("/Users/ebodine/tmp/neovim-undo-dir")
 endif
 set undodir=/Users/ebodine/tmp/neovim-undo-dir
 set undofile
+
+" Automatically reload files that have changed.
+set autoread
 
 " Take me to my Leader key
 let mapleader = "\<Space>"
@@ -580,6 +583,46 @@ Plug 'matze/vim-move'
 let g:move_map_keys = 0
 " let g:move_key_modifier = 'M'
 
+" Mundo {{{
+" http://simnalamburt.github.io/vim-mundo/dist/
+" Graph your Vim undo tree in style; less painful browsing of the undo tree.
+
+" Your current position in the undo tree is marked with an @ character. Other
+" nodes are marked with an o character.
+
+" When you toggle open the graph Mundo will put your cursor on your current
+" position in the tree. You can move up and down the graph with the j and k
+" keys.
+
+" You can move to the top of the graph (the newest state) with gg and to the
+" bottom of the graph (the oldest state) with G.
+
+" As you move between undo states the preview pane will show you a unified
+" diff of the change that state made.
+
+" Pressing return on a state (or double clicking on it) will revert the
+" contents of the file to match that state.
+
+" You can use p on a state to make the preview window show the diff between
+" your current state and the selected state, instead of a preview of what the
+" selected state changed.
+
+" Pressing P while on a state will initiate "play to" mode targeted at that
+" state. This will replay all the changes between your current state and the
+" target, with a slight pause after each change. It's mostly useless, but can
+" be fun to watch and see where your editing lags — that might be a good place
+" to define a new mapping to speed up your editing.
+
+" Pressing q while in the undo graph will close it. You can also just press
+" your toggle mapping key.
+Plug 'simnalamburt/vim-mundo'
+let g:mundo_width = 52
+let g:mundo_preview_height = 40
+let g:mundo_preview_bottom = 1
+
+nnoremap <silent><leader>u :MundoToggle<cr>
+" }}}
+
 " NERDTree {{{
 " https://github.com/scrooloose/nerdtree.git
 Plug 'https://github.com/scrooloose/nerdtree.git'
@@ -754,11 +797,6 @@ nnoremap <silent><leader>nu :UndoTreeToggle<cr>
 "             Try d]n inside a conflict.
 Plug 'tpope/vim-unimpaired'
 " }}}
-
-" vim-over
-" A :substitute preview
-" https://github.com/osyo-manga/vim-over
-Plug 'osyo-manga/vim-over'
 
 " vim-better-whitespace
 " https://github.com/ntpeters/vim-better-whitespace
