@@ -350,20 +350,6 @@ Plug 'zeero/vim-ctrlp-help'
 " https://github.com/easymotion/vim-easymotion
 Plug 'easymotion/vim-easymotion'
 
-" fzf is a general-purpose command-line fuzzy finder.
-" https://github.com/junegunn/fzf.vim
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
-nnoremap <leader>fa :Ag <cr>
-nnoremap <leader>ff :Files <cr>
-" lines in current buffer
-nnoremap <leader>fl :BLines <cr>
-" nnoremap <leader>s :BLines <cr>
-" tags in current buffer
-nnoremap <leader>ft :BTags <cr>
-
-
 " incsearch.vim - Incrementally highlight search pattern matches. {{{
 " https://github.com/haya14busa/incsearch.vim
 Plug 'haya14busa/incsearch.vim'
