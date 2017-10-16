@@ -259,7 +259,7 @@ let g:ctrlp_user_command='ag %s -i --nocolor --nogroup --hidden
 " let g:ctrlp_extensions=['smarttabs']
 
 " let g:ctrlp_map = ''
-nnoremap <leader>fb :CtrlPBufer<cr>
+nnoremap <leader>fb :CtrlPBuffer<cr>
 nnoremap <leader>fc :CtrlPChange<cr>
 nnoremap <leader>fd :CtrlPDir<cr>
 nnoremap <leader>fi :CtrlPMixed<cr>
