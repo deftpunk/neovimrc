@@ -259,8 +259,15 @@ let g:ctrlp_user_command='ag %s -i --nocolor --nogroup --hidden
 " let g:ctrlp_extensions=['smarttabs']
 
 " let g:ctrlp_map = ''
-nnoremap <leader>o :CtrlP<cr>
-nnoremap <leader>i :CtrlPMixed<cr>
+nnoremap <leader>fb :CtrlPBufer<cr>
+nnoremap <leader>fc :CtrlPChange<cr>
+nnoremap <leader>fd :CtrlPDir<cr>
+nnoremap <leader>fi :CtrlPMixed<cr>
+nnoremap <leader>fm :CtrlPMRUFiles<cr>
+nnoremap <leader>fq :CtrlPQuickfix<cr>
+
+nnoremap <leader>s :CtrlPLine<cr>
+
 
 let g:ctrlp_prompt_mappings = {
     \ 'PrtSelectMove("n")':   ['<c-n>', '<down>'],
@@ -402,6 +409,36 @@ let g:lt_height = 15
 
 " General Utilities -------------------------------------------------------- {{{
 
+" vim-ags
+" https://github.com/gabesoft/vim-ags
+"
+" MAPPINGS                                         *ags-mappings*
+" Once inside the search results window:~
+"     p    - navigate file paths forward
+"     P    - navigate files paths backwards
+"     r    - navigate results forward
+"     R    - navigate results backwards
+"     a    - display the file path for current results
+"     c    - copy to clipboard the file path for current results
+"     E    - enter edit mode
+"     oa   - open file above the results window
+"     ob   - open file below the results window
+"     ol   - open file to the left of the results window
+"     or   - open file to the right of the results window
+"     os   - open file in the results window
+"     ou   - open file in a previously opened window
+"     xu   - open file in a previously opened window and close the search results
+"     <CR> - open file in a previously opened window
+"     q    - close the search results window
+"     u    - displays these key mappings
+
+Plug 'gabesoft/vim-ags'
+let g:ags_winheight=65
+" This plugin has a display conflict with RainbowDelimiters.
+autocmd BufNewFile,BufRead,BufEnter *.agsv set filetype=agsv
+autocmd BufNewFile,BufRead,BufEnter *.agsv RainbowToggle
+autocmd FileType agse,agsv RainbowToggle
+
 " vim-abolish - abbreviate multiple variants of words
 " https://github.com/tpope/tpope-vim-abolish
 Plug 'tpope/tpope-vim-abolish'
@@ -456,11 +493,6 @@ Plug 'MattesGroeger/vim-bookmarks'
 " https://github.com/raimondi/delimitMate
 " NOTE: Another pairs plugin to try - https://github.com/jiangmiao/auto-pairs
 Plug 'raimondi/delimitMate'
-
-" denite - dark powered, inspired by Helm {{{
-" https://github.com/Shougo/denite.nvim
-Plug 'Shougo/denite.nvim'
-
 
 " }}}
 
@@ -865,10 +897,11 @@ Plug 'elzr/vim-json'
 Plug 'gabrielelana/vim-markdown'
 let g:markdown_include_jekyll_support = 0
 let g:markdown_enable_conceal = 1
+let g:markdown_enable_folding = 1
 
 " vim-markdown-folding
 "https://github.com/nelstrom/vim-markdown-folding
-Plug 'nelstrom/vim-markdown-folding'
+" Plug 'nelstrom/vim-markdown-folding'
 " }}}
 
 " Python {{{
@@ -1087,77 +1120,6 @@ Plug 'ryanoasis/vim-devicons'
 call plug#end()
 filetype plugin indent on
 syntax enable
-
-" Denite configuration {{{
-" This has to be after plug#end instead of near <Plug Shougo/denite> or denite
-" functions/vars aren't in the runtime yet.
-
-" file_rec behavior
-" Ag command
-call denite#custom#var('file_rec', 'command',
-\ ['ag', '-U', '--follow', '--nocolor', '--nogroup', '-g', ''])
-" set matchers
-call denite#custom#source(
-	\ 'file_rec', 'matchers', ['matcher_fuzzy', 'matcher_project_files', 'matcher_ignore_globs'])
-" Change ignore_globs
-call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-      \ [ '.git/', '__pycache__/', 'dist/', 'build/'])
-
-" NOTE: Wed Sep 20 7:29:43
-" According to denite docs, ripgrep is slower than Ag(?)  Need to test
-" ripgrep - http://blog.burntsushi.net/ripgrep/
-" call denite#custom#var('file_rec', 'command',
-" \ ['rg', '--files', '--glob', '!.git', ''])
-
-" change the prompt.
-call denite#custom#option('default', {
-      \ 'prompt': '❯'
-\ })
-
-" automatically resize the Denite window.
-call denite#custom#option('default', 'auto_resize', 1)
-
-" sublime sorter algorithm for outline
-call denite#custom#source('outline', 'sorters', ['sorter_sublime'])
-
-" Denite mappings
-" Got the idea for mapping this way from:
-"     https://github.com/rafi/vim-config/blob/master/config/plugins/denite.vim
-let insert_mode_mappings = [
-	\  ['<Esc>', '<denite:enter_mode:normal>', 'noremap'],
-	\  ['<C-j>', '<denite:move_to_next_line>', 'noremap'],
-	\  ['<C-k>', '<denite:move_to_previous_line>', 'noremap'],
-	\  ['<C-N>', '<denite:assign_next_matched_text>', 'noremap'],
-	\  ['<C-P>', '<denite:assign_previous_matched_text>', 'noremap'],
-	\  ['<Up>', '<denite:assign_previous_text>', 'noremap'],
-	\  ['<Down>', '<denite:assign_next_text>', 'noremap'],
-	\  ['<C-Y>', '<denite:redraw>', 'noremap'],
-	\ ]
-
-let normal_mode_mappings = [
-	\   ["'", '<denite:toggle_select_down>', 'noremap'],
-	\   ['<C-n>', '<denite:jump_to_next_source>', 'noremap'],
-	\   ['<C-p>', '<denite:jump_to_previous_source>', 'noremap'],
-	\   ['gg', '<denite:move_to_first_line>', 'noremap'],
-	\   ['st', '<denite:do_action:tabopen>', 'noremap'],
-	\   ['sg', '<denite:do_action:vsplit>', 'noremap'],
-	\   ['sv', '<denite:do_action:split>', 'noremap'],
-	\   ['sc', '<denite:quit>', 'noremap'],
-	\   ['r', '<denite:redraw>', 'noremap'],
-	\ ]
-
-for m in insert_mode_mappings
-	call denite#custom#map('insert', m[0], m[1], m[2])
-endfor
-for m in normal_mode_mappings
-	call denite#custom#map('normal', m[0], m[1], m[2])
-endfor
-
-" Denite mappings
-nnoremap <silent><leader>b :Denite buffer<cr>
-nnoremap <silent><leader>s :Denite line<cr>
-
-" }}}
 
 " General mappings ------------------------------------------------- {{{
 
