@@ -732,6 +732,12 @@ Plug 'chip/vim-fat-finger'
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 
+" SplitJoin
+" https://github.com/AndrewRadev/splitjoin.vim
+"   gS to split a one-liner into multiple lines
+"   gJ (with the cursor on the first line of a block) to join a block into a single-line statemen
+Plug 'AndrewRadev/splitjoin.vim'
+
 " tagbar - a class outline viewer {{{
 " https://majutsushi.github.io/tagbar
 Plug 'majutsushi/tagbar'
@@ -986,6 +992,9 @@ nnoremap <silent> <leader>gr :Gremove<CR>
 nnoremap <silent> <leader>gu :Gbrowse<CR>
 
 nnoremap <silent> <leader>gm :MerginalToggle<CR>
+
+" TODO: check out vim-rhubarb for its github :Gbrowse functionality.
+" https://github.com/tpope/vim-rhubarb
 " }}}
 
 " NOTE: Mon Sep 25 2017 8:17:43pm - more spartan than even fugitive, very fast
