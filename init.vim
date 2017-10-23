@@ -395,6 +395,13 @@ let g:lt_height = 15
 
 " General Utilities -------------------------------------------------------- {{{
 
+" vim-active-numbers
+" https://github.com/AssailantLF/vim-active-numbers
+" Only show line numbers in the active window.
+Plug 'AssailantLF/vim-active-numbers'
+let g:active_number = 1
+let g:active_relativenumber = 1
+
 " vim-ags
 " https://github.com/gabesoft/vim-ags
 "
@@ -731,6 +738,21 @@ Plug 'chip/vim-fat-finger'
 " https://github.com/luochen1990/rainbow
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
+
+" vim-sandwich
+" https://github.com/machakann/vim-sandwich
+" The set of operator and textobject plugins to search/select/edit sandwiched textobjects.
+"   Add
+"   Press sa{motion/textobject}{addition}. For example, a key sequence saiw( makes foo to (foo).
+"
+"   Delete
+"   Press sdb or sd{deletion}. For example, key sequences sdb or sd( makes (foo) to foo. sdb searches a
+"   set of surrounding automatically.
+"
+"   Replace
+"   Press srb{addition} or sr{deletion}{addition}.
+"   For example, key sequences srb" or sr(" makes (foo) to "foo".
+Plug 'machakann/vim-sandwich'
 
 " SplitJoin
 " https://github.com/AndrewRadev/splitjoin.vim
