@@ -56,33 +56,33 @@ vmap ]<   <
 map  ]>   ]tV]e>
 vmap ]>   >
 
-map  ]#   :call PythonCommentSelection()<CR>
-vmap ]#   :call PythonCommentSelection()<CR>
-map  ]u   :call PythonUncommentSelection()<CR>
-vmap ]u   :call PythonUncommentSelection()<CR>
+" map  ]#   :call PythonCommentSelection()<CR>
+" vmap ]#   :call PythonCommentSelection()<CR>
+" map  ]u   :call PythonUncommentSelection()<CR>
+" vmap ]u   :call PythonUncommentSelection()<CR>
 
 map  ]c   :call PythonSelectObject("class")<CR>
 map  ]d   :call PythonSelectObject("function")<CR>
 
-map  ]<up>    :call PythonNextLine(-1)<CR>
-map  ]<down>  :call PythonNextLine(1)<CR>
-" You may prefer use <s-up> and <s-down>... :-)
+" map  ]<up>    :call PythonNextLine(-1)<CR>
+" map  ]<down>  :call PythonNextLine(1)<CR>
+" " You may prefer use <s-up> and <s-down>... :-)
 
-" jump to previous class
-map  ]J   :call PythonDec("class", -1)<CR>
-vmap ]J   :call PythonDec("class", -1)<CR>
+" " jump to previous class
+" map  ]J   :call PythonDec("class", -1)<CR>
+" vmap ]J   :call PythonDec("class", -1)<CR>
 
-" jump to next class
-map  ]j   :call PythonDec("class", 1)<CR>
-vmap ]j   :call PythonDec("class", 1)<CR>
+" " jump to next class
+" map  ]j   :call PythonDec("class", 1)<CR>
+" vmap ]j   :call PythonDec("class", 1)<CR>
 
-" jump to previous function
-map  ]F   :call PythonDec("function", -1)<CR>
-vmap ]F   :call PythonDec("function", -1)<CR>
+" " jump to previous function
+" map  ]F   :call PythonDec("function", -1)<CR>
+" vmap ]F   :call PythonDec("function", -1)<CR>
 
-" jump to next function
-map  ]f   :call PythonDec("function", 1)<CR>
-vmap ]f   :call PythonDec("function", 1)<CR>
+" " jump to next function
+" map  ]f   :call PythonDec("function", 1)<CR>
+" vmap ]f   :call PythonDec("function", 1)<CR>
 
 
 
