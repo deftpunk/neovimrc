@@ -19,7 +19,6 @@
 " https://github.com/mhinz/vim-galore
 " https://github.com/xolox/vim-session
 " https://github.com/dhruvasagar/vim-prosession/
-" https://github.com/mbbill/undotree
 " http://spacevim.org/documentation/
 " https://github.com/ludovicchabant/vim-gutentags
 " https://github.com/wellle/targets.vim
@@ -35,6 +34,10 @@
 "	problems.
 " let g:python3_host_prog = system('which python3')
 " let g:python_host_prog = system('which python')
+"
+" Vim startup profiling, optimization etc.
+" https://coderwall.com/p/sdva9q/how-to-detect-plugins-slowing-vim-down
+"
 " }}}
 
 " Options -------------------------------------------------------- {{{
@@ -188,7 +191,12 @@ Plug 'morhetz/gruvbox'
 
 " xterm color table & other color related things
 Plug 'guns/xterm-color-table.vim'
-Plug 'Rykka/colorv.vim'
+
+" colorv
+"https://github.com/Rykka/colorv.vim/
+" A powerful color tool for Vim - view colors, pick colors, edit colors, etc.
+" NOTE: Wed Oct 25, 2017 10:19:32am - Tends to slow down Neovim
+" Plug 'Rykka/colorv.vim'
 
 " winresizer - https://github.com/simeji/winresizer
 " Easy resizing of windows in side vim. Ctrl-e starts the window resize mode
@@ -1078,10 +1086,6 @@ nnoremap <silent> <leader>gvc :GV!<cr>
 nnoremap <silent> <leader>gvl :GV?<cr>
 " }}}
 
-" vim-signify - " Show added, modified, deleted lines
-" https://github.com/mhinz/vim-signify
-" Only more useful than gitgutter if using other version control systems.
-
 " vimagit - A Vim implementation of the awesome Emacs magit {{{
 " https://github.com/jreybert/vimagit
 " Local mappings:
@@ -1098,6 +1102,7 @@ nnoremap <silent> <leader>gvl :GV?<cr>
 "   - R  refresh the magit buffer
 "   - ?  Toggle help showing in magit buffer.
 Plug 'jreybert/vimagit'
+nnoremap <silent><leader>vv :MagitOnly<cr>
 " }}}
 
 " }}}
@@ -1139,6 +1144,9 @@ filetype plugin indent on
 syntax enable
 
 " General mappings ------------------------------------------------- {{{
+
+" Edit Neovim configuration file.
+nnoremap <silent> <leader>ec :e $MYVIMRC<cr>
 
 " toggle between line numbers, relative line numbers and no numbers.
 nnoremap <silent> <leader>nn :exec &nu==&rnu? "se nu!" : "se rnu!"<cr>
