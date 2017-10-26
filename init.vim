@@ -168,7 +168,7 @@ call plug#begin('~/.config/nvim/plugged')
 "   deal with. This plugin hides such details and provides a declarative way to
 "   define text objects. You can use regular expressions to define simple text
 "   objects, or use functions to define complex ones.
-" Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-user'
 
 " }}}
 
