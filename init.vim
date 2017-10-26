@@ -1131,7 +1131,7 @@ nnoremap <silent> <leader>gvl :GV?<cr>
 "   - R  refresh the magit buffer
 "   - ?  Toggle help showing in magit buffer.
 Plug 'jreybert/vimagit'
-" nnoremap <silent><leader>vv :MagitOnly<cr>
+nnoremap <silent><leader>vv :MagitOnly<cr>
 " }}}
 
 " }}}
