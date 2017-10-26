@@ -995,7 +995,7 @@ Plug 'tmhedberg/SimpylFold'
 " It also provides a few motions in normal and operator-pending mode:
 "     [pf / ]pf: move to next/previous function
 "     [pc / ]pc: move to next/previous class
-" Plug 'bps/vim-textobj-python'
+Plug 'bps/vim-textobj-python'
 " }}}
 
 " }}}
