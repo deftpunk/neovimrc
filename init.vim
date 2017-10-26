@@ -157,6 +157,21 @@ call plug#begin('~/.config/nvim/plugged')
 
 " }}}
 
+" Text Objects ----------------------------------------------------- {{{
+
+" vim-textobj-user
+" https://github.com/kana/vim-textobj-user
+" Create your own textobjects - dependency for textobj-python
+"
+" vim-textobj-user is a Vim plugin to create your own text objects without
+"   pain. It is hard to create text objects, because there are many pitfalls to
+"   deal with. This plugin hides such details and provides a declarative way to
+"   define text objects. You can use regular expressions to define simple text
+"   objects, or use functions to define complex ones.
+" Plug 'kana/vim-textobj-user'
+
+" }}}
+
 " Display ----------------------------------------------------------- {{{
 
 " Squeeze out all of the color that we can.
@@ -766,7 +781,7 @@ Plug 'machakann/vim-sandwich'
 " https://github.com/AndrewRadev/splitjoin.vim
 "   gS to split a one-liner into multiple lines
 "   gJ (with the cursor on the first line of a block) to join a block into a single-line statemen
-Plug 'AndrewRadev/splitjoin.vim'
+" Plug 'AndrewRadev/splitjoin.vim'
 
 " tagbar - a class outline viewer {{{
 " https://majutsushi.github.io/tagbar
@@ -967,6 +982,20 @@ let python_highlight_all = 1
 " https://github.com/tmhedberg/SimpylFold
 Plug 'tmhedberg/SimpylFold'
 
+" Python textobjects
+" https://github.com/bps/vim-textobj-python
+"
+" This is a Vim plugin to provide text objects for Python functions and
+" classes. It provides the following objects:
+"     af: a function
+"     if: inner function
+"     ac: a class
+"     ic: inner class
+"
+" It also provides a few motions in normal and operator-pending mode:
+"     [pf / ]pf: move to next/previous function
+"     [pc / ]pc: move to next/previous class
+" Plug 'bps/vim-textobj-python'
 " }}}
 
 " }}}
@@ -1102,7 +1131,7 @@ nnoremap <silent> <leader>gvl :GV?<cr>
 "   - R  refresh the magit buffer
 "   - ?  Toggle help showing in magit buffer.
 Plug 'jreybert/vimagit'
-nnoremap <silent><leader>vv :MagitOnly<cr>
+" nnoremap <silent><leader>vv :MagitOnly<cr>
 " }}}
 
 " }}}
