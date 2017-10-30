@@ -269,15 +269,25 @@ nmap  -  <Plug>(choosewin)
 " The active fork of CtrlP {{{
 " https://github.com/ctrlpvim/ctrlp.vim
 Plug 'ctrlpvim/ctrlp.vim'
+
+" Fri Oct 27, 2017 11:36:42am - Try out using cpsm as a matcher
+" https://github.com/nixprime/cpsm
+"lug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
+"et g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
+
+" Fri Oct 27, 2017 11:26:32am - trying out ripgrep with CtrlP
+let g:ctrlp_user_command='rg %s --files --color=never --glob ""'
+let g:ctrlp_use_caching=0
+
 " Use the silver searcher in deference to what ctrlp normally does.
 " 3/23/2016 - commented this out because it wasn't working for some reason.
 " 10/4/2016 - giving this another shot with a modified Ag cmdline.
-let g:ctrlp_user_command='ag %s -i --nocolor --nogroup --hidden
-                            \ --ignore .git
-                            \ --ignore .hg
-                            \ --ignore .DS_store
-                            \ --ignore "**/*.pyc"
-                            \ -g ""'
+" let g:ctrlp_user_command='ag %s -i --nocolor --nogroup --hidden
+"                             \ --ignore .git
+"                             \ --ignore .hg
+"                             \ --ignore .DS_store
+"                             \ --ignore "**/*.pyc"
+"                             \ -g ""'
 " let g:ctrlp_root_markers = ['makepythontags']
 " let g:ctrlp_extensions=['smarttabs']
 
@@ -776,6 +786,10 @@ let g:rainbow_active = 1
 "   Press srb{addition} or sr{deletion}{addition}.
 "   For example, key sequences srb" or sr(" makes (foo) to "foo".
 Plug 'machakann/vim-sandwich'
+
+" https://github.com/junegunn/vim-slash
+" Enhancing in-buffer search experience.
+Plug 'junegunn/vim-slash'
 
 " SplitJoin
 " https://github.com/AndrewRadev/splitjoin.vim
