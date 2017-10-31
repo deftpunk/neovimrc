@@ -795,6 +795,8 @@ Plug 'junegunn/vim-slash'
 " https://github.com/AndrewRadev/splitjoin.vim
 "   gS to split a one-liner into multiple lines
 "   gJ (with the cursor on the first line of a block) to join a block into a single-line statemen
+" NOTE: Mon Oct 30 2017 9:04:23am - disabling, seems to always conflict with some other plugin
+" 	or antother.
 " Plug 'AndrewRadev/splitjoin.vim'
 
 " tagbar - a class outline viewer {{{
@@ -1202,6 +1204,9 @@ nnoremap <leader>w :w!<cr>
 
 " Yank to the end of the line.
 nnoremap Y y$
+
+" U is a better redo
+nnoremap U <C-r>
 
 " Windows
 " Ease the window split navigation
