@@ -28,7 +28,9 @@
 " https://github.com/rhysd/vim-gfm-syntax - Github flavored markdown syntax
 " 					    hightlighting
 " https://github.com/pearofducks/ansible-vim - Ansible YAML
-
+" https://github.com/bcicen/vim-jfmt
+"
+"
 " We set this early because of plugins that require python/python3.
 " NOTE: Tue Aug 15 14:52:34 2017 - commented these out, they were just causing
 "	problems.
@@ -159,7 +161,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 " Text Objects ----------------------------------------------------- {{{
 
-" vim-textobj-user
+" vim-textobj-user {{{
 " https://github.com/kana/vim-textobj-user
 " Create your own textobjects - dependency for textobj-python
 "
@@ -169,6 +171,27 @@ call plug#begin('~/.config/nvim/plugged')
 "   define text objects. You can use regular expressions to define simple text
 "   objects, or use functions to define complex ones.
 Plug 'kana/vim-textobj-user'
+" }}}
+
+" argtextobj.vim {{{
+" https://github.com/vim-scripts/argtextobj.vim
+" Text objects for function arguments.
+"   aa - an argument
+"   ia - inner argument
+Plug 'vim-scripts/argtextobj.vim'
+" }}}
+
+" vim-indent-object {{{
+" https://github.com/michaeljsmith/vim-indent-object
+"   Mapping              Description
+"  -----------------------------------------------------------------
+"  <count>ai         (A)n (I)ndentation level and line above.
+"  <count>ii         (I)nner (I)ndentation level (no line above).
+"  <count>aI         (A)n (I)ndentation level and lines above/below.
+"  <count>iI (I)nner (I)ndentation level (no lines above/below).
+"  -----------------------------------------------------------------
+Plug 'michaeljsmith/vim-indent-object'
+" }}}
 
 " }}}
 
@@ -191,6 +214,10 @@ endif
 " Plug 'MaxSt/FlatColor'
 " Plug 'AlessandroYorba/Sierra'
 Plug 'tomasr/molokai'
+
+" https://github.com/drewtempelmeyer/palenight.vim
+Plug 'drewtempelmeyer/palenight'
+
 " https://github.com/morhetz/gruvbox
 Plug 'morhetz/gruvbox'
 " Plug 'whatyouhide/vim-gotham'
@@ -707,6 +734,15 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " https://github.com/neomake/neomake
 Plug 'https://github.com/neomake/neomake'
 
+" vim-operator-flashy {{{
+" https://github.com/haya14busa/vim-operator-flashy
+" Highlight/Flash the yanked area.
+Plug 'kana/vim-operator-user'
+Plug 'haya14busa/vim-operator-flashy'
+map y <Plug>(operator-flashy)
+nmap Y <Plug>(operator-flashy)$
+" }}}
+
 " scratch.vim {{{
 " https://github.com/mtth/scratch.vim
 " An unobtrusive scratch window.
@@ -772,7 +808,7 @@ Plug 'chip/vim-fat-finger'
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 
-" vim-sandwich
+" vim-sandwich {{{
 " https://github.com/machakann/vim-sandwich
 " The set of operator and textobject plugins to search/select/edit sandwiched textobjects.
 "   Add
@@ -786,6 +822,7 @@ let g:rainbow_active = 1
 "   Press srb{addition} or sr{deletion}{addition}.
 "   For example, key sequences srb" or sr(" makes (foo) to "foo".
 Plug 'machakann/vim-sandwich'
+" }}}
 
 " https://github.com/junegunn/vim-slash
 " Enhancing in-buffer search experience.
@@ -883,13 +920,13 @@ nnoremap <silent><leader>nu :UndoTreeToggle<cr>
 Plug 'tpope/vim-unimpaired'
 " }}}
 
-" vim-better-whitespace
+" vim-better-whitespace {{{
 " https://github.com/ntpeters/vim-better-whitespace
 " Cause trailing whitespace characters to be highlighted.  Also make stripping
 " whitespace painless.
 Plug 'ntpeters/vim-better-whitespace'
 autocmd FileType python autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
-
+" }}}
 
 " }}}
 
@@ -920,10 +957,11 @@ Plug 'zchee/deoplete-go', {'do': 'make'}
 
 " }}}
 
-" Jinja
-" vim-jinja
+" vim-jinja {{{
 "https://github.com/mitsuhiko/vim-jinja
+" Jinja2 is a full featured template engine for Python - http://jinja.pocoo.org/
 Plug 'mitsuhiko/vim-jinja'
+" }}}
 
 " JSON {{{
 " vim-json
@@ -1012,6 +1050,7 @@ Plug 'tmhedberg/SimpylFold'
 "     [pf / ]pf: move to next/previous function
 "     [pc / ]pc: move to next/previous class
 Plug 'bps/vim-textobj-python'
+
 " }}}
 
 " }}}
