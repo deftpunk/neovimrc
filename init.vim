@@ -21,8 +21,6 @@
 " https://github.com/dhruvasagar/vim-prosession/
 " http://spacevim.org/documentation/
 " https://github.com/ludovicchabant/vim-gutentags
-" https://github.com/wellle/targets.vim
-" https://github.com/michaeljsmith/vim-indent-object
 " https://github.com/tmhedberg/SimpylFold
 " https://github.com/chrisbra/csv.vim - CSV files
 " https://github.com/rhysd/vim-gfm-syntax - Github flavored markdown syntax
@@ -160,25 +158,24 @@ call plug#begin('~/.config/nvim/plugged')
 " }}}
 
 " Text Objects ----------------------------------------------------- {{{
-
-" vim-textobj-user {{{
-" https://github.com/kana/vim-textobj-user
-" Create your own textobjects - dependency for textobj-python
 "
-" vim-textobj-user is a Vim plugin to create your own text objects without
-"   pain. It is hard to create text objects, because there are many pitfalls to
-"   deal with. This plugin hides such details and provides a declarative way to
-"   define text objects. You can use regular expressions to define simple text
-"   objects, or use functions to define complex ones.
-Plug 'kana/vim-textobj-user'
-" }}}
+" Text Objects in Vim are a very handy tool
+" https://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guide/
+
+" targets.vim
+" https://github.com/wellle/targets.vim
+"   - Pair text objects
+"   - Quote text objects
+"   - Separator text objects
+"   - Argument text objects
+Plug 'wellle/targets.vim'
 
 " argtextobj.vim {{{
 " https://github.com/vim-scripts/argtextobj.vim
 " Text objects for function arguments.
 "   aa - an argument
 "   ia - inner argument
-Plug 'vim-scripts/argtextobj.vim'
+" Plug 'vim-scripts/argtextobj.vim'
 " }}}
 
 " vim-indent-object {{{
@@ -191,6 +188,18 @@ Plug 'vim-scripts/argtextobj.vim'
 "  <count>iI (I)nner (I)ndentation level (no lines above/below).
 "  -----------------------------------------------------------------
 Plug 'michaeljsmith/vim-indent-object'
+" }}}
+
+" vim-textobj-user {{{
+" https://github.com/kana/vim-textobj-user
+" Create your own textobjects - dependency for textobj-python
+"
+" vim-textobj-user is a Vim plugin to create your own text objects without
+"   pain. It is hard to create text objects, because there are many pitfalls to
+"   deal with. This plugin hides such details and provides a declarative way to
+"   define text objects. You can use regular expressions to define simple text
+"   objects, or use functions to define complex ones.
+Plug 'kana/vim-textobj-user'
 " }}}
 
 " }}}
@@ -216,7 +225,7 @@ endif
 Plug 'tomasr/molokai'
 
 " https://github.com/drewtempelmeyer/palenight.vim
-Plug 'drewtempelmeyer/palenight'
+Plug 'drewtempelmeyer/palenight.vim'
 
 " https://github.com/morhetz/gruvbox
 Plug 'morhetz/gruvbox'
@@ -462,9 +471,9 @@ Plug 'AssailantLF/vim-active-numbers'
 let g:active_number = 1
 let g:active_relativenumber = 1
 
-" vim-ags
+" vim-ags {{{
 " https://github.com/gabesoft/vim-ags
-"
+" --------------------------------------
 " MAPPINGS                                         *ags-mappings*
 " Once inside the search results window:~
 "     p    - navigate file paths forward
@@ -484,13 +493,16 @@ let g:active_relativenumber = 1
 "     <CR> - open file in a previously opened window
 "     q    - close the search results window
 "     u    - displays these key mappings
-
+" --------------------------------------
 Plug 'gabesoft/vim-ags'
 let g:ags_winheight=65
 " This plugin has a display conflict with RainbowDelimiters.
 autocmd BufNewFile,BufRead,BufEnter *.agsv set filetype=agsv
 autocmd BufNewFile,BufRead,BufEnter *.agsv RainbowToggle
 autocmd FileType agse,agsv RainbowToggle
+
+nnoremap <silent><leader>rt :RainbowToggle<cr>
+" }}}
 
 " vim-abolish - abbreviate multiple variants of words
 " https://github.com/tpope/tpope-vim-abolish
@@ -515,6 +527,20 @@ let g:ale_emit_conflict_warnings = 0
 " https://github.com/kana/vim-arpeggio
 " You cant create heirarchies with this unlike in Emacs.
 Plug 'kana/vim-arpeggio'
+
+" vim-asterisk {{{
+" https://github.com/haya14busa/vim-asterisk
+" Provides improved * motions.
+Plug 'haya14busa/vim-asterisk'
+map *   <Plug>(asterisk-*)
+map #   <Plug>(asterisk-#)
+map g*  <Plug>(asterisk-g*)
+map g#  <Plug>(asterisk-g#)
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+map z#  <Plug>(asterisk-z#)
+map gz# <Plug>(asterisk-gz#)
+" }}}
 
 " vim-bbye - Handle deleting buffers and closing files. {{{
 " https://github.com/moll/vim-bbye
@@ -546,8 +572,6 @@ Plug 'MattesGroeger/vim-bookmarks'
 " https://github.com/raimondi/delimitMate
 " NOTE: Another pairs plugin to try - https://github.com/jiangmiao/auto-pairs
 Plug 'raimondi/delimitMate'
-
-" }}}
 
 " deoplete - dark powered async completion framework for neovim {{{
 " https://github.com/Shougo/deoplete.nvim
@@ -655,7 +679,7 @@ let g:indentLine_fileType = ['python', 'perl']
 Plug 'farmergreg/vim-lastplace'
 " }}}
 
-" vim-move
+" vim-move {{{
 " https://github.com/matze/vim-move
 " Move lines and selections up/down
 " NOTE: Wed Sep 13 3:10:22pm - mappings of Alt & Super don't seem to working
@@ -667,6 +691,7 @@ Plug 'farmergreg/vim-lastplace'
 Plug 'matze/vim-move'
 let g:move_map_keys = 0
 " let g:move_key_modifier = 'M'
+" }}}
 
 " Mundo {{{
 " http://simnalamburt.github.io/vim-mundo/dist/
@@ -726,6 +751,7 @@ let g:NERDTreeIndicatorMapCustom = {
     \ }
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
+let g:NERDTreeShowBookmarks=1
 nnoremap <leader>nt :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }}}
@@ -791,7 +817,7 @@ Plug 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsSnippetDirectories=["UltiSnips", "/Users/ebodine/.config/nvim/mysnippets"]
+let g:UltiSnipsSnippetsDir="/Users/ebodine/.config/nvim/mysnippets"
 
 " vim-snippets
 " https://github.com/honza/vim-snippets
@@ -930,7 +956,68 @@ autocmd FileType python autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 
 " }}}
 
-" Software Development Languages/FileTypes ------------------------- {{{
+" Notes & Wiki {{{
+
+" vim-wiki {{{
+" https://github.com/vimwiki/vimwiki
+" Personal wiki for Vim - note taking and etc.
+" Basic Markup:
+"   = Header1 =
+"   == Header2 ==
+"   === Header3 ===
+"   *bold* -- bold text
+"   _italic_ -- italic text
+"   ~~strikeout text~~
+"   `code (no syntax) text`
+"   [[wiki link]] -- wiki link
+"   [[wiki link|description]] -- wiki link with description
+"
+"   * bullet list item 1
+"       - bullet list item 2
+"       - bullet list item 3
+"           * bullet list item 4
+"           * bullet list item 5
+"   * bullet list item 6
+"   * bullet list item 7
+"       - bullet list item 8
+"       - bullet list item 9
+
+"   1. numbered list item 1
+"   2. numbered list item 2
+"       a) numbered list item 3
+"       b) numbered list item 4
+
+"   For other syntax elements, see :h vimwiki-syntax
+
+" Keybindings:
+"     <Leader>ww -- Open default wiki index file.
+"     <Leader>wt -- Open default wiki index file in a new tab.
+"     <Leader>ws -- Select and open wiki index file.
+"     <Leader>wd -- Delete wiki file you are in.
+"     <Leader>wr -- Rename wiki file you are in.
+"     <Enter> -- Follow/Create wiki link
+"     <Shift-Enter> -- Split and follow/create wiki link
+"     <Ctrl-Enter> -- Vertical split and follow/create wiki link
+"     <Backspace> -- Go back to parent(previous) wiki link
+"     <Tab> -- Find next wiki link
+"     <Shift-Tab> -- Find previous wiki link
+
+" For more keys, see :h vimwiki-mappings
+" Commands:
+"     :Vimwiki2HTML -- Convert current wiki link to HTML
+"     :VimwikiAll2HTML -- Convert all your wiki links to HTML
+"     :help vimwiki-commands -- list all commands
+Plug 'vimwiki/vimwiki'
+" }}}
+
+" }}}
+
+" Software Development Utilities {{{
+
+" vim-endwise
+" https://github.com/tpope/vim-endwise
+" Primarily for Ruby but will also Vimscript, Shell and Lua
+Plug 'tpope/vim-endwise'
 
 " vim-polyglot - language packs for vim
 " https://github.com/sheerun/vim-polyglot
@@ -940,10 +1027,15 @@ Plug 'sheerun/vim-polyglot'
 " temporarily disabled for comparison.
 let g:polyglot_disabled = ['python']
 
-" Docker/Dockerfile
+" }}} 
+
+" Software Development Languages/FileTypes ------------------------- {{{
+
+" Docker/Dockerfile {{{
 "https://github.com/ekalinin/Dockerfile.vim
 " NOTE: No docs for this plugin.
 Plug 'ekalinin/Dockerfile.vim'
+" }}}
 
 " Golang {{{
 " vim-go
@@ -1050,6 +1142,10 @@ Plug 'tmhedberg/SimpylFold'
 "     [pf / ]pf: move to next/previous function
 "     [pc / ]pc: move to next/previous class
 Plug 'bps/vim-textobj-python'
+
+" }}}
+
+" Ruby {{{
 
 " }}}
 
