@@ -796,10 +796,6 @@ let g:scratch_height=25
 let g:scratch_persistence_file='/Home/Users/ebodine/tmp/neovim-scratch.txt'
 " }}}
 
-" vim-surround - surroundings - parentheses, branckets, quotes
-" https://github.com/tpope/vim-surround.git
-Plug 'https://github.com/tpope/vim-surround.git'
-
 " vim-repeat - enable repeating supported plugin maps.
 Plug 'https://github.com/tpope/vim-repeat.git'
 
@@ -836,6 +832,7 @@ let g:rainbow_active = 1
 
 " vim-sandwich {{{
 " https://github.com/machakann/vim-sandwich
+" Replacement for vim-surround; uses text objects to surround/sandwich things.
 " The set of operator and textobject plugins to search/select/edit sandwiched textobjects.
 "   Add
 "   Press sa{motion/textobject}{addition}. For example, a key sequence saiw( makes foo to (foo).
@@ -1147,6 +1144,12 @@ Plug 'bps/vim-textobj-python'
 
 " Ruby {{{
 
+" vim-ruby
+" https://github.com/vim-ruby/vim-ruby
+" Ruby configuration
+Plug 'vim-ruby/vim-ruby'
+
+" autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 " }}}
 
 " }}}
