@@ -16,12 +16,12 @@
 "   1. `nvim -V20 2>&1 | tee logfile`
 
 " Some plugins to investigate/review and sites to visit:
+" https://github.com/roxma/nvim-completion-manager
 " https://github.com/mhinz/vim-galore
 " https://github.com/xolox/vim-session
 " https://github.com/dhruvasagar/vim-prosession/
 " http://spacevim.org/documentation/
 " https://github.com/ludovicchabant/vim-gutentags
-" https://github.com/tmhedberg/SimpylFold
 " https://github.com/chrisbra/csv.vim - CSV files
 " https://github.com/rhysd/vim-gfm-syntax - Github flavored markdown syntax
 " 					    hightlighting
@@ -125,20 +125,6 @@ let g:mapleader = "\<Space>"
 
 autocmd BufEnter * :syntax sync fromstart
 
-" Return to last edit position when opening files (You want this!)
-" NOTE: Mon Sep 11 10:26:13 - commented out in favor of lastplugin.
-" augroup last_edit "{{{
-"   autocmd!
-"   autocmd BufReadPost *
-"        \ if line("'\"") > 1 && line("'\"") <= line("$") |
-"        \ exe "normal! g'\"" |
-"        \ endif
-" augroup END
-"}}}
-
-" Save buffers when switching buffers.
-" ":au FocusLost * silent! wa
-
 "}}}
 
 " vim-plug - Plugin management {{{
@@ -151,10 +137,6 @@ autocmd BufEnter * :syntax sync fromstart
 "
 " Specify a directory for plugins.
 call plug#begin('~/.config/nvim/plugged')
-" }}}
-
-" Dependencies ------------------------------------------------------ {{{
-
 " }}}
 
 " Text Objects ----------------------------------------------------- {{{
@@ -223,12 +205,11 @@ endif
 " Plug 'MaxSt/FlatColor'
 " Plug 'AlessandroYorba/Sierra'
 Plug 'tomasr/molokai'
-
 " https://github.com/drewtempelmeyer/palenight.vim
 Plug 'drewtempelmeyer/palenight.vim'
-
 " https://github.com/morhetz/gruvbox
 Plug 'morhetz/gruvbox'
+Plug 'cocopon/iceberg.vim'
 " Plug 'whatyouhide/vim-gotham'
 " Plug 'NLKNguyen/papercolor-theme'
 " Plug 'vim-scripts/pyte'
@@ -267,7 +248,8 @@ let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_theme='airlineish'
 let g:airline#extensions#tabline#enabled=1
-" enable integration with ale
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'" enable integration with ale
 let g:airline#extensions#ale#enabled=1
 " need to enable this for vim-devicons
 let g:airline_powerline_fonts = 1
@@ -279,7 +261,6 @@ Plug 'mhinz/vim-startify'
 
 " vim-choosewin - as close to ace-window as we get. {{{
 " https://github.com/t9md/vim-choosewin
-" BUG: Overlay leaves a red band where letter was in terminal windows
 " TODO: Create FR/PR for adding = key to equalize windows
 " Some bindings:
 "   Move between tabs using ] and [
@@ -469,7 +450,6 @@ let g:lt_height = 15
 " Only show line numbers in the active window.
 Plug 'AssailantLF/vim-active-numbers'
 let g:active_number = 1
-let g:active_relativenumber = 1
 
 " vim-ags {{{
 " https://github.com/gabesoft/vim-ags
@@ -507,7 +487,7 @@ nnoremap <silent><leader>rt :RainbowToggle<cr>
 " vim-abolish - abbreviate multiple variants of words
 " https://github.com/tpope/tpope-vim-abolish
 Plug 'tpope/tpope-vim-abolish'
-let g:abolish_save_file="~/.config/nvim/abolish-abbreviations.vim"
+let g:abolish_save_file="/Users/ebodine/.config/nvim/abolish-abbreviations.vim"
 
 " Ale - async syntax checking {{{
 " https://github.com/w0rp/ale
@@ -542,6 +522,24 @@ map z#  <Plug>(asterisk-z#)
 map gz# <Plug>(asterisk-gz#)
 " }}}
 
+" vim-autosave {{{
+" https://github.com/907th/vim-auto-save
+" Automatically saves changes to disk without having to use :w (or any binding
+" to it) every time a buffer has been modified or based on your preferred
+" events.
+"
+" By default AutoSave will save every time something has been changed in normal
+" mode and when the user leaves insert mode. This configuration is a mix
+" between save as often as possible and try to avoid breaking other plugins
+" that depend on filewrite-events.
+Plug '907th/vim-auto-save'
+
+" Enable AutoSave on Vim startup
+let g:auto_save = 1
+" Do not display the auto-save notification
+let g:auto_save_silent = 1
+" }}}
+
 " vim-bbye - Handle deleting buffers and closing files. {{{
 " https://github.com/moll/vim-bbye
 Plug 'moll/vim-bbye'
@@ -550,6 +548,8 @@ nnoremap <leader>k :Bdelete<cr>
 " }}}
 
 " vim-bookmarks {{{
+" NTOE: Wed Nov 22, 2017 2:57:13pm - commented out to see if I use this at
+" all.
 " https://github.com/MattesGroeger/vim-bookmarks
 "
 " Default mappings::
@@ -563,7 +563,7 @@ nnoremap <leader>k :Bdelete<cr>
 "   Clear bookmarks in all buffers 	                mx 	:BookmarkClearAll
 "   Save all bookmarks to a file 		:BookmarkSave <FILE_PATH>
 "   Load bookmarks from a file 		        :BookmarkLoad <FILE_PATH>
-Plug 'MattesGroeger/vim-bookmarks'
+" Plug 'MattesGroeger/vim-bookmarks'
 " disable default mappings.
 " let g:bookmark_no_default_key_mappings = 1
 " }}}
@@ -596,6 +596,8 @@ let g:deoplete#enable_at_startup = 1
 " :Rename - same as above but relative fo file's curent directory.
 " :SudoWrite - Write file w/ sudo
 " :SudoEdit - Edit a file w/ sudo
+" NOTE: Wed Nov 22, 2017 2:58:32pm - The Sudo* functions are not working(?) on
+" Mac ... not sure if this is Mac or vim-eunuch
 Plug 'tpope/vim-eunuch'
 " }}}
 
@@ -677,20 +679,6 @@ let g:indentLine_fileType = ['python', 'perl']
 " https://github.com/farmergreg/vim-lastplace
 " - Folds are automatically opened when jumping to the last edit position
 Plug 'farmergreg/vim-lastplace'
-" }}}
-
-" vim-move {{{
-" https://github.com/matze/vim-move
-" Move lines and selections up/down
-" NOTE: Wed Sep 13 3:10:22pm - mappings of Alt & Super don't seem to working
-" in VimR or terminal neovim
-" NOTE: Wed Sep 13 3:11:23pm - folds get closed as a side-effect == kind of
-" annoying side-effect.
-" NOTE: Wed Sep 13 3:13:43pm - unimpaired's [e & ]e mappings do the same thing
-" without the folding side-effect.
-Plug 'matze/vim-move'
-let g:move_map_keys = 0
-" let g:move_key_modifier = 'M'
 " }}}
 
 " Mundo {{{
@@ -813,7 +801,8 @@ Plug 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsSnippetsDir="/Users/ebodine/.config/nvim/mysnippets"
+" let g:UltiSnipsSnippetsDir="/Users/ebodine/.config/nvim/mysnippets"
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 
 " vim-snippets
 " https://github.com/honza/vim-snippets
@@ -1005,6 +994,7 @@ autocmd FileType python autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 "     :VimwikiAll2HTML -- Convert all your wiki links to HTML
 "     :help vimwiki-commands -- list all commands
 Plug 'vimwiki/vimwiki'
+noremap <Leader>wq <Plug>VimwikiUISelect
 " }}}
 
 " }}}
@@ -1024,7 +1014,7 @@ Plug 'sheerun/vim-polyglot'
 " temporarily disabled for comparison.
 let g:polyglot_disabled = ['python']
 
-" }}} 
+" }}}
 
 " Software Development Languages/FileTypes ------------------------- {{{
 
@@ -1149,7 +1139,7 @@ Plug 'bps/vim-textobj-python'
 " Ruby configuration
 Plug 'vim-ruby/vim-ruby'
 
-" autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
+autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 " }}}
 
 " }}}
@@ -1175,6 +1165,7 @@ Plug 'vim-ruby/vim-ruby'
 " :Gdiff -
 " :Gbrowse - Open the current file, blob, tree, commit or tag in your browser
 "            at the hosting provider.
+Plug 'tpope/vim-fugitive'
 
 " Merginal
 " https://github.com/idanarye/vim-merginal
@@ -1190,10 +1181,15 @@ Plug 'vim-ruby/vim-ruby'
 "   - Diffing against other branches
 "   - Renaming branches
 "   - Viewing git history for branches
-Plug 'tpope/vim-fugitive'
 Plug 'idanarye/vim-merginal'
 
-"
+" GitHub extension for fugitive
+" https://github.com/tpope/vim-rhubarb
+" Provides :Gbrowse functionality as well as being able to use
+" |i_CTRL-X_CTRL-O| to omni-complete GitHub issues or project collaborator
+" usernames when editing a commit message.
+Plug 'tpope/vim-rhubarb'
+
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gc :Gcommit<CR>
@@ -1206,8 +1202,6 @@ nnoremap <silent> <leader>gu :Gbrowse<CR>
 
 nnoremap <silent> <leader>gm :MerginalToggle<CR>
 
-" TODO: check out vim-rhubarb for its github :Gbrowse functionality.
-" https://github.com/tpope/vim-rhubarb
 " }}}
 
 " NOTE: Mon Sep 25 2017 8:17:43pm - more spartan than even fugitive, very fast
@@ -1301,6 +1295,10 @@ set splitright
 " Mon Sep 18 11:44:23 - commented out, this makes me lose place when going in
 " and out of the terminal.
 " :au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+
+" Set the terminal scrollback to the maximum.
+" https://stackoverflow.com/questions/34009064/how-do-i-set-the-terminal-buffer-scrollback-size
+" set scrollback=100000
 
 " terminal mappings
 tnoremap <Esc> <C-\><C-n>
