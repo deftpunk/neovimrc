@@ -602,6 +602,8 @@ let g:deoplete#enable_at_startup = 1
 Plug 'tpope/vim-eunuch'
 " }}}
 
+" Folding {{{
+
 " FastFold {{{
 " https://github.com/Konfekt/FastFold
 " Automatic folds bog down Neovim/Vim, make this go away.
@@ -616,6 +618,14 @@ let g:vimsyn_folding='af'
 " Create a fold text object, mapped to iz and az
 xnoremap iz :<c-u>FastFoldUpdate<cr><esc>:<c-u>normal! ]zv[z<cr>
 xnoremap az :<c-u>FastFoldUpdate<cr><esc>:<c-u>normal! ]zV[z<cr>
+" }}}
+
+" Tabfold {{{
+" https://github.com/thalesmello/tabfold
+" Plugin that enables fold toggle using the <Tab> key
+Plug 'thalesmello/tabfold'
+" }}}
+
 " }}}
 
 " follow my lead
