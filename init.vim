@@ -27,8 +27,9 @@
 " 					    hightlighting
 " https://github.com/pearofducks/ansible-vim - Ansible YAML
 " https://github.com/bcicen/vim-jfmt
-"
-"
+" https://github.com/idanarye/vim-vebugger
+" https://github.com/blueyed/vim-diminactive
+
 " We set this early because of plugins that require python/python3.
 " NOTE: Tue Aug 15 14:52:34 2017 - commented these out, they were just causing
 "	problems.
