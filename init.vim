@@ -41,6 +41,27 @@
 "
 " }}}
 
+" External Configuration {{{
+"
+" neovim-remote
+" https://github.com/mhinz/neovim-remote
+" This solves the neovim inside of neovim problem you get when you set your
+" EDITOR=nvim and =git commit= is called.
+"
+" Install:
+"   1. $ pip install neovim-remote
+"   2. Change =EDITOR=nvim= in ~.zshrc
+"   3. Set NVIM_LISTEN_ADDRESS=/tmp/nvimsocket in ~.zshrc
+"
+" Usage:
+"   - nvr --remote file1 file2
+" 
+if has('nvim')
+  let $VISUAL = 'nvr -cc split --remote-wait'
+endif
+"
+" }}}
+
 " Options -------------------------------------------------------- {{{
 
 " good encoding
@@ -225,6 +246,12 @@ Plug 'cocopon/iceberg.vim'
 " xterm color table & other color related things
 Plug 'guns/xterm-color-table.vim'
 
+" Colorizer
+" https://github.com/chrisbra/Colorizer
+" Highlight color codes inside CSS and Html files.
+Plug 'chrisbra/Colorizer'
+let g:colorizer_auto_filetype='css,html'
+
 " colorv
 "https://github.com/Rykka/colorv.vim/
 " A powerful color tool for Vim - view colors, pick colors, edit colors, etc.
@@ -258,7 +285,8 @@ let g:airline_powerline_fonts = 1
 
 " vim-startify - https://github.com/mhinz/vim-startify
 " A fancy start screen for Vim
-Plug 'mhinz/vim-startify'
+" NOTE: 1/19/2018 - commented out because I don't use it very often.
+" Plug 'mhinz/vim-startify'
 
 " vim-choosewin - as close to ace-window as we get. {{{
 " https://github.com/t9md/vim-choosewin
@@ -317,8 +345,7 @@ nnoremap <leader>fi :CtrlPMixed<cr>
 nnoremap <leader>fm :CtrlPMRUFiles<cr>
 nnoremap <leader>fq :CtrlPQuickfix<cr>
 
-nnoremap <leader>s :CtrlPLine<cr>
-
+nnoremap <leader>s :CtrlPLine %<cr>
 
 let g:ctrlp_prompt_mappings = {
     \ 'PrtSelectMove("n")':   ['<c-n>', '<down>'],
@@ -400,6 +427,26 @@ Plug 'zeero/vim-ctrlp-help'
 " Moving around in a buffer like ace-jump and avy.
 " https://github.com/easymotion/vim-easymotion
 Plug 'easymotion/vim-easymotion'
+
+" fzf {{{
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Default fzf layout
+" - down / up / left / right
+let g:fzf_layout = { 'down': '~40%' }
+
+" Enable per-command history.
+" CTRL-N and CTRL-P will be automatically bound to next-history and
+" previous-history instead of down and up. If you don't like the change,
+" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
+let g:fzf_history_dir = '~/tmp/fzf-history'
+" }}}
 
 " incsearch.vim - Incrementally highlight search pattern matches. {{{
 " https://github.com/haya14busa/incsearch.vim
@@ -684,10 +731,11 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'Yggdroot/indentLine'
 let g:indentLine_char = '┆'
 let g:indentLine_indentLevel = 6
-let g:indentLine_fileType = ['python', 'perl']
+let g:indentLine_fileType = ['python', 'perl', 'go']
 
-" vim-lastplace - remember your last location in a file. {{{
+" vim-lastplace {{{
 " https://github.com/farmergreg/vim-lastplace
+" Remember your last location in a file.
 " - Folds are automatically opened when jumping to the last edit position
 Plug 'farmergreg/vim-lastplace'
 " }}}
@@ -695,6 +743,11 @@ Plug 'farmergreg/vim-lastplace'
 " Mundo {{{
 " http://simnalamburt.github.io/vim-mundo/dist/
 " Graph your Vim undo tree in style; less painful browsing of the undo tree.
+
+" Also tried out Undotree:
+" https://github.com/mbbill/undotree
+" Plug 'mbbill/undotree'
+" nnoremap <silent><leader>nu :UndotreeToggle<cr>
 
 " Your current position in the undo tree is marked with an @ character. Other
 " nodes are marked with an o character.
@@ -764,6 +817,7 @@ Plug 'https://github.com/neomake/neomake'
 " Highlight/Flash the yanked area.
 Plug 'kana/vim-operator-user'
 Plug 'haya14busa/vim-operator-flashy'
+let g:operator#flashy#flash_time=500
 map y <Plug>(operator-flashy)
 nmap Y <Plug>(operator-flashy)$
 " }}}
@@ -850,6 +904,7 @@ Plug 'machakann/vim-sandwich'
 " https://github.com/junegunn/vim-slash
 " Enhancing in-buffer search experience.
 Plug 'junegunn/vim-slash'
+noremap <plug>(slash-after) zz
 
 " SplitJoin
 " https://github.com/AndrewRadev/splitjoin.vim
@@ -911,10 +966,9 @@ nnoremap <leader>tt :TagbarToggle<CR>
 nnoremap <leader>to :TagbarOpen<CR>
 " }}}
 
-" vim-undotree
-"https://github.com/mbbill/undotree
-Plug 'mbbill/undotree'
-nnoremap <silent><leader>nu :UndoTreeToggle<cr>
+" vim-tmux-navigator
+" https://github.com/christoomey/vim-tmux-navigator
+Plug 'christoomey/vim-tmux-navigator'
 
 " unimpaired - pairs of handy bracket mappings {{{
 " https://github.com/tpope/vim-unimpaired
@@ -955,58 +1009,18 @@ autocmd FileType python autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 
 " Notes & Wiki {{{
 
-" vim-wiki {{{
-" https://github.com/vimwiki/vimwiki
-" Personal wiki for Vim - note taking and etc.
-" Basic Markup:
-"   = Header1 =
-"   == Header2 ==
-"   === Header3 ===
-"   *bold* -- bold text
-"   _italic_ -- italic text
-"   ~~strikeout text~~
-"   `code (no syntax) text`
-"   [[wiki link]] -- wiki link
-"   [[wiki link|description]] -- wiki link with description
+" 1. Have tried vim-orgmode.
+"    https://github.com/jceb/vim-orgmode
+"    It is kind of slow at parsing - it started to bog at just 1900 lines.
+"    It can't do tables.
 "
-"   * bullet list item 1
-"       - bullet list item 2
-"       - bullet list item 3
-"           * bullet list item 4
-"           * bullet list item 5
-"   * bullet list item 6
-"   * bullet list item 7
-"       - bullet list item 8
-"       - bullet list item 9
+" 2. Have tried vim-wiki
+"    Just to much going back and forth.  Not lean enough.
 
-"   1. numbered list item 1
-"   2. numbered list item 2
-"       a) numbered list item 3
-"       b) numbered list item 4
-
-"   For other syntax elements, see :h vimwiki-syntax
-
-" Keybindings:
-"     <Leader>ww -- Open default wiki index file.
-"     <Leader>wt -- Open default wiki index file in a new tab.
-"     <Leader>ws -- Select and open wiki index file.
-"     <Leader>wd -- Delete wiki file you are in.
-"     <Leader>wr -- Rename wiki file you are in.
-"     <Enter> -- Follow/Create wiki link
-"     <Shift-Enter> -- Split and follow/create wiki link
-"     <Ctrl-Enter> -- Vertical split and follow/create wiki link
-"     <Backspace> -- Go back to parent(previous) wiki link
-"     <Tab> -- Find next wiki link
-"     <Shift-Tab> -- Find previous wiki link
-
-" For more keys, see :h vimwiki-mappings
-" Commands:
-"     :Vimwiki2HTML -- Convert current wiki link to HTML
-"     :VimwikiAll2HTML -- Convert all your wiki links to HTML
-"     :help vimwiki-commands -- list all commands
-Plug 'vimwiki/vimwiki'
-noremap <Leader>wq <Plug>VimwikiUISelect
-" }}}
+" vim-speeddating
+" https://github.com/tpope/vim-speeddating
+" Use Ctrl-a/Ctrl-x to increment dates, times and more
+Plug 'tpope/vim-speeddating'
 
 " }}}
 
@@ -1015,6 +1029,7 @@ noremap <Leader>wq <Plug>VimwikiUISelect
 " vim-endwise
 " https://github.com/tpope/vim-endwise
 " Primarily for Ruby but will also Vimscript, Shell and Lua
+" e.g. will put an -end- after your -if-
 Plug 'tpope/vim-endwise'
 
 " vim-polyglot - language packs for vim
@@ -1201,15 +1216,15 @@ Plug 'idanarye/vim-merginal'
 " usernames when editing a commit message.
 Plug 'tpope/vim-rhubarb'
 
-nnoremap <silent> <leader>gs :Gstatus<CR>
-nnoremap <silent> <leader>gd :Gdiff<CR>
-nnoremap <silent> <leader>gc :Gcommit<CR>
 nnoremap <silent> <leader>gb :Gblame<CR>
+nnoremap <silent> <leader>gc :Gcommit<CR>
+nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gl :Glog<CR>
 nnoremap <silent> <leader>gp :Git push<CR>
-nnoremap <silent> <leader>gw :Gwrite<CR>
 nnoremap <silent> <leader>gr :Gremove<CR>
+nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gu :Gbrowse<CR>
+nnoremap <silent> <leader>gw :Gwrite<CR>
 
 nnoremap <silent> <leader>gm :MerginalToggle<CR>
 
@@ -1313,6 +1328,11 @@ set splitright
 
 " terminal mappings
 tnoremap <Esc> <C-\><C-n>
+
+" neoterm
+" https://github.com/kassio/neoterm
+" Wrapper of some neovim's :terminal functions. 
+Plug 'kassio/neoterm'
 
 " }}}
 
