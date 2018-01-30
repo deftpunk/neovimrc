@@ -1062,6 +1062,14 @@ Plug 'zchee/deoplete-go', {'do': 'make'}
 
 " }}}
 
+" HTML5 {{{
+" html5.vim
+" https://github.com/othree/html5.vim
+Plug 'othree/html5.vim'
+let g:html5_rdfa_attributes_complete = 0
+let g:html5_aria_attributes_complete = 0
+" }}}
+
 " vim-jinja {{{
 "https://github.com/mitsuhiko/vim-jinja
 " Jinja2 is a full featured template engine for Python - http://jinja.pocoo.org/
@@ -1333,7 +1341,8 @@ tnoremap <Esc> <C-\><C-n>
 " https://github.com/kassio/neoterm
 " Wrapper of some neovim's :terminal functions. 
 Plug 'kassio/neoterm'
-
+let g:neoterm_open_in_all_tabs=0
+let g:neoterm_repl_python="ipython"
 " }}}
 
 " VimDevIcons - add glyphs/icons to plugins {{{
