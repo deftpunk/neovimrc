@@ -55,7 +55,8 @@
 "
 " Usage:
 "   - nvr --remote file1 file2
-" 
+" }}}
+
 if has('nvim')
   let $VISUAL = 'nvr -cc split --remote-wait'
 endif
@@ -251,6 +252,13 @@ Plug 'guns/xterm-color-table.vim'
 " Highlight color codes inside CSS and Html files.
 Plug 'chrisbra/Colorizer'
 let g:colorizer_auto_filetype='css,html'
+
+" Pikachu
+" Pick colors for use in Neovim.
+" https://github.com/DougBeney/pickachu
+" Zenity is a dependency.
+" Install: brew install zenity
+Plug 'DougBeney/pickachu'
 
 " colorv
 "https://github.com/Rykka/colorv.vim/
@@ -624,6 +632,8 @@ Plug 'raimondi/delimitMate'
 " deoplete - dark powered async completion framework for neovim {{{
 " https://github.com/Shougo/deoplete.nvim
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" NOTE: Feb 15, 2018  9:12 am - Had to comment out NVIM_LISTEN_ADDRESS in ~/.zshrc
+" https://github.com/Shougo/deoplete.nvim/issues/646
 let g:deoplete#enable_at_startup = 1
 
 " Disable deoplete when in multi cursor mode
@@ -1410,6 +1420,12 @@ cmap <c-e> <end>
 
 " Remap VIM 0 to first non-blank character
 map 0 ^
+
+" Increment & Decrement numbers individually or in vertical sequence
+noremap + <C-a>
+noremap - <C-x>
+xnoremap + g<C-a>
+xnoremap - g<C-x>
 
 " }}}
 
