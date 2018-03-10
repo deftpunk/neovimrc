@@ -125,8 +125,14 @@ set matchtime=2
 set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
 " set listchars+=eol:⤦
 set list
-" show line breaks - got the character to show up w/ <Ctrl-V>u21aa in insert mode.
+
+" Indentation and line breaks
+" - visually show line breaks - got the character to show up w/ <Ctrl-V>u21aa in
+"   insert mode.
+" - The column used for number/relatvienumber is also used for wrapped lines
+set breakindent
 set showbreak=↪
+set cpo+=n
 
 " Use persistent history
 if !isdirectory("/Users/ebodine/tmp/neovim-undo-dir")
@@ -137,6 +143,10 @@ set undofile
 
 " Automatically reload files that have changed.
 set autoread
+
+" Substitute all matches on a line instead of just one - this means that
+" supplying 'g' will now only make a single substitution.
+set gdefault
 
 " Take me to my Leader key
 let mapleader = "\<Space>"
