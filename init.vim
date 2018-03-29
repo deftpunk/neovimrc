@@ -12,9 +12,36 @@
 "                    I am a dark-side Neovim user
 "
 " Introduction {{{
-" Debugging the init file:
-"   1. `nvim -V20 2>&1 | tee logfile`
+" A configuration for Neovim on Mac.
+" }}}
 
+" Bootstrap - External Configuration {{{
+"
+" neovim-remote:
+" https://github.com/mhinz/neovim-remote
+" This solves the neovim inside of neovim problem you get when you set your
+" EDITOR=nvim and =git commit= is called.
+"
+" Install:
+"   1. $ pip install neovim-remote
+"   2. Change =EDITOR=nvim= in ~.zshrc
+"   3. Set NVIM_LISTEN_ADDRESS=/tmp/nvimsocket in ~.zshrc
+"
+" Usage:
+"   - nvr --remote file1 file2
+" }}}
+"
+" Bootstrap - Base Configuration {{{
+" What to do when bootstraping a new neovim install."
+
+" 1. Use brew to install neovim
+"    $ brew update && brew install neovim
+" 2. Clone my Neovim configuration.
+" 3.
+"
+" }}}
+
+" Investigations {{{
 " Some plugins to investigate/review and sites to visit:
 " https://github.com/roxma/nvim-completion-manager
 " https://github.com/mhinz/vim-galore
@@ -35,33 +62,23 @@
 "	problems.
 " let g:python3_host_prog = system('which python3')
 " let g:python_host_prog = system('which python')
+" }}}
+
+" Profiling & Debugging the Configuration {{{
+"
+" Start without an init file:
+" $ neovim -u NONE
+"
+" Debugging the init file:
+" $ `nvim -V20 2>&1 | tee logfile`
 "
 " Vim startup profiling, optimization etc.
 " https://coderwall.com/p/sdva9q/how-to-detect-plugins-slowing-vim-down
-"
-" }}}
-
-" External Configuration {{{
-"
-" neovim-remote
-" https://github.com/mhinz/neovim-remote
-" This solves the neovim inside of neovim problem you get when you set your
-" EDITOR=nvim and =git commit= is called.
-"
-" Install:
-"   1. $ pip install neovim-remote
-"   2. Change =EDITOR=nvim= in ~.zshrc
-"   3. Set NVIM_LISTEN_ADDRESS=/tmp/nvimsocket in ~.zshrc
-"
-" Usage:
-"   - nvr --remote file1 file2
 " }}}
 
 if has('nvim')
   let $VISUAL = 'nvr -cc split --remote-wait'
 endif
-"
-" }}}
 
 " Options -------------------------------------------------------- {{{
 
