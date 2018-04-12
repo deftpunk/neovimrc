@@ -1438,8 +1438,10 @@ nnoremap <leader>wv :wincmd v<cr>
 "                   startup.
 " Key 'j' is already mapped in mode 'n'
 " Key 'k' is already mapped in mode 'n'
-" nmap k gk
-" nmap j gj
+" NOTE: 4/7/2018 - Same errors as above, this is probably because Arpeggio is
+" doing a remap of j + k
+" nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
+" nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
 " cmdline mappings
 cmap <c-a> <home>
@@ -1453,6 +1455,12 @@ noremap + <C-a>
 noremap - <C-x>
 xnoremap + g<C-a>
 xnoremap - g<C-x>
+
+" Omni completion remap
+inoremap <C-l> <C-x><C-l>
+
+" Quit vimdiff using q but also don't mess with macro.
+nnoremap <expr> q &diff ? ":diffoff!\<bar>only\<cr>" : "q"
 
 " }}}
 
