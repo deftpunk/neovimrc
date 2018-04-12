@@ -165,6 +165,9 @@ set autoread
 " supplying 'g' will now only make a single substitution.
 set gdefault
 
+" Blanking out nrformat will force decimal arithmetic.
+set nrformats=
+
 " Take me to my Leader key
 let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
