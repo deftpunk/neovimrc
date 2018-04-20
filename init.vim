@@ -56,7 +56,10 @@
 " https://github.com/bcicen/vim-jfmt
 " https://github.com/idanarye/vim-vebugger
 " https://github.com/blueyed/vim-diminactive
-
+"
+" Colorschemes
+" https://github.com/rakr/vim-one
+"
 " We set this early because of plugins that require python/python3.
 " NOTE: Tue Aug 15 14:52:34 2017 - commented these out, they were just causing
 "	problems.
@@ -168,6 +171,12 @@ set gdefault
 " Blanking out nrformat will force decimal arithmetic.
 set nrformats=
 
+" Smarter completions by infering case, as opposed to ignorecase.
+set infercase
+
+" Only syntax highlight the first 250 characters on a line.
+set synmaxcol=250
+
 " Take me to my Leader key
 let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
@@ -177,6 +186,19 @@ let g:mapleader = "\<Space>"
 " General Autocommands -------------------------------------------- {{{
 
 autocmd BufEnter * :syntax sync fromstart
+
+" Automatically equalize splits when Vim is resized.
+autocmd VimResized * wincmd =
+
+" Enable functional autosave and autoread behaviour.
+" https://bluz71.github.io/2017/05/15/vim-tips-tricks.html
+set autoread
+
+augroup autoSaveAndRead
+    autocmd!
+    autocmd TextChanged,InsertLeave,FocusLost * silent! wall
+    autocmd CursorHold * silent! checktime
+augroup END
 
 "}}}
 
@@ -526,6 +548,11 @@ let g:lt_location_list_toggle_map = '<leader>cl'
 let g:lt_quickfix_list_toggle_map = '<leader>cq'
 let g:lt_height = 15
 " }}}
+
+" Visual Star Search
+" Allow for * and # searches to occur on the current visual selection.
+" https://github.com/nelstrom/vim-visual-star-search
+Plug 'nelstrom/vim-visual-star-search'
 
 " }}}
 
@@ -1080,6 +1107,10 @@ Plug 'sheerun/vim-polyglot'
 " temporarily disabled for comparison.
 let g:polyglot_disabled = ['python']
 
+" vim-test - run your tests at the speed of thought.
+" https://github.com/janko-m/vim-test
+Plug 'janko-m/vim-test'
+
 " }}}
 
 " Software Development Languages/FileTypes ------------------------- {{{
@@ -1464,6 +1495,9 @@ inoremap <C-l> <C-x><C-l>
 
 " Quit vimdiff using q but also don't mess with macro.
 nnoremap <expr> q &diff ? ":diffoff!\<bar>only\<cr>" : "q"
+
+" Use Q to play macro normally and over visual selections.
+xnoremap Q :'<,'>:normal @q<CR>
 
 " }}}
 
