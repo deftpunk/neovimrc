@@ -337,11 +337,6 @@ let g:airline#extensions#ale#enabled=1
 let g:airline_powerline_fonts = 1
 " }}}
 
-" vim-startify - https://github.com/mhinz/vim-startify
-" A fancy start screen for Vim
-" NOTE: 1/19/2018 - commented out because I don't use it very often.
-" Plug 'mhinz/vim-startify'
-
 " vim-choosewin - as close to ace-window as we get. {{{
 " https://github.com/t9md/vim-choosewin
 " TODO: Create FR/PR for adding = key to equalize windows
@@ -434,14 +429,6 @@ let g:ctrlp_funky_cache_dir='~/.config/nvim/.cache/ctrlp-funky'
 " NOTE: 8/24/2017 - Its still a bit slow.
 nnoremap <leader>ci :CtrlPFunky<cr>
 
-" vim-ctrlp-cscope
-" CtrlP extension for showing CScope or GNU Global tags
-" TODO: Is this really any better than CtrlPBufTagAll?  Does it automatically
-"       start the cscope db.?
-" https://github.com/ivan-cukic/vim-ctrlp-cscope
-" NOTE: March 10, 2017 - Commented out, does not work with Python3
-" Plug 'ivan-cukic/vim-ctrlp-cscope'
-
 " Goto declarations.
 " Either the identifier under the cursor or visually selected text.
 " https://github.com/ivalkeen/vim-ctrlp-tjump
@@ -456,24 +443,18 @@ Plug 'sgur/ctrlp-extensions.vim'
 " marks - local and global
 Plug 'mattn/ctrlp-mark'
 
-" Allows you to find and run vim commands.
-" https://github.com/fisadev/vim-ctrlp-cmdpalette
-" Plug 'fisadev/vim-ctrlp-cmdpalette'
-
 " Show and exec command history from CtrlP
 " Adds cmd history (what you see in g:) and search history
 " (what you see in g/) to ctrlp so you can quickly re-run commands or searches.
 " https://github.com/ompugao/ctrlp-history
 Plug 'ompugao/ctrlp-history'
-
-" TODO: Figure out what to do with tabs and then uncomment or remove.
-" Switch between tabs
-" https://github.com/davidegx/ctrlp-smarttabs
-" Plug '~/tmp/ctrlp-smarttabs'
+nnoremap <silent><C-p><C-h> :CtrlPCmdHistory<CR>
+nnoremap <silent><C-p><C-s> :CtrlPSearchHistory<CR>
 
 " CtrlP extension for vim help keywords.
 " https://github.com/zeero/vim-ctrlp-help
 Plug 'zeero/vim-ctrlp-help'
+nnoremap <leader>he :CtrlPHelp<cr>
 
 " }}}
 
@@ -481,26 +462,6 @@ Plug 'zeero/vim-ctrlp-help'
 " Moving around in a buffer like ace-jump and avy.
 " https://github.com/easymotion/vim-easymotion
 Plug 'easymotion/vim-easymotion'
-
-" fzf {{{
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit' }
-
-" Default fzf layout
-" - down / up / left / right
-let g:fzf_layout = { 'down': '~40%' }
-
-" Enable per-command history.
-" CTRL-N and CTRL-P will be automatically bound to next-history and
-" previous-history instead of down and up. If you don't like the change,
-" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
-let g:fzf_history_dir = '~/tmp/fzf-history'
-" }}}
 
 " incsearch.vim - Incrementally highlight search pattern matches. {{{
 " https://github.com/haya14busa/incsearch.vim
