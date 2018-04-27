@@ -312,12 +312,6 @@ let g:colorizer_auto_filetype='css,html'
 " Install: brew install zenity
 Plug 'DougBeney/pickachu'
 
-" colorv
-"https://github.com/Rykka/colorv.vim/
-" A powerful color tool for Vim - view colors, pick colors, edit colors, etc.
-" NOTE: Wed Oct 25, 2017 10:19:32am - Tends to slow down Neovim
-" Plug 'Rykka/colorv.vim'
-
 " winresizer - https://github.com/simeji/winresizer
 " Easy resizing of windows in side vim. Ctrl-e starts the window resize mode
 " and Enter or Esc exits it.
@@ -1110,6 +1104,12 @@ let g:polyglot_disabled = ['python']
 " vim-test - run your tests at the speed of thought.
 " https://github.com/janko-m/vim-test
 Plug 'janko-m/vim-test'
+
+" open-browser - Open a broser from Neovim
+" https://github.com/tyru/open-browser.vim
+" I mostly use this to start a web search from Neovim.
+"
+Plug 'tyru/open-browser.vim'
 
 " }}}
 
