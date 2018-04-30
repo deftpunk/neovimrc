@@ -513,11 +513,12 @@ Plug 'nelstrom/vim-visual-star-search'
 
 " General Utilities -------------------------------------------------------- {{{
 
-" vim-active-numbers
+" vim-active-numbers {{{
 " https://github.com/AssailantLF/vim-active-numbers
 " Only show line numbers in the active window.
 Plug 'AssailantLF/vim-active-numbers'
 let g:active_number = 1
+" }}}
 
 " vim-ags {{{
 " https://github.com/gabesoft/vim-ags
@@ -552,10 +553,24 @@ autocmd FileType agse,agsv RainbowToggle
 nnoremap <silent><leader>rt :RainbowToggle<cr>
 " }}}
 
-" vim-abolish - abbreviate multiple variants of words
+" vim-abolish {{{
 " https://github.com/tpope/tpope-vim-abolish
+" Abbreviate multiple variants of words
+"
+" Coercion
+" Press crs (coerce to snake_case).
+" MixedCase (crm),
+" camelCase (crc),
+" snake_case (crs),
+" UPPER_CASE (cru),
+" dash-case (cr-),
+" dot.case (cr.),
+" space case (cr<space>),
+" and Title Case (crt) are all just 3 keystrokes away.
+" These commands support repeat.vim.
 Plug 'tpope/tpope-vim-abolish'
 let g:abolish_save_file="/Users/ebodine/.config/nvim/abolish-abbreviations.vim"
+" }}}
 
 " Ale - async syntax checking {{{
 " https://github.com/w0rp/ale
@@ -832,6 +847,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Neomake
 " https://github.com/neomake/neomake
+" Asynchronous linting and make framework for Neovim/Vim
 Plug 'https://github.com/neomake/neomake'
 
 " vim-operator-flashy {{{
