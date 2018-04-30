@@ -1483,4 +1483,5 @@ Arpeggionnoremap jk :
 "   	  iab <buffer> ebx erick.bodine
 iab sb " {{{
 iab eb " }}}
+iab ydate <c-r>=strfitime("%a %b %d %T %Y")
 " }}}
