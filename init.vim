@@ -132,7 +132,7 @@ set incsearch
 set nohlsearch
 
 " live substitution previews
-set inccommand=split
+set inccommand=nosplit
 
 " When a bracket is inserted, briefly jump to the matching one.  The time to
 " show the match is set by matchtime, which is in tenths of seconds.
@@ -544,11 +544,11 @@ let g:active_number = 1
 "     u    - displays these key mappings
 " --------------------------------------
 Plug 'gabesoft/vim-ags'
-let g:ags_winheight=65
+let g:ags_winheight=60
 " This plugin has a display conflict with RainbowDelimiters.
 autocmd BufNewFile,BufRead,BufEnter *.agsv set filetype=agsv
 autocmd BufNewFile,BufRead,BufEnter *.agsv RainbowToggle
-autocmd FileType agse,agsv RainbowToggle
+autocmd FileType agsv RainbowToggle
 
 nnoremap <silent><leader>rt :RainbowToggle<cr>
 " }}}
@@ -756,6 +756,9 @@ Plug 'tpope/vim-commentary'
 " In preview window:
 "     q - Close preview window.
 Plug 'dyng/ctrlsf.vim'
+
+" https://github.com/tpope/vim-dispatch
+Plug 'tpope/vim-dispatch'
 
 " vim-multiple-cursors
 " https://github.com/terryma/vim-multiple-cursors
@@ -1176,11 +1179,13 @@ let g:jedi#completions_enabled = 0
 Plug 'cjrh/vim-conda'
 
 " impsort.vim - sensibly sort imports
-"https://github.com/tweekmonster/impsort.vim
+" https://github.com/tweekmonster/impsort.vim
 " Utility for sorting and highlighting Python imports.
 " We'll see if this is any better than using isort.
 Plug 'tweekmonster/impsort.vim'
 let g:impsort_textwidth = 104
+" so that the linter doesn't complain.
+let g:impsort_lines_after_imports = 2
 " run impsort on save.
 autocmd BufWritePre *.py ImpSort!
 
@@ -1228,7 +1233,12 @@ autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 
 " Version Control -------------------------------------------------- {{{
 
-" vim-fugitive + vim-merginal - Git management  {{{
+" Gina
+" https://github.com/lambdalisue/gina.vim
+" Tue May 29, 2018 2:33:34pm - Just trying this one out.
+Plug 'lambdalisue/gina.vim'
+
+" vim-fugitive + vim-merginal + vim-rhubarb - Git management  {{{
 " https://github.com/tpope/vim-fugitive
 " :Gstatus - Brings up output of git status
 "   - Press - to add/reset a files changes.
