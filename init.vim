@@ -59,7 +59,7 @@
 "
 " Colorschemes
 " https://github.com/rakr/vim-one
-"
+
 " We set this early because of plugins that require python/python3.
 " NOTE: Tue Aug 15 14:52:34 2017 - commented these out, they were just causing
 "	problems.
@@ -363,17 +363,11 @@ nmap  -  <Plug>(choosewin)
 
 " The active fork of CtrlP {{{
 " https://github.com/ctrlpvim/ctrlp.vim
-Plug 'ctrlpvim/ctrlp.vim'
-
+"
 " Fri Oct 27, 2017 11:36:42am - Try out using cpsm as a matcher
 " https://github.com/nixprime/cpsm
-"lug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
-"et g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
-
-" Fri Oct 27, 2017 11:26:32am - trying out ripgrep with CtrlP
-let g:ctrlp_user_command='rg %s --files --color=never --glob ""'
-let g:ctrlp_use_caching=0
-
+" NOTE: Didn't work out so well
+"
 " Use the silver searcher in deference to what ctrlp normally does.
 " 3/23/2016 - commented this out because it wasn't working for some reason.
 " 10/4/2016 - giving this another shot with a modified Ag cmdline.
@@ -386,7 +380,11 @@ let g:ctrlp_use_caching=0
 " let g:ctrlp_root_markers = ['makepythontags']
 " let g:ctrlp_extensions=['smarttabs']
 
-" let g:ctrlp_map = ''
+Plug 'ctrlpvim/ctrlp.vim'
+
+let g:ctrlp_user_command='rg %s --files --color=never --glob ""'
+let g:ctrlp_use_caching=0
+
 nnoremap <leader>fb :CtrlPBuffer<cr>
 nnoremap <leader>fc :CtrlPChange<cr>
 nnoremap <leader>fd :CtrlPDir<cr>
@@ -404,8 +402,7 @@ let g:ctrlp_prompt_mappings = {
 " vim-ctrlp-ag - Ag with CtrlP
 " https://github.com/lokikl/vim-ctrlp-ag
 Plug 'lokikl/vim-ctrlp-ag'
-" nnoremap <c-f> :CtrlPag<cr>
-" vnoremap <c-f> :CtrlPagVisual<cr>
+
 nnoremap <leader>ca :CtrlPagLocate
 nnoremap <leader>cp :CtrlPagPrevious<cr>
 let g:ctrlp_ag_ignores = '--ignore .git
