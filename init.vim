@@ -286,8 +286,6 @@ endif
 " Themes {{{
 Plug 'ayu-theme/ayu-vim'
 Plug 'tomasr/molokai'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'morhetz/gruvbox'
 Plug 'cocopon/iceberg.vim'
 " }}}
 
