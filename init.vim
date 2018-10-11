@@ -43,6 +43,7 @@
 
 " Investigations {{{
 " Some plugins to investigate/review and sites to visit:
+" https://github.com/matze/vim-move
 " https://github.com/roxma/nvim-completion-manager
 " https://github.com/mhinz/vim-galore
 " https://github.com/xolox/vim-session
@@ -78,6 +79,12 @@
 " Vim startup profiling, optimization etc.
 " https://coderwall.com/p/sdva9q/how-to-detect-plugins-slowing-vim-down
 " }}}
+
+" Notes
+"
+" 1. Figuring out what (Neo)vim thinks a key is when pressed:
+"    - Enter Insert mode.
+"    - Press Ctrl-v & then the key combination you are trying to figure out.
 
 if has('nvim')
   let $VISUAL = 'nvr -cc split --remote-wait'
@@ -277,23 +284,11 @@ if (has("termguicolors"))
 endif
 
 " Themes {{{
-" Plug 'MaxSt/FlatColor'
-" Plug 'AlessandroYorba/Sierra'
+Plug 'ayu-theme/ayu-vim'
 Plug 'tomasr/molokai'
-" https://github.com/drewtempelmeyer/palenight.vim
 Plug 'drewtempelmeyer/palenight.vim'
-" https://github.com/morhetz/gruvbox
 Plug 'morhetz/gruvbox'
 Plug 'cocopon/iceberg.vim'
-" Plug 'whatyouhide/vim-gotham'
-" Plug 'NLKNguyen/papercolor-theme'
-" Plug 'vim-scripts/pyte'
-" Plug 'jonathanfilip/vim-lucius'
-" Plug 'https://github.com/mhartington/oceanic-next.git'
-" Plug 'https://github.com/fmoralesc/molokayo.git'
-" Plug 'https://github.com/aunsira/macvim-light'
-" Plug 'https://github.com/freeo/vim-kalisi'
-" Plug 'https://github.com/Reewr/vim-monokai-phoenix'
 " }}}
 
 " xterm color table & other color related things
@@ -321,8 +316,8 @@ Plug 'jimsei/winresizer'
 let g:winresizer_vert_resize=5
 let g:winresizer_horiz_resize=5
 
-" vim-airline {{{
-" https://github.com/vim-airline/vim-airline
+" " vim-airline {{{
+" " https://github.com/vim-airline/vim-airline
 Plug 'vim-airline/vim-airline'
 Plug 'https://github.com/paranoida/vim-airlineish'
 
@@ -333,9 +328,18 @@ let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'" enable integration with ale
 let g:airline#extensions#ale#enabled=1
-" need to enable this for vim-devicons
+" " need to enable this for vim-devicons
 let g:airline_powerline_fonts = 1
 " }}}
+
+" lightline - a light & configurable statusline for vim/neovim {{{
+" https://github.com/itchyny/lightline.vim
+" NOTE: Mon Jun 25, 4:57:32pm - Trying out lightline
+"       - appears to be faster(?) in normal operation - startup is not faster.
+"       - a LOT less information on the statusline though.
+ " Plug 'itchyny/lightline.vim'
+ " set laststatus=2
+ " }}}
 
 " vim-choosewin - as close to ace-window as we get. {{{
 " https://github.com/t9md/vim-choosewin
@@ -426,12 +430,7 @@ let g:ctrlp_funky_cache_dir='~/.config/nvim/.cache/ctrlp-funky'
 " NOTE: 8/24/2017 - Its still a bit slow.
 nnoremap <leader>ci :CtrlPFunky<cr>
 
-" Goto declarations.
-" Either the identifier under the cursor or visually selected text.
-" https://github.com/ivalkeen/vim-ctrlp-tjump
-Plug 'ivalkeen/vim-ctrlp-tjump'
-" nnoremap <c-]> :CtrlPtjump<cr>
-" vnoremap <c-]> :CtrlPtjumpVisual<cr>
+" CtrlPtjump - doesn't work without a tags file, so i deleted it - Sep 24, 2018
 
 " cmdline, yankring + menu
 " https://github.com/sgur/ctrlp-extensions.vim
@@ -1033,6 +1032,15 @@ Plug 'christoomey/vim-tmux-navigator'
 " ]n          Go to the next SCM conflict marker or diff/patch hunk.
 "             Try d]n inside a conflict.
 Plug 'tpope/vim-unimpaired'
+
+" vim-which-key - vim port of emacs-which-key
+" https://github.com/liuchengxu/vim-which-key
+" On-demand lazy load
+Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+" nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+" TODO: see vim-which-key README for further configuration examples.
 " }}}
 
 " vim-better-whitespace {{{
@@ -1092,6 +1100,67 @@ Plug 'tyru/open-browser.vim'
 
 " Software Development Languages/FileTypes ------------------------- {{{
 
+" vim-sexp
+"https://github.com/guns/vim-sexp
+Plug 'guns/vim-sexp'
+
+" Clojure {{{
+
+" Acid
+" Asynchronous Clojure Interactive Development
+" https://github.com/clojure-vim/acid.nvim
+Plug 'clojure-vim/acid.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" }}}
+
+" Conflict marker highlighting. {{{
+" https://github.com/rhysd/conflict-marker.vim
+"
+" Highlight Conflict Markers
+"  Conflict markers (<<<<<<<, ======= and >>>>>>> as default) are highlighted automatically.
+"
+" Jump among Conflict Markers
+"   [x and ]x mappings are defined as default.
+"
+"   Jump within a Conflict Marker
+"   This feature uses matchit.vim, which is bundled in Vim (macros/matchit.vim). % mapping is extened by
+"   matchit.vim.
+"
+" Resolve a Conflict with Various Strategies
+"   This plugin defines mappings as default, ct for themselves, co for ourselves, cn for none and cb for
+"   both.
+Plug 'rhysd/conflict-marker.vim'
+
+" Don't use default mappings.
+" let g:conflict_marker_enable_mappings=0
+" }}}
+
+" Common Lisp {{{
+
+" vlime
+" A Common Lisp dev environment for Vim (and Neovim)
+" https://github.com/l04m33/vlime
+"
+" ncat (netcat/nc) is a dependency for vlime.
+"    Install using Homebrew: brew install netcat
+"    This will install v0.7.1 of http://netcat.sourceforge.net/
+"    One can use either the nc or netcat command. nc is an alias for netcat.
+"
+" To start a server: nc -l -p 9999
+"
+" To start a client: nc targethost 9999
+"
+" To get the manpage of this version, one needs to use man netcat, as man nc
+" will open the manpage of the BSD version.
+Plug 'l04m33/vlime', {'rtp': 'vim'}
+"
+"
+" vim-sexp
+" https://github.com/guns/vim-sexp
+Plug 'guns/vim-sexp'
+
+" }}}
+
 " Docker/Dockerfile {{{
 "https://github.com/ekalinin/Dockerfile.vim
 " NOTE: No docs for this plugin.
@@ -1102,6 +1171,7 @@ Plug 'ekalinin/Dockerfile.vim'
 " vim-go
 " https://github.com/fatih/vim-go
 Plug 'fatih/vim-go'
+let g:go_version_warning = 0
 
 " deoplete-go
 " https://github.com/zchee/deoplete-go
@@ -1420,6 +1490,10 @@ filetype plugin indent on
 syntax enable
 
 " General mappings ------------------------------------------------- {{{
+
+" A test to see if i could map the MacOSX Command key - Friday July 6 2018 ==
+" YES
+nnoremap <D-l> :echo "testing"<cr>
 
 " Edit Neovim configuration file.
 nnoremap <silent> <leader>ec :e $MYVIMRC<cr>
