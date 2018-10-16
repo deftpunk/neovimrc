@@ -1059,7 +1059,9 @@ autocmd FileType python autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 "    It can't do tables.
 "
 " 2. Have tried vim-wiki
-"    Just to much going back and forth.  Not lean enough.
+"    Just to much going back and forth.  Not lean enough, should give it
+"    another try at some point.  Maybe just as a way of keeping reference
+"    material.
 
 " vim-speeddating
 " https://github.com/tpope/vim-speeddating
@@ -1482,7 +1484,7 @@ let g:neoterm_repl_python="ipython"
 Plug 'ryanoasis/vim-devicons'
 " }}}
 
-" Initialize plugin system
+" Conclude plugin initialization.
 call plug#end()
 filetype plugin indent on
 syntax enable
