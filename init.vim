@@ -86,6 +86,8 @@
 "    - Enter Insert mode.
 "    - Press Ctrl-v & then the key combination you are trying to figure out.
 
+" Avoid nested neovim processes by using neovim-remote.
+" https://github.com/mhinz/neovim-remote
 if has('nvim')
   let $VISUAL = 'nvr -cc split --remote-wait'
 endif
@@ -217,7 +219,7 @@ augroup END
 "
 " Make sure you use single quotes when specifying URLs
 "
-" Specify a directory for plugins.
+" Intialize Plug and specify a directory for plugins.
 call plug#begin('~/.config/nvim/plugged')
 " }}}
 
