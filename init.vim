@@ -80,17 +80,21 @@
 " https://coderwall.com/p/sdva9q/how-to-detect-plugins-slowing-vim-down
 " }}}
 
-" Notes
+" Notes {{{
 "
 " 1. Figuring out what (Neo)vim thinks a key is when pressed:
 "    - Enter Insert mode.
 "    - Press Ctrl-v & then the key combination you are trying to figure out.
+" }}}
 
+" neovim-remote {{{
 " Avoid nested neovim processes by using neovim-remote.
 " https://github.com/mhinz/neovim-remote
+" Use - pip3 install neovim-remote - to install.
 if has('nvim')
   let $VISUAL = 'nvr -cc split --remote-wait'
 endif
+" }}}
 
 " Options -------------------------------------------------------- {{{
 
@@ -652,6 +656,14 @@ nnoremap <leader>k :Bdelete<cr>
 " NOTE: Another pairs plugin to try - https://github.com/jiangmiao/auto-pairs
 Plug 'raimondi/delimitMate'
 
+" dash.vim
+" https://github.com/rizzatti/dash.vim
+" Use Dash.app to lookup documentation.
+" Usage:
+"     :Dash[!] [TERM] [KEYWORD]
+"     :Dash os.path.dirname python
+Plug 'rizzatti/dash.vim'
+
 " deoplete - dark powered async completion framework for neovim {{{
 " https://github.com/Shougo/deoplete.nvim
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -1070,6 +1082,11 @@ autocmd FileType python autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 " Use Ctrl-a/Ctrl-x to increment dates, times and more
 Plug 'tpope/vim-speeddating'
 
+" vimwiki
+" https://github.com/vimwiki/vimwiki
+Plug 'vimwiki/vimwiki'
+let g:vimwiki_list = [{'path': '~/tmp/reference/', 'syntax': 'markdown', 'ext': '.md'}]
+
 " }}}
 
 " Software Development Utilities {{{
@@ -1461,7 +1478,9 @@ set splitright
 " https://stackoverflow.com/questions/34009064/how-do-i-set-the-terminal-buffer-scrollback-size
 " set scrollback=100000
 
-" terminal mappings
+" Terminal mappings
+
+" switch back to Normal mode.
 tnoremap <Esc> <C-\><C-n>
 
 " neoterm
@@ -1474,6 +1493,7 @@ let g:neoterm_repl_python="ipython"
 
 " VimDevIcons - add glyphs/icons to plugins {{{
 " https://github.com/ryanoasis/vim-devicons
+" Goes at the end so that any preceding plugins can take advantage of it.
 " For Mac:
 " 1. Install the Nerd fonts via Homebrew
 "    - $ brew tap caskroom/fonts
