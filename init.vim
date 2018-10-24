@@ -1255,6 +1255,18 @@ let g:markdown_enable_folding = 1
 " }}}
 
 " Python {{{
+"
+" Setup: Using ipython in a terminal:
+" - The biggest problem is creating multiline (more than 2 lines) code in
+"   ipython.
+"   Create an ipython config file to turn on vi mode:
+"      echo "c.TerminalInteractiveShell.editing_mode = 'vi'" \
+"      >>~/.ipython/profile_default/ipython_config.py
+" - You need to have miniconda in the PATH and have installed ipython
+" - You need to `source activate <env>` to get the correct environment.
+" - Configure your terminal binding to use <leader><ESC> to Escape to Normal
+"   mode.  You can then use <Esc>o to create a new line in ipython.
+" - Start up ipython in a terminal and enjoy.
 
 " deoplete source for Jedi/Python
 " https://github.com/zchee/deoplete-jedi
@@ -1490,7 +1502,7 @@ set splitright
 " Terminal mappings
 
 " switch back to Normal mode.
-tnoremap <Esc> <C-\><C-n>
+tnoremap <leader><Esc> <C-\><C-n>
 
 " neoterm
 " https://github.com/kassio/neoterm
