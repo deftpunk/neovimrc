@@ -9,7 +9,8 @@
 "                  A vimrc for the Emacs RSI emigrant
 "                          Author: deftpunk
 "
-"                    I am a dark-side Neovim user
+" I am a dark-side Neovim user, I have lots of plugins that I use.  If you
+" don't like that, then don't use my configuration.
 "
 " Introduction {{{
 " A configuration for Neovim on Mac.
@@ -17,7 +18,11 @@
 
 " Bootstrap - External Configuration {{{
 "
-" neovim-remote:
+" Setup Python:
+" 1. I like to use miniconda.  So install that first.
+" 2. Use pip to install jedi, neovim, ipython & requests.
+"
+" Setup neovim-remote:
 " https://github.com/mhinz/neovim-remote
 " This solves the neovim inside of neovim problem you get when you set your
 " EDITOR=nvim and =git commit= is called.
@@ -293,6 +298,8 @@ endif
 Plug 'ayu-theme/ayu-vim'
 Plug 'tomasr/molokai'
 Plug 'cocopon/iceberg.vim'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'JaySandhu/xcode-vim'
 " }}}
 
 " xterm color table & other color related things
@@ -324,10 +331,12 @@ let g:winresizer_horiz_resize=5
 " " https://github.com/vim-airline/vim-airline
 Plug 'vim-airline/vim-airline'
 Plug 'https://github.com/paranoida/vim-airlineish'
+Plug 'vim-airline/vim-airline-themes'
 
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
-let g:airline_theme='airlineish'
+let g:airline_theme='papercolor'
+" let g:airline_theme='airlineish'
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'" enable integration with ale
@@ -1582,8 +1591,9 @@ xnoremap Q :'<,'>:normal @q<CR>
 " }}}
 
 " Turn on colorscheme.
-"set background=light
-colorscheme molokai
+set background=light
+colorscheme PaperColor
+" colorscheme molokai
 
 " turn on gruvbox
 " let g:gruvbox_italic=1
