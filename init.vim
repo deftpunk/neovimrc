@@ -1485,8 +1485,11 @@ nnoremap <silent><leader>vv :MagitOnly<cr>
 
 " Teminal --------------------------------------------------------- {{{
 
-" window settings
-highlight TermCursor ctermfg=red guifg=red
+" Window settings
+" NOTE: Neither of these seems to work?? Wed Oct 24, 2018 5:30:24pm
+" 	Only works when I set the highlight from the statusline??
+" highlight TermCursor ctermfg=red guifg=red
+au TermOpen :highlight TermCursor ctermfg=red guifg=red
 set splitbelow
 set splitright
 
@@ -1497,7 +1500,8 @@ set splitright
 
 " Set the terminal scrollback to the maximum.
 " https://stackoverflow.com/questions/34009064/how-do-i-set-the-terminal-buffer-scrollback-size
-" set scrollback=100000
+" It seems that 100000 is the maximum.
+set scrollback=100000
 
 " Terminal mappings
 
@@ -1507,6 +1511,7 @@ tnoremap <leader><Esc> <C-\><C-n>
 " neoterm
 " https://github.com/kassio/neoterm
 " Wrapper of some neovim's :terminal functions. 
+" NOTE: Can we use neoterm to send python code/selection to the terminal?
 Plug 'kassio/neoterm'
 let g:neoterm_open_in_all_tabs=0
 let g:neoterm_repl_python="ipython"
