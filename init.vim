@@ -1490,6 +1490,7 @@ nnoremap <silent><leader>vv :MagitOnly<cr>
 " 	Only works when I set the highlight from the statusline??
 " highlight TermCursor ctermfg=red guifg=red
 au TermOpen :highlight TermCursor ctermfg=red guifg=red
+
 set splitbelow
 set splitright
 
