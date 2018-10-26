@@ -1345,8 +1345,10 @@ autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 " NOTE: Mon Sep 25 2017 8:17:43pm - more spartan than even fugitive, very fast
 " 	though.  Prefer to use Magit or fugitive.
 " 	Tue May 29, 2018 2:33:34pm - Trying out again.
-" 	Fri Oct 26 2018 9:39:23am - Is improving; the workflow is still not
-" 	very smooth but it looks more configurable/customizable.
+" 	Fri Oct 26 2018 9:39:23am - Is improving; looks more
+" 	                            configurable/customizable.
+" 	- doesn't cleanup buffers it creates.
+" 	- flow between status could be smoother
 Plug 'lambdalisue/gina.vim'
 
 " vim-fugitive + vim-merginal + vim-rhubarb - Git management  {{{
