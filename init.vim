@@ -1342,7 +1342,11 @@ autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 
 " Gina
 " https://github.com/lambdalisue/gina.vim
-" Tue May 29, 2018 2:33:34pm - Just trying this one out.
+" NOTE: Mon Sep 25 2017 8:17:43pm - more spartan than even fugitive, very fast
+" 	though.  Prefer to use Magit or fugitive.
+" 	Tue May 29, 2018 2:33:34pm - Trying out again.
+" 	Fri Oct 26 2018 9:39:23am - Is improving; the workflow is still not
+" 	very smooth but it looks more configurable/customizable.
 Plug 'lambdalisue/gina.vim'
 
 " vim-fugitive + vim-merginal + vim-rhubarb - Git management  {{{
@@ -1402,11 +1406,6 @@ nnoremap <silent> <leader>gw :Gwrite<CR>
 nnoremap <silent> <leader>gm :MerginalToggle<CR>
 
 " }}}
-
-" NOTE: Mon Sep 25 2017 8:17:43pm - more spartan than even fugitive, very fast
-" though.  Prefer to use Magit or fugitive.
-" https://github.com/lambdalisue/gina.vim
-" Plug 'lambdalisue/gina.vim'
 
 " vim-gitgutter - show git diff in the gutter {{{
 " https://github.com/airblade/vim-gitgutter
