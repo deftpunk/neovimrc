@@ -1349,6 +1349,13 @@ autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 " 	                            configurable/customizable.
 " 	- doesn't cleanup buffers it creates.
 " 	- flow between status could be smoother
+"
+" :Gina status
+" -- to stage/unstage
+" or
+" DD for vdiff
+" :Gina commit
+" :Gina push
 Plug 'lambdalisue/gina.vim'
 
 " vim-fugitive + vim-merginal + vim-rhubarb - Git management  {{{
