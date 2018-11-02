@@ -173,10 +173,10 @@ set showbreak=↪
 set cpo+=n
 
 " Use persistent history
-if !isdirectory("/Users/ebodine/tmp/neovim-undo-dir")
-	call mkdir("/Users/ebodine/tmp/neovim-undo-dir", "", 0700)
+if !isdirectory("/Users/matthewbodine/tmp/neovim-undo-dir")
+	call mkdir("/Users/matthewbodine/tmp/neovim-undo-dir", "", 0700)
 endif
-set undodir=/Users/ebodine/tmp/neovim-undo-dir
+set undodir=/Users/matthewbodine/tmp/neovim-undo-dir
 set undofile
 
 " Automatically reload files that have changed.
@@ -294,14 +294,6 @@ if (has("termguicolors"))
     set termguicolors
 endif
 
-" Themes {{{
-Plug 'ayu-theme/ayu-vim'
-Plug 'tomasr/molokai'
-Plug 'cocopon/iceberg.vim'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'JaySandhu/xcode-vim'
-" }}}
-
 " xterm color table & other color related things
 Plug 'guns/xterm-color-table.vim'
 
@@ -326,24 +318,6 @@ Plug 'DougBeney/pickachu'
 Plug 'jimsei/winresizer'
 let g:winresizer_vert_resize=5
 let g:winresizer_horiz_resize=5
-
-" " vim-airline {{{
-" " https://github.com/vim-airline/vim-airline
-Plug 'vim-airline/vim-airline'
-Plug 'https://github.com/paranoida/vim-airlineish'
-Plug 'vim-airline/vim-airline-themes'
-
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_theme='papercolor'
-" let g:airline_theme='airlineish'
-let g:airline#extensions#tabline#enabled=1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'" enable integration with ale
-let g:airline#extensions#ale#enabled=1
-" " need to enable this for vim-devicons
-let g:airline_powerline_fonts = 1
-" }}}
 
 " lightline - a light & configurable statusline for vim/neovim {{{
 " https://github.com/itchyny/lightline.vim
@@ -578,7 +552,7 @@ nnoremap <silent><leader>rt :RainbowToggle<cr>
 " and Title Case (crt) are all just 3 keystrokes away.
 " These commands support repeat.vim.
 Plug 'tpope/tpope-vim-abolish'
-let g:abolish_save_file="/Users/ebodine/.config/nvim/abolish-abbreviations.vim"
+let g:abolish_save_file="/Users/matthewbodine/.config/nvim/abolish-abbreviations.vim"
 " }}}
 
 " Ale - async syntax checking {{{
@@ -591,7 +565,7 @@ let g:ale_linters = {
 \}
 " let g:ale_python_flake8_executable = 'python3 -m flake8'
 "let g:ale_python_flake8_options = '--max-line-length=105'
-let g:ale_python_flake8_options = '--config=/Users/ebodine/.flake8'
+let g:ale_python_flake8_options = '--config=/Users/matthewbodine/.flake8'
 let g:ale_emit_conflict_warnings = 0
 " }}}
 
@@ -904,7 +878,7 @@ nmap Y <Plug>(operator-flashy)$
 "  to a valid file path.
 Plug 'mtth/scratch.vim'
 let g:scratch_height=25
-let g:scratch_persistence_file='/Home/Users/ebodine/tmp/neovim-scratch.txt'
+let g:scratch_persistence_file='/Home/Users/matthewbodine/tmp/neovim-scratch.txt'
 " }}}
 
 " vim-repeat - enable repeating supported plugin maps.
@@ -924,7 +898,7 @@ Plug 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-" let g:UltiSnipsSnippetsDir="/Users/ebodine/.config/nvim/mysnippets"
+" let g:UltiSnipsSnippetsDir="/Users/matthewbodine/.config/nvim/mysnippets"
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 
 " vim-snippets
@@ -1519,11 +1493,38 @@ tnoremap <leader><Esc> <C-\><C-n>
 
 " neoterm
 " https://github.com/kassio/neoterm
-" Wrapper of some neovim's :terminal functions. 
+" Wrapper of some neovim's :terminal functions.
 " NOTE: Can we use neoterm to send python code/selection to the terminal?
 Plug 'kassio/neoterm'
 let g:neoterm_open_in_all_tabs=0
 let g:neoterm_repl_python="ipython"
+" }}}
+
+" Appearances {{{
+" Themes, airline, devicons, etc.
+
+" Themes {{{
+Plug 'ayu-theme/ayu-vim'
+Plug 'tomasr/molokai'
+Plug 'cocopon/iceberg.vim'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'JaySandhu/xcode-vim'
+" }}}
+
+" vim-airline {{{
+" https://github.com/vim-airline/vim-airline
+Plug 'vim-airline/vim-airline'
+Plug 'https://github.com/paranoida/vim-airlineish'
+Plug 'vim-airline/vim-airline-themes'
+
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'" enable integration with ale
+let g:airline#extensions#ale#enabled=1
+" " need to enable this for vim-devicons
+let g:airline_powerline_fonts = 1
 " }}}
 
 " VimDevIcons - add glyphs/icons to plugins {{{
@@ -1534,17 +1535,32 @@ let g:neoterm_repl_python="ipython"
 "    - $ brew tap caskroom/fonts
 "    - $ brew cask install font-hack-nerd-font
 " 2. Install a patched font from http://nerdfonts.com/
-"    - I chose RobotoMono.zip
+"    - I chose RobotoMono.zip; scroll down the page to Downloads
 " 3. Unzip the font, click on Complete font to install
 " 4. Edit Profiles in iTerm2 and change to Roboto Nerd font
 " NOTE: vim-devicons has to be installed last in order to work properly with airline, etc.
 Plug 'ryanoasis/vim-devicons'
+" }}}
 " }}}
 
 " Conclude plugin initialization.
 call plug#end()
 filetype plugin indent on
 syntax enable
+
+" colorschemes {{{
+" Turn on different colorschemes for gui or terminal.
+" NOTE: This has to be after the `plug#end & syntax enable` above.
+if has('gui_running') || has('gui_vimr')
+    set background=light
+    colorscheme PaperColor
+    let g:airline_theme='papercolor'
+else
+    set background=dark
+    colorscheme molokai
+    let g:airline_theme='airlineish'
+endif
+" }}}
 
 " General mappings ------------------------------------------------- {{{
 
@@ -1615,16 +1631,6 @@ nnoremap <expr> q &diff ? ":diffoff!\<bar>only\<cr>" : "q"
 xnoremap Q :'<,'>:normal @q<CR>
 
 " }}}
-
-" Turn on colorscheme.
-set background=light
-colorscheme PaperColor
-" colorscheme molokai
-
-" turn on gruvbox
-" let g:gruvbox_italic=1
-" let g:gruvbox_contrast_light=hard
-" colorscheme gruvbox
 
 " Because, for some reason, this doesn't work until after neobundle#end or
 " plug#end
