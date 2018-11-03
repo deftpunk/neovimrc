@@ -62,13 +62,6 @@
 " https://github.com/bcicen/vim-jfmt
 " https://github.com/idanarye/vim-vebugger
 " https://github.com/blueyed/vim-diminactive
-"
-" We set this early because of plugins that require python/python3.
-" NOTE: Tue Aug 15 14:52:34 2017 - commented these out, they were just causing
-"	problems.
-" let g:python3_host_prog = system('which python3')
-" let g:python_host_prog = system('which python')
-" }}}
 
 " Profiling & Debugging the Configuration {{{
 "
