@@ -62,6 +62,7 @@
 " https://github.com/bcicen/vim-jfmt
 " https://github.com/idanarye/vim-vebugger
 " https://github.com/blueyed/vim-diminactive
+" }}}
 
 " Profiling & Debugging the Configuration {{{
 "
@@ -138,9 +139,6 @@ set noswapfile
 " Search incremently + dont keep the highlight around.
 set incsearch
 set nohlsearch
-
-" live substitution previews
-set inccommand=nosplit
 
 " When a bracket is inserted, briefly jump to the matching one.  The time to
 " show the match is set by matchtime, which is in tenths of seconds.
@@ -561,7 +559,8 @@ let g:ale_emit_conflict_warnings = 0
 
 " arpeggio - keychords for vim
 " https://github.com/kana/vim-arpeggio
-" You cant create heirarchies with this unlike in Emacs.
+" You cant create heirarchies with this unlike key-chord in Emacs.
+" It is initialized after the plug#end statement.
 Plug 'kana/vim-arpeggio'
 
 " vim-asterisk {{{
@@ -747,12 +746,13 @@ Plug 'tpope/vim-dispatch'
 Plug 'terryma/vim-multiple-cursors'
 " }}}
 
-" indentLine - what it says
+" indentLine {{{
 " https://github.com/Yggdroot/indentLine
 Plug 'Yggdroot/indentLine'
 let g:indentLine_char = '┆'
 let g:indentLine_indentLevel = 6
 let g:indentLine_fileType = ['python', 'perl', 'go']
+" }}}
 
 " vim-lastplace {{{
 " https://github.com/farmergreg/vim-lastplace
@@ -901,10 +901,11 @@ Plug 'honza/vim-snippets'
 " Fix common misspellings and typos.  Supports over 4,000 common misspellings.
 Plug 'chip/vim-fat-finger'
 
-" rainbow - rainbow parentheses improved
+" rainbow - rainbow parentheses improved {{{
 " https://github.com/luochen1990/rainbow
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
+" }}}
 
 " vim-sandwich {{{
 " https://github.com/machakann/vim-sandwich
@@ -923,18 +924,11 @@ let g:rainbow_active = 1
 Plug 'machakann/vim-sandwich'
 " }}}
 
+" vim-slash
 " https://github.com/junegunn/vim-slash
 " Enhancing in-buffer search experience.
 Plug 'junegunn/vim-slash'
 noremap <plug>(slash-after) zz
-
-" SplitJoin
-" https://github.com/AndrewRadev/splitjoin.vim
-"   gS to split a one-liner into multiple lines
-"   gJ (with the cursor on the first line of a block) to join a block into a single-line statemen
-" NOTE: Mon Oct 30 2017 9:04:23am - disabling, seems to always conflict with some other plugin
-" 	or antother.
-" Plug 'AndrewRadev/splitjoin.vim'
 
 " tagbar - a class outline viewer {{{
 " https://majutsushi.github.io/tagbar
@@ -988,9 +982,11 @@ nnoremap <leader>tt :TagbarToggle<CR>
 nnoremap <leader>to :TagbarOpen<CR>
 " }}}
 
-" vim-tmux-navigator
-" https://github.com/christoomey/vim-tmux-navigator
-Plug 'christoomey/vim-tmux-navigator'
+" traces
+"https://github.com/markonm/traces.vim
+" A better way to highlight search+replace actions.  Works in more situations
+" than inccomand.
+Plug 'markonm/traces.vim'
 
 " unimpaired - pairs of handy bracket mappings {{{
 " https://github.com/tpope/vim-unimpaired
