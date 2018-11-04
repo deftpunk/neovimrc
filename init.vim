@@ -52,7 +52,6 @@
 " https://github.com/roxma/nvim-completion-manager
 " https://github.com/mhinz/vim-galore
 " https://github.com/xolox/vim-session
-" https://github.com/dhruvasagar/vim-prosession/
 " http://spacevim.org/documentation/
 " https://github.com/ludovicchabant/vim-gutentags
 " https://github.com/chrisbra/csv.vim - CSV files
@@ -874,6 +873,19 @@ let g:scratch_persistence_file='/Home/Users/matthewbodine/tmp/neovim-scratch.txt
 " vim-repeat - enable repeating supported plugin maps.
 Plug 'https://github.com/tpope/vim-repeat.git'
 
+" Sessions {{{
+" vim-obsession
+" Better manage the :mksession interface - see vim-prosession below.
+" https://github.com/tpope/vim-obsession
+Plug 'tpope/vim-obsession'
+
+" prosession
+" Leverage vim-obsession to switch between multiple sessions cleanly
+" https://github.com/dhruvasagar/vim-prosession/
+Plug 'dhruvasagar/vim-prosession'
+let g:prosession_dir='~/tmp/nvim/sessions'
+" }}}
+
 " Snippets -------------------------------------------------------- {{{
 " Using Ultisnips instead of neocomplete because neocomplete does not allow
 " you to use additional snippet directories.
@@ -1299,24 +1311,6 @@ autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 " }}}
 
 " Version Control -------------------------------------------------- {{{
-
-" Gina
-" https://github.com/lambdalisue/gina.vim
-" NOTE: Mon Sep 25 2017 8:17:43pm - more spartan than even fugitive, very fast
-" 	though.  Prefer to use Magit or fugitive.
-" 	Tue May 29, 2018 2:33:34pm - Trying out again.
-" 	Fri Oct 26 2018 9:39:23am - Is improving; looks more
-" 	                            configurable/customizable.
-" 	- doesn't cleanup buffers it creates.
-" 	- flow between status could be smoother
-"
-" :Gina status
-" -- to stage/unstage
-" or
-" DD for vdiff
-" :Gina commit
-" :Gina push
-Plug 'lambdalisue/gina.vim'
 
 " vim-fugitive + vim-merginal + vim-rhubarb - Git management  {{{
 " https://github.com/tpope/vim-fugitive
