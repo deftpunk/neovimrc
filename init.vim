@@ -870,6 +870,17 @@ let g:scratch_height=25
 let g:scratch_persistence_file='/Home/Users/matthewbodine/tmp/neovim-scratch.txt'
 " }}}
 
+" vim-scriptease {{{
+" https://github.com/tpope/vim-scriptease
+" Some utilities to add in the creation of plugins and other goodies.
+" e.g.
+" 	:Messages
+" 	:Verbose
+" 	:Time
+" 	K - look help for the VimL construct.
+Plug 'tpope/vim-scriptease'
+" }}}
+
 " vim-repeat - enable repeating supported plugin maps.
 Plug 'https://github.com/tpope/vim-repeat.git'
 
