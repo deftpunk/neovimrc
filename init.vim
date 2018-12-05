@@ -16,9 +16,22 @@
 " A configuration for Neovim on Mac.
 " }}}
 
-" Bootstrap - External Configuration {{{
+" Bootstrap new installs {{{
 "
-" Setup Python:
+" The xcode setup:
+" 1. xcode-select --install
+"
+" Setup Python
+" This is the Python for Neovim, not the one for Python development. So DO NOT have miniconda in
+" the PATH or PYTHONPATH.
+"   1. brew install python@2
+"   2. brew install python3
+"   3. pip2 install neovim --upgrade
+"   4. pip3 install neovim --upgrade
+"   5. pip3 install neovim-remote
+"   6. pip3 install jedi, ipython, requests
+
+
 " 1. I like to use miniconda.  So install that first.
 " 2. Use pip to install jedi, neovim, ipython & requests.
 "
@@ -48,8 +61,10 @@
 
 " Investigations {{{
 " Some plugins to investigate/review and sites to visit:
+" https://github.com/Yilin-Yang/vim-markbar - show marks, maybe better than
+"                                             vim-bookmarks.
+" https://github.com/reconquest/vim-pythonx - python tools for easier coding.
 " https://github.com/matze/vim-move
-" https://github.com/roxma/nvim-completion-manager
 " https://github.com/mhinz/vim-galore
 " https://github.com/xolox/vim-session
 " http://spacevim.org/documentation/
@@ -81,6 +96,9 @@
 "    - Enter Insert mode.
 "    - Press Ctrl-v & then the key combination you are trying to figure out.
 " }}}
+
+" let g:loaded_python3_provider = 0
+" let g:python3_host_prog = '/Users/matthewbodine/miniconda3/bin/python'
 
 " neovim-remote {{{
 " Avoid nested neovim processes by using neovim-remote.
@@ -295,7 +313,7 @@ let g:colorizer_auto_filetype='css,html'
 " https://github.com/DougBeney/pickachu
 " Zenity is a dependency.
 " Install: brew install zenity
-Plug 'DougBeney/pickachu'
+" Plug 'DougBeney/pickachu'
 
 " winresizer - https://github.com/simeji/winresizer
 " Easy resizing of windows in side vim. Ctrl-e starts the window resize mode
@@ -1074,11 +1092,6 @@ autocmd FileType python autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 " Use Ctrl-a/Ctrl-x to increment dates, times and more
 Plug 'tpope/vim-speeddating'
 
-" vimwiki
-" https://github.com/vimwiki/vimwiki
-Plug 'vimwiki/vimwiki'
-let g:vimwiki_list = [{'path': '~/tmp/reference/', 'syntax': 'markdown', 'ext': '.md'}]
-
 " }}}
 
 " Software Development Utilities {{{
@@ -1120,7 +1133,7 @@ Plug 'guns/vim-sexp'
 " Acid
 " Asynchronous Clojure Interactive Development
 " https://github.com/clojure-vim/acid.nvim
-Plug 'clojure-vim/acid.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'clojure-vim/acid.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " }}}
 
