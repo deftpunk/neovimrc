@@ -31,10 +31,6 @@
 "   5. pip3 install neovim-remote
 "   6. pip3 install jedi, ipython, requests
 
-
-" 1. I like to use miniconda.  So install that first.
-" 2. Use pip to install jedi, neovim, ipython & requests.
-"
 " Setup neovim-remote:
 " https://github.com/mhinz/neovim-remote
 " This solves the neovim inside of neovim problem you get when you set your
@@ -96,9 +92,6 @@
 "    - Enter Insert mode.
 "    - Press Ctrl-v & then the key combination you are trying to figure out.
 " }}}
-
-" let g:loaded_python3_provider = 0
-" let g:python3_host_prog = '/Users/matthewbodine/miniconda3/bin/python'
 
 " neovim-remote {{{
 " Avoid nested neovim processes by using neovim-remote.
@@ -851,6 +844,13 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Asynchronous linting and make framework for Neovim/Vim
 Plug 'https://github.com/neomake/neomake'
 
+" open-browser {{{
+" https://github.com/tyru/open-browser.vim
+" Open a broser from Neovim - I mostly use this to start a web search from
+" Neovim.  It opens your default browser.
+Plug 'tyru/open-browser.vim'
+" }}}
+
 " vim-operator-flashy {{{
 " https://github.com/haya14busa/vim-operator-flashy
 " Highlight/Flash the yanked area.
@@ -899,10 +899,13 @@ let g:scratch_persistence_file='/Home/Users/matthewbodine/tmp/neovim-scratch.txt
 Plug 'tpope/vim-scriptease'
 " }}}
 
-" vim-repeat - enable repeating supported plugin maps.
+" vim-repeat {{{
+" https://github.com/tpope/vim-repeat
+" Enable repeating supported plugin maps.
 Plug 'https://github.com/tpope/vim-repeat.git'
+" }}}
 
-" Sessions {{{
+" Sessions - obssesion+prosession {{{
 " vim-obsession
 " Better manage the :mksession interface - see vim-prosession below.
 " https://github.com/tpope/vim-obsession
@@ -915,7 +918,7 @@ Plug 'dhruvasagar/vim-prosession'
 let g:prosession_dir='~/tmp/nvim/sessions'
 " }}}
 
-" Snippets -------------------------------------------------------- {{{
+" Snippets {{{
 " Using Ultisnips instead of neocomplete because neocomplete does not allow
 " you to use additional snippet directories.
 
@@ -1086,6 +1089,8 @@ autocmd FileType python autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 "    Just to much going back and forth.  Not lean enough, should give it
 "    another try at some point.  Maybe just as a way of keeping reference
 "    material.
+"    Wed December 5 2:51:20pm 2018 - tried again; didn't like dealling with the
+"    binding conflicts.
 
 " vim-speeddating
 " https://github.com/tpope/vim-speeddating
@@ -1094,48 +1099,7 @@ Plug 'tpope/vim-speeddating'
 
 " }}}
 
-" Software Development Utilities {{{
-
-" vim-endwise
-" https://github.com/tpope/vim-endwise
-" Primarily for Ruby but will also Vimscript, Shell and Lua
-" e.g. will put an -end- after your -if-
-Plug 'tpope/vim-endwise'
-
-" vim-polyglot - language packs for vim
-" https://github.com/sheerun/vim-polyglot
-" A best-of-breed collection of programming language syntax,indent,ftplugin
-" config files.
-Plug 'sheerun/vim-polyglot'
-" temporarily disabled for comparison.
-let g:polyglot_disabled = ['python']
-
-" vim-test - run your tests at the speed of thought.
-" https://github.com/janko-m/vim-test
-Plug 'janko-m/vim-test'
-
-" open-browser - Open a broser from Neovim
-" https://github.com/tyru/open-browser.vim
-" I mostly use this to start a web search from Neovim.
-"
-Plug 'tyru/open-browser.vim'
-
-" }}}
-
-" Software Development Languages/FileTypes ------------------------- {{{
-
-" vim-sexp
-"https://github.com/guns/vim-sexp
-Plug 'guns/vim-sexp'
-
-" Clojure {{{
-
-" Acid
-" Asynchronous Clojure Interactive Development
-" https://github.com/clojure-vim/acid.nvim
-" Plug 'clojure-vim/acid.nvim', { 'do': ':UpdateRemotePlugins' }
-
-" }}}
+" Software Development: Utilities {{{
 
 " Conflict marker highlighting. {{{
 " https://github.com/rhysd/conflict-marker.vim
@@ -1157,6 +1121,44 @@ Plug 'rhysd/conflict-marker.vim'
 
 " Don't use default mappings.
 " let g:conflict_marker_enable_mappings=0
+" }}}
+
+" vim-endwise {{{
+" https://github.com/tpope/vim-endwise
+" Primarily for Ruby but will also Vimscript, Shell and Lua
+" e.g. will put an -end- after your -if-
+Plug 'tpope/vim-endwise'
+" }}}
+
+" vim-polyglot - language packs for vim {{{
+" https://github.com/sheerun/vim-polyglot
+" A best-of-breed collection of programming language syntax,indent,ftplugin
+" config files.
+Plug 'sheerun/vim-polyglot'
+" I prefer my own configuration of Python.
+let g:polyglot_disabled = ['python']
+" }}}
+
+" vim-sexp
+"https://github.com/guns/vim-sexp
+" Precision editing of S-expressions in Clojure, Common Lisp
+Plug 'guns/vim-sexp'
+
+" vim-test - run your tests at the speed of thought.
+" https://github.com/janko-m/vim-test
+Plug 'janko-m/vim-test'
+
+" }}}
+
+" Software Development: Languages/FileTypes ------------------------- {{{
+
+" Clojure {{{
+
+" Acid
+" Asynchronous Clojure Interactive Development
+" https://github.com/clojure-vim/acid.nvim
+" Plug 'clojure-vim/acid.nvim', { 'do': ':UpdateRemotePlugins' }
+
 " }}}
 
 " Common Lisp {{{
@@ -1202,14 +1204,6 @@ let g:go_version_warning = 0
 " deoplete.nvim source for Go. Asynchronous Go completion for Neovim.
 Plug 'zchee/deoplete-go', {'do': 'make'}
 
-" }}}
-
-" HTML5 {{{
-" html5.vim
-" https://github.com/othree/html5.vim
-Plug 'othree/html5.vim'
-let g:html5_rdfa_attributes_complete = 0
-let g:html5_aria_attributes_complete = 0
 " }}}
 
 " vim-jinja {{{
@@ -1330,6 +1324,19 @@ Plug 'bps/vim-textobj-python'
 Plug 'vim-ruby/vim-ruby'
 
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
+" }}}
+
+" Web development - Javascript, CSS, HTML, etc. {{{
+"Plug 'rstacruz/vim-hyperstyle'
+
+" HTML5 {{{
+" html5.vim
+" https://github.com/othree/html5.vim
+Plug 'othree/html5.vim'
+let g:html5_rdfa_attributes_complete = 0
+let g:html5_aria_attributes_complete = 0
+" }}}
+
 " }}}
 
 " }}}
