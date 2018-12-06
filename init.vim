@@ -59,10 +59,19 @@
 "    $ brew update && brew install neovim
 " 2. Clone my Neovim configuration.
 
+" Install Plugin Manager:
+" Install vim-plug (https://github.com/junegunn/vim-plug) BEFORE RUNNING NEOVIM
+"   1. $ curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+"        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
 " }}}
 
-" Investigations {{{
-" Some plugins to investigate/review and sites to visit:
+" Notes {{{
+
+" Investigations:
+" Some plugins to check out in the future & notes on comparing classes of
+" plugins.
+"
 " https://github.com/Yilin-Yang/vim-markbar - show marks, maybe better than
 "                                             vim-bookmarks.
 " https://github.com/reconquest/vim-pythonx - python tools for easier coding.
@@ -78,6 +87,9 @@
 " https://github.com/bcicen/vim-jfmt
 " https://github.com/idanarye/vim-vebugger
 " https://github.com/blueyed/vim-diminactive
+"
+" Themes:
+"   - https://github.com/xero/nord-vim-mod
 "
 " Search and Replace plugins:
 "   1. far.vim - https://github.com/brooth/far.vim
@@ -102,7 +114,7 @@
 "   	- Single or multiple buffers.
 " }}}
 
-" Profiling & Debugging the Configuration {{{
+" Troubleshooting, Debugging & Profiling the Configuration {{{
 "
 " Check messages register:
 "   1. run =:messages=
@@ -1448,8 +1460,8 @@ nnoremap <silent> <leader>gm :MerginalToggle<CR>
 " https://github.com/airblade/vim-gitgutter
 Plug 'airblade/vim-gitgutter'
 
-" set update time to 250ms
-set updatetime=250
+" set update time - gitgutter recommends 100
+set updatetime=100
 
 " both of these work with repeat.vim
 nmap ]h <Plug>GitGutterNextHunk
@@ -1522,39 +1534,55 @@ let g:magit_default_fold_level = 0
 
 " }}}
 
-" Teminal --------------------------------------------------------- {{{
+" Terminal {{{
 
-" Window settings
+" Settings {{{
 " NOTE: Neither of these seems to work?? Wed Oct 24, 2018 5:30:24pm
 " 	Only works when I set the highlight from the statusline??
 " highlight TermCursor ctermfg=red guifg=red
 au TermOpen :highlight TermCursor ctermfg=red guifg=red
 
+" Keep terminal splits below and to the right.
 set splitbelow
 set splitright
 
 " Start in insert mode not normal mode.
-" Mon Sep 18 11:44:23 - commented out, this makes me lose place when going in
-" and out of the terminal.
+" Mon Sep 18 11:44:23 2018 - commented out, this makes me lose place when
+" going in and out of the terminal.
 " :au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
 " Set the terminal scrollback to the maximum.
 " https://stackoverflow.com/questions/34009064/how-do-i-set-the-terminal-buffer-scrollback-size
 " It seems that 100000 is the maximum.
 set scrollback=100000
+" }}}
 
-" Terminal mappings
+" Mappings {{{
 
 " switch back to Normal mode.
 tnoremap <leader><Esc> <C-\><C-n>
+" }}}
 
-" neoterm
+" neoterm {{{
 " https://github.com/kassio/neoterm
 " Wrapper of some neovim's :terminal functions.
 " NOTE: Can we use neoterm to send python code/selection to the terminal?
 Plug 'kassio/neoterm'
 let g:neoterm_open_in_all_tabs=0
 let g:neoterm_repl_python="ipython"
+" }}}
+
+" Nuake {{{
+"https://github.com/Lenovsky/nuake
+" A Quake style terminal panel for Neovim.
+Plug 'Lenovsky/nuake'
+
+" Set the Nuake size in percent.
+let g:nuake_size = 0.30
+" Enable the Nuake instance per tab page
+let g:nuake_per_tab = 1
+" }}}
+
 " }}}
 
 " Appearances {{{
