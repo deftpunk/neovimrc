@@ -12,16 +12,30 @@
 " I am a dark-side Neovim user, I have lots of plugins that I use.  If you
 " don't like that, then don't use my configuration.
 "
-" Introduction {{{
-" A configuration for Neovim on Mac.
+" About Neovim {{{
+
+" Neovim (https://neovim.io/) - the future of Vim.
+"
+" Vim the text editor has been loved by a generation of users.  This is the
+" next generation.
+" - Shougo
+
 " }}}
 
-" Bootstrap new installs {{{
-"
-" The xcode setup:
-" 1. xcode-select --install
-"
-" Setup Python
+" Bootstrap Neovim Install {{{
+
+" Setup Xcode:
+"   1. Install Xcode
+"   2. Install the cmdline tools: =xcode-select --install=
+
+" Install External Dependencies:
+" Install the following packages via =brew install=
+"    - gls
+"    - coreutils
+"    - cask
+"    - ripgrep
+
+" Setup Python:
 " This is the Python for Neovim, not the one for Python development. So DO NOT have miniconda in
 " the PATH or PYTHONPATH.
 "   1. brew install python@2
@@ -31,28 +45,20 @@
 "   5. pip3 install neovim-remote
 "   6. pip3 install jedi, ipython, requests
 
-" Setup neovim-remote:
+" Setup Neovim Remote:
 " https://github.com/mhinz/neovim-remote
 " This solves the neovim inside of neovim problem you get when you set your
 " EDITOR=nvim and =git commit= is called.
+"   1. Change =EDITOR=nvim= in ~.zshrc
+"   2. Set NVIM_LISTEN_ADDRESS=/tmp/nvimsocket in ~.zshrc
 "
-" Install:
-"   1. $ pip install neovim-remote
-"   2. Change =EDITOR=nvim= in ~.zshrc
-"   3. Set NVIM_LISTEN_ADDRESS=/tmp/nvimsocket in ~.zshrc
-"
-" Usage:
-"   - nvr --remote file1 file2
-" }}}
-"
-" Bootstrap - Base Configuration {{{
-" What to do when bootstraping a new neovim install."
+" = nvr --remote file1 file2 =
 
+" Install Neovim:
 " 1. Use brew to install neovim
 "    $ brew update && brew install neovim
 " 2. Clone my Neovim configuration.
-" 3.
-"
+
 " }}}
 
 " Investigations {{{
@@ -72,9 +78,48 @@
 " https://github.com/bcicen/vim-jfmt
 " https://github.com/idanarye/vim-vebugger
 " https://github.com/blueyed/vim-diminactive
+"
+" Search and Replace plugins:
+"   1. far.vim - https://github.com/brooth/far.vim
+"       - Edit mode, in the sense that you enter the replace with pattern on
+"         the commandline.
+"       - ripgrep support
+"       - Asynchronous on Neovim
+"   2. FlyGrep.vim - https://github.com/wsdjeg/FlyGrep.vim
+"       - No Edit mode
+"   3. vim-ags - https://github.com/gabesoft/vim-ags
+"   	- Edit mode
+"   	- Looks like you can change the search utility to ripgrep.
+"   	- Async was just added.
+"   4. ctrlsf.vim - https://github.com/dyng/ctrlsf.vim
+"       - leverages multiple-cursors
+"       - can make use of ripgrep
+"       - Edit mode only allows for modify and delete.
+"       - Asynchronous
+"   5. vim-swoop - https://github.com/pelodelfuego/vim-swoop
+"   	- Pretty sure its not Asynchronous.
+"   	- Edit mode
+"   	- Single or multiple buffers.
 " }}}
 
 " Profiling & Debugging the Configuration {{{
+"
+" Check messages register:
+"   1. run =:messages=
+"
+" Send =:messages= output to buffer.
+"   1. =:redir @a=
+"   2. =:messages=
+"   3. =:redir END=
+"   4. Paste into a buffer: ="ap=
+"
+" Check the health:
+"   1. run =:checkhealth=
+"
+" Check the Python configuration for Neovim:
+"   1. Export Python log: export NVIM_PYTHON_LOG_FILE="/~/nvmi_python_log"
+"   2. Restart Neovim
+"   3. Check the log above.
 "
 " Start without an init file:
 " $ neovim -u NONE
@@ -93,16 +138,14 @@
 "    - Press Ctrl-v & then the key combination you are trying to figure out.
 " }}}
 
-" neovim-remote {{{
-" Avoid nested neovim processes by using neovim-remote.
-" https://github.com/mhinz/neovim-remote
-" Use - pip3 install neovim-remote - to install.
+" Options -------------------------------------------------------- {{{
+
+" neovim-remote
+" Avoid nested neovim processes by using neovim-remote. This should have been
+" installed prior to Neovim.
 if has('nvim')
   let $VISUAL = 'nvr -cc split --remote-wait'
 endif
-" }}}
-
-" Options -------------------------------------------------------- {{{
 
 " good encoding
 set encoding=utf-8
@@ -1472,6 +1515,9 @@ nnoremap <silent> <leader>gvl :GV?<cr>
 "   - ?  Toggle help showing in magit buffer.
 Plug 'jreybert/vimagit'
 nnoremap <silent><leader>vv :MagitOnly<cr>
+" vimagit is pretty dumb from a performance perspective and has a really hard
+" time with files that lots of diffs or really long lines.
+let g:magit_default_fold_level = 0
 " }}}
 
 " }}}
