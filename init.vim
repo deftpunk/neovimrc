@@ -68,7 +68,7 @@
 
 " Notes {{{
 
-" Investigations:
+" Investigations: {{{
 " Some plugins to check out in the future & notes on comparing classes of
 " plugins.
 "
@@ -88,6 +88,23 @@
 " https://github.com/idanarye/vim-vebugger
 " https://github.com/blueyed/vim-diminactive
 "
+" vim-themis - https://github.com/thinca/vim-themis - testing framework for
+"   vimscript.
+" vital.vim - https://github.com/vim-jp/vital.vim
+" }}}
+
+" Plugin And Vimscript Development: {{{
+"
+" VimConf18 - Effective Modern Vim Scripting:
+" https://www.youtube.com/watch?v=J5BX1FXnKBw&t=0s&list=PLx8bw5NQypsnlh5K5LZAaFvAdxfGpt2iq&index=9
+" https://vimconf.org/2018/slides/Effective_Modern_Vim_scripting_at_vimconf2018_for_PDF.pdf
+"
+" $ echo set runtimepath+=~/vim-amake >> ~/.vimrc
+" $ mkdir ~/vim-amake && cd ~/vim-amake
+" $ mkdir plugin autoload doc
+" $ touch plugin/amake.vim autoload/amake.vim doc/amake.txt README.md
+" }}}
+
 " Themes:
 "   - https://github.com/xero/nord-vim-mod
 "
@@ -143,11 +160,13 @@
 " https://coderwall.com/p/sdva9q/how-to-detect-plugins-slowing-vim-down
 " }}}
 
-" Notes {{{
+" FAQ: {{{
 "
 " 1. Figuring out what (Neo)vim thinks a key is when pressed:
 "    - Enter Insert mode.
 "    - Press Ctrl-v & then the key combination you are trying to figure out.
+" 2. How to show all of the filetypes that Neovim supports:
+"    =:echo glob($VIMRUNTIME . '/syntax/*.vim')=
 " }}}
 
 " Options -------------------------------------------------------- {{{
@@ -245,8 +264,9 @@ set nrformats=
 " Smarter completions by infering case, as opposed to ignorecase.
 set infercase
 
-" Only syntax highlight the first 250 characters on a line.
-set synmaxcol=250
+" Only syntax highlight the first 200 characters on a line.  This helps avoid
+" some performance penalty with long lines.
+set synmaxcol=200
 
 " Take me to my Leader key
 let mapleader = "\<Space>"
@@ -263,8 +283,11 @@ autocmd VimResized * wincmd =
 
 " Enable functional autosave and autoread behaviour.
 " https://bluz71.github.io/2017/05/15/vim-tips-tricks.html
+" autoread - When a file has been changed outside of Vim but not inside it,
+" automatically read it again.
 set autoread
 
+" checktime - Check if any buffers were changed outside of Vim.
 augroup autoSaveAndRead
     autocmd!
     autocmd TextChanged,InsertLeave,FocusLost * silent! wall
@@ -275,12 +298,7 @@ augroup END
 
 " vim-plug - Plugin management {{{
 " https://github.com/junegunn/vim-plug
-" To install:
-" $ curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-"   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"
 " Make sure you use single quotes when specifying URLs
-"
 " Intialize Plug and specify a directory for plugins.
 call plug#begin('~/.config/nvim/plugged')
 " }}}
@@ -332,78 +350,21 @@ Plug 'kana/vim-textobj-user'
 
 " }}}
 
-" Display ----------------------------------------------------------- {{{
-
-" Squeeze out all of the color that we can.
-set t_Co=256   " This is may or may not needed.
-
-if (has("nvim"))
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
-
-" Support for true color terminal.
-" Used to be a env variable
-if (has("termguicolors"))
-    set termguicolors
-endif
-
-" xterm color table & other color related things
-Plug 'guns/xterm-color-table.vim'
-
-" Colorizer
-" https://github.com/chrisbra/Colorizer
-" Highlight color codes inside CSS and Html files.
-Plug 'chrisbra/Colorizer'
-let g:colorizer_auto_filetype='css,html'
-
-" Pikachu
-" Pick colors for use in Neovim.
-" https://github.com/DougBeney/pickachu
-" Zenity is a dependency.
-" Install: brew install zenity
-" Plug 'DougBeney/pickachu'
-
-" winresizer - https://github.com/simeji/winresizer
-" Easy resizing of windows in side vim. Ctrl-e starts the window resize mode
-" and Enter or Esc exits it.
-" NOTE: 8/19/2017 - screen redraw in Neovim is killing any resize?!?
-"       8/23/2017 - nope, this was unique to Tagbar & the equalalways option.
-Plug 'jimsei/winresizer'
-let g:winresizer_vert_resize=5
-let g:winresizer_horiz_resize=5
-
-" lightline - a light & configurable statusline for vim/neovim {{{
-" https://github.com/itchyny/lightline.vim
-" NOTE: Mon Jun 25, 4:57:32pm - Trying out lightline
-"       - appears to be faster(?) in normal operation - startup is not faster.
-"       - a LOT less information on the statusline though.
- " Plug 'itchyny/lightline.vim'
- " set laststatus=2
- " }}}
-
-" vim-choosewin - as close to ace-window as we get. {{{
-" https://github.com/t9md/vim-choosewin
-" TODO: Create FR/PR for adding = key to equalize windows
-" Some bindings:
-"   Move between tabs using ] and [
-"   Move to first tab - 0
-"   Move to last tab - $
-"   Close current tab - x
-Plug 't9md/vim-choosewin'
-" overlay the window shortcuts
-" let g:choosewin_overlay_enable = 1
-" Turn off the blink when we land on the window.  I find this annoying, it
-" makes me think something is wrong with redraw.
-let g:choosewin_blink_on_land = 0
-" Shade the windows a little bit when overlay enabled.
-let g:choosewin_overlay_shade = 1
-" invoke with '-'
-nmap  -  <Plug>(choosewin)
-" }}}
-
-" }}}
-
 " Navigation ------------------------------------------------------------- {{{
+
+" Navigation Plugins:
+" 1. Denite
+"    - uses Python
+" 2. CtrlP
+" 3. LeaderF - https://github.com/Yggdroot/LeaderF
+"    - uses Python
+" 4. FZF
+"
+" ... any more??
+
+" denite
+"https://github.com/Shougo/denite.nvim
+Plug 'Shougo/denite.nvim'
 
 " The active fork of CtrlP {{{
 " https://github.com/ctrlpvim/ctrlp.vim
@@ -512,27 +473,8 @@ map g/ <Plug>(incsearch-stay)
 Plug 'haya14busa/incsearch-fuzzy.vim'
 " }}}
 
-" vim-qf - Tame the quickfix window {{{
-" https://github.com/romainl/vim-qf
-" Features:
-"   * quickfix buffers are hidden from :ls and buffer navigation
-"   * quit Vim if the last window is a location/quickfix window
-"   * close the location window automatically when quitting parent window
-"   * (optional) mappings for :cnext, :cprevious, :lnext, :lprevious that wrap
-"        around the beginning and end of the list
-"   * (optional) mapping for jumping to and from the location/quickfix window,
-"   * (optional) mappings for toggling location/quickfix windows
-"   * (optional) open the location/quickfix window automatically after :make,
-"        :grep, :lvimgrep and friends if there are valid locations/errors
-"   * (optional) automatically set the height of location/quickfix windows to
-"        the number of list items if less than Vim's default height (10) or
-"        the user's prefered height
-" Plug 'romainl/vim-qf'
-" TODO: vim-qf mappings needed - toggle, to-and-from, next/previous,
-"       first/last.
-" nnoremap <leader>cl <Plug>qf_loc_toggle
-
-" ListToggle - toggle location & quickfix windows.
+" ListToggle {{{
+" Toggle location & quickfix windows.
 " https://github.com/Valloric/ListToggle
 Plug 'Valloric/ListToggle'
 let g:lt_location_list_toggle_map = '<leader>cl'
@@ -548,6 +490,25 @@ Plug 'nelstrom/vim-visual-star-search'
 " }}}
 
 " General Utilities -------------------------------------------------------- {{{
+
+" vim-abolish {{{
+" https://github.com/tpope/tpope-vim-abolish
+" Abbreviate multiple variants of words
+"
+" Coercion
+" Press crs (coerce to snake_case).
+" MixedCase (crm),
+" camelCase (crc),
+" snake_case (crs),
+" UPPER_CASE (cru),
+" dash-case (cr-),
+" dot.case (cr.),
+" space case (cr<space>),
+" and Title Case (crt) are all just 3 keystrokes away.
+" These commands support repeat.vim.
+Plug 'tpope/tpope-vim-abolish'
+let g:abolish_save_file="/Users/matthewbodine/.config/nvim/abolish-abbreviations.vim"
+" }}}
 
 " vim-active-numbers {{{
 " https://github.com/AssailantLF/vim-active-numbers
@@ -589,25 +550,6 @@ autocmd FileType agsv RainbowToggle
 nnoremap <silent><leader>rt :RainbowToggle<cr>
 " }}}
 
-" vim-abolish {{{
-" https://github.com/tpope/tpope-vim-abolish
-" Abbreviate multiple variants of words
-"
-" Coercion
-" Press crs (coerce to snake_case).
-" MixedCase (crm),
-" camelCase (crc),
-" snake_case (crs),
-" UPPER_CASE (cru),
-" dash-case (cr-),
-" dot.case (cr.),
-" space case (cr<space>),
-" and Title Case (crt) are all just 3 keystrokes away.
-" These commands support repeat.vim.
-Plug 'tpope/tpope-vim-abolish'
-let g:abolish_save_file="/Users/matthewbodine/.config/nvim/abolish-abbreviations.vim"
-" }}}
-
 " Ale - async syntax checking {{{
 " https://github.com/w0rp/ale
 Plug 'w0rp/ale'
@@ -622,11 +564,12 @@ let g:ale_python_flake8_options = '--config=/Users/matthewbodine/.flake8'
 let g:ale_emit_conflict_warnings = 0
 " }}}
 
-" arpeggio - keychords for vim
+" arpeggio {{{
 " https://github.com/kana/vim-arpeggio
-" You cant create heirarchies with this unlike key-chord in Emacs.
-" It is initialized after the plug#end statement.
+" keychords for vim. You cant create heirarchies with this unlike key-chord in
+" Emacs. It is initialized after the plug#end statement.
 Plug 'kana/vim-arpeggio'
+" }}}
 
 " vim-asterisk {{{
 " https://github.com/haya14busa/vim-asterisk
@@ -658,6 +601,7 @@ Plug '907th/vim-auto-save'
 let g:auto_save = 1
 " Do not display the auto-save notification
 let g:auto_save_silent = 1
+let g:auto_save_events = ["InsertLeave", "TextChanged", "FocusLost"]
 " }}}
 
 " vim-bbye - Handle deleting buffers and closing files. {{{
@@ -693,13 +637,14 @@ nnoremap <leader>k :Bdelete<cr>
 " NOTE: Another pairs plugin to try - https://github.com/jiangmiao/auto-pairs
 Plug 'raimondi/delimitMate'
 
-" dash.vim
+" dash.vim {{{
 " https://github.com/rizzatti/dash.vim
 " Use Dash.app to lookup documentation.
 " Usage:
 "     :Dash[!] [TERM] [KEYWORD]
 "     :Dash os.path.dirname python
 Plug 'rizzatti/dash.vim'
+" }}}
 
 " deoplete - dark powered async completion framework for neovim {{{
 " https://github.com/Shougo/deoplete.nvim
@@ -756,13 +701,6 @@ Plug 'thalesmello/tabfold'
 " }}}
 
 " }}}
-
-" follow my lead
-"https://github.com/ktonga/vim-follow-my-lead
-" Show all of your <leader> mappings in a nice table.
-"   <leader>fml -> show table
-"   <q> -> closes the mapping window
-Plug 'ktonga/vim-follow-my-lead'
 
 " vim-commentary - comment/uncomment stuff out {{{
 " https://github.com/tpope/vim-commentary
@@ -824,6 +762,15 @@ let g:indentLine_fileType = ['python', 'perl', 'go']
 " Remember your last location in a file.
 " - Folds are automatically opened when jumping to the last edit position
 Plug 'farmergreg/vim-lastplace'
+" }}}
+
+" vim-lion {{{
+" https://github.com/tommcdo/vim-lion
+" Align text around a given character.
+" I find it easiest to select a visual region and then invoke gl<character> to
+" re-align text around a chosen character (which will often be equals).
+Plug 'tommcdo/vim-lion'
+let g:lion_squeeze_spaces = 1
 " }}}
 
 " Mundo {{{
@@ -1112,15 +1059,19 @@ Plug 'markonm/traces.vim'
 " ]n          Go to the next SCM conflict marker or diff/patch hunk.
 "             Try d]n inside a conflict.
 Plug 'tpope/vim-unimpaired'
+" }}}
 
-" vim-which-key - vim port of emacs-which-key
+" vim-which-key {{{
 " https://github.com/liuchengxu/vim-which-key
-" On-demand lazy load
+" A vim port of emacs-which-key which displays bindings in a popup.
+"
+" There is also the =follow my lead= plugin that shows mappings in a table but
+" I prefer the which-key method.
+"https://github.com/ktonga/vim-follow-my-lead
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
 
 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 " nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
-" TODO: see vim-which-key README for further configuration examples.
 " }}}
 
 " vim-better-whitespace {{{
@@ -1129,11 +1080,12 @@ nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 " whitespace painless.
 Plug 'ntpeters/vim-better-whitespace'
 autocmd FileType python autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
+autocmd FileType vim autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 " }}}
 
 " }}}
 
-" Notes & Wiki {{{
+" Note Taking {{{
 
 " 1. Have tried vim-orgmode.
 "    https://github.com/jceb/vim-orgmode
@@ -1185,15 +1137,6 @@ Plug 'rhysd/conflict-marker.vim'
 Plug 'tpope/vim-endwise'
 " }}}
 
-" vim-polyglot - language packs for vim {{{
-" https://github.com/sheerun/vim-polyglot
-" A best-of-breed collection of programming language syntax,indent,ftplugin
-" config files.
-Plug 'sheerun/vim-polyglot'
-" I prefer my own configuration of Python.
-let g:polyglot_disabled = ['python']
-" }}}
-
 " vim-sexp
 "https://github.com/guns/vim-sexp
 " Precision editing of S-expressions in Clojure, Common Lisp
@@ -1205,7 +1148,7 @@ Plug 'janko-m/vim-test'
 
 " }}}
 
-" Software Development: Languages/FileTypes ------------------------- {{{
+" Software Development: Languages {{{
 
 " Clojure {{{
 
@@ -1242,61 +1185,43 @@ Plug 'guns/vim-sexp'
 
 " }}}
 
-" Docker/Dockerfile {{{
-"https://github.com/ekalinin/Dockerfile.vim
-" NOTE: No docs for this plugin.
-Plug 'ekalinin/Dockerfile.vim'
-" }}}
-
 " Golang {{{
+
+" https//golang.org
+"
+" Install golang:
+" 1. Get the binary pkg from the .org site and install it. The homebrew
+" install is not official and is not recommended.
+"
+" Create the directories & requisite environment variables:
+" 1. mkdir -p workspace/go/src workspace/go/bin workspace/go/pkg
+" 2. export GOPATH=$HOME/workspace/go
+" 3. export GOROOT=/usr/local/go
+" 4. export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+" 5. Add the variables to .zshrc
+
+" Install Golang utilities:
+" go get -u github.com/nsf/gocode
+" go get -u github.com/alecthomas/gometalinter
+" go get -u github.com/rogpeppe/godef
+" go get -u golang.org/x/tools/cmd/goimports
+" go get -u github.com/jstemmer/gotags
+" go get github.com/matryer/moq
+" go get -u github.com/zmb3/gogetdoc
+" go get -u golang.org/x/tools/cmd/guru
+" go get -u golang.org/x/lint/golint
+
 " vim-go
 " https://github.com/fatih/vim-go
 Plug 'fatih/vim-go'
 let g:go_version_warning = 0
+let g:go_bin_path="$GOPATH/bin/"
 
 " deoplete-go
 " https://github.com/zchee/deoplete-go
 " deoplete.nvim source for Go. Asynchronous Go completion for Neovim.
 Plug 'zchee/deoplete-go', {'do': 'make'}
 
-" }}}
-
-" vim-jinja {{{
-"https://github.com/mitsuhiko/vim-jinja
-" Jinja2 is a full featured template engine for Python - http://jinja.pocoo.org/
-Plug 'mitsuhiko/vim-jinja'
-" }}}
-
-" JSON {{{
-" vim-json
-" https://github.com/elzr/vim-json
-" NOTE: If the json file doesn't look right, check the concealcursor value
-" problem mentioned in the github README.
-Plug 'elzr/vim-json'
-" }}}
-
-" Markdown {{{
-
-" NOTE: Wed Sep 20 11:24:32 - commenting out while trying the gabrielelana
-" version of vim-markdown
-" " vim-markdown
-" " https://github.com/tpope/vim-markdown
-" Plug 'tpope/vim-markdown'
-" " Make sure that .md file get detected as Markdown
-" autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-" let g:markdown_minlines = 100
-
-" vim-markdown
-"https://github.com/gabrielelana/vim-markdown
-" Not the tpope version
-Plug 'gabrielelana/vim-markdown'
-let g:markdown_include_jekyll_support = 0
-let g:markdown_enable_conceal = 1
-let g:markdown_enable_folding = 1
-
-" vim-markdown-folding
-"https://github.com/nelstrom/vim-markdown-folding
-" Plug 'nelstrom/vim-markdown-folding'
 " }}}
 
 " Python {{{
@@ -1394,6 +1319,66 @@ let g:html5_aria_attributes_complete = 0
 
 " }}}
 
+" }}}
+
+" Miscellaneous File Types {{{
+
+" Dockerfile {{{
+"https://github.com/ekalinin/Dockerfile.vim
+" NOTE: No docs for this plugin.
+Plug 'ekalinin/Dockerfile.vim'
+" }}}
+
+" vim-jinja {{{
+"https://github.com/mitsuhiko/vim-jinja
+" Jinja2 is a full featured template engine for Python - http://jinja.pocoo.org/
+Plug 'mitsuhiko/vim-jinja'
+" }}}
+
+" JSON {{{
+" vim-json
+" https://github.com/elzr/vim-json
+" NOTE: If the json file doesn't look right, check the concealcursor value
+" problem mentioned in the github README.
+Plug 'elzr/vim-json'
+" }}}
+
+" Markdown {{{
+
+" NOTE: Wed Sep 20 11:24:32 - commenting out while trying the gabrielelana
+" version of vim-markdown
+" " vim-markdown
+" " https://github.com/tpope/vim-markdown
+" Plug 'tpope/vim-markdown'
+" " Make sure that .md file get detected as Markdown
+" autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+" let g:markdown_minlines = 100
+
+" vim-markdown
+"https://github.com/gabrielelana/vim-markdown
+" Not the tpope version
+Plug 'gabrielelana/vim-markdown'
+let g:markdown_include_jekyll_support = 0
+let g:markdown_enable_conceal = 1
+let g:markdown_enable_folding = 1
+
+" vim-markdown-folding
+"https://github.com/nelstrom/vim-markdown-folding
+" Plug 'nelstrom/vim-markdown-folding'
+" }}}
+
+" }}}
+
+" vim-polyglot {{{
+" Various language packs for vim.
+" https://github.com/sheerun/vim-polyglot
+" A best-of-breed collection of programming language syntax,indent,ftplugin
+" config files.
+" ** HAS TO COME AFTER LANGUAGE DEFINITIONS THAT YOU HAVE DISABLED BELOW **
+" ** HAS CONFLICTS WITH VIM-GO - https://github.com/fatih/vim-go/issues/2045 **
+Plug 'sheerun/vim-polyglot'
+" I prefer my own configuration of Python.
+let g:polyglot_disabled = ['go', 'python']
 " }}}
 
 " Version Control -------------------------------------------------- {{{
@@ -1588,6 +1573,66 @@ let g:nuake_per_tab = 1
 " Appearances {{{
 " Themes, airline, devicons, etc.
 
+" Squeeze out all of the color that we can.
+set t_Co=256   " This is may or may not needed.
+
+if (has("nvim"))
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+
+" Support for true color terminal.
+" Used to be a env variable
+if (has("termguicolors"))
+    set termguicolors
+endif
+
+" xterm color table & other color related things
+Plug 'guns/xterm-color-table.vim'
+
+" Colorizer
+" https://github.com/chrisbra/Colorizer
+" Highlight color codes inside CSS and Html files.
+Plug 'chrisbra/Colorizer'
+let g:colorizer_auto_filetype='css,html'
+
+" Pikachu
+" Pick colors for use in Neovim.
+" https://github.com/DougBeney/pickachu
+" Zenity is a dependency.
+" Install: brew install zenity
+" Plug 'DougBeney/pickachu'
+
+" winresizer {{{
+" https://github.com/simeji/winresizer
+" Easy resizing of windows in side vim. Ctrl-e starts the window resize mode
+" and Enter or Esc exits it.
+" NOTE: 8/19/2017 - screen redraw in Neovim is killing any resize?!?
+"       8/23/2017 - nope, this was unique to Tagbar & the equalalways option.
+Plug 'jimsei/winresizer'
+let g:winresizer_vert_resize=5
+let g:winresizer_horiz_resize=5
+" }}}
+
+" vim-choosewin - as close to ace-window as we get. {{{
+" https://github.com/t9md/vim-choosewin
+" TODO: Create FR/PR for adding = key to equalize windows
+" Some bindings:
+"   Move between tabs using ] and [
+"   Move to first tab - 0
+"   Move to last tab - $
+"   Close current tab - x
+Plug 't9md/vim-choosewin'
+" overlay the window shortcuts
+" let g:choosewin_overlay_enable = 1
+" Turn off the blink when we land on the window.  I find this annoying, it
+" makes me think something is wrong with redraw.
+let g:choosewin_blink_on_land = 0
+" Shade the windows a little bit when overlay enabled.
+let g:choosewin_overlay_shade = 1
+" invoke with '-'
+nmap  -  <Plug>(choosewin)
+" }}}
+
 " Themes {{{
 Plug 'ayu-theme/ayu-vim'
 Plug 'tomasr/molokai'
@@ -1595,6 +1640,14 @@ Plug 'cocopon/iceberg.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'JaySandhu/xcode-vim'
 " }}}
+
+" Statuslines:
+" There are a number of different options: powerline, airline, lightline, etc.
+" 1. lightline - https://github.com/itchyny/lightline.vim
+"   - Mon Jun 25 4:57:32pm 2018
+"     Appears to be faster(?) in normal operation - startup is not faster.
+"     A LOT less information on the statusline though.
+" 2. powerline - much too much and slow.
 
 " vim-airline {{{
 " https://github.com/vim-airline/vim-airline
@@ -1708,6 +1761,8 @@ xnoremap - g<C-x>
 
 " Omni completion remap
 inoremap <C-l> <C-x><C-l>
+" Delete the previous word.
+inoremap <C-b> <C-O>diw
 
 " Quit vimdiff using q but also don't mess with macro.
 nnoremap <expr> q &diff ? ":diffoff!\<bar>only\<cr>" : "q"
