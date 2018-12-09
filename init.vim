@@ -64,6 +64,11 @@
 "   1. $ curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
 "        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+" Install Vimr:
+" Grab binary download from http://vimr.org/
+"   1. Copy CLI tool
+"   2. Set zsh interactive - so that environment variables are picked up.
+
 " }}}
 
 " Notes {{{
@@ -1210,12 +1215,16 @@ Plug 'guns/vim-sexp'
 " go get -u github.com/zmb3/gogetdoc
 " go get -u golang.org/x/tools/cmd/guru
 " go get -u golang.org/x/lint/golint
+" go get github.com/fatih/gomodifytags
 
 " vim-go
 " https://github.com/fatih/vim-go
+" There are A LOT of commands in vim-go:
+"   * :GoAddTags + :GoRemoveTags - modify/update field tags in a structs.
 Plug 'fatih/vim-go'
 let g:go_version_warning = 0
-let g:go_bin_path="$GOPATH/bin/"
+" let g:go_bin_path="$HOME/workspace/go/bin/"
+let g:go_bin_path="/Users/matthewbodine/workspace/go/bin/"
 
 " deoplete-go
 " https://github.com/zchee/deoplete-go
