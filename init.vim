@@ -69,6 +69,9 @@
 "   1. Copy CLI tool
 "   2. Set zsh interactive - so that environment variables are picked up.
 
+" Development Language Specifics:
+" Check below for any specific settings or install quirks.
+
 " }}}
 
 " Notes {{{
@@ -282,6 +285,9 @@ let g:mapleader = "\<Space>"
 " General Autocommands -------------------------------------------- {{{
 
 autocmd BufEnter * :syntax sync fromstart
+
+" Turn off line numbers for help files.
+" autocmd FileType help setlocal nonumber norelativenumber
 
 " Automatically equalize splits when Vim is resized.
 autocmd VimResized * wincmd =
@@ -520,6 +526,9 @@ let g:abolish_save_file="/Users/matthewbodine/.config/nvim/abolish-abbreviations
 " Only show line numbers in the active window.
 Plug 'AssailantLF/vim-active-numbers'
 let g:active_number = 1
+let g:actnum_exclude =
+\ [ 'denite', 'tagbar', 'startify', 'undotree', 'gundo', 'vimshell', 'w3m',
+\   'help', 'mundo']
 " }}}
 
 " vim-ags {{{
@@ -923,6 +932,7 @@ Plug 'tpope/vim-obsession'
 " https://github.com/dhruvasagar/vim-prosession/
 Plug 'dhruvasagar/vim-prosession'
 let g:prosession_dir='~/tmp/nvim/sessions'
+let g:prosession_on_startup = 1
 " }}}
 
 " Snippets {{{
@@ -1318,6 +1328,12 @@ autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 " Web development - Javascript, CSS, HTML, etc. {{{
 "Plug 'rstacruz/vim-hyperstyle'
 
+" Colorizer
+" https://github.com/chrisbra/Colorizer
+" Highlight color codes inside CSS and Html files.
+Plug 'chrisbra/Colorizer'
+let g:colorizer_auto_filetype='css,html'
+
 " HTML5 {{{
 " html5.vim
 " https://github.com/othree/html5.vim
@@ -1536,6 +1552,15 @@ let g:magit_default_fold_level = 0
 " highlight TermCursor ctermfg=red guifg=red
 au TermOpen :highlight TermCursor ctermfg=red guifg=red
 
+" No line numbers in terminals.
+" We also have to tell acitve-numbers to ignore Terminals as well.  There is
+" no =terminal= filetype so we have to do it this way.
+augroup TerminalStuff
+   au!
+   autocmd TermOpen * setlocal nonumber norelativenumber
+   autocmd TermOpen * ActiveNumbersIgnore | setlocal nonumber norelativenumber
+augroup END
+
 " Keep terminal splits below and to the right.
 set splitbelow
 set splitright
@@ -1597,12 +1622,6 @@ endif
 
 " xterm color table & other color related things
 Plug 'guns/xterm-color-table.vim'
-
-" Colorizer
-" https://github.com/chrisbra/Colorizer
-" Highlight color codes inside CSS and Html files.
-Plug 'chrisbra/Colorizer'
-let g:colorizer_auto_filetype='css,html'
 
 " Pikachu
 " Pick colors for use in Neovim.
