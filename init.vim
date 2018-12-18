@@ -28,12 +28,16 @@
 "   1. Install Xcode
 "   2. Install the cmdline tools: =xcode-select --install=
 
+" Change ITerm Preferences:
+"   Profiles -> Keys -> Left option key acts as +Esc
+"
 " Install External Dependencies:
 " Install the following packages via =brew install=
 "    - gls
 "    - coreutils
 "    - cask
 "    - ripgrep
+"    - ispell
 
 " Setup Python:
 " This is the Python for Neovim, not the one for Python development. So DO NOT have miniconda in
@@ -99,6 +103,9 @@
 " vim-themis - https://github.com/thinca/vim-themis - testing framework for
 "   vimscript.
 " vital.vim - https://github.com/vim-jp/vital.vim
+" denite - https://github.com/Shougo/denite.nvim
+" denite-extras - https://github.com/neoclide/denite-extra
+" coc.vim - https://github.com/neoclide/coc.nvim
 " }}}
 
 " Plugin And Vimscript Development: {{{
@@ -785,6 +792,19 @@ Plug 'farmergreg/vim-lastplace'
 " re-align text around a chosen character (which will often be equals).
 Plug 'tommcdo/vim-lion'
 let g:lion_squeeze_spaces = 1
+" }}}
+
+" vim-move
+" https://github.com/matze/vim-move
+" Move line/selection up/down, move char/selection left/right
+" NOTE: To get the default Meta mappings to work in iTerm, do the following:
+"       - In iTerm: Profiles -> Keys -> Left option key acts as +Esc
+" e.g.
+"    A-j line/selection up
+"    A-h char/selection left
+Plug 'matze/vim-move'
+" let g:move_map_keys = 0
+" let g:move_key_modifier = 'A'
 " }}}
 
 " Mundo {{{
@@ -1657,8 +1677,8 @@ Plug 't9md/vim-choosewin'
 let g:choosewin_blink_on_land = 0
 " Shade the windows a little bit when overlay enabled.
 let g:choosewin_overlay_shade = 1
-" invoke with '-'
-nmap  -  <Plug>(choosewin)
+" remap into C-w mappings.
+nmap <C-w>- :ChooseWin<cr>
 " }}}
 
 " Themes {{{
