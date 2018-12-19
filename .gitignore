@@ -10,6 +10,11 @@
 
 # Sessions
 Session.vim
+sessions/
+sessionslast_session.vim
+
+autoload/
+plugged/
 
 # Scratch
 __Scratch__
