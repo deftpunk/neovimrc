@@ -38,6 +38,12 @@
 "    - cask
 "    - ripgrep
 "    - ispell
+"    - git
+"
+" Git Configuration:
+"   - symlink global configuration files:
+"   $ ln -s tmp/yah/gitignore_global .gitignore_global
+"   $ ln -s tmp/yah/gitconfig .gitconfig
 
 " Setup Python:
 " This is the Python for Neovim, not the one for Python development. So DO NOT have miniconda in
