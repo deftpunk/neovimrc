@@ -93,7 +93,7 @@
 " https://github.com/Yilin-Yang/vim-markbar - show marks, maybe better than
 "                                             vim-bookmarks.
 " https://github.com/reconquest/vim-pythonx - python tools for easier coding.
-" https://github.com/matze/vim-move
+" https://github.com/numirias/semshi
 " https://github.com/mhinz/vim-galore
 " https://github.com/xolox/vim-session
 " http://spacevim.org/documentation/
@@ -484,18 +484,6 @@ nnoremap <leader>he :CtrlPHelp<cr>
 " https://github.com/easymotion/vim-easymotion
 Plug 'easymotion/vim-easymotion'
 
-" incsearch.vim - Incrementally highlight search pattern matches. {{{
-" https://github.com/haya14busa/incsearch.vim
-Plug 'haya14busa/incsearch.vim'
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-" g/ Search will NOT move the cursor.
-map g/ <Plug>(incsearch-stay)
-
-" incsearch-fuzzy.vim
-" https://github.com/haya14busa/incsearch-fuzzy.vim
-Plug 'haya14busa/incsearch-fuzzy.vim'
-" }}}
 
 " ListToggle {{{
 " Toggle location & quickfix windows.
@@ -602,8 +590,8 @@ Plug 'kana/vim-arpeggio'
 " https://github.com/haya14busa/vim-asterisk
 " Provides improved * motions.
 Plug 'haya14busa/vim-asterisk'
-map *   <Plug>(asterisk-*)
-map #   <Plug>(asterisk-#)
+nmap * <Plug>(asterisk-*)
+nmap # <Plug>(asterisk-#)
 map g*  <Plug>(asterisk-g*)
 map g#  <Plug>(asterisk-g#)
 map z*  <Plug>(asterisk-z*)
@@ -659,10 +647,12 @@ nnoremap <leader>k :Bdelete<cr>
 " let g:bookmark_no_default_key_mappings = 1
 " }}}
 
-" delimitMate - auto quotes, parens, brackets
+" delimitMate {{{
+" auto quotes, parens, brackets
 " https://github.com/raimondi/delimitMate
 " NOTE: Another pairs plugin to try - https://github.com/jiangmiao/auto-pairs
 Plug 'raimondi/delimitMate'
+" }}}
 
 " dash.vim {{{
 " https://github.com/rizzatti/dash.vim
@@ -800,7 +790,7 @@ Plug 'tommcdo/vim-lion'
 let g:lion_squeeze_spaces = 1
 " }}}
 
-" vim-move
+" vim-move {{{
 " https://github.com/matze/vim-move
 " Move line/selection up/down, move char/selection left/right
 " NOTE: To get the default Meta mappings to work in iTerm, do the following:
@@ -881,10 +871,11 @@ nnoremap <leader>nt :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }}}
 
-" Neomake
+" Neomake {{{
 " https://github.com/neomake/neomake
 " Asynchronous linting and make framework for Neovim/Vim
 Plug 'https://github.com/neomake/neomake'
+" }}}
 
 " open-browser {{{
 " https://github.com/tyru/open-browser.vim
@@ -947,6 +938,19 @@ Plug 'tpope/vim-scriptease'
 Plug 'https://github.com/tpope/vim-repeat.git'
 " }}}
 
+" incsearch.vim - Incrementally highlight search pattern matches. {{{
+" https://github.com/haya14busa/incsearch.vim
+Plug 'haya14busa/incsearch.vim'
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+" g/ Search will NOT move the cursor.
+map g/ <Plug>(incsearch-stay)
+
+" incsearch-fuzzy.vim
+" https://github.com/haya14busa/incsearch-fuzzy.vim
+Plug 'haya14busa/incsearch-fuzzy.vim'
+" }}}
+
 " Sessions - obssesion+prosession {{{
 " vim-obsession
 " Better manage the :mksession interface - see vim-prosession below.
@@ -961,6 +965,15 @@ let g:prosession_dir='~/tmp/nvim/sessions'
 let g:prosession_on_startup = 1
 " }}}
 
+" vim-smooth-scroll
+" https://github.com/terryma/vim-smooth-scroll
+Plug 'terryma/vim-smooth-scroll'
+let g:Illuminate_ftblacklist = ['nerdtree']
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
 " Snippets {{{
 " Using Ultisnips instead of neocomplete because neocomplete does not allow
 " you to use additional snippet directories.
@@ -969,13 +982,10 @@ let g:prosession_on_startup = 1
 " https://github.com/SirVer/ultisnips
 "   - youtube tutorials at the bottom of website
 Plug 'SirVer/ultisnips'
-
-" Ultisnips options.
-" NOTE: When creating your own snippets, don't forget to add `endsnippet`.
+" expand via tab.
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-" let g:UltiSnipsSnippetsDir="/Users/matthewbodine/.config/nvim/mysnippets"
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 
 " vim-snippets
@@ -983,10 +993,11 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 Plug 'honza/vim-snippets'
 " }}}
 
-" vim-fat-finger
+" vim-fat-finger {{{
 " https://github.com/chip/vim-fat-finger
 " Fix common misspellings and typos.  Supports over 4,000 common misspellings.
 Plug 'chip/vim-fat-finger'
+" }}}
 
 " rainbow - rainbow parentheses improved {{{
 " https://github.com/luochen1990/rainbow
@@ -1011,11 +1022,12 @@ let g:rainbow_active = 1
 Plug 'machakann/vim-sandwich'
 " }}}
 
-" vim-slash
+" vim-slash {{{
 " https://github.com/junegunn/vim-slash
 " Enhancing in-buffer search experience.
 Plug 'junegunn/vim-slash'
 noremap <plug>(slash-after) zz
+" }}}
 
 " tagbar - a class outline viewer {{{
 " https://majutsushi.github.io/tagbar
@@ -1069,11 +1081,12 @@ nnoremap <leader>tt :TagbarToggle<CR>
 nnoremap <leader>to :TagbarOpen<CR>
 " }}}
 
-" traces
-"https://github.com/markonm/traces.vim
+" traces {{{
+" https://github.com/markonm/traces.vim
 " A better way to highlight search+replace actions.  Works in more situations
 " than inccomand.
 Plug 'markonm/traces.vim'
+" }}}
 
 " unimpaired - pairs of handy bracket mappings {{{
 " https://github.com/tpope/vim-unimpaired
@@ -1187,6 +1200,12 @@ Plug 'guns/vim-sexp'
 " https://github.com/janko-m/vim-test
 Plug 'janko-m/vim-test'
 
+" vim-illuminate
+" https://github.com/RRethy/vim-illuminate
+" Selectively illuminating other uses of the current word under the cursor.
+Plug 'RRethy/vim-illuminate'
+" make the illumination stand out a bit more.
+hi link illuminatedWord Visual
 " }}}
 
 " Software Development: Languages {{{
@@ -1428,8 +1447,10 @@ let g:markdown_enable_folding = 1
 " ** HAS TO COME AFTER LANGUAGE DEFINITIONS THAT YOU HAVE DISABLED BELOW **
 " ** HAS CONFLICTS WITH VIM-GO - https://github.com/fatih/vim-go/issues/2045 **
 Plug 'sheerun/vim-polyglot'
-" I prefer my own configuration of Python.
-let g:polyglot_disabled = ['go', 'python']
+" I prefer my own configuration of Python, Markdown and Golang, Markdown and
+" Golang
+let g:polyglot_disabled = ['go', 'python', 'markdown']
+let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js=javascript', 'json=javascript', 'perl', 'php', 'python', 'ruby', 'sass', 'xml', 'html', 'vim']
 " }}}
 
 " Version Control -------------------------------------------------- {{{
@@ -1688,11 +1709,11 @@ nmap <C-w>- :ChooseWin<cr>
 " }}}
 
 " Themes {{{
-Plug 'ayu-theme/ayu-vim'
 Plug 'tomasr/molokai'
-Plug 'cocopon/iceberg.vim'
 Plug 'NLKNguyen/papercolor-theme'
-Plug 'JaySandhu/xcode-vim'
+
+" https://github.com/challenger-deep-theme/vim
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 " }}}
 
 " Statuslines:
@@ -1784,11 +1805,6 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-
-nnoremap <leader>wc :wincmd c<cr>
-nnoremap <leader>wo :wincmd o<cr>
-nnoremap <leader>ws :wincmd s<cr>
-nnoremap <leader>wv :wincmd v<cr>
 
 " follow lines that wrap.
 " NOTE: 8/24/2014 - these 2 mappings resulted in the following message on nvim
