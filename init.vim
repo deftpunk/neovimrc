@@ -335,6 +335,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 " targets.vim
 " https://github.com/wellle/targets.vim
+" Vim plugin that provides additional text objects
 "   - Pair text objects
 "   - Quote text objects
 "   - Separator text objects
@@ -1177,14 +1178,20 @@ Plug 'tpope/vim-speeddating'
 "   [x and ]x mappings are defined as default.
 "
 "   Jump within a Conflict Marker
-"   This feature uses matchit.vim, which is bundled in Vim (macros/matchit.vim). % mapping is extened by
-"   matchit.vim.
+"   This feature uses matchit.vim, which is bundled in Vim (macros/matchit.vim).
+"   % mapping is extened by matchit.vim.
 "
 " Resolve a Conflict with Various Strategies
-"   This plugin defines mappings as default, ct for themselves, co for ourselves, cn for none and cb for
-"   both.
+"   This plugin defines mappings as default, =ct= for themselves,
+"   =co= for ourselves, =cn= for none and =cb= for both.
+"
+"   <<<<<<< HEAD
+"   ourselves
+"   =======
+"   themselves
+"   >>>>>>> deadbeef0123
+"
 Plug 'rhysd/conflict-marker.vim'
-
 " Don't use default mappings.
 " let g:conflict_marker_enable_mappings=0
 " }}}
@@ -1866,6 +1873,9 @@ call denite#custom#map(
 " Global mappings.
 nnoremap <leader>i :<C-u>Denite buffer file_mru<cr>
 nnoremap <leader>s :<C-u>Denite line<cr>
+
+" Change the matched char color.
+hi link deniteMatchedChar Special
 " }}}
 
 " Because, for some reason, this doesn't work until after neobundle#end or
