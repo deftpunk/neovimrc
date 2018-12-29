@@ -292,6 +292,7 @@ set synmaxcol=200
 " Take me to my Leader key
 let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
+" Map the localleader.
 
 " }}}
 
@@ -387,8 +388,12 @@ Plug 'kana/vim-textobj-user'
 " ... any more??
 
 " denite
-"https://github.com/Shougo/denite.nvim
+" https://github.com/Shougo/denite.nvim
 Plug 'Shougo/denite.nvim'
+
+" A file_mru source for denite.
+" https://github.com/Shougo/neomru.vim
+Plug 'Shougo/neomru.vim'
 
 " The active fork of CtrlP {{{
 " https://github.com/ctrlpvim/ctrlp.vim
@@ -1840,6 +1845,27 @@ nnoremap <expr> q &diff ? ":diffoff!\<bar>only\<cr>" : "q"
 " Use Q to play macro normally and over visual selections.
 xnoremap Q :'<,'>:normal @q<CR>
 
+" }}}
+
+" Denite mappings & configuration. {{{
+
+" Change mappings.
+call denite#custom#map(
+      \ 'insert',
+      \ '<C-j>',
+      \ '<denite:move_to_next_line>',
+      \ 'noremap'
+      \)
+call denite#custom#map(
+      \ 'insert',
+      \ '<C-k>',
+      \ '<denite:move_to_previous_line>',
+      \ 'noremap'
+      \)
+
+" Global mappings.
+nnoremap <leader>i :<C-u>Denite buffer file_mru<cr>
+nnoremap <leader>s :<C-u>Denite line<cr>
 " }}}
 
 " Because, for some reason, this doesn't work until after neobundle#end or
