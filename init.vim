@@ -1468,6 +1468,19 @@ let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js
 " Version Control -------------------------------------------------- {{{
 
 " vim-fugitive + vim-merginal + vim-rhubarb - Git management  {{{
+
+" Git porcelain in Neovim/Vim comes primarily in the form of
+" vim-fugitive, vim-magit & vim-gina.
+"
+" Gina:
+"   - requires a 2 command workflow => =Gina status= & =Gina commit=
+
+" gina
+" https://github.com/lambdalisue/gina.vim
+" Gina.vim (gina) is a plugin to asynchronously control git repositories.
+Plug 'lambdalisue/gina.vim'
+
+" vim-fugitive {{{
 " https://github.com/tpope/vim-fugitive
 " :Gstatus - Brings up output of git status
 "   - Press - to add/reset a files changes.
@@ -1487,8 +1500,9 @@ let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js
 " :Gbrowse - Open the current file, blob, tree, commit or tag in your browser
 "            at the hosting provider.
 Plug 'tpope/vim-fugitive'
+" }}}
 
-" Merginal
+" Merginal {{{
 " https://github.com/idanarye/vim-merginal
 " A fugitive extension to manage and merge Git branches through a nice interface
 "   - Viewing the list of branches
@@ -1503,13 +1517,17 @@ Plug 'tpope/vim-fugitive'
 "   - Renaming branches
 "   - Viewing git history for branches
 Plug 'idanarye/vim-merginal'
+nnoremap <silent> <leader>gm :MerginalToggle<CR>
+" }}}
 
+" vim-rhubarb {{{
 " GitHub extension for fugitive
 " https://github.com/tpope/vim-rhubarb
 " Provides :Gbrowse functionality as well as being able to use
 " |i_CTRL-X_CTRL-O| to omni-complete GitHub issues or project collaborator
 " usernames when editing a commit message.
 Plug 'tpope/vim-rhubarb'
+" }}}
 
 nnoremap <silent> <leader>gb :Gblame<CR>
 nnoremap <silent> <leader>gc :Gcommit<CR>
@@ -1520,8 +1538,6 @@ nnoremap <silent> <leader>gr :Gremove<CR>
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gu :Gbrowse<CR>
 nnoremap <silent> <leader>gw :Gwrite<CR>
-
-nnoremap <silent> <leader>gm :MerginalToggle<CR>
 
 " }}}
 
@@ -1785,12 +1801,16 @@ else
     colorscheme molokai
     let g:airline_theme='airlineish'
 endif
+
+" comments should always be in italics
+highlight Comment cterm=italic
 " }}}
 
 " General mappings ------------------------------------------------- {{{
 
-" A test to see if i could map the MacOSX Command key - Friday July 6 2018 ==
-" YES
+" A test to see if i could map the MacOSX Command key
+" Friday July 6 2018 - Is working in Vimr
+" Saturday December 29, 2018 - Won't work in iTerm2
 nnoremap <D-l> :echo "testing"<cr>
 
 " Edit Neovim configuration file.
@@ -1805,9 +1825,10 @@ nnoremap <leader>q :qa<cr>
 " quick save
 nnoremap <leader>w :w!<cr>
 
+" Make D behave
+nnoremap D d$
 " Yank to the end of the line.
 nnoremap Y y$
-
 " U is a better redo
 nnoremap U <C-r>
 
