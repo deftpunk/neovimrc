@@ -90,6 +90,7 @@
 " Some plugins to check out in the future & notes on comparing classes of
 " plugins.
 "
+" https://github.com/mcchrish/nnn.vim - a possible replacement for NERDTree
 " https://github.com/Yilin-Yang/vim-markbar - show marks, maybe better than
 "                                             vim-bookmarks.
 " https://github.com/reconquest/vim-pythonx - python tools for easier coding.
@@ -105,13 +106,20 @@
 " https://github.com/bcicen/vim-jfmt
 " https://github.com/idanarye/vim-vebugger
 " https://github.com/blueyed/vim-diminactive
+" https://github.com/PeterRincker/vim-argumentative - function signatures.
 "
 " vim-themis - https://github.com/thinca/vim-themis - testing framework for
 "   vimscript.
 " vital.vim - https://github.com/vim-jp/vital.vim
 " denite - https://github.com/Shougo/denite.nvim
 " denite-extras - https://github.com/neoclide/denite-extra
-" coc.vim - https://github.com/neoclide/coc.nvim
+" coc.vim - https://github.com/neoclide/coc.nvim - better(?) completion w/ LSP
+"
+" Finished:
+" Thursday Jan 3, 2019
+" https://github.com/terryma/vim-smooth-scroll
+" I can do without the smooth scrolling.
+"
 " }}}
 
 " Plugin And Vimscript Development: {{{
@@ -129,7 +137,7 @@
 " Themes:
 "   - https://github.com/xero/nord-vim-mod
 "
-" Search and Replace plugins:
+" Search And Replace Plugins:
 "   1. far.vim - https://github.com/brooth/far.vim
 "       - Edit mode, in the sense that you enter the replace with pattern on
 "         the commandline.
@@ -152,7 +160,7 @@
 "   	- Single or multiple buffers.
 " }}}
 
-" Troubleshooting, Debugging & Profiling the Configuration {{{
+" Troubleshooting Debugging And Profiling The Configuration: {{{
 "
 " Check messages register:
 "   1. run =:messages=
@@ -237,6 +245,20 @@ set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg     " binary image
 
 " copy/paste from clipboard
 set clipboard+=unnamedplus
+" Optimization for Neovim startup.
+" https://www.reddit.com/r/neovim/comments/ab01n8/improve_neovim_startup_by_60ms_for_free_on_macos/
+let g:clipboard = {
+  \ 'name': 'pbcopy',
+  \ 'copy': {
+  \    '+': 'pbcopy',
+  \    '*': 'pbcopy',
+  \  },
+  \ 'paste': {
+  \    '+': 'pbpaste',
+  \    '*': 'pbpaste',
+  \ },
+  \ 'cache_enabled': 0,
+  \ }
 
 " no irritating swapfile.
 set noswapfile
@@ -289,10 +311,13 @@ set infercase
 " some performance penalty with long lines.
 set synmaxcol=200
 
-" Take me to my Leader key
+" Take me to my Leader key and make sure that nothing messes with it.
+noremap <Leader>      <Nop>
+noremap <LocalLeader> <Nop>
 let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
 " Map the localleader.
+let g:maplocalleader = '\'
 
 " }}}
 
@@ -380,21 +405,39 @@ Plug 'kana/vim-textobj-user'
 
 " Navigation Plugins:
 " 1. Denite
-"    - uses Python
+"    - uses Python3
+"    - outline/tags source requires ctags to be installed.
 " 2. CtrlP
+"    - outline/tags (CtrlPFunky) doesn't require ctags to be installed.
 " 3. LeaderF - https://github.com/Yggdroot/LeaderF
 "    - uses Python
 " 4. FZF
+"    - No boommarks
+"    - No outline/tags
 "
 " ... any more??
 
-" denite
+" denite {{{
 " https://github.com/Shougo/denite.nvim
 Plug 'Shougo/denite.nvim'
 
 " A file_mru source for denite.
 " https://github.com/Shougo/neomru.vim
 Plug 'Shougo/neomru.vim'
+
+" denite-dirmark
+" https://github.com/kmnk/denite-dirmark
+" A denite.nvim source and kind to mark and list directories
+Plug 'kmnk/denite-dirmark'
+
+" fruzzy
+" https://github.com/raghur/fruzzy
+" Freaky fast fuzzy finder for (denite.nvim/CtrlP matcher) for vim/neovim
+Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
+" optional - but recommended - see below
+let g:fruzzy#usenative = 1
+let g:fruzzy#sortonempty = 1 " default value
+" }}}
 
 " The active fork of CtrlP {{{
 " https://github.com/ctrlpvim/ctrlp.vim
@@ -971,15 +1014,6 @@ let g:prosession_dir='~/tmp/nvim/sessions'
 let g:prosession_on_startup = 1
 " }}}
 
-" vim-smooth-scroll
-" https://github.com/terryma/vim-smooth-scroll
-Plug 'terryma/vim-smooth-scroll'
-let g:Illuminate_ftblacklist = ['nerdtree']
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-
 " Snippets {{{
 " Using Ultisnips instead of neocomplete because neocomplete does not allow
 " you to use additional snippet directories.
@@ -1470,10 +1504,19 @@ let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js
 " vim-fugitive + vim-merginal + vim-rhubarb - Git management  {{{
 
 " Git porcelain in Neovim/Vim comes primarily in the form of
-" vim-fugitive, vim-magit & vim-gina.
+" vim-fugitive, vim-magit & vim-gina.  Unfortunately, none are of the caliber
+" of Emacs magit ... sigh.
 "
 " Gina:
 "   - requires a 2 command workflow => =Gina status= & =Gina commit=
+"
+" Vim Magit:
+"   - can lock up on large commits, doesn't seem to be async
+"   - can show you the status of everything in current repo.
+"   - operations are from a =status= buffer.
+"
+" Vim Fugitive Vim Rhubarb GV Merginal:
+"   -
 
 " gina
 " https://github.com/lambdalisue/gina.vim
@@ -1563,6 +1606,9 @@ xmap ah <Plug>GitGutterTextObjectOuterVisual
 
 " have gitgutter ignore whitespace
 let g:gitgutter_diff_args = '-w'
+
+" Set the maximum number of signs to show in a buffer.
+let g:gitgutter_max_signs = 2500
 
 "symbols
 let g:gitgutter_sign_added = "✚"
@@ -1740,8 +1786,12 @@ nmap <C-w>- :ChooseWin<cr>
 Plug 'tomasr/molokai'
 Plug 'NLKNguyen/papercolor-theme'
 
-" https://github.com/challenger-deep-theme/vim
-Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+" gotham
+" https://github.com/whatyouhide/vim-gotham
+" Also has an airline theme as well:
+"   gotham
+"   let g:gotham_airline_emphasised_insert = 0
+" Plug 'whatyouhide/vim-gotham'
 " }}}
 
 " Statuslines:
@@ -1749,8 +1799,10 @@ Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 " 1. lightline - https://github.com/itchyny/lightline.vim
 "   - Mon Jun 25 4:57:32pm 2018
 "     Appears to be faster(?) in normal operation - startup is not faster.
-"     A LOT less information on the statusline though.
+"     A LOT less information on the statusline that you then have to configure
+"     yourself.
 " 2. powerline - much too much and slow.
+" 3. airline - is a good middle ground for me.
 
 " vim-airline {{{
 " https://github.com/vim-airline/vim-airline
@@ -1808,6 +1860,13 @@ highlight Comment cterm=italic
 
 " General mappings ------------------------------------------------- {{{
 
+" Disable some bindings that I find annoying & potentially dangerous if hit
+" accidentally.
+" ZZ - save and close Vim
+" ZQ - close Vim
+nnoremap ZZ <Nop>
+nnoremap ZQ <Nop>
+
 " A test to see if i could map the MacOSX Command key
 " Friday July 6 2018 - Is working in Vimr
 " Saturday December 29, 2018 - Won't work in iTerm2
@@ -1831,6 +1890,9 @@ nnoremap D d$
 nnoremap Y y$
 " U is a better redo
 nnoremap U <C-r>
+
+" make vv act like V
+nnoremap vv 0v$
 
 " Windows
 " Ease the window split navigation
@@ -1876,6 +1938,10 @@ xnoremap Q :'<,'>:normal @q<CR>
 " }}}
 
 " Denite mappings & configuration. {{{
+
+" fruzzy matcher
+" tell denite to use this matcher by default for all sources
+call denite#custom#source('_', 'matchers', ['matcher/fruzzy'])
 
 " Change mappings.
 call denite#custom#map(
