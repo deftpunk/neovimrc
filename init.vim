@@ -39,6 +39,10 @@
 "    - ripgrep
 "    - ispell
 "    - git
+"    - bat
+"    - tree
+"    - ctags
+"    - fd
 "
 " Git Configuration:
 "   - symlink global configuration files:
@@ -407,13 +411,18 @@ Plug 'kana/vim-textobj-user'
 " 1. Denite
 "    - uses Python3
 "    - outline/tags source requires ctags to be installed.
+"    - Denite Lines doesn't work with the jumplist == C-i/C-o don't work.
 " 2. CtrlP
 "    - outline/tags (CtrlPFunky) doesn't require ctags to be installed.
+"    - CtrlPLine works with jumplist so that C-i/C-o work
 " 3. LeaderF - https://github.com/Yggdroot/LeaderF
 "    - uses Python
 " 4. FZF
+"    - wicked fast.
 "    - No boommarks
 "    - No outline/tags
+"    - MRU is a different command - no mixed results, that I can see.
+"    - Does work with jumplist.
 "
 " ... any more??
 
@@ -526,6 +535,13 @@ nnoremap <silent><C-p><C-s> :CtrlPSearchHistory<CR>
 Plug 'zeero/vim-ctrlp-help'
 nnoremap <leader>he :CtrlPHelp<cr>
 
+" }}}
+
+" FZF {{{
+"
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
+Plug 'junegunn/fzf.vim'
+Plug 'pbogut/fzf-mru.vim'
 " }}}
 
 " vim-easymotion
@@ -1414,6 +1430,12 @@ Plug 'bps/vim-textobj-python'
 Plug 'vim-ruby/vim-ruby'
 
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
+
+" Vagrant files need to be set to Ruby filetype.
+augroup ft_vagrant
+    au!
+    au BufRead,BufNewFile Vagrantfile set ft=ruby
+augroup END
 " }}}
 
 " Web development - Javascript, CSS, HTML, etc. {{{
@@ -1958,8 +1980,8 @@ call denite#custom#map(
       \)
 
 " Global mappings.
-nnoremap <leader>i :<C-u>Denite buffer file_mru<cr>
-nnoremap <leader>s :<C-u>Denite line<cr>
+" nnoremap <leader>i :<C-u>Denite buffer file_mru<cr>
+" nnoremap <leader>s :<C-u>Denite line<cr>
 
 " Change the matched char color.
 hi link deniteMatchedChar Special
