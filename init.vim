@@ -414,7 +414,8 @@ Plug 'kana/vim-textobj-user'
 "    - Denite Lines doesn't work with the jumplist == C-i/C-o don't work.
 " 2. CtrlP
 "    - outline/tags (CtrlPFunky) doesn't require ctags to be installed.
-"    - CtrlPLine works with jumplist so that C-i/C-o work
+"    - CtrlPLine works with jumplist so that C-i/C-o work but doesn't seem to
+"      find stuff as well.
 " 3. LeaderF - https://github.com/Yggdroot/LeaderF
 "    - uses Python
 " 4. FZF
@@ -422,22 +423,9 @@ Plug 'kana/vim-textobj-user'
 "    - No boommarks
 "    - No outline/tags
 "    - MRU is a different command - no mixed results, that I can see.
-"    - Does work with jumplist.
+"    - Lines+BLines Does work with jumplist.
 "
 " ... any more??
-
-" denite {{{
-" https://github.com/Shougo/denite.nvim
-Plug 'Shougo/denite.nvim'
-
-" A file_mru source for denite.
-" https://github.com/Shougo/neomru.vim
-Plug 'Shougo/neomru.vim'
-
-" denite-dirmark
-" https://github.com/kmnk/denite-dirmark
-" A denite.nvim source and kind to mark and list directories
-Plug 'kmnk/denite-dirmark'
 
 " fruzzy
 " https://github.com/raghur/fruzzy
@@ -446,7 +434,6 @@ Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
 " optional - but recommended - see below
 let g:fruzzy#usenative = 1
 let g:fruzzy#sortonempty = 1 " default value
-" }}}
 
 " The active fork of CtrlP {{{
 " https://github.com/ctrlpvim/ctrlp.vim
@@ -471,6 +458,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 
 let g:ctrlp_user_command='rg %s --files --color=never --glob ""'
 let g:ctrlp_use_caching=0
+let g:ctrlp_match_func = {'match': 'fruzzy#ctrlp#matcher'}
+let g:ctrlp_match_current_file = 1 " to include current file in matches
 
 nnoremap <leader>fb :CtrlPBuffer<cr>
 nnoremap <leader>fc :CtrlPChange<cr>
@@ -1957,34 +1946,6 @@ nnoremap <expr> q &diff ? ":diffoff!\<bar>only\<cr>" : "q"
 " Use Q to play macro normally and over visual selections.
 xnoremap Q :'<,'>:normal @q<CR>
 
-" }}}
-
-" Denite mappings & configuration. {{{
-
-" fruzzy matcher
-" tell denite to use this matcher by default for all sources
-call denite#custom#source('_', 'matchers', ['matcher/fruzzy'])
-
-" Change mappings.
-call denite#custom#map(
-      \ 'insert',
-      \ '<C-j>',
-      \ '<denite:move_to_next_line>',
-      \ 'noremap'
-      \)
-call denite#custom#map(
-      \ 'insert',
-      \ '<C-k>',
-      \ '<denite:move_to_previous_line>',
-      \ 'noremap'
-      \)
-
-" Global mappings.
-" nnoremap <leader>i :<C-u>Denite buffer file_mru<cr>
-" nnoremap <leader>s :<C-u>Denite line<cr>
-
-" Change the matched char color.
-hi link deniteMatchedChar Special
 " }}}
 
 " Because, for some reason, this doesn't work until after neobundle#end or
