@@ -26,13 +26,13 @@ snippet print
 print("${1} ".format(${2}))${0}
 endsnippet
 
-snippet deftest
+snippet deftest "Create a test_* function"
 def test_${1}(self):
 	""" ${2} """
 	${0}
 endsnippet
 
-snippet deflib
+snippet deflib "JumpCloud lib function"
 def ${1}(api_key: str, ${2}):
 	""" ${3}
 	:param api_key: str API Key for the Organization we are hitting.
@@ -118,7 +118,7 @@ snippet kx
 '${1}': ${0},
 endsnippet
 
-snippet defasync
+snippet defasync "basic async function"
 async def ${1}():
 	""" ${2} """
 	${0}
@@ -127,4 +127,16 @@ endsnippet
 snippet she
 #!/usr/bin/env python
 
+${0}
+endsnippet
+
+snippet classx "basic class"
+class ${1}:
+	"""${2} """
+	def __init__(self, ${3}):
+		self.${0}
+endsnippet
+
+snippet prx "make print easier to deal with"
+print("${0}")
 endsnippet
