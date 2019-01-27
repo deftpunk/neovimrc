@@ -94,6 +94,10 @@
 " Some plugins to check out in the future & notes on comparing classes of
 " plugins.
 "
+" https://github.com/kana/vim-niceblock
+" https://github.com/euclio/vim-markdown-composer
+" https://gitlab.com/HiPhish/repl.nvim
+" https://github.com/svermeulen/vim-subversive
 " https://github.com/mcchrish/nnn.vim - a possible replacement for NERDTree
 " https://github.com/Yilin-Yang/vim-markbar - show marks, maybe better than
 "                                             vim-bookmarks.
@@ -430,6 +434,7 @@ Plug 'kana/vim-textobj-user'
 " fruzzy
 " https://github.com/raghur/fruzzy
 " Freaky fast fuzzy finder for (denite.nvim/CtrlP matcher) for vim/neovim
+" 01/21/2019 - Got a pretty fast speed up using fruzzy with CtrlP.
 Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
 " optional - but recommended - see below
 let g:fruzzy#usenative = 1
@@ -533,11 +538,13 @@ Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
 " }}}
 
-" vim-easymotion
+" vim-easymotion {{{
 " Moving around in a buffer like ace-jump and avy.
 " https://github.com/easymotion/vim-easymotion
 Plug 'easymotion/vim-easymotion'
-
+nmap <leader><leader>s <Plug>(easymotion-s)
+nmap <leader><leader>l <Plug>(easymotion-bd-tl)
+" }}}
 
 " ListToggle {{{
 " Toggle location & quickfix windows.
@@ -583,7 +590,7 @@ Plug 'AssailantLF/vim-active-numbers'
 let g:active_number = 1
 let g:actnum_exclude =
 \ [ 'denite', 'tagbar', 'startify', 'undotree', 'gundo', 'vimshell', 'w3m',
-\   'help', 'mundo']
+\   'help', 'mundo', 'magit', 'fugitive']
 " }}}
 
 " vim-ags {{{
@@ -627,8 +634,6 @@ let g:ale_sign_warning = '≈'
 let g:ale_linters = {
 \    'python': ['flake8'],
 \}
-" let g:ale_python_flake8_executable = 'python3 -m flake8'
-"let g:ale_python_flake8_options = '--max-line-length=105'
 let g:ale_python_flake8_options = '--config=/Users/matthewbodine/.flake8'
 let g:ale_emit_conflict_warnings = 0
 " }}}
@@ -723,16 +728,6 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " NOTE: Feb 15, 2018  9:12 am - Had to comment out NVIM_LISTEN_ADDRESS in ~/.zshrc
 " https://github.com/Shougo/deoplete.nvim/issues/646
 let g:deoplete#enable_at_startup = 1
-
-" Disable deoplete when in multi cursor mode
-" function! Multiple_cursors_before()
-"     let b:deoplete_disable_auto_complete = 1
-" endfunction
-"
-" function! Multiple_cursors_after()
-"     let b:deoplete_disable_auto_complete = 0
-" endfunction
-" }}}
 
 " vim-eunuch {{{
 " https://github.com/tpope/vim-eunuch
@@ -853,8 +848,6 @@ let g:lion_squeeze_spaces = 1
 "    A-j line/selection up
 "    A-h char/selection left
 Plug 'matze/vim-move'
-" let g:move_map_keys = 0
-" let g:move_key_modifier = 'A'
 " }}}
 
 " Mundo {{{
@@ -925,27 +918,11 @@ nnoremap <leader>nt :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }}}
 
-" Neomake {{{
-" https://github.com/neomake/neomake
-" Asynchronous linting and make framework for Neovim/Vim
-Plug 'https://github.com/neomake/neomake'
-" }}}
-
 " open-browser {{{
 " https://github.com/tyru/open-browser.vim
 " Open a broser from Neovim - I mostly use this to start a web search from
 " Neovim.  It opens your default browser.
 Plug 'tyru/open-browser.vim'
-" }}}
-
-" vim-operator-flashy {{{
-" https://github.com/haya14busa/vim-operator-flashy
-" Highlight/Flash the yanked area.
-Plug 'kana/vim-operator-user'
-Plug 'haya14busa/vim-operator-flashy'
-let g:operator#flashy#flash_time=500
-map y <Plug>(operator-flashy)
-nmap Y <Plug>(operator-flashy)$
 " }}}
 
 " scratch.vim {{{
@@ -1003,6 +980,10 @@ map g/ <Plug>(incsearch-stay)
 " incsearch-fuzzy.vim
 " https://github.com/haya14busa/incsearch-fuzzy.vim
 Plug 'haya14busa/incsearch-fuzzy.vim'
+
+nmap z/ <Plug>(incsearch-fuzzy-/)
+nmap z? <Plug>(incsearch-fuzzy-?)
+nmap zg/ <Plug>(incsearch-fuzzy-stay)<Paste>
 " }}}
 
 " Sessions - obssesion+prosession {{{
@@ -1054,14 +1035,15 @@ let g:rainbow_active = 1
 " https://github.com/machakann/vim-sandwich
 " Replacement for vim-surround; uses text objects to surround/sandwich things.
 " The set of operator and textobject plugins to search/select/edit sandwiched textobjects.
-"   Add
-"   Press sa{motion/textobject}{addition}. For example, a key sequence saiw( makes foo to (foo).
+"   add:
+"   Press sa{motion/textobject}{addition}. For example, a key sequence
+"   saiw( makes foo to (foo).
 "
-"   Delete
-"   Press sdb or sd{deletion}. For example, key sequences sdb or sd( makes (foo) to foo. sdb searches a
-"   set of surrounding automatically.
+"   delete:
+"   Press sdb or sd{deletion}. For example, key sequences sdb or
+"   sd( makes (foo) to foo. sdb searches a set of surrounding automatically.
 "
-"   Replace
+"   replace:
 "   Press srb{addition} or sr{deletion}{addition}.
 "   For example, key sequences srb" or sr(" makes (foo) to "foo".
 Plug 'machakann/vim-sandwich'
@@ -1070,6 +1052,8 @@ Plug 'machakann/vim-sandwich'
 " vim-slash {{{
 " https://github.com/junegunn/vim-slash
 " Enhancing in-buffer search experience.
+"   - Clears highlight when cursor moves.
+"   - star-search: highlighting without moving.
 Plug 'junegunn/vim-slash'
 noremap <plug>(slash-after) zz
 " }}}
@@ -1160,19 +1144,6 @@ Plug 'markonm/traces.vim'
 Plug 'tpope/vim-unimpaired'
 " }}}
 
-" vim-which-key {{{
-" https://github.com/liuchengxu/vim-which-key
-" A vim port of emacs-which-key which displays bindings in a popup.
-"
-" There is also the =follow my lead= plugin that shows mappings in a table but
-" I prefer the which-key method.
-"https://github.com/ktonga/vim-follow-my-lead
-Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
-
-nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-" nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
-" }}}
-
 " vim-better-whitespace {{{
 " https://github.com/ntpeters/vim-better-whitespace
 " Cause trailing whitespace characters to be highlighted.  Also make stripping
@@ -1251,12 +1222,17 @@ Plug 'guns/vim-sexp'
 " https://github.com/janko-m/vim-test
 Plug 'janko-m/vim-test'
 
-" vim-illuminate
+" vim-illuminate {{{
 " https://github.com/RRethy/vim-illuminate
 " Selectively illuminating other uses of the current word under the cursor.
 Plug 'RRethy/vim-illuminate'
 " make the illumination stand out a bit more.
 hi link illuminatedWord Visual
+" toggle word illumination.
+let g:Illuminate_highlightUnderCursor = 0
+nnoremap <leader>it :IlluminationToggle<cr>
+" }}}
+
 " }}}
 
 " Software Development: Languages {{{
@@ -1267,32 +1243,6 @@ hi link illuminatedWord Visual
 " Asynchronous Clojure Interactive Development
 " https://github.com/clojure-vim/acid.nvim
 " Plug 'clojure-vim/acid.nvim', { 'do': ':UpdateRemotePlugins' }
-
-" }}}
-
-" Common Lisp {{{
-
-" vlime
-" A Common Lisp dev environment for Vim (and Neovim)
-" https://github.com/l04m33/vlime
-"
-" ncat (netcat/nc) is a dependency for vlime.
-"    Install using Homebrew: brew install netcat
-"    This will install v0.7.1 of http://netcat.sourceforge.net/
-"    One can use either the nc or netcat command. nc is an alias for netcat.
-"
-" To start a server: nc -l -p 9999
-"
-" To start a client: nc targethost 9999
-"
-" To get the manpage of this version, one needs to use man netcat, as man nc
-" will open the manpage of the BSD version.
-Plug 'l04m33/vlime', {'rtp': 'vim'}
-"
-"
-" vim-sexp
-" https://github.com/guns/vim-sexp
-Plug 'guns/vim-sexp'
 
 " }}}
 
@@ -1436,7 +1386,8 @@ augroup END
 Plug 'chrisbra/Colorizer'
 let g:colorizer_auto_filetype='css,html'
 
-" HTML5 {{{
+" HTML {{{
+
 " html5.vim
 " https://github.com/othree/html5.vim
 Plug 'othree/html5.vim'
@@ -1626,18 +1577,6 @@ let g:gitgutter_sign_added = "✚"
 let g:gitgutter_sign_modified = "✹"
 let g:gitgutter_sign_removed = "✖"
 let g:gitgutter_sign_modified_removed = "✖"
-"
-" symbol colors for gui
-" add - 21ff90 = GitGutterAddDefault
-" modified = 21ffff = GitGutterChangeDefault
-" delete = ff2222 = GitGutterDeleteDefual
-" change/delete = ff9021 = GitGutterChangeDeleteDefaultrre
-"
-" line changed colors
-" highlight GitGutterAdd ctermfg=red guifg=red
-" highlight GitGutterChange ctermfg=red guifg=red
-" highlight GitGutterDelete ctermfg=red guifg=red
-" highlight GitGutterChangeDelete ctermfg=red guifg=red
 " }}}
 
 " gv - view git commits {{{
@@ -1676,9 +1615,9 @@ let g:magit_default_fold_level = 0
 
 " }}}
 
-" Terminal {{{
+" Terminal: {{{
 
-" Settings {{{
+" Terminal Settings {{{
 " NOTE: Neither of these seems to work?? Wed Oct 24, 2018 5:30:24pm
 " 	Only works when I set the highlight from the statusline??
 " highlight TermCursor ctermfg=red guifg=red
@@ -1708,12 +1647,6 @@ set splitright
 set scrollback=100000
 " }}}
 
-" Mappings {{{
-
-" switch back to Normal mode.
-tnoremap <leader><Esc> <C-\><C-n>
-" }}}
-
 " neoterm {{{
 " https://github.com/kassio/neoterm
 " Wrapper of some neovim's :terminal functions.
@@ -1721,22 +1654,25 @@ tnoremap <leader><Esc> <C-\><C-n>
 Plug 'kassio/neoterm'
 let g:neoterm_open_in_all_tabs=0
 let g:neoterm_repl_python="ipython"
-" }}}
 
-" Nuake {{{
-"https://github.com/Lenovsky/nuake
-" A Quake style terminal panel for Neovim.
-Plug 'Lenovsky/nuake'
-
-" Set the Nuake size in percent.
-let g:nuake_size = 0.30
-" Enable the Nuake instance per tab page
-let g:nuake_per_tab = 1
-" }}}
+" Use gn{text-object} in normal mode
+nmap gn <Plug>(neoterm-repl-send)
+" Send selected contents in visual mode.
+xmap gn <Plug>(neoterm-repl-send)
+" Send line
+nmap gnl <plug>(neoterm-repl-send-line)
 
 " }}}
 
-" Appearances {{{
+" Terminal Mappings {{{
+
+" switch back to Normal mode this way so as to allow for ipython.
+tnoremap <leader><Esc> <C-\><C-n>
+" }}}
+
+" }}}
+
+" Appearances: {{{
 " Themes, airline, devicons, etc.
 
 " Squeeze out all of the color that we can.
@@ -1755,13 +1691,6 @@ endif
 " xterm color table & other color related things
 Plug 'guns/xterm-color-table.vim'
 
-" Pikachu
-" Pick colors for use in Neovim.
-" https://github.com/DougBeney/pickachu
-" Zenity is a dependency.
-" Install: brew install zenity
-" Plug 'DougBeney/pickachu'
-
 " winresizer {{{
 " https://github.com/simeji/winresizer
 " Easy resizing of windows in side vim. Ctrl-e starts the window resize mode
@@ -1769,8 +1698,11 @@ Plug 'guns/xterm-color-table.vim'
 " NOTE: 8/19/2017 - screen redraw in Neovim is killing any resize?!?
 "       8/23/2017 - nope, this was unique to Tagbar & the equalalways option.
 Plug 'jimsei/winresizer'
-let g:winresizer_vert_resize=5
-let g:winresizer_horiz_resize=5
+let g:winresizer_vert_resize=3
+let g:winresizer_horiz_resize=3
+" I want to use CTRL-W_e to trigger the resize.
+let g:winresizer_start_key='<C-w>e'
+let g:winresizer_gui_start_key='<C-w>e'
 " }}}
 
 " vim-choosewin - as close to ace-window as we get. {{{
@@ -1881,7 +1813,7 @@ nnoremap ZQ <Nop>
 " A test to see if i could map the MacOSX Command key
 " Friday July 6 2018 - Is working in Vimr
 " Saturday December 29, 2018 - Won't work in iTerm2
-nnoremap <D-l> :echo "testing"<cr>
+" nnoremap <D-l> :echo "testing"<cr>
 
 " Edit Neovim configuration file.
 nnoremap <silent> <leader>ec :e $MYVIMRC<cr>
