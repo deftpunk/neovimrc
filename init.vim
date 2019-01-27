@@ -157,11 +157,13 @@
 "   	- Edit mode
 "   	- Looks like you can change the search utility to ripgrep.
 "   	- Async was just added.
+"   	- rainbow delimiter conflict that can be worked around.
 "   4. ctrlsf.vim - https://github.com/dyng/ctrlsf.vim
 "       - leverages multiple-cursors
 "       - can make use of ripgrep
 "       - Edit mode only allows for modify and delete.
 "       - Asynchronous
+"       - multiple-cursors dependency
 "   5. vim-swoop - https://github.com/pelodelfuego/vim-swoop
 "   	- Pretty sure its not Asynchronous.
 "   	- Edit mode
@@ -591,39 +593,6 @@ let g:active_number = 1
 let g:actnum_exclude =
 \ [ 'denite', 'tagbar', 'startify', 'undotree', 'gundo', 'vimshell', 'w3m',
 \   'help', 'mundo', 'magit', 'fugitive']
-" }}}
-
-" vim-ags {{{
-" https://github.com/gabesoft/vim-ags
-" --------------------------------------
-" MAPPINGS                                         *ags-mappings*
-" Once inside the search results window:~
-"     p    - navigate file paths forward
-"     P    - navigate files paths backwards
-"     r    - navigate results forward
-"     R    - navigate results backwards
-"     a    - display the file path for current results
-"     c    - copy to clipboard the file path for current results
-"     E    - enter edit mode
-"     oa   - open file above the results window
-"     ob   - open file below the results window
-"     ol   - open file to the left of the results window
-"     or   - open file to the right of the results window
-"     os   - open file in the results window
-"     ou   - open file in a previously opened window
-"     xu   - open file in a previously opened window and close the search results
-"     <CR> - open file in a previously opened window
-"     q    - close the search results window
-"     u    - displays these key mappings
-" --------------------------------------
-Plug 'gabesoft/vim-ags'
-let g:ags_winheight=60
-" This plugin has a display conflict with RainbowDelimiters.
-autocmd BufNewFile,BufRead,BufEnter *.agsv set filetype=agsv
-autocmd BufNewFile,BufRead,BufEnter *.agsv RainbowToggle
-autocmd FileType agsv RainbowToggle
-
-nnoremap <silent><leader>rt :RainbowToggle<cr>
 " }}}
 
 " Ale - async syntax checking {{{
