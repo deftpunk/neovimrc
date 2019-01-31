@@ -1694,8 +1694,11 @@ Plug 't9md/vim-choosewin'
 let g:choosewin_blink_on_land = 0
 " Shade the windows a little bit when overlay enabled.
 let g:choosewin_overlay_shade = 1
-" remap into C-w mappings.
-nmap <C-w>- :ChooseWin<cr>
+nmap  -  <Plug>(choosewin)
+
+" nerdtree_choosewin
+" https://github.com/weilbith/nerdtree_choosewin-plugin
+Plug 'weilbith/nerdtree_choosewin-plugin'
 " }}}
 
 " Themes {{{
@@ -1838,12 +1841,6 @@ cmap <c-e> <end>
 
 " Remap VIM 0 to first non-blank character
 map 0 ^
-
-" Increment & Decrement numbers individually or in vertical sequence
-noremap + <C-a>
-noremap - <C-x>
-xnoremap + g<C-a>
-xnoremap - g<C-x>
 
 " Omni completion remap
 inoremap <C-l> <C-x><C-l>
