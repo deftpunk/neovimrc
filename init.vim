@@ -471,7 +471,7 @@ let g:ctrlp_match_current_file = 1 " to include current file in matches
 nnoremap <leader>fb :CtrlPBuffer<cr>
 nnoremap <leader>fc :CtrlPChange<cr>
 nnoremap <leader>fd :CtrlPDir<cr>
-nnoremap <leader>fi :CtrlPMixed<cr>
+nnoremap <leader>i :CtrlPMixed<cr>
 nnoremap <leader>fm :CtrlPMRUFiles<cr>
 nnoremap <leader>fq :CtrlPQuickfix<cr>
 
@@ -775,7 +775,11 @@ Plug 'tpope/vim-commentary'
 "     q - Close preview window.
 Plug 'dyng/ctrlsf.vim'
 
+
+
+" vim-dispatch
 " https://github.com/tpope/vim-dispatch
+" Dependency for vim-multiple-cursors
 Plug 'tpope/vim-dispatch'
 
 " vim-multiple-cursors
@@ -1770,7 +1774,12 @@ endif
 highlight Comment cterm=italic
 " }}}
 
-" General mappings ------------------------------------------------- {{{
+" General Mappings: {{{
+
+" Some general leader mappings. {{{
+" Kill all of the open currently open buffers.
+nnoremap <leader>bd :bufdo bd<cr>
+" }}}
 
 " Disable some bindings that I find annoying & potentially dangerous if hit
 " accidentally.
