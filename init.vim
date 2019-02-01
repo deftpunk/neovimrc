@@ -116,6 +116,11 @@
 " https://github.com/blueyed/vim-diminactive
 " https://github.com/PeterRincker/vim-argumentative - function signatures.
 "
+" https://github.com/cohama/lexima.vim - parens autoclosing
+" https://github.com/alvan/vim-closetag - for closing html tags
+" http://mattn.github.io/emmet-vim/ - for closing CSS tags
+" https://github.com/jiangmiao/auto-pairs - another parens/backets autoclosing
+"
 " vim-themis - https://github.com/thinca/vim-themis - testing framework for
 "   vimscript.
 " vital.vim - https://github.com/vim-jp/vital.vim
@@ -150,20 +155,21 @@
 "       - Edit mode, in the sense that you enter the replace with pattern on
 "         the commandline.
 "       - ripgrep support
-"       - Asynchronous on Neovim
+"       - Asynchronous on Neovim without using Dispatch.
+"       - Farundo doesn't always undo - known bug
 "   2. FlyGrep.vim - https://github.com/wsdjeg/FlyGrep.vim
 "       - No Edit mode
 "   3. vim-ags - https://github.com/gabesoft/vim-ags
 "   	- Edit mode
 "   	- Looks like you can change the search utility to ripgrep.
-"   	- Async was just added.
+"   	- Async was just added but can be laggy.
 "   	- rainbow delimiter conflict that can be worked around.
 "   4. ctrlsf.vim - https://github.com/dyng/ctrlsf.vim
 "       - leverages multiple-cursors
 "       - can make use of ripgrep
 "       - Edit mode only allows for modify and delete.
 "       - Asynchronous
-"       - multiple-cursors dependency
+"       - Dispatch and multiple-cursors dependencies.
 "   5. vim-swoop - https://github.com/pelodelfuego/vim-swoop
 "   	- Pretty sure its not Asynchronous.
 "   	- Edit mode
@@ -414,7 +420,8 @@ Plug 'kana/vim-textobj-user'
 " Navigation ------------------------------------------------------------- {{{
 
 " Navigation Plugins:
-" 1. Denite
+" 1. Denite 1/31/2019 - not sure if it will be fast enough to work w/ Linux
+"                       Kernel code. base.
 "    - uses Python3
 "    - outline/tags source requires ctags to be installed.
 "    - Denite Lines doesn't work with the jumplist == C-i/C-o don't work.
@@ -422,7 +429,10 @@ Plug 'kana/vim-textobj-user'
 "    - outline/tags (CtrlPFunky) doesn't require ctags to be installed.
 "    - CtrlPLine works with jumplist so that C-i/C-o work but doesn't seem to
 "      find stuff as well.
+"    - fruzzy & ripgrep help make it much faster.
+"    - CtrlPFunky is the bomb.
 " 3. LeaderF - https://github.com/Yggdroot/LeaderF
+"              1/31/2019 - not fast enough.
 "    - uses Python
 " 4. FZF
 "    - wicked fast.
@@ -430,10 +440,8 @@ Plug 'kana/vim-textobj-user'
 "    - No outline/tags
 "    - MRU is a different command - no mixed results, that I can see.
 "    - Lines+BLines Does work with jumplist.
-"
-" ... any more??
 
-" fruzzy
+" fruzzy {{{
 " https://github.com/raghur/fruzzy
 " Freaky fast fuzzy finder for (denite.nvim/CtrlP matcher) for vim/neovim
 " 01/21/2019 - Got a pretty fast speed up using fruzzy with CtrlP.
@@ -441,6 +449,7 @@ Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
 " optional - but recommended - see below
 let g:fruzzy#usenative = 1
 let g:fruzzy#sortonempty = 1 " default value
+" }}}
 
 " The active fork of CtrlP {{{
 " https://github.com/ctrlpvim/ctrlp.vim
@@ -774,13 +783,14 @@ Plug 'tpope/vim-commentary'
 " In preview window:
 "     q - Close preview window.
 Plug 'dyng/ctrlsf.vim'
-
-
+let g:ctrlsf_ackprg = '/usr/local/bin/rg'
+let g:ctrlsf_indent = 2
+let g:ctrlsf_search_mode = 'async'
 
 " vim-dispatch
 " https://github.com/tpope/vim-dispatch
 " Dependency for vim-multiple-cursors
-Plug 'tpope/vim-dispatch'
+" Plug 'tpope/vim-dispatch'
 
 " vim-multiple-cursors
 " https://github.com/terryma/vim-multiple-cursors
