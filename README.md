@@ -1,2 +1,2 @@
 # neovimrc
-My Neovim configuration
+My dark powered Neovim configuration.
