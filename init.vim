@@ -787,11 +787,6 @@ let g:ctrlsf_ackprg = '/usr/local/bin/rg'
 let g:ctrlsf_indent = 2
 let g:ctrlsf_search_mode = 'async'
 
-" vim-dispatch
-" https://github.com/tpope/vim-dispatch
-" Dependency for vim-multiple-cursors
-" Plug 'tpope/vim-dispatch'
-
 " vim-multiple-cursors
 " https://github.com/terryma/vim-multiple-cursors
 " Dependency for edit mode in CtrlSF
