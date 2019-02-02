@@ -1465,23 +1465,71 @@ Plug 'lambdalisue/gina.vim'
 
 " vim-fugitive {{{
 " https://github.com/tpope/vim-fugitive
-" :Gstatus - Brings up output of git status
-"   - Press - to add/reset a files changes.
-"   - Press cc to commit
-"   - Press ca to amend a commit
-"   - Press o to split
-"   - Press S for vertical split
-"   - Press dv for diff in vertical split
-" :Gblame - Brings up an interactive vertical split with git blame output
-"   - Press q to close blame and return to blamed window.
-"   - Press o to open commit in horizontal window.
-"   - Press O to open commit in vertical window.
-"   - Press - to reblame at commit
+"
+" :Gstatus - Brings up output of git status {{{
+"    g?    show this help
+"    <C-N> next file
+"    <C-P> previous file
+"    <CR>  |:Gedit|
+"    -     |:Git| add
+"    -     |:Git| reset (staged files)
+"    ca    |:Gcommit| --amend
+"    cc    |:Gcommit|
+"    ce    |:Gcommit| --amend --no-edit
+"    cw    |:Gcommit| --amend --only
+"    cva   |:Gcommit| --verbose --amend
+"    cvc   |:Gcommit| --verbose
+"    cf    |:Gcommit| --fixup=
+"    cs    |:Gcommit| --squash=
+"    cA    |:Gcommit| --edit --squash=
+"    =     toggle inline diff
+"    <     show inline diff
+"    >     hide inline diff
+"    D     |:Gdiff|
+"    ds    |:Gsdiff|
+"    dp    |:Git!| diff (p for patch; use :Gw to apply)
+"    dp    |:Git| add --intent-to-add (untracked files)
+"    dv    |:Gvdiff|
+"    gO    |:Gvsplit|
+"    O     |:Gtabedit|
+"    o     |:Gsplit|
+"    P     |:Git| add --patch
+"    P     |:Git| reset --patch (staged files)
+"    s     |:Git| add
+"    u     |:Git| reset
+"    X     |:Git| checkout
+"    X     |:Git| checkout HEAD (staged files)
+"    X     |:Git| clean (untracked files)
+"    X     |:Git| rm (unmerged files)
+"    q     close status
+"    R     reload status
+"    . enter |:| command line with file prepopulated
+" }}}
+
+" :Gblame - Brings up an interactive vertical split with git blame output {{{
+"     g?    show this help
+"     A     resize to end of author column
+"     C     resize to end of commit column
+"     D     resize to end of date/time column
+"     q     close blame and return to blamed window
+"     gq    q, then |:Gedit| to return to work tree version
+"     <CR>  q, then open commit
+"     o     open commit in horizontal split
+"     O     open commit in new tab
+"     p     open commit in preview window
+"     -     reblame at commit
+"     ~     reblame at [count]th first grandparent
+"     P reblame at [count]th parent (like HEAD^[count])
+" }}}
+
 " :Gcommit - Brings up a split window to obtain a commit message.  A :wq or
 "            :Gwrite will write the commit and close the window.
-" :Gdiff -
+
+" :Gdiff / :Gsdiff / :Gvdiff - vimdiff / vimdiff split horizontally / vimdiff
+"                              split vertically
+
 " :Gbrowse - Open the current file, blob, tree, commit or tag in your browser
-"            at the hosting provider.
+"            at the hosting provider.  vim-rhubarb provides Github access.
 Plug 'tpope/vim-fugitive'
 " }}}
 
@@ -1516,7 +1564,7 @@ nnoremap <silent> <leader>gb :Gblame<CR>
 nnoremap <silent> <leader>gc :Gcommit<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gl :Glog<CR>
-nnoremap <silent> <leader>gp :Git push<CR>
+nnoremap <silent> <leader>gp :Gpush<CR>
 nnoremap <silent> <leader>gr :Gremove<CR>
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gu :Gbrowse<CR>
@@ -1571,6 +1619,8 @@ nnoremap <silent> <leader>gvl :GV?<cr>
 
 " vimagit - A Vim implementation of the awesome Emacs magit {{{
 " https://github.com/jreybert/vimagit
+" Fri Feb 1 2019 - Commented out in favor of vim-fugitive
+"
 " Local mappings:
 "   - <cr> on a file will hide/unhide diffs
 "   - zc hide diffs on a file
@@ -1584,11 +1634,11 @@ nnoremap <silent> <leader>gvl :GV?<cr>
 "   - I  add the file under the cursor position to gitignore
 "   - R  refresh the magit buffer
 "   - ?  Toggle help showing in magit buffer.
-Plug 'jreybert/vimagit'
-nnoremap <silent><leader>vv :MagitOnly<cr>
+" Plug 'jreybert/vimagit'
+" nnoremap <silent><leader>vv :MagitOnly<cr>
 " vimagit is pretty dumb from a performance perspective and has a really hard
 " time with files that lots of diffs or really long lines.
-let g:magit_default_fold_level = 0
+" let g:magit_default_fold_level = 0
 " }}}
 
 " }}}
