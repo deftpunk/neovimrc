@@ -304,10 +304,10 @@ set showbreak=↪
 set cpo+=n
 
 " Use persistent history
-if !isdirectory("/Users/matthewbodine/tmp/neovim-undo-dir")
-	call mkdir("/Users/matthewbodine/tmp/neovim-undo-dir", "", 0700)
+if !isdirectory("/Users/ebodine/tmp/neovim-undo-dir")
+	call mkdir("/Users/ebodine/tmp/neovim-undo-dir", "", 0700)
 endif
-set undodir=/Users/matthewbodine/tmp/neovim-undo-dir
+set undodir=/Users/ebodine/tmp/neovim-undo-dir
 set undofile
 
 " Automatically reload files that have changed.
@@ -591,7 +591,7 @@ Plug 'nelstrom/vim-visual-star-search'
 " and Title Case (crt) are all just 3 keystrokes away.
 " These commands support repeat.vim.
 Plug 'tpope/tpope-vim-abolish'
-let g:abolish_save_file="/Users/matthewbodine/.config/nvim/abolish-abbreviations.vim"
+let g:abolish_save_file="/Users/ebodine/.config/nvim/abolish-abbreviations.vim"
 " }}}
 
 " vim-active-numbers {{{
@@ -612,7 +612,7 @@ let g:ale_sign_warning = '≈'
 let g:ale_linters = {
 \    'python': ['flake8'],
 \}
-let g:ale_python_flake8_options = '--config=/Users/matthewbodine/.flake8'
+let g:ale_python_flake8_options = '--config=/Users/ebodine/.flake8'
 let g:ale_emit_conflict_warnings = 0
 " }}}
 
@@ -700,12 +700,14 @@ Plug 'raimondi/delimitMate'
 Plug 'rizzatti/dash.vim'
 " }}}
 
-" deoplete - dark powered async completion framework for neovim {{{
+" deoplete {{{
 " https://github.com/Shougo/deoplete.nvim
+" Dark powered async completion framework for neovim
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " NOTE: Feb 15, 2018  9:12 am - Had to comment out NVIM_LISTEN_ADDRESS in ~/.zshrc
 " https://github.com/Shougo/deoplete.nvim/issues/646
 let g:deoplete#enable_at_startup = 1
+" }}}
 
 " vim-eunuch {{{
 " https://github.com/tpope/vim-eunuch
@@ -927,7 +929,7 @@ Plug 'tyru/open-browser.vim'
 "  to a valid file path.
 Plug 'mtth/scratch.vim'
 let g:scratch_height=25
-let g:scratch_persistence_file='/Home/Users/matthewbodine/tmp/neovim-scratch.txt'
+let g:scratch_persistence_file='/Home/Users/ebodine/tmp/neovim-scratch.txt'
 " }}}
 
 " vim-scriptease {{{
@@ -1258,7 +1260,7 @@ nnoremap <leader>it :IlluminationToggle<cr>
 Plug 'fatih/vim-go'
 let g:go_version_warning = 0
 " let g:go_bin_path="$HOME/workspace/go/bin/"
-let g:go_bin_path="/Users/matthewbodine/workspace/go/bin/"
+let g:go_bin_path="/Users/ebodine/workspace/go/bin/"
 
 " deoplete-go
 " https://github.com/zchee/deoplete-go
@@ -1433,8 +1435,7 @@ let g:markdown_enable_folding = 1
 " ** HAS TO COME AFTER LANGUAGE DEFINITIONS THAT YOU HAVE DISABLED BELOW **
 " ** HAS CONFLICTS WITH VIM-GO - https://github.com/fatih/vim-go/issues/2045 **
 Plug 'sheerun/vim-polyglot'
-" I prefer my own configuration of Python, Markdown and Golang, Markdown and
-" Golang
+" I prefer my own configuration of Python, Markdown and Golang
 let g:polyglot_disabled = ['go', 'python', 'markdown']
 let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js=javascript', 'json=javascript', 'perl', 'php', 'python', 'ruby', 'sass', 'xml', 'html', 'vim']
 " }}}
