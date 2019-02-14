@@ -15,6 +15,7 @@ sessionslast_session.vim
 
 autoload/
 plugged/
+neovim-undo-dir/
 
 # Scratch
 __Scratch__
