@@ -307,7 +307,7 @@ set cpo+=n
 if !isdirectory("/Users/ebodine/tmp/neovim-undo-dir")
 	call mkdir("/Users/ebodine/tmp/neovim-undo-dir", "", 0700)
 endif
-set undodir=/Users/ebodine/tmp/neovim-undo-dir
+set undodir=/Users/ebodine/tmp/neovimrc/neovim-undo-dir
 set undofile
 
 " Automatically reload files that have changed.
@@ -976,7 +976,7 @@ Plug 'tpope/vim-obsession'
 " Leverage vim-obsession to switch between multiple sessions cleanly
 " https://github.com/dhruvasagar/vim-prosession/
 Plug 'dhruvasagar/vim-prosession'
-let g:prosession_dir='~/tmp/nvim/sessions'
+let g:prosession_dir='~/tmp/neovimrc/sessions'
 let g:prosession_on_startup = 1
 " }}}
 
@@ -1382,7 +1382,7 @@ let g:html5_aria_attributes_complete = 0
 " Miscellaneous File Types {{{
 
 " Dockerfile {{{
-"https://github.com/ekalinin/Dockerfile.vim
+" https://github.com/ekalinin/Dockerfile.vim
 " NOTE: No docs for this plugin.
 Plug 'ekalinin/Dockerfile.vim'
 " }}}
