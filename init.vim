@@ -110,7 +110,6 @@
 " https://github.com/chrisbra/csv.vim - CSV files
 " https://github.com/rhysd/vim-gfm-syntax - Github flavored markdown syntax
 " 					    hightlighting
-" https://github.com/pearofducks/ansible-vim - Ansible YAML
 " https://github.com/bcicen/vim-jfmt
 " https://github.com/idanarye/vim-vebugger
 " https://github.com/blueyed/vim-diminactive
@@ -1380,6 +1379,11 @@ let g:html5_aria_attributes_complete = 0
 " }}}
 
 " Miscellaneous File Types {{{
+
+" ansible-vim {{{
+" https://github.com/pearofducks/ansible-vim
+Plug 'pearofducks/ansible-vim'
+" }}}
 
 " Dockerfile {{{
 " https://github.com/ekalinin/Dockerfile.vim
