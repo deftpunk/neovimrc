@@ -600,7 +600,7 @@ Plug 'AssailantLF/vim-active-numbers'
 let g:active_number = 1
 let g:actnum_exclude =
 \ [ 'denite', 'tagbar', 'startify', 'undotree', 'gundo', 'vimshell', 'w3m',
-\   'help', 'mundo', 'magit', 'fugitive']
+\   'help', 'mundo', 'magit', 'fugitive', 'nerdtree']
 " }}}
 
 " Ale - async syntax checking {{{
@@ -966,6 +966,7 @@ nmap zg/ <Plug>(incsearch-fuzzy-stay)<Paste>
 " }}}
 
 " Sessions - obssesion+prosession {{{
+
 " vim-obsession
 " Better manage the :mksession interface - see vim-prosession below.
 " https://github.com/tpope/vim-obsession
@@ -977,6 +978,11 @@ Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
 let g:prosession_dir='~/tmp/neovimrc/sessions'
 let g:prosession_on_startup = 1
+
+" ctrlp-obsession
+" https://github.com/gikmx/vim-ctrlposession
+" A super simple session-navigator using obsession / prosession & CtrlP
+Plug 'gikmx/ctrlp-obsession'
 " }}}
 
 " Snippets {{{
@@ -1084,6 +1090,21 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
     \ }
+
+" Tagbar configuration for Groovy.  Requires a corresponding ~/.ctags config.
+" https://github.com/majutsushi/tagbar/wiki#groovy
+let g:tagbar_type_groovy = {
+    \ 'ctagstype' : 'groovy',
+    \ 'kinds'     : [
+        \ 'p:package:1',
+        \ 'c:classes',
+        \ 'i:interfaces',
+        \ 't:traits',
+        \ 'e:enums',
+        \ 'm:methods',
+        \ 'f:fields:1'
+    \ ]
+\ }
 
 nnoremap <leader>tt :TagbarToggle<CR>
 nnoremap <leader>to :TagbarOpen<CR>
@@ -1417,17 +1438,14 @@ Plug 'elzr/vim-json'
 " let g:markdown_minlines = 100
 
 " vim-markdown
-"https://github.com/gabrielelana/vim-markdown
+" https://github.com/gabrielelana/vim-markdown
 " Not the tpope version
+" NOTE: Mon Feb 25, 2019 4:17:32pm - Really slow for big *.md files, trying to
+" see if disabling folding will help things.
 Plug 'gabrielelana/vim-markdown'
 let g:markdown_include_jekyll_support = 0
 let g:markdown_enable_conceal = 1
-let g:markdown_enable_folding = 1
-
-" vim-markdown-folding
-"https://github.com/nelstrom/vim-markdown-folding
-" Plug 'nelstrom/vim-markdown-folding'
-" }}}
+" let g:markdown_enable_folding = 1
 
 " }}}
 
