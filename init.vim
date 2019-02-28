@@ -414,6 +414,24 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'kana/vim-textobj-user'
 " }}}
 
+" vim-wordmotion {{{
+" Expands the definition of a word.
+" https://github.com/chaoren/vim-wordmotion
+" --------------------------------------------------
+"      word            	      Example
+" --------------------------------------------------
+" Camel case words     	    [Camel][Case]
+" Acronyms             	    [HTML]And[CSS]
+" Uppercase words      	    [UPPERCASE] [WORDS]
+" Lowercase words      	    [lowercase] [words]
+" Hexadecimal literals 	    [0x00ffFF] [0x0f]
+" Binary literals      	    [0b01] [0b0011]
+" Regular numbers      	    [1234] [5678]
+" Other characters     	    [~!@#$]
+" --------------------------------------------------
+Plug 'chaoren/vim-wordmotion'
+" }}}
+
 " }}}
 
 " Navigation ------------------------------------------------------------- {{{
@@ -436,7 +454,7 @@ Plug 'kana/vim-textobj-user'
 " 4. FZF
 "    - wicked fast.
 "    - No boommarks
-"    - No outline/tags
+"    - tags but requires ctags
 "    - MRU is a different command - no mixed results, that I can see.
 "    - Lines+BLines Does work with jumplist.
 
@@ -476,10 +494,10 @@ let g:ctrlp_use_caching=0
 let g:ctrlp_match_func = {'match': 'fruzzy#ctrlp#matcher'}
 let g:ctrlp_match_current_file = 1 " to include current file in matches
 
-nnoremap <leader>fb :CtrlPBuffer<cr>
 nnoremap <leader>fc :CtrlPChange<cr>
 nnoremap <leader>fd :CtrlPDir<cr>
 nnoremap <leader>i :CtrlPMixed<cr>
+nnoremap <leader>ii :CtrlPBuffer<cr>
 nnoremap <leader>fm :CtrlPMRUFiles<cr>
 nnoremap <leader>fq :CtrlPQuickfix<cr>
 
@@ -542,18 +560,38 @@ nnoremap <leader>he :CtrlPHelp<cr>
 " }}}
 
 " FZF {{{
-"
+" https://github.com/junegunn/fzf.vim
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+    \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
+
+" Mappings:
+" search lines in buffer.
+nmap <leader><leader>s :BLines<cr>
 " }}}
 
 " vim-easymotion {{{
 " Moving around in a buffer like ace-jump and avy.
 " https://github.com/easymotion/vim-easymotion
 Plug 'easymotion/vim-easymotion'
-nmap <leader><leader>s <Plug>(easymotion-s)
-nmap <leader><leader>l <Plug>(easymotion-bd-tl)
+" nmap <leader><leader>s <Plug>(easymotion-s)
+" nmap <leader><leader>l <Plug>(easymotion-bd-tl)
 " }}}
 
 " ListToggle {{{
@@ -1583,13 +1621,21 @@ nnoremap <silent> <leader>gm :MerginalToggle<CR>
 Plug 'tpope/vim-rhubarb'
 " }}}
 
+" vim-fubitive {{{
+" https://github.com/tommcdo/vim-fubitive
+" Add bitbucket support for Gbrowse - yeah!
+Plug 'tommcdo/vim-fubitive'
+" }}}
+
 nnoremap <silent> <leader>gb :Gblame<CR>
 nnoremap <silent> <leader>gc :Gcommit<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
-nnoremap <silent> <leader>gl :Glog<CR>
+" Adding 0 at the beginning points to the local file - :GV! is better.
+nnoremap <silent> <leader>gl :0Glog<CR>
 nnoremap <silent> <leader>gp :Gpush<CR>
 nnoremap <silent> <leader>gr :Gremove<CR>
 nnoremap <silent> <leader>gs :Gstatus<CR>
+" Browse the file online in the repository browser, e.g. github or bitbucket.
 nnoremap <silent> <leader>gu :Gbrowse<CR>
 nnoremap <silent> <leader>gw :Gwrite<CR>
 
