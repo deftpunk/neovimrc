@@ -581,6 +581,11 @@ let g:fzf_colors =
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
 
+" Modify the git log commeand.
+let g:fzf_commits_log_options = '--graph --color=always
+  \ --format="%C(yellow)%h%C(red)%d%C(reset)
+  \ - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
+
 " Mappings:
 " search lines in buffer.
 nmap <leader><leader>s :BLines<cr>
@@ -915,7 +920,9 @@ nnoremap <silent><leader>u :MundoToggle<cr>
 " NERDTree {{{
 " https://github.com/scrooloose/nerdtree.git
 Plug 'https://github.com/scrooloose/nerdtree.git'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+let g:NERDTreeUpdateOnCursorHold = 0
+let g:NERDTreeUpdateOnWrite      = 0
 let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "✹",
     \ "Staged"    : "✚",
@@ -933,6 +940,19 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeShowBookmarks=1
 nnoremap <leader>nt :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" https://bluz71.github.io/2017/05/21/vim-plugins-i-like.html
+" One inconvenience is that NERDTree, by default, will not refresh itself when
+" one enters the file-tree window. For instance, it won’t display new files
+" not created within NERDTree unless a manual refresh is executed. This can be
+" overcome with the following auto-refreshing snippet:
+function! NERDTreeRefresh()
+    if &filetype == "nerdtree"
+        silent exe substitute(mapcheck("R"), "<CR>", "", "")
+    endif
+endfunction
+
+autocmd BufEnter * call NERDTreeRefresh()
 " }}}
 
 " open-browser {{{
