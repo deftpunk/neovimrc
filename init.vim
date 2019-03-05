@@ -1706,6 +1706,14 @@ nnoremap <silent> <leader>gvc :GV!<cr>
 nnoremap <silent> <leader>gvl :GV?<cr>
 " }}}
 
+" flog {{{
+" https://github.com/rbong/vim-flog
+" Flog is a lightweight and powerful git branch viewer that integrates with
+" fugitive.  New and improved gitv.
+" NOTE: Comparing with gv.vim
+Plug 'rbong/vim-flog'
+" }}}
+
 " }}}
 
 " Terminal: {{{
