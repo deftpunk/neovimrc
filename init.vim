@@ -1380,8 +1380,8 @@ Plug 'cjrh/vim-conda'
 
 " impsort.vim - sensibly sort imports
 " https://github.com/tweekmonster/impsort.vim
-" Utility for sorting and highlighting Python imports.
-" We'll see if this is any better than using isort.
+" Utility for sorting and highlighting Python imports.  More flexible than
+" isort.
 Plug 'tweekmonster/impsort.vim'
 let g:impsort_textwidth = 104
 " so that the linter doesn't complain.
@@ -1704,30 +1704,6 @@ nnoremap <silent> <leader>gva :GV<cr>
 nnoremap <silent> <leader>gvc :GV!<cr>
 " commit browser for current file in location list.
 nnoremap <silent> <leader>gvl :GV?<cr>
-" }}}
-
-" vimagit - A Vim implementation of the awesome Emacs magit {{{
-" https://github.com/jreybert/vimagit
-" Fri Feb 1 2019 - Commented out in favor of vim-fugitive
-"
-" Local mappings:
-"   - <cr> on a file will hide/unhide diffs
-"   - zc hide diffs on a file
-"   - zo unhide diffs on a file
-"   - +,-,0  enlarge,shrink,reset the diff context
-"   - S stage/unstage hunk or stage/unstage whole file depending on cursor
-"       position.
-"   - F stage/unstage the whole file at cursor position
-"   - CC from `stage mode` set commit mode
-"        :w, :x, :wq, ZZ will commit all staged changes
-"   - I  add the file under the cursor position to gitignore
-"   - R  refresh the magit buffer
-"   - ?  Toggle help showing in magit buffer.
-" Plug 'jreybert/vimagit'
-" nnoremap <silent><leader>vv :MagitOnly<cr>
-" vimagit is pretty dumb from a performance perspective and has a really hard
-" time with files that lots of diffs or really long lines.
-" let g:magit_default_fold_level = 0
 " }}}
 
 " }}}
