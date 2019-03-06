@@ -1435,6 +1435,16 @@ augroup ft_vagrant
 augroup END
 " }}}
 
+" Rust {{{
+
+" rust-lang support
+" TODO: rusti & coc.vim using LSP.
+Plug 'rust-lang/rust.vimt-lang/rust.vim'
+" Run rustfmt on save.
+let g:autofmt_autosave = 1
+
+" }}}
+
 " Web development - Javascript, CSS, HTML, etc. {{{
 "Plug 'rstacruz/vim-hyperstyle'
 
@@ -1505,6 +1515,7 @@ let g:markdown_include_jekyll_support = 0
 let g:markdown_enable_conceal = 1
 " let g:markdown_enable_folding = 1
 
+" }}}
 " }}}
 
 " vim-polyglot {{{
