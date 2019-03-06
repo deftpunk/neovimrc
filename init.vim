@@ -94,18 +94,17 @@
 " Some plugins to check out in the future & notes on comparing classes of
 " plugins.
 "
-" https://github.com/kana/vim-niceblock
 " https://github.com/euclio/vim-markdown-composer
 " https://gitlab.com/HiPhish/repl.nvim
-" https://github.com/svermeulen/vim-subversive
-" https://github.com/mcchrish/nnn.vim - a possible replacement for NERDTree
+" https://github.com/svermeulen/vim-subversive - operator motions to quickly
+" replace text.
+" https://github.com/svermeulen/vim-yoink - maintain a yank history to cycle
+" between when pasting.
 " https://github.com/Yilin-Yang/vim-markbar - show marks, maybe better than
 "                                             vim-bookmarks.
 " https://github.com/reconquest/vim-pythonx - python tools for easier coding.
-" https://github.com/numirias/semshi
-" https://github.com/mhinz/vim-galore
+" https://github.com/numirias/semshi - semantic python hightlighting.
 " https://github.com/xolox/vim-session
-" http://spacevim.org/documentation/
 " https://github.com/ludovicchabant/vim-gutentags
 " https://github.com/chrisbra/csv.vim - CSV files
 " https://github.com/rhysd/vim-gfm-syntax - Github flavored markdown syntax
@@ -122,7 +121,6 @@
 "
 " vim-themis - https://github.com/thinca/vim-themis - testing framework for
 "   vimscript.
-" vital.vim - https://github.com/vim-jp/vital.vim
 " denite - https://github.com/Shougo/denite.nvim
 " denite-extras - https://github.com/neoclide/denite-extra
 " coc.vim - https://github.com/neoclide/coc.nvim - better(?) completion w/ LSP
@@ -132,18 +130,37 @@
 " https://github.com/terryma/vim-smooth-scroll
 " I can do without the smooth scrolling.
 "
+" Tuesday March 5, 2019
+" https://github.com/mcchrish/nnn.vim - a possible replacement for NERDTree
+" Not really a full-featured replacement.
+"
+" https://github.com/kana/vim-niceblock - Visual Block extras.
+" Functionality is filled in elsewhere.
+
 " }}}
 
-" Plugin And Vimscript Development: {{{
+" Vim Neovim Reference:
+" https://github.com/mhinz/vim-galore
+" http://spacevim.org/documentation/ - useful to mine for ideas.
+
+" General Plugin And Vimscript Development: {{{
 "
 " VimConf18 - Effective Modern Vim Scripting:
 " https://www.youtube.com/watch?v=J5BX1FXnKBw&t=0s&list=PLx8bw5NQypsnlh5K5LZAaFvAdxfGpt2iq&index=9
+"
+" vital.vim - https://github.com/vim-jp/vital.vim - vim utility functions.
+"
 " https://vimconf.org/2018/slides/Effective_Modern_Vim_scripting_at_vimconf2018_for_PDF.pdf
 "
 " $ echo set runtimepath+=~/vim-amake >> ~/.vimrc
 " $ mkdir ~/vim-amake && cd ~/vim-amake
 " $ mkdir plugin autoload doc
 " $ touch plugin/amake.vim autoload/amake.vim doc/amake.txt README.md
+" }}}
+
+" My Own Plugins: {{{
+"   1. Make tagbar open left of right depending on NERDTree or number of
+"   windows open.
 " }}}
 
 " Themes:
@@ -1111,7 +1128,7 @@ Plug 'majutsushi/tagbar'
 set noequalalways
 
 let g:tagbar_sort = 0
-let g:tagbar_left = 1
+let g:tagbar_left = 0
 let g:tagbar_expand = 1
 let g:tagbar_width = 45
 let g:tagbar_iconchars = ['▸', '▾']
@@ -1436,6 +1453,9 @@ augroup END
 " }}}
 
 " Rust {{{
+
+" Writing Rust plugin in Neovim.
+" https://blog.usejournal.com/a-detailed-guide-to-writing-your-first-neovim-plugin-in-rust-a81604c606b1
 
 " rust-lang support
 " TODO: rusti & coc.vim using LSP.
