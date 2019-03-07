@@ -1312,6 +1312,15 @@ nnoremap <leader>it :IlluminationToggle<cr>
 
 " Software Development: Languages {{{
 
+" C/C++ {{{
+
+" vim-fswitch
+" https://github.com/derekwyatt/vim-fswitch
+" Switch between header files and their partner files.
+Plug 'derekwyatt/vim-fswitch'
+
+" }}}
+
 " Clojure {{{
 
 " Acid
