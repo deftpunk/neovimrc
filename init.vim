@@ -518,7 +518,7 @@ nnoremap <leader>ii :CtrlPBuffer<cr>
 nnoremap <leader>fm :CtrlPMRUFiles<cr>
 nnoremap <leader>fq :CtrlPQuickfix<cr>
 
-nnoremap <leader>s :CtrlPLine %<cr>
+" nnoremap <leader>s :CtrlPLine %<cr>
 
 let g:ctrlp_prompt_mappings = {
     \ 'PrtSelectMove("n")':   ['<c-n>', '<down>'],
@@ -605,15 +605,17 @@ let g:fzf_commits_log_options = '--graph --color=always
 
 " Mappings:
 " search lines in buffer.
-nmap <leader><leader>s :BLines<cr>
+nmap <leader>s :BLines<cr>
+" search file contents using ripgrep.
+nmap <leader>r :Rg<cr>
 " }}}
 
 " vim-easymotion {{{
 " Moving around in a buffer like ace-jump and avy.
 " https://github.com/easymotion/vim-easymotion
 Plug 'easymotion/vim-easymotion'
-" nmap <leader><leader>s <Plug>(easymotion-s)
-" nmap <leader><leader>l <Plug>(easymotion-bd-tl)
+nmap <leader><leader>s <Plug>(easymotion-s)
+nmap <leader><leader>l <Plug>(easymotion-bd-tl)
 " }}}
 
 " ListToggle {{{
@@ -1042,6 +1044,12 @@ nmap zg/ <Plug>(incsearch-fuzzy-stay)<Paste>
 
 " Sessions - obssesion+prosession {{{
 
+" From https://dockyard.com/blog/2018/06/01/simple-vim-session-management-part-1
+" Session management without plugins....
+" let g:sessions_dir = '~/vim-sessions'
+" exec 'nnoremap <Leader>ss :mks! ' . g:session_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
+" exec 'nnoremap <Leader>sr :so ' . g:session_dir. '/*.vim<C-D><BS><BS><BS><BS><BS>'
+
 " vim-obsession
 " Better manage the :mksession interface - see vim-prosession below.
 " https://github.com/tpope/vim-obsession
@@ -1468,9 +1476,14 @@ augroup END
 
 " rust-lang support
 " TODO: rusti & coc.vim using LSP.
-Plug 'rust-lang/rust.vimt-lang/rust.vim'
+Plug 'rust-lang/rust.vim'
 " Run rustfmt on save.
 let g:autofmt_autosave = 1
+
+" }}}
+
+" Vimscript {{{
+" If you want to script Vim, you have to use vimscript, at least some.
 
 " }}}
 
@@ -1539,12 +1552,14 @@ Plug 'elzr/vim-json'
 " Not the tpope version
 " NOTE: Mon Feb 25, 2019 4:17:32pm - Really slow for big *.md files, trying to
 " see if disabling folding will help things.
+" NOTE: Thu Mar 7, 2019 4:37:12pm - disabling folding did not help.
 Plug 'gabrielelana/vim-markdown'
 let g:markdown_include_jekyll_support = 0
 let g:markdown_enable_conceal = 1
 " let g:markdown_enable_folding = 1
 
 " }}}
+
 " }}}
 
 " vim-polyglot {{{
@@ -1578,11 +1593,6 @@ let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js
 "
 " Vim Fugitive Vim Rhubarb GV Merginal:
 "   -
-
-" gina
-" https://github.com/lambdalisue/gina.vim
-" Gina.vim (gina) is a plugin to asynchronously control git repositories.
-Plug 'lambdalisue/gina.vim'
 
 " vim-fugitive {{{
 " https://github.com/tpope/vim-fugitive
@@ -1695,8 +1705,9 @@ nnoremap <silent> <leader>gl :0Glog<CR>
 nnoremap <silent> <leader>gp :Gpush<CR>
 nnoremap <silent> <leader>gr :Gremove<CR>
 nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gu :Gpull<CR>
 " Browse the file online in the repository browser, e.g. github or bitbucket.
-nnoremap <silent> <leader>gu :Gbrowse<CR>
+nnoremap <silent> <leader>gx :Gbrowse<CR>
 nnoremap <silent> <leader>gw :Gwrite<CR>
 
 " }}}
@@ -1748,9 +1759,10 @@ nnoremap <silent> <leader>gvl :GV?<cr>
 
 " flog {{{
 " https://github.com/rbong/vim-flog
+" https://medium.com/@r.l.bongers/announcing-flog-a-new-git-branch-viewer-for-vim-from-the-former-maintainer-of-gitv-e9db68977810
 " Flog is a lightweight and powerful git branch viewer that integrates with
 " fugitive.  New and improved gitv.
-" NOTE: Comparing with gv.vim
+" NOTE: Sat Mar 9, 2019 3:08:19pm - Comparing with gv.vim
 Plug 'rbong/vim-flog'
 " }}}
 
@@ -1905,6 +1917,26 @@ let g:airline#extensions#tabline#left_alt_sep = '|'" enable integration with ale
 let g:airline#extensions#ale#enabled=1
 " " need to enable this for vim-devicons
 let g:airline_powerline_fonts = 1
+" }}}
+
+" tmuxline.vim {{{
+" https://github.com/edkolev/tmuxline.vim
+" Simple tmux statusline generator with support for powerline symbols and
+" statusline / airline / lightline integration.
+" NOTE:
+"   Once this is installed, generate the ~/.tmux-status.conf file with
+"     :TmuxlineSnapshot ~/.tmux-status.conf in Neovim.
+"   Then, add the following to tmux.conf
+"     # Enable tmuxline when no Neovim.
+"     source-file ~/.tmux-status.conf
+"
+"   ** The TmuxlineSnapshot command must be executed after |tmuxline| has set
+"   tmux's statusline, i.e. after executing |:Tmuxline|
+Plug 'edkolev/tmuxline.vim'
+" for tmuxline + vim-airline integration
+let g:airline#extensions#tmuxline#enabled = 1
+" start tmuxline even without vim running
+let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
 " }}}
 
 " VimDevIcons - add glyphs/icons to plugins {{{
