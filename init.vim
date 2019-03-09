@@ -1825,6 +1825,18 @@ tnoremap <leader><Esc> <C-\><C-n>
 
 " }}}
 
+" Tmux
+" https://github.com/christoomey/vim-tmux-navigator
+" Allows you, with similar config in tmux.conf, to move between vim splits and
+" tmux panes seamlessly.
+"
+" Window split navigation:
+"   nnoremap <C-J> <C-W><C-J>
+"   nnoremap <C-K> <C-W><C-K>
+"   nnoremap <C-L> <C-W><C-L>
+"   nnoremap <C-H> <C-W><C-H>
+Plug 'christoomey/vim-tmux-navigator'
+
 " Appearances: {{{
 " Themes, airline, devicons, etc.
 
@@ -2018,12 +2030,10 @@ nnoremap U <C-r>
 " make vv act like V
 nnoremap vv 0v$
 
-" Windows
-" Ease the window split navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" vv to generate new vertical split
+nnoremap <silent> vv <C-w>v
+" ss to generate new horizontal split
+nnoremap <silent> ss <C-w>s
 
 " follow lines that wrap.
 " NOTE: 8/24/2014 - these 2 mappings resulted in the following message on nvim
