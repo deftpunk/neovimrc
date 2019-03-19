@@ -1,5 +1,6 @@
 " vim: ft=vim nu fdm=marker
 "
+"
 "                  _       __ _     _   _
 "               __| | ___| |_| |_  | | | |_ _ __ ___
 "              / _` |/ _ \  _| __| | | | | | '_ ` _ \
@@ -88,8 +89,6 @@
 
 " }}}
 
-" Notes {{{
-
 " Investigations: {{{
 " Some plugins to check out in the future & notes on comparing classes of
 " plugins.
@@ -121,10 +120,9 @@
 "
 " vim-themis - https://github.com/thinca/vim-themis - testing framework for
 "   vimscript.
-" denite - https://github.com/Shougo/denite.nvim
-" denite-extras - https://github.com/neoclide/denite-extra
 " coc.vim - https://github.com/neoclide/coc.nvim - better(?) completion w/ LSP
-"
+" https://github.com/thaerkh/vim-workspace - a single plugin for
+" sessions+obsession+prosession+fuzzy
 " Finished:
 " Thursday Jan 3, 2019
 " https://github.com/terryma/vim-smooth-scroll
@@ -139,9 +137,10 @@
 
 " }}}
 
-" Vim Neovim Reference:
+" Vim Neovim General Reference: {{{
 " https://github.com/mhinz/vim-galore
 " http://spacevim.org/documentation/ - useful to mine for ideas.
+" }}}
 
 " General Plugin And Vimscript Development: {{{
 "
@@ -163,10 +162,7 @@
 "   windows open.
 " }}}
 
-" Themes:
-"   - https://github.com/xero/nord-vim-mod
-"
-" Search And Replace Plugins:
+" Search And Replace Plugins: {{{
 "   1. far.vim - https://github.com/brooth/far.vim
 "       - Edit mode, in the sense that you enter the replace with pattern on
 "         the commandline.
@@ -231,6 +227,14 @@
 " }}}
 
 " Options -------------------------------------------------------- {{{
+
+let g:python_host_prog="/usr/local/bin/python2"
+let g:python3_host_prog="/usr/local/bin/python3"
+
+" So that the shape of the cursor changes in tmux depending on normal or
+" insert mode.  Unnfortunately I have to make the cursor shape or italics show
+" up properly in iTerm or tmux on MacOSX.
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 " neovim-remote
 " Avoid nested neovim processes by using neovim-remote. This should have been
@@ -506,15 +510,16 @@ let g:fruzzy#sortonempty = 1 " default value
 
 Plug 'ctrlpvim/ctrlp.vim'
 
+set grepprg=rg\ --color=never
 let g:ctrlp_user_command='rg %s --files --color=never --glob ""'
 let g:ctrlp_use_caching=0
 let g:ctrlp_match_func = {'match': 'fruzzy#ctrlp#matcher'}
 let g:ctrlp_match_current_file = 1 " to include current file in matches
+let g:ctrlp_match_window = 'bottom,order:ttb,max:25,results:25'
 
 nnoremap <leader>fc :CtrlPChange<cr>
 nnoremap <leader>fd :CtrlPDir<cr>
-nnoremap <leader>i :CtrlPMixed<cr>
-nnoremap <leader>ii :CtrlPBuffer<cr>
+nnoremap <leader>i :CtrlPBuffer<cr>
 nnoremap <leader>fm :CtrlPMRUFiles<cr>
 nnoremap <leader>fq :CtrlPQuickfix<cr>
 
@@ -524,19 +529,6 @@ let g:ctrlp_prompt_mappings = {
     \ 'PrtSelectMove("n")':   ['<c-n>', '<down>'],
     \ 'PrtSelectMove("p")':   ['<c-p>', '<up>'],
     \ }
-
-" vim-ctrlp-ag - Ag with CtrlP
-" https://github.com/lokikl/vim-ctrlp-ag
-Plug 'lokikl/vim-ctrlp-ag'
-
-nnoremap <leader>ca :CtrlPagLocate
-nnoremap <leader>cp :CtrlPagPrevious<cr>
-let g:ctrlp_ag_ignores = '--ignore .git
-    \ --ignore "deps/*"
-    \ --ignore ".mypy_cache"
-    \ --ignore "__pycache__"
-    \ --ignore "_build/*"
-    \ --ignore "node_modules/*"'
 
 " Show tags (ctags) for current file.
 " https://github.com/tacahiroy/ctrlp-funky
@@ -606,6 +598,8 @@ let g:fzf_commits_log_options = '--graph --color=always
 " Mappings:
 " search lines in buffer.
 nmap <leader>s :BLines<cr>
+" list open buffers.
+nmap <leader>b :Buffers<cr>
 " search file contents using ripgrep.
 nmap <leader>r :Rg<cr>
 " }}}
@@ -972,6 +966,17 @@ function! NERDTreeRefresh()
 endfunction
 
 autocmd BufEnter * call NERDTreeRefresh()
+
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+let g:NERDTreeIndicatorMapCustom = {
+	\ "Modified"  : "✗",
+	\ "Staged"    : "✓",
+	\ "Dirty"     : "*",
+	\ "Untracked" : "?",
+	\ "Renamed"   : "→"
+	\ }
+let g:NERDTreeUpdateOnCursorHold = 0
+let g:NERDTreeUpdateOnWrite      = 0
 " }}}
 
 " open-browser {{{
@@ -1320,12 +1325,19 @@ nnoremap <leader>it :IlluminationToggle<cr>
 
 " Software Development: Languages {{{
 
+" Bash, Zsh, *.etest
+" etest are unit test files in bash for NetApp Ember.
+autocmd BufRead,BufNewFile *.etest setfiletype sh
+autocmd FileType sh set tabstop=4 shiftwidth=4
+
 " C/C++ {{{
 
 " vim-fswitch
 " https://github.com/derekwyatt/vim-fswitch
 " Switch between header files and their partner files.
 Plug 'derekwyatt/vim-fswitch'
+
+Plug 'octol/vim-cpp-enhanced-highlight'
 
 " }}}
 
@@ -1825,7 +1837,9 @@ tnoremap <leader><Esc> <C-\><C-n>
 
 " }}}
 
-" Tmux
+" Tmux: {{{
+
+" vim-tmux-navigator {{{
 " https://github.com/christoomey/vim-tmux-navigator
 " Allows you, with similar config in tmux.conf, to move between vim splits and
 " tmux panes seamlessly.
@@ -1836,18 +1850,31 @@ tnoremap <leader><Esc> <C-\><C-n>
 "   nnoremap <C-L> <C-W><C-L>
 "   nnoremap <C-H> <C-W><C-H>
 Plug 'christoomey/vim-tmux-navigator'
+" }}}
+
+" vimux {{{
+" https://github.com/benmills/vimux
+Plug 'benmills/vimux'
+
+" Prompt for a command to run
+map <leader>vp :VimuxPromptCommand<CR>
+" Run last command executed by VimuxRunCommand
+map <leader>vl :VimuxRunLastCommand<CR>
+" Inspect runner pane - switch to the pane that the above command has run in.
+map <leader>vi :VimuxInspectRunner<CR>
+" Zoom the tmux runner pane
+map <leader>vz :VimuxZoomRunner<CR>
+" }}}
+" }}}
 
 " Appearances: {{{
 " Themes, airline, devicons, etc.
-
-" Squeeze out all of the color that we can.
-set t_Co=256   " This is may or may not needed.
 
 if (has("nvim"))
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
-" Support for true color terminal.
+" Support for true color terminal.  This changes cterm colors to gui colors.
 " Used to be a env variable
 if (has("termguicolors"))
     set termguicolors
@@ -1896,6 +1923,8 @@ Plug 'weilbith/nerdtree_choosewin-plugin'
 " Themes {{{
 Plug 'tomasr/molokai'
 Plug 'NLKNguyen/papercolor-theme'
+" Tue Mar 19, 2019 10:56:31 - The python highlighting was terrible.
+" Plug 'nikitavoloboev/vim-monokai-night'
 
 " gotham
 " https://github.com/whatyouhide/vim-gotham
@@ -2055,7 +2084,9 @@ map 0 ^
 " Omni completion remap
 inoremap <C-l> <C-x><C-l>
 " Delete the previous word.
-inoremap <C-b> <C-O>diw
+inoremap <C-b> <C-o>diw
+" Delete the previous character, like all the shells do.
+inoremap <C-d> <C-o>x
 
 " Quit vimdiff using q but also don't mess with macro.
 nnoremap <expr> q &diff ? ":diffoff!\<bar>only\<cr>" : "q"
