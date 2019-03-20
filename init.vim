@@ -93,6 +93,9 @@
 " Some plugins to check out in the future & notes on comparing classes of
 " plugins.
 "
+" Poor mans ipython.
+" https://www.reddit.com/r/neovim/comments/axilbq/using_nvim_as_python_ide_via_pynvim/ehu2fa2
+"
 " https://github.com/euclio/vim-markdown-composer
 " https://gitlab.com/HiPhish/repl.nvim
 " https://github.com/svermeulen/vim-subversive - operator motions to quickly
@@ -103,6 +106,7 @@
 "                                             vim-bookmarks.
 " https://github.com/reconquest/vim-pythonx - python tools for easier coding.
 " https://github.com/numirias/semshi - semantic python hightlighting.
+" https://github.com/mjbrownie/GetFilePlus - possible help for python gf
 " https://github.com/xolox/vim-session
 " https://github.com/ludovicchabant/vim-gutentags
 " https://github.com/chrisbra/csv.vim - CSV files
@@ -121,6 +125,9 @@
 " vim-themis - https://github.com/thinca/vim-themis - testing framework for
 "   vimscript.
 " coc.vim - https://github.com/neoclide/coc.nvim - better(?) completion w/ LSP
+"   Using python (pyls) or other client - https://github.com/neoclide/coc-pyls/issues/5
+"   https://www.reddit.com/r/neovim/comments/ay14vz/show_use_neovim_floating_window_instead_of/
+"   https://github.com/ncm2/float-preview.nvim/issues/1#issuecomment-470524243
 " https://github.com/thaerkh/vim-workspace - a single plugin for
 " sessions+obsession+prosession+fuzzy
 " Finished:
@@ -228,8 +235,8 @@
 
 " Options -------------------------------------------------------- {{{
 
-let g:python_host_prog="/usr/local/bin/python2"
-let g:python3_host_prog="/usr/local/bin/python3"
+" let g:python_host_prog="/usr/local/bin/python2"
+" let g:python3_host_prog="/usr/local/bin/python3"
 
 " So that the shape of the cursor changes in tmux depending on normal or
 " insert mode.  Unnfortunately I have to make the cursor shape or italics show
@@ -2044,7 +2051,7 @@ highlight Comment cterm=italic
 
 " Some general leader mappings. {{{
 " Kill all of the open currently open buffers.
-nnoremap <leader>bd :bufdo bd<cr>
+" nnoremap <leader>bd :bufdo bd<cr>
 " }}}
 
 " Disable some bindings that I find annoying & potentially dangerous if hit
