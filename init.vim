@@ -1551,6 +1551,11 @@ Plug 'pearofducks/ansible-vim'
 Plug 'ekalinin/Dockerfile.vim'
 " }}}
 
+" ini files {{{
+" Specically need to set .flake8 to dosini
+au BufRead,BufNewFile flake8 set filetype=dosini
+" }}}
+
 " vim-jinja {{{
 "https://github.com/mitsuhiko/vim-jinja
 " Jinja2 is a full featured template engine for Python - http://jinja.pocoo.org/
