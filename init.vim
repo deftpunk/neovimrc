@@ -595,6 +595,14 @@ let g:fzf_commits_log_options = '--graph --color=always
   \ --format="%C(yellow)%h%C(red)%d%C(reset)
   \ - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
 
+" Augment the Rg command with a preview window.
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
 " Mappings:
 " search lines in buffer.
 nmap <leader>s :BLines<cr>
@@ -1325,10 +1333,11 @@ nnoremap <leader>it :IlluminationToggle<cr>
 
 " Software Development: Languages {{{
 
-" Bash, Zsh, *.etest
+" Bash, Zsh, *.etest {{{
 " etest are unit test files in bash for NetApp Ember.
 autocmd BufRead,BufNewFile *.etest setfiletype sh
 autocmd FileType sh set tabstop=4 shiftwidth=4
+" }}}
 
 " C/C++ {{{
 
@@ -1391,6 +1400,14 @@ let g:go_bin_path="/Users/ebodine/workspace/go/bin/"
 " deoplete.nvim source for Go. Asynchronous Go completion for Neovim.
 Plug 'zchee/deoplete-go', {'do': 'make'}
 
+" }}}
+
+" Groovy {{{
+" This is mainly for Jenkins pipeline files.
+
+" Some of the files we work with have ./<path> full path names in them, remove
+" it so that gf will work properly.
+autocmd FileType groovy setlocal includeexpr=substitute(v:filename,'\\.\/','','g')
 " }}}
 
 " Python {{{
