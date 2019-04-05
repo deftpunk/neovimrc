@@ -96,6 +96,9 @@
 " Poor mans ipython.
 " https://www.reddit.com/r/neovim/comments/axilbq/using_nvim_as_python_ide_via_pynvim/ehu2fa2
 "
+" Mon Apr 1, 2019 6:05:34pm - mostly usablem not yet entirely stable.
+" http://liuchengxu.org/vista.vim/ - a new and improved tagbar using LSP.
+"
 " https://github.com/euclio/vim-markdown-composer
 " https://gitlab.com/HiPhish/repl.nvim
 " https://github.com/svermeulen/vim-subversive - operator motions to quickly
@@ -130,6 +133,7 @@
 "   https://github.com/ncm2/float-preview.nvim/issues/1#issuecomment-470524243
 " https://github.com/thaerkh/vim-workspace - a single plugin for
 " sessions+obsession+prosession+fuzzy
+"
 " Finished:
 " Thursday Jan 3, 2019
 " https://github.com/terryma/vim-smooth-scroll
@@ -1316,11 +1320,6 @@ Plug 'rhysd/conflict-marker.vim'
 Plug 'tpope/vim-endwise'
 " }}}
 
-" vim-sexp
-"https://github.com/guns/vim-sexp
-" Precision editing of S-expressions in Clojure, Common Lisp
-Plug 'guns/vim-sexp'
-
 " vim-test - run your tests at the speed of thought.
 " https://github.com/janko-m/vim-test
 Plug 'janko-m/vim-test'
@@ -1359,10 +1358,28 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Clojure {{{
 
+" vim-sexp
+" https://github.com/guns/vim-sexp
+" Precision editing of S-expressions in Clojure, Common Lisp
+Plug 'guns/vim-sexp'
+
+" There are about 4 different Clojure support plugins.
+" 1. vim-fireplace
+" 2. acid.vim
+" 3.
+" 4.
+
 " Acid
 " Asynchronous Clojure Interactive Development
 " https://github.com/clojure-vim/acid.nvim
 " Plug 'clojure-vim/acid.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" vim-fireplace {{{
+" Clojure REPL support
+" https://github.com/tpope/vim-fireplace
+" You need to have installed cider-nrepl in your ~/.lein/profiles.clj
+Plug 'tpope/vim-fireplace'
+" }}}
 
 " }}}
 
@@ -1807,6 +1824,13 @@ nnoremap <silent> <leader>gvl :GV?<cr>
 Plug 'rbong/vim-flog'
 " }}}
 
+" git-messenger {{{
+" https://github.com/rhysd/git-messenger.vim
+" Plugin to reveal the commit messages under the cursor.
+Plug 'rhysd/git-messenger.vim'
+nmap <Leader>gm <Plug>(git-messenger)
+" }}}
+
 " }}}
 
 " Terminal: {{{
@@ -2031,17 +2055,10 @@ filetype plugin indent on
 syntax enable
 
 " colorschemes {{{
-" Turn on different colorschemes for gui or terminal.
 " NOTE: This has to be after the `plug#end & syntax enable` above.
-if has('gui_running') || has('gui_vimr')
-    set background=light
-    colorscheme PaperColor
-    let g:airline_theme='papercolor'
-else
-    set background=dark
-    colorscheme molokai
-    let g:airline_theme='airlineish'
-endif
+set background=dark
+colorscheme molokai
+let g:airline_theme='airlineish'
 
 " comments should always be in italics
 highlight Comment cterm=italic
