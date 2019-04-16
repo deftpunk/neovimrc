@@ -528,14 +528,6 @@ let g:ctrlp_match_func = {'match': 'fruzzy#ctrlp#matcher'}
 let g:ctrlp_match_current_file = 1 " to include current file in matches
 let g:ctrlp_match_window = 'bottom,order:ttb,max:25,results:25'
 
-nnoremap <leader>fc :CtrlPChange<cr>
-nnoremap <leader>fd :CtrlPDir<cr>
-nnoremap <leader>i :CtrlPBuffer<cr>
-nnoremap <leader>fm :CtrlPMRUFiles<cr>
-nnoremap <leader>fq :CtrlPQuickfix<cr>
-
-" nnoremap <leader>s :CtrlPLine %<cr>
-
 let g:ctrlp_prompt_mappings = {
     \ 'PrtSelectMove("n")':   ['<c-n>', '<down>'],
     \ 'PrtSelectMove("p")':   ['<c-p>', '<up>'],
@@ -2009,6 +2001,7 @@ let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'" enable integration with ale
 let g:airline#extensions#ale#enabled=1
+let g:airline#extensions#tagbar#enabled=1
 " " need to enable this for vim-devicons
 let g:airline_powerline_fonts = 1
 " }}}
