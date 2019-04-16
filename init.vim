@@ -611,6 +611,9 @@ command! -bang -nargs=* Rg
 nmap <leader>s :BLines<cr>
 " list open buffers.
 nmap <leader>b :Buffers<cr>
+" search files.
+nmap <leader>f :Files
+nmap <leader>F :Gfiles
 " search file contents using ripgrep.
 nmap <leader>r :Rg<cr>
 " }}}
@@ -1343,6 +1346,24 @@ autocmd FileType sh set tabstop=4 shiftwidth=4
 " https://github.com/derekwyatt/vim-fswitch
 " Switch between header files and their partner files.
 Plug 'derekwyatt/vim-fswitch'
+" Switch to the file and load it into the current window >
+nmap <silent> <Leader>of :FSHere<cr>
+ " Switch to the file and load it into the window on the right >
+nmap <silent> <Leader>ol :FSRight<cr>
+ " Switch to the file and load it into a new window split on the right >
+nmap <silent> <Leader>oL :FSSplitRight<cr>
+ " Switch to the file and load it into the window on the left >
+nmap <silent> <Leader>oh :FSLeft<cr>
+ " Switch to the file and load it into a new window split on the left >
+nmap <silent> <Leader>oH :FSSplitLeft<cr>
+ " Switch to the file and load it into the window above >
+nmap <silent> <Leader>ok :FSAbove<cr>
+ " Switch to the file and load it into a new window split above >
+nmap <silent> <Leader>oK :FSSplitAbove<cr>
+ " Switch to the file and load it into the window below >
+nmap <silent> <Leader>oj :FSBelow<cr>
+ " Switch to the file and load it into a new window split below >
+nmap <silent> <Leader>oJ :FSSplitBelow<cr>
 
 Plug 'octol/vim-cpp-enhanced-highlight'
 
