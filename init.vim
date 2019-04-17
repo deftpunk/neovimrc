@@ -612,8 +612,8 @@ nmap <leader>s :BLines<cr>
 " list open buffers.
 nmap <leader>b :Buffers<cr>
 " search files.
-nmap <leader>f :Files
-nmap <leader>F :Gfiles
+nmap <leader>f :Files<cr>
+nmap <leader>F :Gfiles<cr>
 " search file contents using ripgrep.
 nmap <leader>r :Rg<cr>
 " }}}
@@ -672,6 +672,12 @@ let g:actnum_exclude =
 \ [ 'denite', 'tagbar', 'startify', 'undotree', 'gundo', 'vimshell', 'w3m',
 \   'help', 'mundo', 'magit', 'fugitive', 'nerdtree']
 " }}}
+
+" AnsiEsc
+" https://github.com/powerman/vim-plugin-AnsiEsc
+" Conceal or highlight ansi escape sequences.  This is a fork of the original
+" with some improvements.
+Plug 'powerman/vim-plugin-AnsiEsc'
 
 " Ale - async syntax checking {{{
 " https://github.com/w0rp/ale
