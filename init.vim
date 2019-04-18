@@ -1030,7 +1030,7 @@ Plug 'tyru/open-browser.vim'
 "  to a valid file path.
 Plug 'mtth/scratch.vim'
 let g:scratch_height=25
-let g:scratch_persistence_file='/Home/Users/ebodine/tmp/neovim-scratch.txt'
+let g:scratch_persistence_file='/Home/Users/ebodine/tmp/neovimrc/neovim-scratch.txt'
 " }}}
 
 " vim-scriptease {{{
