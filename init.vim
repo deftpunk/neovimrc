@@ -1349,8 +1349,9 @@ autocmd FileType sh set tabstop=4 shiftwidth=4
 " C/C++ {{{
 
 " Folding for C/C++
+" Wed Apr 17 2019 8:34pm - function error on initialization.
 " https://github.com/LucHermitte/VimFold4C
-Plug 'LucHermitte/VimFold4C'
+" Plug 'LucHermitte/VimFold4C'
 
 " vim-fswitch
 " https://github.com/derekwyatt/vim-fswitch
