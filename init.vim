@@ -2089,12 +2089,20 @@ let g:airline_theme='airlineish'
 highlight Comment cterm=italic
 " }}}
 
-" General Mappings: {{{
+" Special Use Case Mappings: {{{
 
-" Some general leader mappings. {{{
-" Kill all of the open currently open buffers.
-" nnoremap <leader>bd :bufdo bd<cr>
+" I use this to better see json blobs on a single line.
+" 1. Goto the interesting line.
+" 2. Search forward to the beginning bracket/brace
+" 3. visually select to the closing bracket/brace.
+" 4. Press _a  and the json will be fomatted on multiple lines for you.
+" Because : Ex cmds are line oriented, the normal pipe to an external command
+" will not work.
+nnoremap _a <Esc>`>a<CR><Esc>`<i<CR><Esc>!!jq<CR>
+
 " }}}
+
+" General Mappings: {{{
 
 " Disable some bindings that I find annoying & potentially dangerous if hit
 " accidentally.
@@ -2107,6 +2115,7 @@ nnoremap ZQ <Nop>
 " Friday July 6 2018 - Is working in Vimr
 " Saturday December 29, 2018 - Won't work in iTerm2
 " nnoremap <D-l> :echo "testing"<cr>
+inoremap <D-l> :echo "testing"<cr>
 
 " Edit Neovim configuration file.
 nnoremap <silent> <leader>ec :e $MYVIMRC<cr>
@@ -2179,5 +2188,5 @@ Arpeggionnoremap jk :
 "   	  iab <buffer> ebx erick.bodine
 iab sb " {{{
 iab eb " }}}
-iab ydate <c-r>=strfitime("%a %b %d %T %Y")
+iab ydate <c-r>=strftime("%a %b %d %Y %T")<cr>
 " }}}
