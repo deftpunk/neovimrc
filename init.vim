@@ -25,6 +25,22 @@
 
 " Bootstrap Neovim Install {{{
 
+" Setup on Linux {{{
+"
+" Install Rust:
+"   1. curl https://sh.rustup.rs -sSf | sh
+"   2. source ~/.cargo/env
+"
+" Install Ripgrep:
+"   1. cargo install ripgrep
+"
+" Install Python:
+"   1. sudo apt-get -y install python-pip
+"
+" }}}
+"
+" Install on MacOSX {{{
+"
 " Setup Xcode:
 "   1. Install Xcode
 "   2. Install the cmdline tools: =xcode-select --install=
@@ -45,6 +61,12 @@
 "    - ctags
 "    - fd
 "
+" Python Install:
+"   1. brew install python@2
+"   2. brew install python3
+"
+" }}}
+"
 " Git Configuration:
 "   - symlink global configuration files:
 "   $ ln -s tmp/yah/gitignore_global .gitignore_global
@@ -53,12 +75,10 @@
 " Setup Python:
 " This is the Python for Neovim, not the one for Python development. So DO NOT have miniconda in
 " the PATH or PYTHONPATH.
-"   1. brew install python@2
-"   2. brew install python3
-"   3. pip2 install neovim --upgrade
-"   4. pip3 install neovim --upgrade
-"   5. pip3 install neovim-remote
-"   6. pip3 install jedi, ipython, requests
+"   1. pip2 install neovim --upgrade
+"   2. pip3 install neovim --upgrade
+"   3. pip3 install neovim-remote
+"   4. pip3 install jedi, ipython, requests
 
 " Setup Neovim Remote:
 " https://github.com/mhinz/neovim-remote
@@ -335,10 +355,20 @@ set showbreak=↪
 set cpo+=n
 
 " Use persistent history
-if !isdirectory("/Users/ebodine/tmp/neovim-undo-dir")
-	call mkdir("/Users/ebodine/tmp/neovim-undo-dir", "", 0700)
+if has('macunix')
+    let s:mac_directory = "/Users/ebodine/tmp/neovim-undo-dir"
+    if !isdirectory(s:mac_directory)
+	call mkdir(s:mac_directory, "", 0700)
+    endif
+    execute "set undodir=".s:mac_directory
+elseif has('unix')
+    let s:unix_directory = "/home/ebodine/tmp/neovim-undo-dir"
+    if !isdirectory(s:unix_directory)
+	call mkdir(s:unix_directory, "", 0700)
+    endif
+    execute "set undodir=".s:unix_directory
 endif
-set undodir=/Users/ebodine/tmp/neovimrc/neovim-undo-dir
+
 set undofile
 
 " Automatically reload files that have changed.
@@ -1599,6 +1629,11 @@ Plug 'pearofducks/ansible-vim'
 Plug 'ekalinin/Dockerfile.vim'
 " }}}
 
+" gentoo-syntax {{{
+" Gentoo and portage related syntax highlighting, filetype, and indent settings for vim
+Plug 'gentoo/gentoo-syntax'
+" }}}
+
 " ini files {{{
 " Specically need to set .flake8 to dosini
 au BufRead,BufNewFile flake8 set filetype=dosini
@@ -1658,6 +1693,22 @@ let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js
 " }}}
 
 " Version Control -------------------------------------------------- {{{
+
+" Mercurial {{{
+
+" vim-lawrencium
+" https://github.com/ludovicchabant/vim-lawrencium
+" https://bolt80.com/lawrencium/
+" The fugitive for Mercurial
+Plug 'ludovicchabant/vim-lawrencium'
+
+" vim-mercenary
+" A mercurial wrapper that implements HGblame, HGdiff {rev}, HGshow {rev} and
+" HGcat {rev} {path}
+" https://github.com/jlfwong/vim-mercenary
+Plug 'jlfwong/vim-mercenary'
+
+" }}}
 
 " vim-fugitive + vim-merginal + vim-rhubarb - Git management  {{{
 
