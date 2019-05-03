@@ -690,7 +690,12 @@ Plug 'nelstrom/vim-visual-star-search'
 " and Title Case (crt) are all just 3 keystrokes away.
 " These commands support repeat.vim.
 Plug 'tpope/tpope-vim-abolish'
-let g:abolish_save_file="/Users/ebodine/.config/nvim/abolish-abbreviations.vim"
+
+if has('macunix')
+    let g:abolish_save_file="/Users/ebodine/.config/nvim/abolish-abbreviations.vim"
+elseif has('unix')
+    let g:abolish_save_file="/home/ebodine/.config/nvim/abolish-abbreviations.vim"
+endif
 " }}}
 
 " vim-active-numbers {{{
@@ -717,7 +722,13 @@ let g:ale_sign_warning = '≈'
 let g:ale_linters = {
 \    'python': ['flake8'],
 \}
-let g:ale_python_flake8_options = '--config=/Users/ebodine/.flake8'
+
+if has('macunix')
+    let g:ale_python_flake8_options = '--config=/Users/ebodine/.flake8'
+elseif has('unix')
+    let g:ale_python_flake8_options = '--config=/home/ebodine/.flake8'
+endif
+
 let g:ale_emit_conflict_warnings = 0
 " }}}
 
@@ -1060,7 +1071,11 @@ Plug 'tyru/open-browser.vim'
 "  to a valid file path.
 Plug 'mtth/scratch.vim'
 let g:scratch_height=25
-let g:scratch_persistence_file='/Home/Users/ebodine/tmp/neovimrc/neovim-scratch.txt'
+if has('macunix')
+    let g:scratch_persistence_file='/Users/ebodine/tmp/neovimrc/neovim-scratch.txt'
+elseif has('unix')
+    let g:scratch_persistence_file='/home/ebodine/tmp/neovimrc/neovim-scratch.txt'
+endif
 " }}}
 
 " vim-scriptease {{{
@@ -1470,8 +1485,11 @@ Plug 'tpope/vim-fireplace'
 "   * :GoAddTags + :GoRemoveTags - modify/update field tags in a structs.
 Plug 'fatih/vim-go'
 let g:go_version_warning = 0
-" let g:go_bin_path="$HOME/workspace/go/bin/"
-let g:go_bin_path="/Users/ebodine/workspace/go/bin/"
+if has('macunix')
+    let g:go_bin_path="/Users/ebodine/workspace/go/bin/"
+elseif has('unix')
+    let g:go_bin_path="/home/ebodine/workspace/go/bin/"
+endif
 
 " deoplete-go
 " https://github.com/zchee/deoplete-go
