@@ -21,6 +21,9 @@ neovim-undo-dir/
 
 # Scratch
 __Scratch__
+neovim-scratch.txt
+vim-keys*
+vim_keys*
 
 # Tags
 tags
