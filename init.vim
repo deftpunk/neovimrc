@@ -1045,6 +1045,9 @@ let g:NERDTreeUpdateOnWrite      = 0
 " Open a broser from Neovim - I mostly use this to start a web search from
 " Neovim.  It opens your default browser.
 Plug 'tyru/open-browser.vim'
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
 " }}}
 
 " scratch.vim {{{
@@ -1092,7 +1095,7 @@ Plug 'tpope/vim-scriptease'
 " vim-repeat {{{
 " https://github.com/tpope/vim-repeat
 " Enable repeating supported plugin maps.
-Plug 'https://github.com/tpope/vim-repeat.git'
+Plug 'tpope/vim-repeat.git'
 " }}}
 
 " incsearch.vim - Incrementally highlight search pattern matches. {{{
