@@ -1095,7 +1095,7 @@ Plug 'tpope/vim-scriptease'
 " vim-repeat {{{
 " https://github.com/tpope/vim-repeat
 " Enable repeating supported plugin maps.
-Plug 'tpope/vim-repeat.git'
+Plug 'tpope/vim-repeat'
 " }}}
 
 " incsearch.vim - Incrementally highlight search pattern matches. {{{
@@ -1676,27 +1676,12 @@ Plug 'elzr/vim-json'
 
 " Markdown {{{
 
-" NOTE: Wed Sep 20 11:24:32 - commenting out while trying the gabrielelana
-" version of vim-markdown
-" " vim-markdown
-" " https://github.com/tpope/vim-markdown
-" Plug 'tpope/vim-markdown'
-" " Make sure that .md file get detected as Markdown
-" autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-" let g:markdown_minlines = 100
+" There are many different markdown plugins.  Most are too slow.
+" 1. gabrielelana/vim-markdown too slow for large *.md files.
+" 2. plasticboy/vim-markdown too slow for large *.md files.
 
-" vim-markdown
-" https://github.com/gabrielelana/vim-markdown
-" Not the tpope version
-" NOTE: Mon Feb 25, 2019 4:17:32pm - Really slow for big *.md files, trying to
-" see if disabling folding will help things.
-" NOTE: Thu Mar 7, 2019 4:37:12pm - disabling folding did not help.
-Plug 'gabrielelana/vim-markdown'
-let g:markdown_include_jekyll_support = 0
-let g:markdown_enable_conceal = 1
-" let g:markdown_enable_folding = 1
-
-" }}}
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 " }}}
 
@@ -1978,6 +1963,15 @@ nmap gnl <plug>(neoterm-repl-send-line)
 
 " }}}
 
+" nuake {{{
+" A Quake style terminal for Neovim
+" https://github.com/Lenovsky/nuake
+Plug 'Lenovsky/nuake'
+let g:nuake_per_tab=1
+
+nnoremap <leader>- :Nuake<cr>
+" }}}
+
 " Terminal Mappings {{{
 
 " switch back to Normal mode this way so as to allow for ipython.
@@ -2245,6 +2239,9 @@ nnoremap <expr> q &diff ? ":diffoff!\<bar>only\<cr>" : "q"
 
 " Use Q to play macro normally and over visual selections.
 xnoremap Q :'<,'>:normal @q<CR>
+
+" Equalize the vertical split.
+nnoremap <C-w>v <C-w>v <C-w>=
 
 " }}}
 
