@@ -2240,8 +2240,10 @@ nnoremap <expr> q &diff ? ":diffoff!\<bar>only\<cr>" : "q"
 " Use Q to play macro normally and over visual selections.
 xnoremap Q :'<,'>:normal @q<CR>
 
-" Equalize the vertical split by overriding C-w v
+" Equalize the vertical, horizontal splits.  Equalize closing a window.
 nnoremap <C-w>v <C-w>v <C-w>=
+nnoremap <C-w>s <C-w>s <C-w>=
+nnoremap <C-w>c <C-w>c <C-w>=
 
 " }}}
 
