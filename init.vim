@@ -813,7 +813,22 @@ Plug 'raimondi/delimitMate'
 " Usage:
 "     :Dash[!] [TERM] [KEYWORD]
 "     :Dash os.path.dirname python
-Plug 'rizzatti/dash.vim'
+" Plug 'rizzatti/dash.vim'
+" }}}
+
+" vim-dasht {{{
+" https://github.com/sunaku/vim-dasht
+" Look up Dash documentation locally - https://github.com/sunaku/dasht
+" Install dasht & then install docsets:
+" 1. brew update; brew install dasht
+" 2. dasht-docsets-install bash
+Plug 'sunaku/vim-dasht'
+" create window beside current one
+let g:dasht_results_window = 'vnew'
+" When in Python, also search NumPy, SciPy, and Pandas:
+" let g:dasht_filetype_docsets['python'] = ['(num|sci)py', 'pandas']
+" search related docsets
+nnoremap <silent> <leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
 " }}}
 
 " deoplete {{{
@@ -1578,6 +1593,13 @@ Plug 'tmhedberg/SimpylFold'
 "     [pf / ]pf: move to next/previous function
 "     [pc / ]pc: move to next/previous class
 Plug 'bps/vim-textobj-python'
+
+" requirements.txt.vim
+" https://github.com/raimon49/requirements.txt.vim
+" the Requirements File Format syntax support for Vim
+Plug 'raimon49/requirements.txt.vim'
+" Add 'freeze' to your .vimrc as a detection pattern
+let g:requirements#detect_filename_pattern = 'freeze'
 
 " }}}
 
