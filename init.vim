@@ -730,6 +730,7 @@ elseif has('unix')
 endif
 
 let g:ale_emit_conflict_warnings = 0
+let g:ale_list_window_size = 15
 " }}}
 
 " arpeggio {{{
@@ -1278,7 +1279,7 @@ let g:tagbar_type_groovy = {
 \ }
 
 nnoremap <leader>tt :TagbarToggle<CR>
-nnoremap <leader>to :TagbarOpen<CR>
+nnoremap <leader>to :TagbarOpen fj<CR>
 " }}}
 
 " traces {{{
