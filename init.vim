@@ -274,6 +274,8 @@ if has('nvim')
   let $VISUAL = 'nvr -cc split --remote-wait'
 endif
 
+set hidden
+
 " good encoding
 set encoding=utf-8
 
@@ -778,27 +780,6 @@ let g:auto_save_events = ["InsertLeave", "TextChanged", "FocusLost"]
 Plug 'moll/vim-bbye'
 " Buffer delete
 nnoremap <leader>k :Bdelete<cr>
-" }}}
-
-" vim-bookmarks {{{
-" NTOE: Wed Nov 22, 2017 2:57:13pm - commented out to see if I use this at
-" all.
-" https://github.com/MattesGroeger/vim-bookmarks
-"
-" Default mappings::
-"   Action 	                                    Shortcut 	Command
-"   Add/remove bookmark at current line 	        mm 	:BookmarkToggle
-"   Add/edit/remove annotation at current line 	        mi 	:BookmarkAnnotate <TEXT>
-"   Jump to next bookmark in buffer 	                mn 	:BookmarkNext
-"   Jump to previous bookmark in buffer 	        mp 	:BookmarkPrev
-"   Show all bookmarks (toggle) 	                ma 	:BookmarkShowAll
-"   Clear bookmarks in current buffer only 	        mc 	:BookmarkClear
-"   Clear bookmarks in all buffers 	                mx 	:BookmarkClearAll
-"   Save all bookmarks to a file 		:BookmarkSave <FILE_PATH>
-"   Load bookmarks from a file 		        :BookmarkLoad <FILE_PATH>
-" Plug 'MattesGroeger/vim-bookmarks'
-" disable default mappings.
-" let g:bookmark_no_default_key_mappings = 1
 " }}}
 
 " delimitMate {{{
@@ -1327,28 +1308,13 @@ autocmd FileType vim autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 
 " }}}
 
-" Note Taking {{{
-
-" 1. Have tried vim-orgmode.
-"    https://github.com/jceb/vim-orgmode
-"    It is kind of slow at parsing - it started to bog at just 1900 lines.
-"    It can't do tables.
-"
-" 2. Have tried vim-wiki
-"    Just to much going back and forth.  Not lean enough, should give it
-"    another try at some point.  Maybe just as a way of keeping reference
-"    material.
-"    Wed December 5 2:51:20pm 2018 - tried again; didn't like dealling with the
-"    binding conflicts.
-
-" vim-speeddating
-" https://github.com/tpope/vim-speeddating
-" Use Ctrl-a/Ctrl-x to increment dates, times and more
-Plug 'tpope/vim-speeddating'
-
-" }}}
-
 " Software Development: Utilities {{{
+
+" coc.vim
+" https://github.com/neoclide/coc.nvim
+" Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
+"
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Conflict marker highlighting. {{{
 " https://github.com/rhysd/conflict-marker.vim
@@ -1449,25 +1415,14 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " vim-sexp
 " https://github.com/guns/vim-sexp
 " Precision editing of S-expressions in Clojure, Common Lisp
-Plug 'guns/vim-sexp'
+Plug 'guns/vim-sexp', {'for': 'clojure'}
 
 " There are about 4 different Clojure support plugins.
 " 1. vim-fireplace
 " 2. acid.vim
-" 3.
-" 4.
+" 3. vim-iced
 
-" Acid
-" Asynchronous Clojure Interactive Development
-" https://github.com/clojure-vim/acid.nvim
-" Plug 'clojure-vim/acid.nvim', { 'do': ':UpdateRemotePlugins' }
-
-" vim-fireplace {{{
-" Clojure REPL support
-" https://github.com/tpope/vim-fireplace
-" You need to have installed cider-nrepl in your ~/.lein/profiles.clj
-Plug 'tpope/vim-fireplace'
-" }}}
+Plug 'liquidz/vim-iced', {'for': 'clojure'}
 
 " }}}
 
@@ -1639,7 +1594,6 @@ let g:autofmt_autosave = 1
 " }}}
 
 " Web development - Javascript, CSS, HTML, etc. {{{
-"Plug 'rstacruz/vim-hyperstyle'
 
 " Colorizer
 " https://github.com/chrisbra/Colorizer
@@ -1720,10 +1674,12 @@ Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['go', 'python', 'markdown']
 let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js=javascript', 'json=javascript', 'perl', 'php', 'python', 'ruby', 'sass', 'xml', 'html', 'vim']
 " }}}
+" }}}
 
 " Version Control -------------------------------------------------- {{{
 
 " Mercurial {{{
+" Unfortunately, I have to use both Mercurial & Git at work.
 
 " vim-lawrencium
 " https://github.com/ludovicchabant/vim-lawrencium
@@ -2088,16 +2044,6 @@ Plug 'weilbith/nerdtree_choosewin-plugin'
 
 " Themes {{{
 Plug 'tomasr/molokai'
-Plug 'NLKNguyen/papercolor-theme'
-" Tue Mar 19, 2019 10:56:31 - The python highlighting was terrible.
-" Plug 'nikitavoloboev/vim-monokai-night'
-
-" gotham
-" https://github.com/whatyouhide/vim-gotham
-" Also has an airline theme as well:
-"   gotham
-"   let g:gotham_airline_emphasised_insert = 0
-" Plug 'whatyouhide/vim-gotham'
 " }}}
 
 " Statuslines:
@@ -2284,3 +2230,11 @@ iab sb " {{{
 iab eb " }}}
 iab ydate <c-r>=strftime("%a %b %d %Y %T")<cr>
 " }}}
+
+" Clean up At2 response output that is in JSON but is too messy for json.tool
+" to handle directly.
+function! At2Json()
+	V:s/u'/"/
+	V:s/'/"/
+	:%!python -m json.tool
+endfunction
