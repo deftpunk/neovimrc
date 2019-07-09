@@ -725,6 +725,7 @@ let g:ale_linters = {
 \    'python': ['flake8'],
 \}
 
+" Python flake8 + Ale
 if has('macunix')
     let g:ale_python_flake8_options = '--config=/Users/ebodine/.flake8'
 elseif has('unix')
@@ -775,8 +776,9 @@ let g:auto_save_silent = 1
 let g:auto_save_events = ["InsertLeave", "TextChanged", "FocusLost"]
 " }}}
 
-" vim-bbye - Handle deleting buffers and closing files. {{{
+" vim-bbye - {{{
 " https://github.com/moll/vim-bbye
+" Handle deleting buffers and closing files.
 Plug 'moll/vim-bbye'
 " Buffer delete
 nnoremap <leader>k :Bdelete<cr>
@@ -795,7 +797,7 @@ Plug 'raimondi/delimitMate'
 " Usage:
 "     :Dash[!] [TERM] [KEYWORD]
 "     :Dash os.path.dirname python
-" Plug 'rizzatti/dash.vim'
+Plug 'rizzatti/dash.vim'
 " }}}
 
 " vim-dasht {{{
@@ -1045,6 +1047,37 @@ Plug 'tyru/open-browser.vim'
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
+" }}}
+
+" vim-quickrun {{{
+" https://github.com/thinca/vim-quickrun
+" Execute the current buffer or run commands quickly.
+"
+" Execute current buffer.
+"  :QuickRun
+"
+" Execute current buffer from line 3 to line 6.
+"  :3,6QuickRun
+"
+" Execute current buffer as perl program.
+"  :QuickRun perl
+"
+" Execute one-liner program given from command-line.
+"  :QuickRun ruby -src 'puts "Hello, world!"'
+"
+"  " Set shortcut keys.
+"  for [key, com] in items({
+"  \   '<Leader>x' : '>:',
+"  \   '<Leader>p' : '>!',
+"  \   '<Leader>w' : '>',
+"  \   '<Leader>q' : '>>',
+"  \ })
+"  	execute 'nnoremap <silent>' key ':QuickRun' com '-mode n<CR>'
+"  	execute 'vnoremap <silent>' key ':QuickRun' com '-mode v<CR>'
+" endfor
+Plug 'thinca/vim-quickrun'
+let g:quickrun_config = {}
+let g:quickrun_config.python = {'command': 'python'}
 " }}}
 
 " scratch.vim {{{
@@ -1649,16 +1682,52 @@ Plug 'mitsuhiko/vim-jinja'
 " NOTE: If the json file doesn't look right, check the concealcursor value
 " problem mentioned in the github README.
 Plug 'elzr/vim-json'
+
+" Enable folding for json files.
+augroup ft_json
+    au!
+    au BufRead,BufNewFile *.json setlocal foldmethod=syntax
+augroup END
 " }}}
 
 " Markdown {{{
 
+" vim-pandoc {{{
+" https://github.com/vim-pandoc/vim-pandoc
 " There are many different markdown plugins.  Most are too slow.
 " 1. gabrielelana/vim-markdown too slow for large *.md files.
 " 2. plasticboy/vim-markdown too slow for large *.md files.
-
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+" }}}
+
+" markdown-preview.nvim {{{
+" https://github.com/iamcco/markdown-preview.nvim
+" Preview markdown on your modern browser with synchronised scrolling and flexible configuration
+"
+" Main features:
+"  - Cross platform (macos/linux/windows)
+"  - Synchronised scrolling
+"  - Fast asynchronous updates
+"  - Katex for typesetting of math
+"  - Plantuml
+"  - Mermaid
+"  - Chart.js
+"  - sequence-diagrams
+"  - Toc
+"  - Emoji
+"  - Task lists
+"  - Local images
+"  - Flexible configuration
+"
+" Start the preview
+" :MarkdownPreview
+"
+" Stop the preview"
+" :MarkdownPreviewStop
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+nnoremap <leader>ms <Plug>MarkdownPreviewToggle
+" }}}
 
 " }}}
 
@@ -1928,7 +1997,10 @@ set scrollback=100000
 " neoterm {{{
 " https://github.com/kassio/neoterm
 " Wrapper of some neovim's :terminal functions.
-" NOTE: Can we use neoterm to send python code/selection to the terminal?
+" Other useful commands:
+" - :T {command}: Opens a terminal, or use an opened terminal, and runs the
+"                 given command within a terminal.
+" - :Tmap {command}: maps a the given command to ,tt.
 Plug 'kassio/neoterm'
 let g:neoterm_open_in_all_tabs=0
 let g:neoterm_repl_python="ipython"
@@ -1953,8 +2025,8 @@ nnoremap <leader>- :Nuake<cr>
 
 " Terminal Mappings {{{
 
-" switch back to Normal mode this way so as to allow for ipython.
-tnoremap <leader><Esc> <C-\><C-n>
+" Switch back to Normal mode.
+tnoremap <Esc> <C-\><C-n>
 " }}}
 
 " }}}
