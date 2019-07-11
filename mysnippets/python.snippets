@@ -140,3 +140,27 @@ endsnippet
 snippet prx "make print easier to deal with"
 print("${0}")
 endsnippet
+
+snippet argsx "template for creating options"
+# Configure cmdline arguments.
+parser = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter,
+                                 epilog="")
+
+parser.add_argument('--verbose', help="Increase logging verbosity.", action="store_true")
+
+args = argparse.parse_args()
+
+endsnippet
+
+snippet argx "create add_argument argument."
+parser.add_argument('${1}', help="${2}", action="store_true")
+endsnippet
+
+snippet logx "template for setting up logging"
+# Configure logging.
+log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG) if args.verbose else log.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s:%(name)s [%(levelname)s] %(message)s')
+log.setFormatter(formatter)
+endsnippet
