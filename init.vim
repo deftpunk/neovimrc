@@ -1,12 +1,5 @@
 " vim: ft=vim nu fdm=marker
 "
-"
-"                  _       __ _     _   _
-"               __| | ___| |_| |_  | | | |_ _ __ ___
-"              / _` |/ _ \  _| __| | | | | | '_ ` _ \
-"             | (_| |  __/ | | |_  \ \_/ / | | | | | |
-"              \__,_|\___|_|  \__|  \___/|_|_| |_| |_|
-"
 "                  A vimrc for the Emacs RSI emigrant
 "                          Author: deftpunk
 "
@@ -88,6 +81,9 @@
 "   2. Set NVIM_LISTEN_ADDRESS=/tmp/nvimsocket in ~.zshrc
 "
 " = nvr --remote file1 file2 =
+"
+" You can be in a :terminal and type 'nvr <file>' and it will open in your
+" neovim - i wish it would not open in the split that the terminal is in.
 
 " Install Neovim:
 " 1. Use brew to install neovim
@@ -130,7 +126,6 @@
 " https://github.com/reconquest/vim-pythonx - python tools for easier coding.
 " https://github.com/numirias/semshi - semantic python hightlighting.
 " https://github.com/mjbrownie/GetFilePlus - possible help for python gf
-" https://github.com/xolox/vim-session
 " https://github.com/ludovicchabant/vim-gutentags
 " https://github.com/chrisbra/csv.vim - CSV files
 " https://github.com/rhysd/vim-gfm-syntax - Github flavored markdown syntax
@@ -154,6 +149,9 @@
 " https://github.com/thaerkh/vim-workspace - a single plugin for
 " sessions+obsession+prosession+fuzzy
 "
+" Need to see if this will bring Emacs style abbreviations, e.g. C-x a i g
+" https://github.com/omrisarig13/vim-auto-abbrev
+
 " Finished:
 " Thursday Jan 3, 2019
 " https://github.com/terryma/vim-smooth-scroll
@@ -423,6 +421,13 @@ augroup autoSaveAndRead
     autocmd CursorHold * silent! checktime
 augroup END
 
+" display a message when the current file is not utf-8 encoded
+" note that we need to use `unsilent` command here because of this issue:
+" https://github.com/vim/vim/issues/4379
+augroup non_utf8_file_warn
+    autocmd!
+    autocmd BufRead * if &fileencoding != 'utf-8' |unsilent echomsg 'file not in utf-8 format!' | endif
+augroup END
 "}}}
 
 " vim-plug - Plugin management {{{
@@ -436,6 +441,8 @@ call plug#begin('~/.config/nvim/plugged')
 "
 " Text Objects in Vim are a very handy tool
 " https://blog.carbonfive.com/2011/10/17/vim-text-objects-the-definitive-guide/
+"
+" There are plugins installed further down that are specific for file types.
 
 " targets.vim
 " https://github.com/wellle/targets.vim
@@ -501,8 +508,7 @@ Plug 'chaoren/vim-wordmotion'
 " Navigation ------------------------------------------------------------- {{{
 
 " Navigation Plugins:
-" 1. Denite 1/31/2019 - not sure if it will be fast enough to work w/ Linux
-"                       Kernel code. base.
+" 1. Denite 1/31/2019 - not fast enough to work w/ Linux Kernel codebase.
 "    - uses Python3
 "    - outline/tags source requires ctags to be installed.
 "    - Denite Lines doesn't work with the jumplist == C-i/C-o don't work.
@@ -607,6 +613,9 @@ nnoremap <leader>he :CtrlPHelp<cr>
 " https://github.com/junegunn/fzf.vim
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
 Plug 'junegunn/fzf.vim'
+
+" https://github.com/pbogut/fzf-mru.vim
+" Command - :FZFMru
 Plug 'pbogut/fzf-mru.vim'
 
 " Customize fzf colors to match your color scheme
@@ -723,6 +732,7 @@ let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '≈'
 let g:ale_linters = {
 \    'python': ['flake8'],
+\    'rust': [ 'cargo', 'rls', 'rustc', 'clippy', 'rustfmt' ],
 \}
 
 " Python flake8 + Ale
@@ -922,6 +932,9 @@ let g:indentLine_fileType = ['python', 'perl', 'go']
 " https://github.com/farmergreg/vim-lastplace
 " Remember your last location in a file.
 " - Folds are automatically opened when jumping to the last edit position
+" - Center the cursor vertically after restoring last edit position.
+" - Keep as much of the file on screen as possible when last edit position is
+"   at the end of the file.
 Plug 'farmergreg/vim-lastplace'
 " }}}
 
@@ -1037,6 +1050,12 @@ let g:NERDTreeIndicatorMapCustom = {
 	\ }
 let g:NERDTreeUpdateOnCursorHold = 0
 let g:NERDTreeUpdateOnWrite      = 0
+
+" nerdtree-syntax-highlight
+" https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
+" This is intended to be used with vim-devicons to add color to icons or
+" entire labels
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " }}}
 
 " open-browser {{{
@@ -1384,6 +1403,22 @@ Plug 'rhysd/conflict-marker.vim'
 Plug 'tpope/vim-endwise'
 " }}}
 
+" vim-polyglot {{{
+" Various language packs for vim.
+" https://github.com/sheerun/vim-polyglot
+" A best-of-breed collection of programming language syntax,indent,ftplugin
+" config files.
+" ** HAS TO COME AFTER LANGUAGE DEFINITIONS THAT YOU HAVE DISABLED BELOW **
+" ** HAS CONFLICTS WITH VIM-GO - https://github.com/fatih/vim-go/issues/2045 **
+Plug 'sheerun/vim-polyglot'
+" I prefer my own configuration of Python, Markdown and Golang
+let g:polyglot_disabled = ['go', 'python', 'markdown']
+let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js=javascript', 'json=javascript', 'perl', 'php', 'python', 'ruby', 'sass', 'xml', 'html', 'vim']
+"
+" Rust & *.toml
+let g:autofmt_autosave = 1
+" }}}
+
 " vim-test - run your tests at the speed of thought.
 " https://github.com/janko-m/vim-test
 Plug 'janko-m/vim-test'
@@ -1404,8 +1439,9 @@ nnoremap <leader>it :IlluminationToggle<cr>
 " Software Development: Languages {{{
 
 " Bash, Zsh, *.etest {{{
-" etest are unit test files in bash for NetApp Ember.
+" *.etest files are unit test files in bash for NetApp Ember.
 autocmd BufRead,BufNewFile *.etest setfiletype sh
+" Set the indent to 4.
 autocmd FileType sh set tabstop=4 shiftwidth=4
 " }}}
 
@@ -1490,18 +1526,18 @@ Plug 'liquidz/vim-iced', {'for': 'clojure'}
 " https://github.com/fatih/vim-go
 " There are A LOT of commands in vim-go:
 "   * :GoAddTags + :GoRemoveTags - modify/update field tags in a structs.
-Plug 'fatih/vim-go'
-let g:go_version_warning = 0
-if has('macunix')
-    let g:go_bin_path="/Users/ebodine/workspace/go/bin/"
-elseif has('unix')
-    let g:go_bin_path="/home/ebodine/workspace/go/bin/"
-endif
+" Plug 'fatih/vim-go'
+" let g:go_version_warning = 0
+" if has('macunix')
+"     let g:go_bin_path="/Users/ebodine/workspace/go/bin/"
+" elseif has('unix')
+"     let g:go_bin_path="/home/ebodine/workspace/go/bin/"
+" endif
 
-" deoplete-go
-" https://github.com/zchee/deoplete-go
-" deoplete.nvim source for Go. Asynchronous Go completion for Neovim.
-Plug 'zchee/deoplete-go', {'do': 'make'}
+" " deoplete-go
+" " https://github.com/zchee/deoplete-go
+" " deoplete.nvim source for Go. Asynchronous Go completion for Neovim.
+" Plug 'zchee/deoplete-go', {'do': 'make'}
 
 " }}}
 
@@ -1612,12 +1648,8 @@ augroup END
 
 " Writing Rust plugin in Neovim.
 " https://blog.usejournal.com/a-detailed-guide-to-writing-your-first-neovim-plugin-in-rust-a81604c606b1
-
-" rust-lang support
+" rust-lang & *.toml support comes in vim-polyglot
 " TODO: rusti & coc.vim using LSP.
-Plug 'rust-lang/rust.vim'
-" Run rustfmt on save.
-let g:autofmt_autosave = 1
 
 " }}}
 
@@ -1692,6 +1724,9 @@ augroup END
 
 " Markdown {{{
 
+" Try out the following at some point.
+" https://github.com/itchyny/vim-highlighturl
+
 " vim-pandoc {{{
 " https://github.com/vim-pandoc/vim-pandoc
 " There are many different markdown plugins.  Most are too slow.
@@ -1730,20 +1765,8 @@ nnoremap <leader>ms <Plug>MarkdownPreviewToggle
 " }}}
 
 " }}}
+" }}}
 
-" vim-polyglot {{{
-" Various language packs for vim.
-" https://github.com/sheerun/vim-polyglot
-" A best-of-breed collection of programming language syntax,indent,ftplugin
-" config files.
-" ** HAS TO COME AFTER LANGUAGE DEFINITIONS THAT YOU HAVE DISABLED BELOW **
-" ** HAS CONFLICTS WITH VIM-GO - https://github.com/fatih/vim-go/issues/2045 **
-Plug 'sheerun/vim-polyglot'
-" I prefer my own configuration of Python, Markdown and Golang
-let g:polyglot_disabled = ['go', 'python', 'markdown']
-let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js=javascript', 'json=javascript', 'perl', 'php', 'python', 'ruby', 'sass', 'xml', 'html', 'vim']
-" }}}
-" }}}
 
 " Version Control -------------------------------------------------- {{{
 
@@ -1755,6 +1778,9 @@ let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js
 " https://bolt80.com/lawrencium/
 " The fugitive for Mercurial
 Plug 'ludovicchabant/vim-lawrencium'
+nnoremap <silent> <leader>hs :Hgstatus<CR>
+nnoremap <silent> <leader>hl :Hg log --limit 5 -v<CR>
+nnoremap <silent> <leader>hc :Hgcommit<CR>
 
 " vim-mercenary
 " A mercurial wrapper that implements HGblame, HGdiff {rev}, HGshow {rev} and
@@ -2116,6 +2142,25 @@ Plug 'weilbith/nerdtree_choosewin-plugin'
 
 " Themes {{{
 Plug 'tomasr/molokai'
+
+" challenger-deep
+" https://github.com/challenger-deep-theme/vim
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+
+Plug 'NLKNguyen/papercolor-theme'
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default': {
+  \       'allow_bold': 1,
+  \       'allow_italic': 1
+  \     }
+  \   },
+  \   'language': {
+  \     'python': {
+  \       'highlight_builtins': 1
+  \     }
+  \   }
+  \ }
 " }}}
 
 " Statuslines:
@@ -2125,6 +2170,8 @@ Plug 'tomasr/molokai'
 "     Appears to be faster(?) in normal operation - startup is not faster.
 "     A LOT less information on the statusline that you then have to configure
 "     yourself.
+"   - More plugins are adding lightline support.
+"     let g:lightline = { 'colorscheme': 'challenger_deep'}
 " 2. powerline - much too much and slow.
 " 3. airline - is a good middle ground for me.
 
