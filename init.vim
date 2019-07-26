@@ -219,6 +219,11 @@
 
 " Troubleshooting Debugging And Profiling The Configuration: {{{
 "
+" Echo out mappings - you will need to do this by interesting filetype.
+"   1. :redir! > vim_keys.txt
+"   2. :silent verbose map
+"   3. :redir END
+"
 " Check messages register:
 "   1. run =:messages=
 "
@@ -2294,9 +2299,9 @@ nnoremap U <C-r>
 nnoremap vv 0v$
 
 " vv to generate new vertical split
-nnoremap <silent> vv <C-w>v
+" nnoremap <silent> vv <C-w>v
 " ss to generate new horizontal split
-nnoremap <silent> ss <C-w>s
+ " nnoremap <silent> ss <C-w>s
 
 " follow lines that wrap.
 " NOTE: 8/24/2014 - these 2 mappings resulted in the following message on nvim
