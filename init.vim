@@ -2146,11 +2146,20 @@ Plug 'weilbith/nerdtree_choosewin-plugin'
 " }}}
 
 " Themes {{{
+
+" molokai
+" https://github.com/tomasr/molokai
+" A modified version of molokai for Vim.
 Plug 'tomasr/molokai'
 
 " challenger-deep
 " https://github.com/challenger-deep-theme/vim
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+
+" vim-256noir
+" https://github.com/andreasvc/vim-256noir
+" A dark 256-color colorscheme for vim that is pretty minimal.
+Plug 'andreasvc/vim-256noir'
 
 Plug 'NLKNguyen/papercolor-theme'
 let g:PaperColor_Theme_Options = {
