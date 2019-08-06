@@ -1406,6 +1406,8 @@ autocmd FileType vim autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 " https://github.com/neoclide/coc.nvim
 " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
 "
+" For Python
+" https://github.com/neoclide/coc-python
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Conflict marker highlighting. {{{
@@ -1632,24 +1634,13 @@ autocmd FileType groovy setlocal includeexpr=substitute(v:filename,'\\.\/','','g
 "   mode.  You can then use <Esc>o to create a new line in ipython.
 " - Start up ipython in a terminal and enjoy.
 
-" deoplete source for Jedi/Python
-" https://github.com/zchee/deoplete-jedi
-" Plug 'zchee/deoplete-jedi'
-
-" " jedi-vim
-" " https://github.com/davidhalter/jedi-vim
-" Plug 'davidhalter/jedi-vim'
-" " Show the function signatures in the commandline.
-" let g:jedi#show_call_signatures = 2
-" " We want to use deoplete-jedi for completion.
-" let g:jedi#completions_enabled = 0
-
-" vim-conda
+" vim-conda {{{
 " https://github.com/cjrh/vim-conda
 " Support python development using Conda env manager
 Plug 'cjrh/vim-conda'
+" }}}
 
-" impsort.vim - sensibly sort imports
+" impsort.vim - sensibly sort imports {{{
 " https://github.com/tweekmonster/impsort.vim
 " Utility for sorting and highlighting Python imports.  More flexible than
 " isort.
@@ -1659,21 +1650,29 @@ let g:impsort_textwidth = 104
 let g:impsort_lines_after_imports = 2
 " run impsort on save.
 autocmd BufWritePre *.py ImpSort!
+" }}}
 
-" vim-python-pep8-indent
+" vim-python-pep8-indent {{{
 " https://github.com/Vimjas/vim-python-pep8-indent
+" Modify the Vim indenting of Python to conform with PEP8 and some nicer style
+" changes.
 Plug 'Vimjas/vim-python-pep8-indent'
+" }}}
 
-" Syntax highlighting - PaperColor scheme targets this syntax file specifically
+" Syntax highlighting {{{
+" PaperColor scheme targets this syntax file specifically
 " https://github.com/hdima/python-syntax/
 Plug 'https://github.com/hdima/python-syntax/'
 let python_highlight_all = 1
+" }}}
 
-" SimpylFold - No-BS Python code folding
+" SimpylFold {{{
+" No-BS Python code folding, used in conjunction with FastFold.
 " https://github.com/tmhedberg/SimpylFold
 Plug 'tmhedberg/SimpylFold'
+" }}}
 
-" Python textobjects
+" Python textobjects {{{
 " https://github.com/bps/vim-textobj-python
 "
 " This is a Vim plugin to provide text objects for Python functions and
@@ -1687,13 +1686,15 @@ Plug 'tmhedberg/SimpylFold'
 "     [pf / ]pf: move to next/previous function
 "     [pc / ]pc: move to next/previous class
 Plug 'bps/vim-textobj-python'
+" }}}
 
-" requirements.txt.vim
+" requirements.txt.vim {{{
 " https://github.com/raimon49/requirements.txt.vim
 " the Requirements File Format syntax support for Vim
 Plug 'raimon49/requirements.txt.vim'
 " Add 'freeze' to your .vimrc as a detection pattern
 let g:requirements#detect_filename_pattern = 'freeze'
+" }}}
 
 " }}}
 
