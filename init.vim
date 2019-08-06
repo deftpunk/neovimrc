@@ -1073,6 +1073,41 @@ nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
 " }}}
 
+" asyncrun.vim {{{
+" Run Async Shell Commands in Vim 8.0 / NeoVim and Output to Quickfix Window
+" https://github.com/skywind3000/asyncrun.vim
+" There are two vim commands: :AsyncRun and :AsyncStop to control async jobs.
+"
+" :AsyncRun[!] [options] {cmd} ...
+" Run shell command in background and output to quickfix. when ! is included,
+" auto-scroll in quickfix will be disabled. Parameters are splited by space, if
+" a parameter contains space, it should be quoted or escaped as backslash +
+" space (unix only).
+"
+" Parameters accept macros start with '%', '#' or '<' :
+"
+" %:p     - File name of current buffer with full path
+" %:t     - File name of current buffer without path
+" %:p:h   - File path of current buffer without file name
+" %:e     - File extension of current buffer
+" %:t:r   - File name of current buffer without path and extension
+" %       - File name relativize to current directory
+" %:h:.   - File path relativize to current directory
+" <cwd>   - Current directory
+" <cword> - Current word under cursor
+" <cfile> - Current file name under cursor
+" <root>  - Project root directory
+Plug 'skywind3000/asyncrun.vim'
+
+" Open the quickfix window at least 12 lines.
+let g:asyncrun_open = 12
+" Disable python stdout buffering
+" https://github.com/skywind3000/asyncrun.vim/wiki/FAQ#cant-see-the-realtime-output-when-running-a-python-script
+" To execute a python script:
+"   :AsyncRun -raw python %:p
+let $PYTHONUNBUFFERED=1
+" }}}
+
 " vim-quickrun {{{
 " https://github.com/thinca/vim-quickrun
 " Execute the current buffer or run commands quickly.
@@ -1449,6 +1484,8 @@ let g:autofmt_autosave = 1
 " tests).
 Plug 'janko-m/vim-test'
 
+" default strategy is asyncrun.
+let test#strategy = 'asyncrun'
 " terminal position.
 let test#neovim#term_position = "bottomright"
 " force python test runner to be pytest.
@@ -2235,7 +2272,8 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'" enable integration with ale
 let g:airline#extensions#ale#enabled=1
 let g:airline#extensions#tagbar#enabled=1
-" " need to enable this for vim-devicons
+
+" need to enable this for vim-devicons
 let g:airline_powerline_fonts = 1
 " }}}
 
@@ -2337,13 +2375,10 @@ nnoremap Y y$
 " U is a better redo
 nnoremap U <C-r>
 
-" make vv act like V
-nnoremap vv 0v$
-
 " vv to generate new vertical split
-" nnoremap <silent> vv <C-w>v
+nnoremap <silent> vv <C-w>v
 " ss to generate new horizontal split
- " nnoremap <silent> ss <C-w>s
+ nnoremap <silent> ss <C-w>s
 
 " follow lines that wrap.
 " NOTE: 8/24/2014 - these 2 mappings resulted in the following message on nvim
