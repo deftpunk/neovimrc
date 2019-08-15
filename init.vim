@@ -149,6 +149,7 @@
 " https://github.com/thaerkh/vim-workspace - a single plugin for
 " sessions+obsession+prosession+fuzzy
 "
+" https://github.com/diepm/vim-rest-console - A REST API console for vim
 " Need to see if this will bring Emacs style abbreviations, e.g. C-x a i g
 " https://github.com/omrisarig13/vim-auto-abbrev
 
@@ -724,11 +725,12 @@ let g:actnum_exclude =
 \   'help', 'mundo', 'magit', 'fugitive', 'nerdtree']
 " }}}
 
-" AnsiEsc
+" AnsiEsc {{{
 " https://github.com/powerman/vim-plugin-AnsiEsc
 " Conceal or highlight ansi escape sequences.  This is a fork of the original
 " with some improvements.
 Plug 'powerman/vim-plugin-AnsiEsc'
+" }}}
 
 " Ale - async syntax checking {{{
 " https://github.com/w0rp/ale
@@ -833,10 +835,10 @@ nnoremap <silent> <leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')])<
 " deoplete {{{
 " https://github.com/Shougo/deoplete.nvim
 " Dark powered async completion framework for neovim
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " NOTE: Feb 15, 2018  9:12 am - Had to comment out NVIM_LISTEN_ADDRESS in ~/.zshrc
 " https://github.com/Shougo/deoplete.nvim/issues/646
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 " }}}
 
 " vim-eunuch {{{
@@ -1410,6 +1412,11 @@ autocmd FileType vim autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 " https://github.com/neoclide/coc-python
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" vista.vim
+" https://github.com/liuchengxu/vista.vim
+" View and search LSP symbols, tags in Vim/NeoVim.
+Plug 'liuchengxu/vista.vim'
+
 " Conflict marker highlighting. {{{
 " https://github.com/rhysd/conflict-marker.vim
 "
@@ -1621,7 +1628,18 @@ autocmd FileType groovy setlocal includeexpr=substitute(v:filename,'\\.\/','','g
 " }}}
 
 " Python {{{
+
+" Setup: Python + Coc
+" 1. Install Coc extension
+"   :CoCInstall coc-python
+" 2. Install the python-language-server
+"   $ pip install python-language-server
+" 3. Install the mypy extension for Python <= 3.2
+"   $ pip install pyls-mypy
 "
+" * Added python-language-server to ~/.condarc so that it gets installed with
+" ever miniconda env creation - fyi, pulls in Jedi as a dependency.
+
 " Setup: Using ipython in a terminal:
 " - The biggest problem is creating multiline (more than 2 lines) code in
 "   ipython.
@@ -2273,6 +2291,13 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'" enable integration with ale
 let g:airline#extensions#ale#enabled=1
 let g:airline#extensions#tagbar#enabled=1
+
+" Coc in airline:
+let g:airline#extensions#coc#enabled = 1
+" change error symbol: >
+let airline#extensions#coc#error_symbol = 'E:'
+" change warning symbol: >
+let airline#extensions#coc#warning_symbol = 'W:'
 
 " need to enable this for vim-devicons
 let g:airline_powerline_fonts = 1
