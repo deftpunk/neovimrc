@@ -113,6 +113,7 @@
 " https://www.reddit.com/r/neovim/comments/axilbq/using_nvim_as_python_ide_via_pynvim/ehu2fa2
 "
 " Mon Apr 1, 2019 6:05:34pm - mostly usablem not yet entirely stable.
+" Sat Aug 17 2019 21:05:52 - coc.vim not fully functional.
 " http://liuchengxu.org/vista.vim/ - a new and improved tagbar using LSP.
 "
 " https://github.com/euclio/vim-markdown-composer
@@ -146,12 +147,17 @@
 "   Using python (pyls) or other client - https://github.com/neoclide/coc-pyls/issues/5
 "   https://www.reddit.com/r/neovim/comments/ay14vz/show_use_neovim_floating_window_instead_of/
 "   https://github.com/ncm2/float-preview.nvim/issues/1#issuecomment-470524243
+"
 " https://github.com/thaerkh/vim-workspace - a single plugin for
 " sessions+obsession+prosession+fuzzy
 "
 " https://github.com/diepm/vim-rest-console - A REST API console for vim
+"
 " Need to see if this will bring Emacs style abbreviations, e.g. C-x a i g
 " https://github.com/omrisarig13/vim-auto-abbrev
+"
+" palenight theme (dark)
+" https://github.com/drewtempelmeyer/palenight.vim
 
 " Finished:
 " Thursday Jan 3, 2019
@@ -608,11 +614,6 @@ Plug 'ompugao/ctrlp-history'
 nnoremap <silent><C-p><C-h> :CtrlPCmdHistory<CR>
 nnoremap <silent><C-p><C-s> :CtrlPSearchHistory<CR>
 
-" CtrlP extension for vim help keywords.
-" https://github.com/zeero/vim-ctrlp-help
-Plug 'zeero/vim-ctrlp-help'
-nnoremap <leader>he :CtrlPHelp<cr>
-
 " }}}
 
 " FZF {{{
@@ -663,6 +664,8 @@ nmap <leader>f :Files<cr>
 nmap <leader>F :Gfiles<cr>
 " search file contents using ripgrep.
 nmap <leader>r :Rg<cr>
+" Search help files.
+inoremap <leader>he :Helptags<cr>
 " }}}
 
 " vim-easymotion {{{
@@ -835,10 +838,11 @@ nnoremap <silent> <leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')])<
 " deoplete {{{
 " https://github.com/Shougo/deoplete.nvim
 " Dark powered async completion framework for neovim
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Python, Rust, Go, Clojure all have their own versions of this plugin.
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " NOTE: Feb 15, 2018  9:12 am - Had to comment out NVIM_LISTEN_ADDRESS in ~/.zshrc
 " https://github.com/Shougo/deoplete.nvim/issues/646
-" let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 " }}}
 
 " vim-eunuch {{{
@@ -1410,12 +1414,17 @@ autocmd FileType vim autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 "
 " For Python
 " https://github.com/neoclide/coc-python
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " vista.vim
 " https://github.com/liuchengxu/vista.vim
 " View and search LSP symbols, tags in Vim/NeoVim.
-Plug 'liuchengxu/vista.vim'
+"
+" Fri Aug 16 2019 16:56:35 - turned off coc.vim, the functionality is just not
+" there yet.  Vista cannot show the outline in the same order that objects
+" occur in the file when using coc.vim
+"
+" Plug 'liuchengxu/vista.vim'
 
 " Conflict marker highlighting. {{{
 " https://github.com/rhysd/conflict-marker.vim
@@ -1639,6 +1648,9 @@ autocmd FileType groovy setlocal includeexpr=substitute(v:filename,'\\.\/','','g
 "
 " * Added python-language-server to ~/.condarc so that it gets installed with
 " ever miniconda env creation - fyi, pulls in Jedi as a dependency.
+"
+" Fri Aug 16 2019 16:55:35 - disabled coc.vim because the functionality
+" compared to deoplete+jedi is just not there yet.
 
 " Setup: Using ipython in a terminal:
 " - The biggest problem is creating multiline (more than 2 lines) code in
@@ -1651,6 +1663,12 @@ autocmd FileType groovy setlocal includeexpr=substitute(v:filename,'\\.\/','','g
 " - Configure your terminal binding to use <leader><ESC> to Escape to Normal
 "   mode.  You can then use <Esc>o to create a new line in ipython.
 " - Start up ipython in a terminal and enjoy.
+
+" deoplete-jedi {{{
+" https://github.com/deoplete-plugins/deoplete-jedi
+Plug 'deoplete-plugins/deoplete-jedi'
+let g:deoplete#sources#jedi#show_docstring = 1
+" }}}
 
 " vim-conda {{{
 " https://github.com/cjrh/vim-conda
@@ -1734,16 +1752,31 @@ augroup END
 
 " Rust {{{
 
-" Install rustfmt
-" rustup component add rustfmt --toolchain stable-x86_64-apple-darwin
-"
-" Install rustls
-" :CocInstall coc-rls
-
 " Writing Rust plugin in Neovim.
 " https://blog.usejournal.com/a-detailed-guide-to-writing-your-first-neovim-plugin-in-rust-a81604c606b1
 " rust-lang & *.toml support comes in vim-polyglot
-" TODO: rusti & coc.vim using LSP.
+
+" Install rustfmt
+" rustup component add rustfmt --toolchain stable-x86_64-apple-darwin
+"
+" Install rustls - only if using coc.vim
+" Fri Aug 16 2019 17:01:42 - disabled coc.vim because the functionality was
+" just not there compared to deoplete.
+" :CocInstall coc-rls
+
+" deoplete-rust {{{
+" Install racer
+" $ cargo +nightly install racer
+"
+" Install the Rust src
+" $ rustup component add rust-src
+"
+Plug 'sebastianmarkow/deoplete-rust'
+let g:deoplete#sources#rust#racer_binary='/Users/ebodine/.cargo/bin/racer'
+let g:deoplete#sources#rust#rust_source_path='/Users/ebodine/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src'
+let g:deoplete#sources#rust#show_duplicates=1
+let g:deoplete#sources#rust#documentation_max_height=30
+" }}}
 
 " }}}
 
@@ -2070,6 +2103,29 @@ nnoremap <silent> <leader>gvl :GV?<cr>
 " Flog is a lightweight and powerful git branch viewer that integrates with
 " fugitive.  New and improved gitv.
 " NOTE: Sat Mar 9, 2019 3:08:19pm - Comparing with gv.vim
+"
+" Flog keeps an open API in order to allow you to customize it to suit your git
+" workflow.
+"
+" The best way to discover how to use the API is by reading it:
+" https://github.com/rbong/vim-flog/blob/master/autoload/flog.vim
+"
+" Example: to add a diff command to Flog, add the following to your |.vimrc|.
+" >
+"   function! Flogdiff(mods) abort
+"     let l:path = fnameescape(flog#get_state().path[0])
+"     let l:commit = flog#get_commit_data(line('.')).short_commit_hash
+"     call flog#preview(a:mods . ' split ' . l:path . ' | Gvdiff ' . l:commit)
+"   endfunction
+"
+"   augroup flog
+"     autocmd FileType floggraph command! -buffer -nargs=0 Flogdiff call Flogdiff('<mods>')
+"   augroup END
+" <
+"
+" By running ":Flogdiff" in the Flog graph window, you can now see a diff of the
+" file passed in with the "-path=" option against the commit under the cursor.
+"
 Plug 'rbong/vim-flog'
 " }}}
 
@@ -2131,16 +2187,6 @@ nmap gn <Plug>(neoterm-repl-send)
 xmap gn <Plug>(neoterm-repl-send)
 " Send line
 nmap gnl <plug>(neoterm-repl-send-line)
-
-" }}}
-
-" nuake {{{
-" A Quake style terminal for Neovim
-" https://github.com/Lenovsky/nuake
-Plug 'Lenovsky/nuake'
-let g:nuake_per_tab=1
-
-nnoremap <leader>- :Nuake<cr>
 " }}}
 
 " Terminal Mappings {{{
@@ -2149,36 +2195,6 @@ nnoremap <leader>- :Nuake<cr>
 tnoremap <Esc> <C-\><C-n>
 " }}}
 
-" }}}
-
-" Tmux: {{{
-
-" vim-tmux-navigator {{{
-" https://github.com/christoomey/vim-tmux-navigator
-" Allows you, with similar config in tmux.conf, to move between vim splits and
-" tmux panes seamlessly.
-"
-" Window split navigation:
-"   nnoremap <C-J> <C-W><C-J>
-"   nnoremap <C-K> <C-W><C-K>
-"   nnoremap <C-L> <C-W><C-L>
-"   nnoremap <C-H> <C-W><C-H>
-Plug 'christoomey/vim-tmux-navigator'
-" }}}
-
-" vimux {{{
-" https://github.com/benmills/vimux
-Plug 'benmills/vimux'
-
-" Prompt for a command to run
-map <leader>vp :VimuxPromptCommand<CR>
-" Run last command executed by VimuxRunCommand
-map <leader>vl :VimuxRunLastCommand<CR>
-" Inspect runner pane - switch to the pane that the above command has run in.
-map <leader>vi :VimuxInspectRunner<CR>
-" Zoom the tmux runner pane
-map <leader>vz :VimuxZoomRunner<CR>
-" }}}
 " }}}
 
 " Appearances: {{{
@@ -2193,9 +2209,6 @@ endif
 if (has("termguicolors"))
     set termguicolors
 endif
-
-" xterm color table & other color related things
-Plug 'guns/xterm-color-table.vim'
 
 " winresizer {{{
 " https://github.com/simeji/winresizer
@@ -2241,29 +2254,14 @@ Plug 'weilbith/nerdtree_choosewin-plugin'
 " A modified version of molokai for Vim.
 Plug 'tomasr/molokai'
 
-" challenger-deep
-" https://github.com/challenger-deep-theme/vim
-Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+" ayu-vim {{{
+" Dark and light themes.
+" https://github.com/ayu-theme/ayu-vim
+Plug 'ayu-theme/ayu-vim'
+" let ayucolor="light"  " for light version of theme
+" let ayucolor="dark"   " for dark version of theme
+" }}}
 
-" vim-256noir
-" https://github.com/andreasvc/vim-256noir
-" A dark 256-color colorscheme for vim that is pretty minimal.
-Plug 'andreasvc/vim-256noir'
-
-Plug 'NLKNguyen/papercolor-theme'
-let g:PaperColor_Theme_Options = {
-  \   'theme': {
-  \     'default': {
-  \       'allow_bold': 1,
-  \       'allow_italic': 1
-  \     }
-  \   },
-  \   'language': {
-  \     'python': {
-  \       'highlight_builtins': 1
-  \     }
-  \   }
-  \ }
 " }}}
 
 " Statuslines:
@@ -2291,13 +2289,6 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'" enable integration with ale
 let g:airline#extensions#ale#enabled=1
 let g:airline#extensions#tagbar#enabled=1
-
-" Coc in airline:
-let g:airline#extensions#coc#enabled = 1
-" change error symbol: >
-let airline#extensions#coc#error_symbol = 'E:'
-" change warning symbol: >
-let airline#extensions#coc#warning_symbol = 'W:'
 
 " need to enable this for vim-devicons
 let g:airline_powerline_fonts = 1
