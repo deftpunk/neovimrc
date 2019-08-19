@@ -1683,7 +1683,8 @@ Plug 'cjrh/vim-conda'
 Plug 'tweekmonster/impsort.vim'
 let g:impsort_textwidth = 104
 " so that the linter doesn't complain.
-let g:impsort_lines_after_imports = 2
+" let g:impsort_lines_after_imports = 2
+" let g:impsort_start_nextline = 1
 " run impsort on save.
 autocmd BufWritePre *.py ImpSort!
 " }}}
@@ -2195,6 +2196,22 @@ nmap gnl <plug>(neoterm-repl-send-line)
 tnoremap <Esc> <C-\><C-n>
 " }}}
 
+" }}}
+
+" Tmux: {{{
+
+" vim-tmux-navigator {{{
+" https://github.com/christoomey/vim-tmux-navigator
+" Allows you, with similar config in tmux.conf, to move between vim splits and
+" tmux panes seamlessly.
+"
+" Window split navigation:
+"   nnoremap <C-J> <C-W><C-J>
+"   nnoremap <C-K> <C-W><C-K>
+"   nnoremap <C-L> <C-W><C-L>
+"   nnoremap <C-H> <C-W><C-H>
+Plug 'christoomey/vim-tmux-navigator'
+" }}}
 " }}}
 
 " Appearances: {{{
