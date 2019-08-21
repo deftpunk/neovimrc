@@ -281,7 +281,7 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 " Avoid nested neovim processes by using neovim-remote. This should have been
 " installed prior to Neovim.
 if has('nvim')
-  let $VISUAL = 'nvr -cc split --remote-wait'
+    let $VISUAL = 'nvr -cc split --remote-wait'
 endif
 
 set hidden
@@ -665,7 +665,7 @@ nmap <leader>F :Gfiles<cr>
 " search file contents using ripgrep.
 nmap <leader>r :Rg<cr>
 " Search help files.
-inoremap <leader>he :Helptags<cr>
+nnoremap <leader>he :Helptags<cr>
 " }}}
 
 " vim-easymotion {{{
@@ -2412,7 +2412,7 @@ nnoremap U <C-r>
 " vv to generate new vertical split
 nnoremap <silent> vv <C-w>v
 " ss to generate new horizontal split
- nnoremap <silent> ss <C-w>s
+nnoremap <silent> ss <C-w>s
 
 " follow lines that wrap.
 " NOTE: 8/24/2014 - these 2 mappings resulted in the following message on nvim
@@ -2440,6 +2440,11 @@ inoremap <C-d> <C-o>x
 
 " Quit vimdiff using q but also don't mess with macro.
 nnoremap <expr> q &diff ? ":diffoff!\<bar>only\<cr>" : "q"
+" Use du instead of the more verbose :diffupdate
+nnoremap <expr> du &diff ? ":diffupdate!<cr>" : echo "No in diff"
+
+" Help specific bindings.
+" Check out ftplugins/help.vim
 
 " Use Q to play macro normally and over visual selections.
 xnoremap Q :'<,'>:normal @q<CR>
