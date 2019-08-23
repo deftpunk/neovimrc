@@ -664,7 +664,8 @@ nmap <leader>f :Files<cr>
 nmap <leader>F :Gfiles<cr>
 " search file contents using ripgrep.
 nmap <leader>r :Rg<cr>
-" Search help files.
+" Search help files.  See General mappings below & filetype/help.vim for other
+" Help related mappings.
 nnoremap <leader>he :Helptags<cr>
 " }}}
 
@@ -1356,6 +1357,24 @@ let g:tagbar_type_groovy = {
         \ 'f:fields:1'
     \ ]
 \ }
+
+" Tagbar configuration for Rust.
+let g:tagbar_type_rust = {
+    \ 'ctagstype': 'rust',
+    \ 'kinds': [
+        \ 'n:modules',
+        \ 's:structs',
+        \ 'i:traits',
+        \ 'c:impls',
+        \ 'f:functions',
+        \ 'g:enums',
+        \ 't:typedefs',
+        \ 'v:variables',
+        \ 'M:macros',
+        \ 'm:fields',
+        \ 'e:variants',
+        \ 'F:methods',
+    \ ]}
 
 nnoremap <leader>tt :TagbarToggle<CR>
 nnoremap <leader>to :TagbarOpen fj<CR>
@@ -2396,8 +2415,13 @@ nnoremap <silent> <leader>ec :e $MYVIMRC<cr>
 " toggle between line numbers, relative line numbers and no numbers.
 nnoremap <silent> <leader>nn :exec &nu==&rnu? "se nu!" : "se rnu!"<cr>
 
-" Exit Neovim
-nnoremap <leader>q :qa<cr>
+" Quit the current window. If we are the last window, then exit Neovim.
+nnoremap <leader>q <C-w>q<cr>
+" Really, I want to quit Neovim.
+nnoremap <leader><leader>q :qa<cr>
+
+" Close the Help window from afar.
+nnoremap <leader>hq :helpclose<cr>
 
 " quick save
 nnoremap <leader>w :w!<cr>
