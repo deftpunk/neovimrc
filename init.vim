@@ -572,7 +572,7 @@ let g:fruzzy#sortonempty = 1 " default value
 Plug 'ctrlpvim/ctrlp.vim'
 
 set grepprg=rg\ --color=never
-let g:ctrlp_user_command='rg %s --files --color=never --glob ""'
+let g:ctrlp_user_command='rg --files %s'
 let g:ctrlp_use_caching=0
 let g:ctrlp_match_func = {'match': 'fruzzy#ctrlp#matcher'}
 let g:ctrlp_match_current_file = 1 " to include current file in matches
@@ -957,17 +957,6 @@ Plug 'farmergreg/vim-lastplace'
 " re-align text around a chosen character (which will often be equals).
 Plug 'tommcdo/vim-lion'
 let g:lion_squeeze_spaces = 1
-" }}}
-
-" vim-move {{{
-" https://github.com/matze/vim-move
-" Move line/selection up/down, move char/selection left/right
-" NOTE: To get the default Meta mappings to work in iTerm, do the following:
-"       - In iTerm: Profiles -> Keys -> Left option key acts as +Esc
-" e.g.
-"    A-j line/selection up
-"    A-h char/selection left
-Plug 'matze/vim-move'
 " }}}
 
 " Mundo {{{
@@ -1585,20 +1574,27 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 
 " }}}
 
-" Clojure {{{
+" Lisp languages {{{
+"
+" The Lisp family of languages, e.g. Clojure & Common Lisp.
 
 " vim-sexp
 " https://github.com/guns/vim-sexp
 " Precision editing of S-expressions in Clojure, Common Lisp
 Plug 'guns/vim-sexp', {'for': 'clojure'}
 
+" Clojure {{{
+
 " There are about 4 different Clojure support plugins.
 " 1. vim-fireplace
 " 2. acid.vim
 " 3. vim-iced
-
 Plug 'liquidz/vim-iced', {'for': 'clojure'}
+" }}}
 
+" Common Lisp {{{
+"
+" }}}
 " }}}
 
 " Golang {{{
@@ -1913,7 +1909,6 @@ nnoremap <leader>ms <Plug>MarkdownPreviewToggle
 
 " }}}
 " }}}
-
 
 " Version Control -------------------------------------------------- {{{
 
