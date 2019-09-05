@@ -97,3 +97,11 @@ Install vim-plug (https://github.com/junegunn/vim-plug) BEFORE RUNNING NEOVIM
 Grab binary download from http://vimr.org/
   1. Copy CLI tool
   2. Set zsh interactive - so that environment variables are picked up.
+
+# FAQ:
+
+  1. Figuring out what Neovim thinks a key is when pressed:
+     - Enter Insert mode.
+     - Press Ctrl-v & then the key combination you are trying to figure out.
+  2. How to show all of the filetypes that Neovim supports:
+     =:echo glob($VIMRUNTIME . '/syntax/*.vim')=

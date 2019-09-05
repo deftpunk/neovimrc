@@ -153,15 +153,6 @@
 " https://coderwall.com/p/sdva9q/how-to-detect-plugins-slowing-vim-down
 " }}}
 
-" FAQ: {{{
-"
-" 1. Figuring out what (Neo)vim thinks a key is when pressed:
-"    - Enter Insert mode.
-"    - Press Ctrl-v & then the key combination you are trying to figure out.
-" 2. How to show all of the filetypes that Neovim supports:
-"    =:echo glob($VIMRUNTIME . '/syntax/*.vim')=
-" }}}
-
 " Options -------------------------------------------------------- {{{
 
 " let g:python_host_prog="/usr/local/bin/python2"
