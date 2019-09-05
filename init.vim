@@ -114,6 +114,11 @@
 "
 " Mon Apr 1, 2019 6:05:34pm - mostly usablem not yet entirely stable.
 " Sat Aug 17 2019 21:05:52 - coc.vim not fully functional.
+" coc.vim - https://github.com/neoclide/coc.nvim - better(?) completion w/ LSP
+"   Using python (pyls) or other client - https://github.com/neoclide/coc-pyls/issues/5
+"   https://www.reddit.com/r/neovim/comments/ay14vz/show_use_neovim_floating_window_instead_of/
+"   https://github.com/ncm2/float-preview.nvim/issues/1#issuecomment-470524243
+"
 " http://liuchengxu.org/vista.vim/ - a new and improved tagbar using LSP.
 "
 " https://github.com/euclio/vim-markdown-composer
@@ -143,11 +148,6 @@
 "
 " vim-themis - https://github.com/thinca/vim-themis - testing framework for
 "   vimscript.
-" coc.vim - https://github.com/neoclide/coc.nvim - better(?) completion w/ LSP
-"   Using python (pyls) or other client - https://github.com/neoclide/coc-pyls/issues/5
-"   https://www.reddit.com/r/neovim/comments/ay14vz/show_use_neovim_floating_window_instead_of/
-"   https://github.com/ncm2/float-preview.nvim/issues/1#issuecomment-470524243
-"
 " https://github.com/thaerkh/vim-workspace - a single plugin for
 " sessions+obsession+prosession+fuzzy
 "
@@ -2219,7 +2219,7 @@ tnoremap <Esc> <C-\><C-n>
 " Allows you, with similar config in tmux.conf, to move between vim splits and
 " tmux panes seamlessly.
 "
-" Window split navigation:
+" ** This sets the following Window split navigation: **
 "   nnoremap <C-J> <C-W><C-J>
 "   nnoremap <C-K> <C-W><C-K>
 "   nnoremap <C-L> <C-W><C-L>
@@ -2280,6 +2280,11 @@ Plug 'weilbith/nerdtree_choosewin-plugin'
 
 " Themes {{{
 
+" papercolor
+" A light theme
+" https://github.com/NLKNguyen/papercolor-theme
+" Plug 'NLKNguyen/papercolor'
+
 " molokai
 " https://github.com/tomasr/molokai
 " A modified version of molokai for Vim.
@@ -2295,7 +2300,7 @@ Plug 'ayu-theme/ayu-vim'
 
 " }}}
 
-" Statuslines:
+" Statuslines: {{{
 " There are a number of different options: powerline, airline, lightline, etc.
 " 1. lightline - https://github.com/itchyny/lightline.vim
 "   - Mon Jun 25 4:57:32pm 2018
@@ -2343,6 +2348,7 @@ Plug 'edkolev/tmuxline.vim'
 let g:airline#extensions#tmuxline#enabled = 1
 " start tmuxline even without vim running
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
+" }}}
 " }}}
 
 " VimDevIcons - add glyphs/icons to plugins {{{
