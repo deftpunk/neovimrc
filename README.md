@@ -1,8 +1,4 @@
-# neovimrc
-
-My dark powered Neovim configuration.  I use a lot of plugins, that is how I
-choose to use Neovim, as is my perogative to do so.  If you choose a different
-way, that is your prerogative but I find "purity" tool discussions dull.
+# About Neovim
 
 Neovim (https://neovim.io/) - the future of Vim.
 
@@ -10,18 +6,24 @@ Neovim (https://neovim.io/) - the future of Vim.
 > next generation.
 - Shougo
 
-## OS Configuration
+# My Configuration
 
-### Mac OS X
+My dark powered Neovim configuration.  I use a lot of plugins, that is how I
+choose to use Neovim, as is my perogative to do so.  If you choose a different
+way, that is your prerogative but I find "purity" tool discussions dull.
 
-#### Setup Xcode
+# OS Configuration
+
+## Mac OS X
+
+### Setup Xcode
   1. Install Xcode
   2. Install the cmdline tools: =xcode-select --install=
 
-#### Change ITerm Preferences
+### Change ITerm Preferences
   Profiles -> Keys -> Left option key acts as +Esc
 
-#### External Dependencies
+### External Dependencies
 Install the following packages via =brew install=
    - gls
    - coreutils
@@ -35,12 +37,12 @@ Install the following packages via =brew install=
    * fzf
    - fd
 
-#### Git Configuration
+### Git Configuration
   - symlink global configuration files:
   $ ln -s tmp/yah/gitignore_global .gitignore_global
   $ ln -s tmp/yah/gitconfig .gitconfig
 
-#### Setup Python
+### Setup Python
 This is the Python for Neovim, not the one for Python development. So DO NOT have miniconda in
 the PATH or PYTHONPATH.
   1. brew install python@2
@@ -51,25 +53,25 @@ the PATH or PYTHONPATH.
   6. pip3 install jedi, ipython, requests
 
 
-### Linux Setup
+## Linux Setup
 
-#### Install Rust:
+### Install Rust:
 
   1. curl https://sh.rustup.rs -sSf | sh
   2. source ~/.cargo/env
 
-#### Install Ripgrep:
+### Install Ripgrep:
 
   1. cargo install ripgrep
 
-#### Install Python:
+### Install Python:
 
   1. sudo apt-get -y install python-pip
 
 
-## Neovim Install
+# Neovim Install
 
-### Setup Neovim Remote
+## Setup Neovim Remote
 https://github.com/mhinz/neovim-remote
 This solves the neovim inside of neovim problem you get when you set your
 EDITOR=nvim and =git commit= is called.
@@ -78,17 +80,20 @@ EDITOR=nvim and =git commit= is called.
 
 = nvr --remote file1 file2 =
 
-### Install Neovim
+## Install Neovim
+
 1. Use brew to install neovim
    $ brew update && brew install neovim
 2. Clone my Neovim configuration.
 
-### Install Plugin Manager
+## Install Plugin Manager
+
 Install vim-plug (https://github.com/junegunn/vim-plug) BEFORE RUNNING NEOVIM
   1. $ curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-### Install Vimr
+## Install Vimr
+
 Grab binary download from http://vimr.org/
   1. Copy CLI tool
   2. Set zsh interactive - so that environment variables are picked up.
