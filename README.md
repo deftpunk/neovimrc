@@ -1,6 +1,8 @@
 # neovimrc
 
-My dark powered Neovim configuration.
+My dark powered Neovim configuration.  I use a lot of plugins, that is how I
+choose to use Neovim, as is my perogative to do so.  If you choose a different
+way, that is your prerogative but I find "purity" tool discussions dull.
 
 Neovim (https://neovim.io/) - the future of Vim.
 
@@ -8,16 +10,18 @@ Neovim (https://neovim.io/) - the future of Vim.
 > next generation.
 - Shougo
 
-## Neovim Install
+## OS Configuration
 
-### Setup Xcode
+### Mac OS X
+
+#### Setup Xcode
   1. Install Xcode
   2. Install the cmdline tools: =xcode-select --install=
 
-### Change ITerm Preferences
+#### Change ITerm Preferences
   Profiles -> Keys -> Left option key acts as +Esc
 
-### External Dependencies
+#### External Dependencies
 Install the following packages via =brew install=
    - gls
    - coreutils
@@ -28,14 +32,15 @@ Install the following packages via =brew install=
    - bat
    - tree
    - ctags
+   * fzf
    - fd
 
-### Git Configuration
+#### Git Configuration
   - symlink global configuration files:
   $ ln -s tmp/yah/gitignore_global .gitignore_global
   $ ln -s tmp/yah/gitconfig .gitconfig
 
-### Setup Python
+#### Setup Python
 This is the Python for Neovim, not the one for Python development. So DO NOT have miniconda in
 the PATH or PYTHONPATH.
   1. brew install python@2
@@ -44,6 +49,25 @@ the PATH or PYTHONPATH.
   4. pip3 install neovim --upgrade
   5. pip3 install neovim-remote
   6. pip3 install jedi, ipython, requests
+
+
+### Linux Setup
+
+#### Install Rust:
+
+  1. curl https://sh.rustup.rs -sSf | sh
+  2. source ~/.cargo/env
+
+#### Install Ripgrep:
+
+  1. cargo install ripgrep
+
+#### Install Python:
+
+  1. sudo apt-get -y install python-pip
+
+
+## Neovim Install
 
 ### Setup Neovim Remote
 https://github.com/mhinz/neovim-remote

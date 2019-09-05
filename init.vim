@@ -3,108 +3,6 @@
 "                  A vimrc for the Emacs RSI emigrant
 "                          Author: deftpunk
 "
-" I am a dark-side Neovim user, I have lots of plugins that I use.  If you
-" don't like that, then don't use my configuration.
-"
-" About Neovim {{{
-
-" Neovim (https://neovim.io/) - the future of Vim.
-"
-" Vim the text editor has been loved by a generation of users.  This is the
-" next generation.
-" - Shougo
-
-" }}}
-
-" Bootstrap Neovim Install {{{
-
-" Setup on Linux {{{
-"
-" Install Rust:
-"   1. curl https://sh.rustup.rs -sSf | sh
-"   2. source ~/.cargo/env
-"
-" Install Ripgrep:
-"   1. cargo install ripgrep
-"
-" Install Python:
-"   1. sudo apt-get -y install python-pip
-"
-" }}}
-"
-" Install on MacOSX {{{
-"
-" Setup Xcode:
-"   1. Install Xcode
-"   2. Install the cmdline tools: =xcode-select --install=
-
-" Change ITerm Preferences:
-"   Profiles -> Keys -> Left option key acts as +Esc
-"
-" Install External Dependencies:
-" Install the following packages via =brew install=
-"    - gls
-"    - coreutils
-"    - cask
-"    - ripgrep
-"    - ispell
-"    - git
-"    - bat
-"    - tree
-"    - ctags
-"    - fd
-"
-" Python Install:
-"   1. brew install python@2
-"   2. brew install python3
-"
-" }}}
-"
-" Git Configuration:
-"   - symlink global configuration files:
-"   $ ln -s tmp/yah/gitignore_global .gitignore_global
-"   $ ln -s tmp/yah/gitconfig .gitconfig
-
-" Setup Python:
-" This is the Python for Neovim, not the one for Python development. So DO NOT have miniconda in
-" the PATH or PYTHONPATH.
-"   1. pip2 install neovim --upgrade
-"   2. pip3 install neovim --upgrade
-"   3. pip3 install neovim-remote
-"   4. pip3 install jedi, ipython, requests
-
-" Setup Neovim Remote:
-" https://github.com/mhinz/neovim-remote
-" This solves the neovim inside of neovim problem you get when you set your
-" EDITOR=nvim and =git commit= is called.
-"   1. Change =EDITOR=nvim= in ~.zshrc
-"   2. Set NVIM_LISTEN_ADDRESS=/tmp/nvimsocket in ~.zshrc
-"
-" = nvr --remote file1 file2 =
-"
-" You can be in a :terminal and type 'nvr <file>' and it will open in your
-" neovim - i wish it would not open in the split that the terminal is in.
-
-" Install Neovim:
-" 1. Use brew to install neovim
-"    $ brew update && brew install neovim
-" 2. Clone my Neovim configuration.
-
-" Install Plugin Manager:
-" Install vim-plug (https://github.com/junegunn/vim-plug) BEFORE RUNNING NEOVIM
-"   1. $ curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-"        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-" Install Vimr:
-" Grab binary download from http://vimr.org/
-"   1. Copy CLI tool
-"   2. Set zsh interactive - so that environment variables are picked up.
-
-" Development Language Specifics:
-" Check below for any specific settings or install quirks.
-
-" }}}
-
 " Investigations: {{{
 " Some plugins to check out in the future & notes on comparing classes of
 " plugins.
@@ -156,9 +54,6 @@
 " Need to see if this will bring Emacs style abbreviations, e.g. C-x a i g
 " https://github.com/omrisarig13/vim-auto-abbrev
 "
-" palenight theme (dark)
-" https://github.com/drewtempelmeyer/palenight.vim
-
 " Finished:
 " Thursday Jan 3, 2019
 " https://github.com/terryma/vim-smooth-scroll
@@ -2280,16 +2175,6 @@ Plug 'weilbith/nerdtree_choosewin-plugin'
 
 " Themes {{{
 
-" papercolor
-" A light theme
-" https://github.com/NLKNguyen/papercolor-theme
-" Plug 'NLKNguyen/papercolor'
-
-" molokai
-" https://github.com/tomasr/molokai
-" A modified version of molokai for Vim.
-Plug 'tomasr/molokai'
-
 " ayu-vim {{{
 " Dark and light themes.
 " https://github.com/ayu-theme/ayu-vim
@@ -2297,6 +2182,20 @@ Plug 'ayu-theme/ayu-vim'
 " let ayucolor="light"  " for light version of theme
 " let ayucolor="dark"   " for dark version of theme
 " }}}
+
+" molokai
+" https://github.com/tomasr/molokai
+" A modified version of molokai for Vim.
+Plug 'tomasr/molokai'
+
+" papercolor
+" A light theme
+" https://github.com/NLKNguyen/papercolor-theme
+" Plug 'NLKNguyen/papercolor'
+
+" palenight theme (dark)
+" https://github.com/drewtempelmeyer/palenight.vim
+" Plug 'drewtempelmeyer/palenight'
 
 " }}}
 
