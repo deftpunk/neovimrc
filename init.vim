@@ -119,40 +119,6 @@
 "   	- Single or multiple buffers.
 " }}}
 
-" Troubleshooting Debugging And Profiling The Configuration: {{{
-"
-" Echo out mappings - you will need to do this by interesting filetype.
-"   1. :redir! > vim_keys.txt
-"   2. :silent verbose map
-"   3. :redir END
-"
-" Check messages register:
-"   1. run =:messages=
-"
-" Send =:messages= output to buffer.
-"   1. =:redir @a=
-"   2. =:messages=
-"   3. =:redir END=
-"   4. Paste into a buffer: ="ap=
-"
-" Check the health:
-"   1. run =:checkhealth=
-"
-" Check the Python configuration for Neovim:
-"   1. Export Python log: export NVIM_PYTHON_LOG_FILE="/~/nvmi_python_log"
-"   2. Restart Neovim
-"   3. Check the log above.
-"
-" Start without an init file:
-" $ neovim -u NONE
-"
-" Debugging the init file:
-" $ `nvim -V20 2>&1 | tee logfile`
-"
-" Vim startup profiling, optimization etc.
-" https://coderwall.com/p/sdva9q/how-to-detect-plugins-slowing-vim-down
-" }}}
-
 " Options -------------------------------------------------------- {{{
 
 " let g:python_host_prog="/usr/local/bin/python2"

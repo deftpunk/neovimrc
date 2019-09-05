@@ -98,10 +98,45 @@ Grab binary download from http://vimr.org/
   1. Copy CLI tool
   2. Set zsh interactive - so that environment variables are picked up.
 
-# FAQ:
+# FAQ: Troubleshooting, Debugging & Profiling
 
-  1. Figuring out what Neovim thinks a key is when pressed:
-     - Enter Insert mode.
-     - Press Ctrl-v & then the key combination you are trying to figure out.
-  2. How to show all of the filetypes that Neovim supports:
-     =:echo glob($VIMRUNTIME . '/syntax/*.vim')=
+## Figuring out what Neovim thinks a key is when pressed:
+
+  - Enter Insert mode.
+  - Press Ctrl-v & then the key combination you are trying to figure out.
+
+## How to show all of the filetypes that Neovim supports:
+
+  :echo glob(\$VIMRUNTIME . '/syntax/\*.vim')
+
+## Echo out mappings - you will need to do this by interesting filetype.
+
+  1. :redir! > vim_keys.txt
+  2. :silent verbose map
+  3. :redir END
+
+## Check messages register:
+  1. run =:messages=
+
+## Send =:messages= output to buffer.
+  1. =:redir @a=
+  2. =:messages=
+  3. =:redir END=
+  4. Paste into a buffer: ="ap=
+
+## Check the health:
+  1. run =:checkhealth=
+
+## Check the Python configuration for Neovim:
+  1. Export Python log: export NVIM_PYTHON_LOG_FILE="/~/nvmi_python_log"
+  2. Restart Neovim
+  3. Check the log above.
+
+## Start without an init file:
+$ neovim -u NONE
+
+## Debugging the init file:
+$ `nvim -V20 2>&1 | tee logfile`
+
+## Vim startup profiling, optimization etc.
+https://coderwall.com/p/sdva9q/how-to-detect-plugins-slowing-vim-down
