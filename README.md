@@ -140,3 +140,22 @@ $ `nvim -V20 2>&1 | tee logfile`
 
 ## Vim startup profiling, optimization etc.
 https://coderwall.com/p/sdva9q/how-to-detect-plugins-slowing-vim-down
+
+## Vim Neovim General Reference:
+
+https://github.com/mhinz/vim-galore
+http://spacevim.org/documentation/ - useful to mine for ideas.
+
+## General Plugin And Vimscript Development:
+
+VimConf18 - Effective Modern Vim Scripting:
+https://www.youtube.com/watch?v=J5BX1FXnKBw&t=0s&list=PLx8bw5NQypsnlh5K5LZAaFvAdxfGpt2iq&index=9
+
+vital.vim - https://github.com/vim-jp/vital.vim - vim utility functions.
+
+https://vimconf.org/2018/slides/Effective_Modern_Vim_scripting_at_vimconf2018_for_PDF.pdf
+
+$ echo set runtimepath+=~/vim-amake >> ~/.vimrc
+$ mkdir ~/vim-amake && cd ~/vim-amake
+$ mkdir plugin autoload doc
+$ touch plugin/amake.vim autoload/amake.vim doc/amake.txt README.md

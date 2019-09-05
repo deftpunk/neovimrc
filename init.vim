@@ -68,57 +68,6 @@
 
 " }}}
 
-" Vim Neovim General Reference: {{{
-" https://github.com/mhinz/vim-galore
-" http://spacevim.org/documentation/ - useful to mine for ideas.
-" }}}
-
-" General Plugin And Vimscript Development: {{{
-"
-" VimConf18 - Effective Modern Vim Scripting:
-" https://www.youtube.com/watch?v=J5BX1FXnKBw&t=0s&list=PLx8bw5NQypsnlh5K5LZAaFvAdxfGpt2iq&index=9
-"
-" vital.vim - https://github.com/vim-jp/vital.vim - vim utility functions.
-"
-" https://vimconf.org/2018/slides/Effective_Modern_Vim_scripting_at_vimconf2018_for_PDF.pdf
-"
-" $ echo set runtimepath+=~/vim-amake >> ~/.vimrc
-" $ mkdir ~/vim-amake && cd ~/vim-amake
-" $ mkdir plugin autoload doc
-" $ touch plugin/amake.vim autoload/amake.vim doc/amake.txt README.md
-" }}}
-
-" My Own Plugins: {{{
-"   1. Make tagbar open left of right depending on NERDTree or number of
-"   windows open.
-" }}}
-
-" Search And Replace Plugins: {{{
-"   1. far.vim - https://github.com/brooth/far.vim
-"       - Edit mode, in the sense that you enter the replace with pattern on
-"         the commandline.
-"       - ripgrep support
-"       - Asynchronous on Neovim without using Dispatch.
-"       - Farundo doesn't always undo - known bug
-"   2. FlyGrep.vim - https://github.com/wsdjeg/FlyGrep.vim
-"       - No Edit mode
-"   3. vim-ags - https://github.com/gabesoft/vim-ags
-"   	- Edit mode
-"   	- Looks like you can change the search utility to ripgrep.
-"   	- Async was just added but can be laggy.
-"   	- rainbow delimiter conflict that can be worked around.
-"   4. ctrlsf.vim - https://github.com/dyng/ctrlsf.vim
-"       - leverages multiple-cursors
-"       - can make use of ripgrep
-"       - Edit mode only allows for modify and delete.
-"       - Asynchronous
-"       - Dispatch and multiple-cursors dependencies.
-"   5. vim-swoop - https://github.com/pelodelfuego/vim-swoop
-"   	- Pretty sure its not Asynchronous.
-"   	- Edit mode
-"   	- Single or multiple buffers.
-" }}}
-
 " Options -------------------------------------------------------- {{{
 
 " let g:python_host_prog="/usr/local/bin/python2"
@@ -749,6 +698,32 @@ Plug 'thalesmello/tabfold'
 "  - You can also use it as a command, either with a range like :7,17Commentary, or
 "    as part of a :global invocation like with :g/TODO/Commentary. That's it.
 Plug 'tpope/vim-commentary'
+" }}}
+
+" Search And Replace Plugins: {{{
+"   1. far.vim - https://github.com/brooth/far.vim
+"       - Edit mode, in the sense that you enter the replace with pattern on
+"         the commandline.
+"       - ripgrep support
+"       - Asynchronous on Neovim without using Dispatch.
+"       - Farundo doesn't always undo - known bug
+"   2. FlyGrep.vim - https://github.com/wsdjeg/FlyGrep.vim
+"       - No Edit mode
+"   3. vim-ags - https://github.com/gabesoft/vim-ags
+"   	- Edit mode
+"   	- Looks like you can change the search utility to ripgrep.
+"   	- Async was just added but can be laggy.
+"   	- rainbow delimiter conflict that can be worked around.
+"   4. ctrlsf.vim - https://github.com/dyng/ctrlsf.vim
+"       - leverages multiple-cursors
+"       - can make use of ripgrep
+"       - Edit mode only allows for modify and delete.
+"       - Asynchronous
+"       - Dispatch and multiple-cursors dependencies.
+"   5. vim-swoop - https://github.com/pelodelfuego/vim-swoop
+"   	- Pretty sure its not Asynchronous.
+"   	- Edit mode
+"   	- Single or multiple buffers.
 " }}}
 
 " ctrlsf - Ctrl-Shift-F (Sublime Text 3) {{{
