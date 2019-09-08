@@ -70,9 +70,6 @@
 
 " Options -------------------------------------------------------- {{{
 
-" let g:python_host_prog="/usr/local/bin/python2"
-" let g:python3_host_prog="/usr/local/bin/python3"
-
 " So that the shape of the cursor changes in tmux depending on normal or
 " insert mode.  Unnfortunately I have to make the cursor shape or italics show
 " up properly in iTerm or tmux on MacOSX.
@@ -207,7 +204,7 @@ noremap <LocalLeader> <Nop>
 let mapleader = "\<Space>"
 let g:mapleader = "\<Space>"
 " Map the localleader.
-let g:maplocalleader = '\'
+let g:maplocalleader = ','
 
 " }}}
 
@@ -1421,6 +1418,18 @@ Plug 'liquidz/vim-iced', {'for': 'clojure'}
 
 " Common Lisp {{{
 "
+" slimv
+" https://github.com/kovisoft/slimv
+" Plug 'kovisoft/slimv'
+
+" vlim
+" https://github.com/l04m33/vlime
+" Sat Sep 07 2019 21:02:40 -
+" 1. the REPL interaction only goes one way.  You can send things but not
+"    interact with it in the other direction.
+" 2. The start up is really simple, no having to start anything first.
+Plug 'l04m33/vlime', {'rtp': 'vim/'}
+
 " }}}
 " }}}
 
@@ -1876,6 +1885,7 @@ Plug 'tpope/vim-rhubarb'
 " vim-fubitive {{{
 " https://github.com/tommcdo/vim-fubitive
 " Add bitbucket support for Gbrowse - yeah!
+" Fri Sep 06 2019 15:37:26 - doesn't recognize ngage bitbucket ... boo!
 Plug 'tommcdo/vim-fubitive'
 " }}}
 
