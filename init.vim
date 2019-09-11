@@ -82,6 +82,10 @@ if has('nvim')
     let $VISUAL = 'nvr -cc split --remote-wait'
 endif
 
+" THis is a generic - and somewhat lazy - usage of path.  You can be much more
+" specific.
+set path=.,**
+
 set hidden
 
 " good encoding
@@ -574,6 +578,17 @@ map z*  <Plug>(asterisk-z*)
 map gz* <Plug>(asterisk-gz*)
 map z#  <Plug>(asterisk-z#)
 map gz# <Plug>(asterisk-gz#)
+" }}}
+
+" vim-auto-abbrev {{{
+" https://github.com/omrisarig13/vim-auto-abbrev
+" TODO: Look at changing/modifying the mapping.
+" '<leader>aa' - call AutoAbbrevAddCurrentWord
+" '<leader>al' - call AutoAbbrevAddCurrentLhsWord
+" '<leader>ar' - call AutoAbbrevAddCurrentRhsWord
+" '<leader>ae' - call AutoAbbrevReload
+Plug 'omrisarig13/vim-auto-abbrev'
+let g:auto_abbrev_file_path = '~/.config/nvim/abbreviates'
 " }}}
 
 " vim-autosave {{{
@@ -1889,8 +1904,12 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tommcdo/vim-fubitive'
 " }}}
 
+" Add/Stage the current file.
+nnoremap <silent> <leader>ga :Git add .<cr>
 nnoremap <silent> <leader>gb :Gblame<CR>
 nnoremap <silent> <leader>gc :Gcommit<CR>
+" Use \q\ to quit the diff.
+" Tue Sep 10 2019 19:51:21 - right now this blows away all other splits.
 nnoremap <silent> <leader>gd :Gdiff<CR>
 " Adding 0 at the beginning points to the local file - :GV! is better.
 nnoremap <silent> <leader>gl :0Glog<CR>
