@@ -2276,9 +2276,9 @@ nnoremap Y y$
 nnoremap U <C-r>
 
 " vv to generate new vertical split
-nnoremap <silent> vv <C-w>v
+nnoremap <silent> vv <C-w>v <C-w>=
 " ss to generate new horizontal split
-nnoremap <silent> ss <C-w>s
+nnoremap <silent> ss <C-w>s <C-w>=
 
 " follow lines that wrap.
 " NOTE: 8/24/2014 - these 2 mappings resulted in the following message on nvim
