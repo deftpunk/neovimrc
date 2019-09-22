@@ -30,7 +30,14 @@
 " https://github.com/reconquest/vim-pythonx - python tools for easier coding.
 " https://github.com/numirias/semshi - semantic python hightlighting.
 " https://github.com/mjbrownie/GetFilePlus - possible help for python gf
-" https://github.com/ludovicchabant/vim-gutentags
+"
+" https://github.com/ludovicchabant/vim-gutentags - Tags management.
+" let g:gutentags_project_root = ['package.json', 'package.yaml', 'Cargo.toml']
+" This makes gutentags magically respect gitignore because ripgrep does so
+" let g:gutentags_file_list_command        = 'rg --files'
+" let g:gutentags_exclude_filetypes        = ['haskell', 'markdown']
+" let g:gutentags_ctags_exclude_wildignore = 1
+"
 " https://github.com/chrisbra/csv.vim - CSV files
 " https://github.com/rhysd/vim-gfm-syntax - Github flavored markdown syntax
 " 					    hightlighting
@@ -1259,6 +1266,9 @@ autocmd FileType vim autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 " https://github.com/neoclide/coc.nvim
 " Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
 "
+" Some extensions:
+" coc-git -> substitutes gitgutter
+"
 " For Python
 " https://github.com/neoclide/coc-python
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -1270,6 +1280,8 @@ autocmd FileType vim autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 " Fri Aug 16 2019 16:56:35 - turned off coc.vim, the functionality is just not
 " there yet.  Vista cannot show the outline in the same order that objects
 " occur in the file when using coc.vim
+"
+" Use with tabnine - https://tabnine.com/
 "
 " Plug 'liuchengxu/vista.vim'
 
@@ -1716,6 +1728,25 @@ augroup ft_json
 augroup END
 " }}}
 
+" Log files. {{{
+" A lot here applies to log files that I have to deal with at work.
+"
+
+" Clean up just a selection.
+" Solidfire/NetApp logs will often have json embedded in log messages.  I can
+" make a new line at the Json, select it and make it more readable with this.
+" :call LogJson()
+function! LogJson()
+	:'<. '>!python -m json.tool
+endfunction
+
+" Bindings for just logfiles.
+augroup logbindings
+	autocmd! logbindings
+	autocmd Filetype log nmap <buffer> <silent> <localleader>lj :call LogJson()<cr>
+augroup END
+" }}}
+
 " Markdown {{{
 
 " Try out the following at some point.
@@ -2136,12 +2167,9 @@ Plug 'weilbith/nerdtree_choosewin-plugin'
 
 " Themes {{{
 
-" ayu-vim {{{
-" Dark and light themes.
-" https://github.com/ayu-theme/ayu-vim
-Plug 'ayu-theme/ayu-vim'
-" let ayucolor="light"  " for light version of theme
-" let ayucolor="dark"   " for dark version of theme
+" vim-colors-github {{{
+" https://github.com/cormacrelf/vim-colors-github
+Plug 'cormacrelf/vim-colors-github'
 " }}}
 
 " molokai
