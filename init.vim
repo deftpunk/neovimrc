@@ -1767,6 +1767,11 @@ augroup END
 
 " Try out the following at some point.
 " https://github.com/itchyny/vim-highlighturl
+"
+" https://github.com/SidOfc/mkdx
+" https://github.com/euclio/vim-markdown-composer
+" https://github.com/rhysd/vim-gfm-syntax - Github flavored markdown syntax
+" 					    hightlighting
 
 " vim-pandoc {{{
 " https://github.com/vim-pandoc/vim-pandoc
