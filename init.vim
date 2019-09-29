@@ -1750,9 +1750,15 @@ function! LogJson()
 	:'<. '>!python -m json.tool
 endfunction
 
-" Bindings for just logfiles.
-augroup logbindings
-	autocmd! logbindings
+" Autogroup for log files.
+" 1. Set foldmethod to manual so that we can create adhoc folds when we go log
+"    spelunking.
+" 2. Some bindings for just logfiles.
+augroup ft_log
+	autocmd! ft_log
+    	autocmd BufRead,BufNewFile *.log setlocal foldmethod=manual
+	autocmd Filetype log syntax off
+	autocmd BufRead *.log if getline(1) =~ '^\[\[34m' | :call AnsiEsc | endif
 	autocmd Filetype log nmap <buffer> <silent> <localleader>lj :call LogJson()<cr>
 augroup END
 " }}}
