@@ -1637,12 +1637,6 @@ let g:requirements#detect_filename_pattern = 'freeze'
 Plug 'vim-ruby/vim-ruby'
 
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
-
-" Vagrant files need to be set to Ruby filetype.
-augroup ft_vagrant
-    au!
-    au BufRead,BufNewFile Vagrantfile set ft=ruby
-augroup END
 " }}}
 
 " Rust {{{
@@ -1806,6 +1800,14 @@ nnoremap <leader>ms <Plug>MarkdownPreviewToggle
 " }}}
 
 " }}}
+
+" Vagrantfile {{{
+" https://github.com/hashivim/vim-vagrant
+" Sets up the syntax highlighting and provides :Vagrant [args] provided that
+" vagrant is in your PATH.
+Plug 'hashivim/vim-vagrant'
+" }}}
+
 " }}}
 
 " Version Control -------------------------------------------------- {{{
