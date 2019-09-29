@@ -19,7 +19,6 @@
 "
 " http://liuchengxu.org/vista.vim/ - a new and improved tagbar using LSP.
 "
-" https://github.com/euclio/vim-markdown-composer
 " https://gitlab.com/HiPhish/repl.nvim
 " https://github.com/svermeulen/vim-subversive - operator motions to quickly
 " replace text.
@@ -30,17 +29,34 @@
 " https://github.com/reconquest/vim-pythonx - python tools for easier coding.
 " https://github.com/numirias/semshi - semantic python hightlighting.
 " https://github.com/mjbrownie/GetFilePlus - possible help for python gf
-"
+
 " https://github.com/ludovicchabant/vim-gutentags - Tags management.
 " let g:gutentags_project_root = ['package.json', 'package.yaml', 'Cargo.toml']
 " This makes gutentags magically respect gitignore because ripgrep does so
 " let g:gutentags_file_list_command        = 'rg --files'
 " let g:gutentags_exclude_filetypes        = ['haskell', 'markdown']
 " let g:gutentags_ctags_exclude_wildignore = 1
-"
+" let g:gutentags_cache_dir = expand('~/.cache/vim/ctags/')"
+" Use the following command to clear the cache quickly:
+" command! -nargs=0 GutentagsClearCache call system('rm ' . g:gutentags_cache_dir . '/*')
+" let g:gutentags_generate_on_new = 1
+" let g:gutentags_generate_on_missing = 1
+" let g:gutentags_generate_on_write = 1
+" let g:gutentags_generate_on_empty_buffer = 0
+" Explaining --fields=+ailmnS (info gathered from: $ ctags --list-fields)
+"     a: Access (or export) of class members
+"     i: Inheritance information
+"     l: Language of input file containing tag
+"     m: Implementation information
+"     n: Line number of tag definition
+"     S: Signature of routine (e.g. prototype or parameter list)
+" let g:gutentags_ctags_extra_args = [
+"       \ '--tag-relative=yes',
+"       \ '--fields=+ailmnS',
+"       \ ]
+" https://www.reddit.com/r/vim/comments/d77t6j/guide_how_to_setup_ctags_with_gutentags_properly/
+
 " https://github.com/chrisbra/csv.vim - CSV files
-" https://github.com/rhysd/vim-gfm-syntax - Github flavored markdown syntax
-" 					    hightlighting
 " https://github.com/bcicen/vim-jfmt
 " https://github.com/idanarye/vim-vebugger
 " https://github.com/blueyed/vim-diminactive
