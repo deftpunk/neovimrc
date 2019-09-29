@@ -2003,8 +2003,8 @@ Plug 'airblade/vim-gitgutter'
 set updatetime=100
 
 " both of these work with repeat.vim
-nmap ]h <Plug>GitGutterNextHunk
-nmap [h <Plug>GitGutterPrevHunk
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
 
 " Preview a hunks changes
 nmap <Leader>hv <Plug>GitGutterPreviewHunk
@@ -2022,8 +2022,9 @@ let g:gitgutter_diff_args = '-w'
 let g:gitgutter_max_signs = 2500
 
 "symbols
+let g:gitgutter_override_sign_column_highlight = 0
 let g:gitgutter_sign_added = "✚"
-let g:gitgutter_sign_modified = "✹"
+let g:gitgutter_sign_modified = "➜"
 let g:gitgutter_sign_removed = "✖"
 let g:gitgutter_sign_modified_removed = "✖"
 " }}}
