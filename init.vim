@@ -1530,6 +1530,18 @@ Plug 'l04m33/vlime', {'rtp': 'vim/'}
 autocmd FileType groovy setlocal includeexpr=substitute(v:filename,'\\.\/','','g')
 " }}}
 
+" Nim {{{
+" https://github.com/alaviss/nim.nvim
+" Nim plugin for Neovim only - Investigating using Nim at work for network
+" stack management.
+" Some convenience mappings:
+"     <Plug>NimGoToDefBuf: Go to definition using the current buffer.
+"     <Plug>NimGoToDefSplit: Open the definition in a horizontal split.
+"     <Plug>NimGoToDefVSplit: Open the definition in a vertical split.
+Plug 'alaviss/nim.nvim'
+
+" }}}
+
 " Python {{{
 
 " Setup: Python + Coc
