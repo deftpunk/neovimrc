@@ -2430,14 +2430,7 @@ call arpeggio#load()
 Arpeggioinoremap jk <Esc>:
 Arpeggionnoremap jk :
 
-" Appbreviations {{{
-" NOTE: You can make filetype/bufferlocal abbreviations by adding the
-"       following to a ftplugin/<filetype>.vim file:
-"   	  iab <buffer> ebx erick.bodine
-iab sb " {{{
-iab eb " }}}
-iab ydate <c-r>=strftime("%a %b %d %Y %T")<cr>
-" }}}
+" Miscellaneous functions }}}
 
 " Clean up At2 response output that is in JSON but is too messy for json.tool
 " to handle directly.
@@ -2446,3 +2439,14 @@ function! At2Json()
 	V:s/'/"/
 	:%!python -m json.tool
 endfunction
+
+" }}}
+
+" Appbreviations {{{
+" NOTE: You can make filetype/bufferlocal abbreviations by adding the
+"       following to a ftplugin/<filetype>.vim file:
+"   	  iab <buffer> ebx erick.bodine
+iab sb " {{{
+iab eb " }}}
+iab ydate <c-r>=strftime("%a %b %d %Y %T")<cr>
+" }}}
