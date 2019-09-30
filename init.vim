@@ -2219,15 +2219,6 @@ Plug 'cormacrelf/vim-colors-github'
 " A modified version of molokai for Vim.
 Plug 'tomasr/molokai'
 
-" papercolor
-" A light theme
-" https://github.com/NLKNguyen/papercolor-theme
-" Plug 'NLKNguyen/papercolor'
-
-" palenight theme (dark)
-" https://github.com/drewtempelmeyer/palenight.vim
-" Plug 'drewtempelmeyer/palenight'
-
 " }}}
 
 " Statuslines: {{{
