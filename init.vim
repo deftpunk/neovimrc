@@ -2301,6 +2301,16 @@ let g:airline_theme='airlineish'
 
 " comments should always be in italics
 highlight Comment cterm=italic
+
+" Change the GitGutter colors to something we want
+" green
+highlight GitGutterAdd guifg=#95ffa4 ctermfg=120
+" red
+highlight GitGutterDelete guifg=#ff8080 ctermfg=204
+" yellow
+highlight GitGutterChange guifg=#ffe9aa ctermfg=228
+" red
+highlight GitGutterChangeDelete guifg=#ff8080 ctermfg=204
 " }}}
 
 " Special Use Case Mappings: {{{
