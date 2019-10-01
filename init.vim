@@ -648,28 +648,21 @@ nnoremap <leader>k :Bdelete<cr>
 Plug 'raimondi/delimitMate'
 " }}}
 
-" dash.vim {{{
-" https://github.com/rizzatti/dash.vim
-" Use Dash.app to lookup documentation.
-" Usage:
-"     :Dash[!] [TERM] [KEYWORD]
-"     :Dash os.path.dirname python
-Plug 'rizzatti/dash.vim'
-" }}}
-
 " vim-dasht {{{
 " https://github.com/sunaku/vim-dasht
 " Look up Dash documentation locally - https://github.com/sunaku/dasht
 " Install dasht & then install docsets:
-" 1. brew update; brew install dasht
-" 2. dasht-docsets-install bash
+"   1. brew update; brew install dasht
+"   2. dasht-docsets-install bash
+" When in Python, also search NumPy, SciPy, and Pandas:
+" let g:dasht_filetype_docsets['python'] = ['(num|sci)py', 'pandas']
 Plug 'sunaku/vim-dasht'
 " create window beside current one
 let g:dasht_results_window = 'vnew'
-" When in Python, also search NumPy, SciPy, and Pandas:
-" let g:dasht_filetype_docsets['python'] = ['(num|sci)py', 'pandas']
-" search related docsets
+" search word under cursor in related docsets
 nnoremap <silent> <leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
+" search visual selection in related docsets
+vnoremap <silent> <Leader>K y:<C-U>call Dasht(getreg(0))<Return>
 " }}}
 
 " deoplete {{{
@@ -2429,6 +2422,10 @@ noremap <leader>0 :tablast<cr>
 call arpeggio#load()
 Arpeggioinoremap jk <Esc>:
 Arpeggionnoremap jk :
+Arpeggiocnoremap jk <Esc>
+
+nnoremap jk :
+cnoremap jk <Esc>
 
 " Miscellaneous functions }}}
 
