@@ -2022,6 +2022,7 @@ let g:gitgutter_sign_removed = "✖"
 let g:gitgutter_sign_modified_removed = "✖"
 
 " Refresh GitGutter signs after fugitive commit.
+" https://github.com/airblade/vim-gitgutter/issues/502
 autocmd BufWritePost,WinEnter * GitGutter
 " }}}
 
@@ -2426,9 +2427,6 @@ call arpeggio#load()
 Arpeggioinoremap jk <Esc>:
 Arpeggionnoremap jk :
 Arpeggiocnoremap jk <Esc>
-
-nnoremap jk :
-cnoremap jk <Esc>
 
 " Miscellaneous functions }}}
 
