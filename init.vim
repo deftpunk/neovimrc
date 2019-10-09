@@ -2133,11 +2133,6 @@ Plug 'weilbith/nerdtree_choosewin-plugin'
 
 " Themes {{{
 
-" vim-colors-github {{{
-" https://github.com/cormacrelf/vim-colors-github
-Plug 'cormacrelf/vim-colors-github'
-" }}}
-
 " molokai
 " https://github.com/tomasr/molokai
 " A modified version of molokai for Vim.
