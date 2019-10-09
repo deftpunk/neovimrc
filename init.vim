@@ -2000,8 +2000,27 @@ Plug 'rbong/vim-flog'
 " git-messenger {{{
 " https://github.com/rhysd/git-messenger.vim
 " Plugin to reveal the commit messages under the cursor.
+" The popup window will be automatically closed when you move the cursor so you don't need to close it manually.
+
+" Running this command while a popup window is open, it moves the cursor into
+" the window. This behavior is useful when the commit message is too long and
+" window cannot show the whole content. By moving the cursor into the popup
+" window, you can see the rest of contents by scrolling it. You can also see the
+" older commits.
+"
+" Following mappings are defined within popup window - press <leader>gm again
+" to get into the popup window.
+"
+" Mapping   	Description
+" ==========================
+"    q      	Close the popup window
+"    o      	older. Back to older commit at the line
+"    O      	Opposite to o. Forward to newer commit at the line
+"    d      	Toggle diff hunks only related to current file in the commit
+"    D      	Toggle all diff hunks in the commit
+"    ?      	Show mappings help
 Plug 'rhysd/git-messenger.vim'
-nmap <Leader>gm <Plug>(git-messenger)
+nmap <leader>gm <Plug>(git-messenger)
 " }}}
 
 " }}}
@@ -2036,25 +2055,6 @@ set splitright
 " https://stackoverflow.com/questions/34009064/how-do-i-set-the-terminal-buffer-scrollback-size
 " It seems that 100000 is the maximum.
 set scrollback=100000
-" }}}
-
-" neoterm {{{
-" https://github.com/kassio/neoterm
-" Wrapper of some neovim's :terminal functions.
-" Other useful commands:
-" - :T {command}: Opens a terminal, or use an opened terminal, and runs the
-"                 given command within a terminal.
-" - :Tmap {command}: maps a the given command to ,tt.
-Plug 'kassio/neoterm'
-let g:neoterm_open_in_all_tabs=0
-let g:neoterm_repl_python="ipython"
-
-" Use gn{text-object} in normal mode
-nmap gn <Plug>(neoterm-repl-send)
-" Send selected contents in visual mode.
-xmap gn <Plug>(neoterm-repl-send)
-" Send line
-nmap gnl <plug>(neoterm-repl-send-line)
 " }}}
 
 " Terminal Mappings {{{
