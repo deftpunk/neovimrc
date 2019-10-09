@@ -1608,11 +1608,12 @@ let g:deoplete#sources#rust#documentation_max_height=30
 
 " Web development - Javascript, CSS, HTML, etc. {{{
 
-" Colorizer
-" https://github.com/chrisbra/Colorizer
-" Highlight color codes inside CSS and Html files.
-Plug 'chrisbra/Colorizer'
-let g:colorizer_auto_filetype='css,html'
+" vim-hexokinase
+" https://github.com/rrethy/vim-hexokinase
+" Asynchronously highlight color codes - better than Colorizer.
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+let g:Hexokinase_highlighters = [ 'virtual' ]
+let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript']
 
 " HTML {{{
 
@@ -2156,7 +2157,7 @@ Plug 'tomasr/molokai'
 " https://github.com/vim-airline/vim-airline
 Plug 'vim-airline/vim-airline'
 Plug 'https://github.com/paranoida/vim-airlineish'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline-themes'
 
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
@@ -2212,7 +2213,9 @@ call plug#end()
 filetype plugin indent on
 syntax enable
 
-" colorschemes {{{
+" Appearances: {{{
+" colorschemes and the like
+
 " NOTE: This has to be after the `plug#end & syntax enable` above.
 set background=dark
 colorscheme molokai
