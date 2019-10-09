@@ -729,6 +729,10 @@ Plug 'tpope/vim-commentary'
 " }}}
 
 " Search And Replace Plugins: {{{
+"
+" Tue Oct 08 2019 19:43:23 - I haven't used any of these since installing and
+" trying them out.  The best is probably ctrlsf.
+"
 "   1. far.vim - https://github.com/brooth/far.vim
 "       - Edit mode, in the sense that you enter the replace with pattern on
 "         the commandline.
@@ -752,39 +756,7 @@ Plug 'tpope/vim-commentary'
 "   	- Pretty sure its not Asynchronous.
 "   	- Edit mode
 "   	- Single or multiple buffers.
-" }}}
-
-" ctrlsf - Ctrl-Shift-F (Sublime Text 3) {{{
-" https://github.com/dyng/ctrlsf.vim
-" An ack/ag/pt/rg powered code search and view tool.
 "
-" :CtrlSF [pattern]
-"
-" In CtrlSF window:
-"     Enter, o, double-click - Open corresponding file of current line in the
-"                              window which CtrlSF is launched from.
-"     <C-O> - Like Enter but open file in a horizontal split window.
-"     t - Like Enter but open file in a new tab.
-"     p - Like Enter but open file in a preview window.
-"     P - Like Enter but open file in a preview window and switch focus to it.
-"     O - Like Enter but always leave CtrlSF window opening.
-"     T - Like t but focus CtrlSF window instead of new opened tab.
-"     M - Switch result window between normal view and compact view.
-"     q - Quit CtrlSF window.
-"     <C-J> - Move cursor to next match.
-"     <C-K> - Move cursor to previous match.
-"
-" In preview window:
-"     q - Close preview window.
-Plug 'dyng/ctrlsf.vim'
-let g:ctrlsf_ackprg = '/usr/local/bin/rg'
-let g:ctrlsf_indent = 2
-let g:ctrlsf_search_mode = 'async'
-
-" vim-multiple-cursors
-" https://github.com/terryma/vim-multiple-cursors
-" Dependency for edit mode in CtrlSF
-Plug 'terryma/vim-multiple-cursors'
 " }}}
 
 " indentLine {{{
@@ -812,51 +784,6 @@ Plug 'farmergreg/vim-lastplace'
 " re-align text around a chosen character (which will often be equals).
 Plug 'tommcdo/vim-lion'
 let g:lion_squeeze_spaces = 1
-" }}}
-
-" Mundo {{{
-" http://simnalamburt.github.io/vim-mundo/dist/
-" Graph your Vim undo tree in style; less painful browsing of the undo tree.
-
-" Also tried out Undotree:
-" https://github.com/mbbill/undotree
-" Plug 'mbbill/undotree'
-" nnoremap <silent><leader>nu :UndotreeToggle<cr>
-
-" Your current position in the undo tree is marked with an @ character. Other
-" nodes are marked with an o character.
-
-" When you toggle open the graph Mundo will put your cursor on your current
-" position in the tree. You can move up and down the graph with the j and k
-" keys.
-
-" You can move to the top of the graph (the newest state) with gg and to the
-" bottom of the graph (the oldest state) with G.
-
-" As you move between undo states the preview pane will show you a unified
-" diff of the change that state made.
-
-" Pressing return on a state (or double clicking on it) will revert the
-" contents of the file to match that state.
-
-" You can use p on a state to make the preview window show the diff between
-" your current state and the selected state, instead of a preview of what the
-" selected state changed.
-
-" Pressing P while on a state will initiate "play to" mode targeted at that
-" state. This will replay all the changes between your current state and the
-" target, with a slight pause after each change. It's mostly useless, but can
-" be fun to watch and see where your editing lags — that might be a good place
-" to define a new mapping to speed up your editing.
-
-" Pressing q while in the undo graph will close it. You can also just press
-" your toggle mapping key.
-Plug 'simnalamburt/vim-mundo'
-let g:mundo_width = 52
-let g:mundo_preview_height = 40
-let g:mundo_preview_bottom = 1
-
-nnoremap <silent><leader>u :MundoToggle<cr>
 " }}}
 
 " NERDTree {{{
