@@ -1363,7 +1363,8 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Lisp languages {{{
 "
-" The Lisp family of languages, e.g. Clojure & Common Lisp.
+" Support for the Lisp family of languages, e.g. Clojure, CL, Scheme, Ratchet,
+" etc.
 
 " vim-sexp
 " https://github.com/guns/vim-sexp
@@ -1374,9 +1375,23 @@ Plug 'guns/vim-sexp', {'for': 'clojure'}
 
 " There are about 4 different Clojure support plugins.
 " 1. vim-fireplace
+"    - This is the workflow that most people use in Vim/Neovim.
 " 2. acid.vim
 " 3. vim-iced
-Plug 'liquidz/vim-iced', {'for': 'clojure'}
+"    - Sat Oct 12 2019 22:46:46 - got some weird error on startup.  I think it
+"    is lag from starting up the nREPL more than anything because a subsequent
+"    start of :IcedInNreplNS worked just fine.
+" 4. conjure
+
+" vim-iced
+" Plug 'liquidz/vim-iced', {'for': 'clojure'}
+
+" Conjure
+" https://github.com/Olical/conjure
+Plug 'Olical/conjure', { 'tag': 'v2.0.0', 'do': 'bin/compile'  }
+let g:conjure_log_direction = "horizontal"
+let g:conjure_log_blacklist = ["up", "ret", "ret-multiline", "load-file", "eval"]
+
 " }}}
 
 " Common Lisp {{{
@@ -1392,8 +1407,8 @@ Plug 'liquidz/vim-iced', {'for': 'clojure'}
 "    interact with it in the other direction.
 " 2. The start up is really simple, no having to start anything first.
 Plug 'l04m33/vlime', {'rtp': 'vim/'}
-
 " }}}
+
 " }}}
 
 " Golang {{{
