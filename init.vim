@@ -1358,6 +1358,13 @@ Plug 'guns/vim-sexp', {'for': 'clojure'}
 
 " Clojure {{{
 
+" Install Java:
+" 1. Download from Oracle.
+"
+" Install Clojure:
+" 1. brew update
+" 2. brew install leiningen
+
 " There are about 4 different Clojure support plugins.
 " 1. vim-fireplace
 "    - This is the workflow that most people use in Vim/Neovim.
