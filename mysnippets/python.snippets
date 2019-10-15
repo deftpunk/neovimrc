@@ -149,7 +149,7 @@ parser = argparse.ArgumentParser(description=__doc__,
 
 parser.add_argument('--verbose', help="Increase logging verbosity.", action="store_true")
 
-args = argparse.parse_args()
+args = parser.parse_args()
 
 endsnippet
 
@@ -157,10 +157,48 @@ snippet argx "create add_argument argument."
 parser.add_argument('${1}', help="${2}", action="store_true")
 endsnippet
 
-snippet logx "template for setting up logging"
+snippet logx "template for setting up basic logging"
 # Configure logging.
 log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG) if args.verbose else log.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s:%(name)s [%(levelname)s] %(message)s')
-log.setFormatter(formatter)
+handler = logging.StreamHandler()
+log.setLevel(logging.DEBUG) if args.verbose else log.setLevel(logging.INFO)
+handler.setFormatter(formatter)
+log.addHandler(handler)
+endsnippet
+
+snippet newfilex
+#!/usr/bin/env python
+"""
+${1}
+"""
+import logging
+import argparse
+
+def main():
+    """ Script entry point. """
+    ${2}
+
+if __name__ == '__main__':
+
+    # Configure cmdline arguments.
+    parser = argparse.ArgumentParser(description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter,
+                                     epilog="")
+    
+    parser.add_argument('--verbose', help="Increase logging verbosity.", action="store_true")
+    
+    args = parser.parse_args()
+
+    # Configure logging.
+    log = logging.getLogger(__name__)
+    formatter = logging.Formatter('%(asctime)s:%(name)s [%(levelname)s] %(message)s')
+    handler = logging.StreamHandler()
+    log.setLevel(logging.DEBUG) if args.verbose else log.setLevel(logging.INFO)
+    handler.setFormatter(formatter)
+    log.addHandler(handler)
+
+    log.info("Starting....")
+
+    main()
 endsnippet
