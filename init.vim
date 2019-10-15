@@ -1256,7 +1256,6 @@ Plug 'rhysd/conflict-marker.vim'
 Plug 'tpope/vim-endwise'
 " }}}
 
-
 " vim-test - run your tests at the speed of thought. {{{
 " https://github.com/janko-m/vim-test
 "
@@ -1408,27 +1407,11 @@ Plug 'l04m33/vlime', {'rtp': 'vim/'}
 " https//golang.org
 "
 " Install golang:
-" 1. Get the binary pkg from the .org site and install it. The homebrew
-" install is not official and is not recommended.
+" 1. brew update
+" 2. brew install golang
 "
-" Create the directories & requisite environment variables:
-" 1. mkdir -p workspace/go/src workspace/go/bin workspace/go/pkg
-" 2. export GOPATH=$HOME/workspace/go
-" 3. export GOROOT=/usr/local/go
-" 4. export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-" 5. Add the variables to .zshrc
-
-" Install Golang utilities:
-" go get -u github.com/nsf/gocode
-" go get -u github.com/alecthomas/gometalinter
-" go get -u github.com/rogpeppe/godef
-" go get -u golang.org/x/tools/cmd/goimports
-" go get -u github.com/jstemmer/gotags
-" go get github.com/matryer/moq
-" go get -u github.com/zmb3/gogetdoc
-" go get -u golang.org/x/tools/cmd/guru
-" go get -u golang.org/x/lint/golint
-" go get github.com/fatih/gomodifytags
+" Install the golang utilities.
+" 1. :GoInstallBinaries
 
 " vim-go
 " https://github.com/fatih/vim-go
@@ -1442,10 +1425,10 @@ elseif has('unix')
     let g:go_bin_path="/home/ebodine/workspace/bin/"
 endif
 
-" " deoplete-go
-" " https://github.com/zchee/deoplete-go
-" " deoplete.nvim source for Go. Asynchronous Go completion for Neovim.
-" Plug 'zchee/deoplete-go', {'do': 'make'}
+" deoplete-go
+" https://github.com/zchee/deoplete-go
+" deoplete.nvim source for Go. Asynchronous Go completion for Neovim.
+Plug 'zchee/deoplete-go', {'do': 'make'}
 
 " }}}
 
@@ -1636,10 +1619,14 @@ let g:html5_aria_attributes_complete = 0
 " vim-polyglot {{{
 " Various language packs for vim.
 " https://github.com/sheerun/vim-polyglot
+"
+" Mon Oct 14 2019 18:00:39 - moved after the language plugins so that it
+" doesn't conflict with any of them, e.g. vim-go
+" ** HAS CONFLICTS WITH VIM-GO - https://github.com/fatih/vim-go/issues/2045 **
+" ** HAS TO COME AFTER LANGUAGE DEFINITIONS THAT YOU HAVE DISABLED BELOW **
+"
 " A best-of-breed collection of programming language syntax,indent,ftplugin
 " config files.
-" ** HAS TO COME AFTER LANGUAGE DEFINITIONS THAT YOU HAVE DISABLED BELOW **
-" ** HAS CONFLICTS WITH VIM-GO - https://github.com/fatih/vim-go/issues/2045 **
 Plug 'sheerun/vim-polyglot'
 " I prefer my own configuration of Python, Markdown and Golang
 let g:polyglot_disabled = ['go', 'python', 'markdown']
