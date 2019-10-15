@@ -1256,21 +1256,6 @@ Plug 'rhysd/conflict-marker.vim'
 Plug 'tpope/vim-endwise'
 " }}}
 
-" vim-polyglot {{{
-" Various language packs for vim.
-" https://github.com/sheerun/vim-polyglot
-" A best-of-breed collection of programming language syntax,indent,ftplugin
-" config files.
-" ** HAS TO COME AFTER LANGUAGE DEFINITIONS THAT YOU HAVE DISABLED BELOW **
-" ** HAS CONFLICTS WITH VIM-GO - https://github.com/fatih/vim-go/issues/2045 **
-Plug 'sheerun/vim-polyglot'
-" I prefer my own configuration of Python, Markdown and Golang
-let g:polyglot_disabled = ['go', 'python', 'markdown']
-let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js=javascript', 'json=javascript', 'perl', 'php', 'python', 'ruby', 'sass', 'xml', 'html', 'vim']
-"
-" Rust & *.toml
-let g:autofmt_autosave = 1
-" }}}
 
 " vim-test - run your tests at the speed of thought. {{{
 " https://github.com/janko-m/vim-test
@@ -1442,13 +1427,13 @@ Plug 'l04m33/vlime', {'rtp': 'vim/'}
 " https://github.com/fatih/vim-go
 " There are A LOT of commands in vim-go:
 "   * :GoAddTags + :GoRemoveTags - modify/update field tags in a structs.
-" Plug 'fatih/vim-go'
-" let g:go_version_warning = 0
-" if has('macunix')
-"     let g:go_bin_path="/Users/ebodine/workspace/go/bin/"
-" elseif has('unix')
-"     let g:go_bin_path="/home/ebodine/workspace/go/bin/"
-" endif
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+let g:go_version_warning = 0
+if has('macunix')
+    let g:go_bin_path="/Users/ebodine/workspace/bin/"
+elseif has('unix')
+    let g:go_bin_path="/home/ebodine/workspace/bin/"
+endif
 
 " " deoplete-go
 " " https://github.com/zchee/deoplete-go
@@ -1639,6 +1624,22 @@ let g:html5_rdfa_attributes_complete = 0
 let g:html5_aria_attributes_complete = 0
 " }}}
 
+" }}}
+
+" vim-polyglot {{{
+" Various language packs for vim.
+" https://github.com/sheerun/vim-polyglot
+" A best-of-breed collection of programming language syntax,indent,ftplugin
+" config files.
+" ** HAS TO COME AFTER LANGUAGE DEFINITIONS THAT YOU HAVE DISABLED BELOW **
+" ** HAS CONFLICTS WITH VIM-GO - https://github.com/fatih/vim-go/issues/2045 **
+Plug 'sheerun/vim-polyglot'
+" I prefer my own configuration of Python, Markdown and Golang
+let g:polyglot_disabled = ['go', 'python', 'markdown']
+let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js=javascript', 'json=javascript', 'perl', 'php', 'python', 'ruby', 'sass', 'xml', 'html', 'vim']
+"
+" Rust & *.toml
+let g:autofmt_autosave = 1
 " }}}
 
 " }}}
