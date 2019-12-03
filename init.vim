@@ -105,6 +105,9 @@ if has('nvim')
     let $VISUAL = 'nvr -cc split --remote-wait'
 endif
 
+let g:python3_host_prog="/usr/local/bin/python3"
+let g:python_host_prog="/usr/local/bin/python"
+
 " THis is a generic - and somewhat lazy - usage of path.  You can be much more
 " specific.
 set path=.,**
@@ -487,11 +490,19 @@ nmap <leader>b :Buffers<cr>
 " search files.
 nmap <leader>f :Files<cr>
 nmap <leader>F :Gfiles<cr>
+nmap <leader>M :FZFMru<cr>
 " search file contents using ripgrep.
 nmap <leader>r :Rg<cr>
 " Search help files.  See General mappings below & filetype/help.vim for other
 " Help related mappings.
 nnoremap <leader>he :Helptags<cr>
+" }}}
+
+" Clap {{{
+" https://github.com/liuchengxu/vim-clap
+" Another fuzzy completion/navigation plugin.
+" NOTE: Mon Dec 02 2019 11:36:50 - not quite featureful yet.
+" Plug 'liuchengxu/vim-clap'
 " }}}
 
 " vim-easymotion {{{
@@ -569,6 +580,7 @@ let g:ale_sign_warning = '≈'
 let g:ale_linters = {
 \    'python': ['flake8'],
 \    'rust': [ 'cargo', 'rls', 'rustc', 'clippy', 'rustfmt' ],
+\    'clojure': ['clj-kondo', 'joker'],
 \}
 
 " Python flake8 + Ale
@@ -789,7 +801,7 @@ let g:lion_squeeze_spaces = 1
 " NERDTree {{{
 " https://github.com/scrooloose/nerdtree.git
 Plug 'https://github.com/scrooloose/nerdtree.git'
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 let g:NERDTreeUpdateOnCursorHold = 0
 let g:NERDTreeUpdateOnWrite      = 0
 let g:NERDTreeIndicatorMapCustom = {
@@ -822,17 +834,6 @@ function! NERDTreeRefresh()
 endfunction
 
 autocmd BufEnter * call NERDTreeRefresh()
-
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-let g:NERDTreeIndicatorMapCustom = {
-	\ "Modified"  : "✗",
-	\ "Staged"    : "✓",
-	\ "Dirty"     : "*",
-	\ "Untracked" : "?",
-	\ "Renamed"   : "→"
-	\ }
-let g:NERDTreeUpdateOnCursorHold = 0
-let g:NERDTreeUpdateOnWrite      = 0
 
 " nerdtree-syntax-highlight
 " https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
@@ -946,6 +947,7 @@ if has('macunix')
 elseif has('unix')
     let g:scratch_persistence_file='/home/ebodine/tmp/neovimrc/neovim-scratch.txt'
 endif
+nmap <leader>fs :Scratch<cr>
 " }}}
 
 " vim-scriptease {{{
@@ -984,11 +986,7 @@ nmap zg/ <Plug>(incsearch-fuzzy-stay)<Paste>
 
 " Sessions - obssesion+prosession {{{
 
-" From https://dockyard.com/blog/2018/06/01/simple-vim-session-management-part-1
-" Session management without plugins....
-" let g:sessions_dir = '~/vim-sessions'
-" exec 'nnoremap <Leader>ss :mks! ' . g:session_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
-" exec 'nnoremap <Leader>sr :so ' . g:session_dir. '/*.vim<C-D><BS><BS><BS><BS><BS>'
+" Obsession & Prosession together allow for saving off sessions by directory.
 
 " vim-obsession
 " Better manage the :mksession interface - see vim-prosession below.
@@ -1002,10 +1000,6 @@ Plug 'dhruvasagar/vim-prosession'
 let g:prosession_dir='~/tmp/neovimrc/sessions'
 let g:prosession_on_startup = 1
 
-" ctrlp-obsession
-" https://github.com/gikmx/vim-ctrlposession
-" A super simple session-navigator using obsession / prosession & CtrlP
-Plug 'gikmx/ctrlp-obsession'
 " }}}
 
 " Snippets {{{
@@ -1015,6 +1009,15 @@ Plug 'gikmx/ctrlp-obsession'
 " Ultisnips - the ultimate snippet solution for Neovim/Vim
 " https://github.com/SirVer/ultisnips
 "   - youtube tutorials at the bottom of website
+
+" Mon Dec 02 2019 21:56:48 - there are some utility scripts that ultisnips
+" makes use of, e.g.
+"   ~/.config/nvim/plugged/ultisnips/pythonx/UltiSnips/snippet_manager.py
+" that have [#!/usr/bin/env python] at the top of the file.
+" This causes problems on systems that have python & python3 installed.
+"
+" I got around it by moving $HOME/miniconda3/bin to the front of PATH.
+
 Plug 'SirVer/ultisnips'
 " expand via tab.
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -1198,29 +1201,6 @@ autocmd FileType vim autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 
 " Software Development: Utilities {{{
 
-" coc.vim
-" https://github.com/neoclide/coc.nvim
-" Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
-"
-" Some extensions:
-" coc-git -> substitutes gitgutter
-"
-" For Python
-" https://github.com/neoclide/coc-python
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" vista.vim
-" https://github.com/liuchengxu/vista.vim
-" View and search LSP symbols, tags in Vim/NeoVim.
-"
-" Fri Aug 16 2019 16:56:35 - turned off coc.vim, the functionality is just not
-" there yet.  Vista cannot show the outline in the same order that objects
-" occur in the file when using coc.vim
-"
-" Use with tabnine - https://tabnine.com/
-"
-" Plug 'liuchengxu/vista.vim'
-
 " Conflict marker highlighting. {{{
 " https://github.com/rhysd/conflict-marker.vim
 "
@@ -1355,6 +1335,9 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " Precision editing of S-expressions in Clojure, Common Lisp
 Plug 'guns/vim-sexp', {'for': 'clojure'}
 
+" Make the sexp mappings easier in the beginning.
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
+
 " Clojure {{{
 
 " Install Java:
@@ -1379,10 +1362,30 @@ Plug 'guns/vim-sexp', {'for': 'clojure'}
 
 " Conjure
 " https://github.com/Olical/conjure
-Plug 'Olical/conjure', { 'tag': 'v2.0.0', 'do': 'bin/compile'  }
+Plug 'Olical/conjure', { 'tag': 'v2.1.1', 'do': 'bin/compile'  }
 let g:conjure_log_direction = "horizontal"
 let g:conjure_log_blacklist = ["up", "ret", "ret-multiline", "load-file", "eval"]
 
+" vim-replant & vim-fireplace
+" https://github.com/SevereOverfl0w/vim-replant
+" https://github.com/tpope/vim-fireplace
+" These make use of CIDER-nrepl & refactor-nrepl middleware for their
+" functionality.  These should be in :plugins in your ~/.lein/profiles.clj
+" file.
+Plug 'SevereOverfl0w/vim-replant', { 'do': ':UpdateRemotePlugins' }
+Plug 'tpope/vim-fireplace'
+
+" Evaluate Clojure buffers on load
+autocmd BufRead *.clj try | silent! Require | catch /^Fireplace/ | endtry
+
+" vim-clojure-static
+" https://github.com/guns/vim-clojure-static
+Plug 'guns/vim-clojure-static'
+
+" vim-clojure-highlight
+" https://github.com/guns/vim-clojure-highlight
+" Extended clojure highlighting
+Plug 'guns/vim-clojure-highlight'
 " }}}
 
 " Common Lisp {{{
@@ -1454,17 +1457,6 @@ Plug 'alaviss/nim.nvim'
 
 " Python {{{
 
-" Setup: Python + Coc
-" 1. Install Coc extension
-"   :CoCInstall coc-python
-" 2. Install the python-language-server
-"   $ pip install python-language-server
-" 3. Install the mypy extension for Python <= 3.2
-"   $ pip install pyls-mypy
-"
-" * Added python-language-server to ~/.condarc so that it gets installed with
-" ever miniconda env creation - fyi, pulls in Jedi as a dependency.
-"
 " Fri Aug 16 2019 16:55:35 - disabled coc.vim because the functionality
 " compared to deoplete+jedi is just not there yet.
 
@@ -1486,6 +1478,23 @@ Plug 'deoplete-plugins/deoplete-jedi'
 let g:deoplete#sources#jedi#show_docstring = 1
 " }}}
 
+" jedi-vim {{{
+" https://github.com/davidhalter/jedi-vim
+" The Jedi Python library for vim
+" Move the cursor to the class or method you want to check, then press the
+" various supported shortcut provided by jedi-vim:
+"     <leader>d: go to definition
+"     K: check documentation of class or method
+"     <leader>n: show the usage of a name in current file
+"     <leader>r: rename a name
+"
+Plug 'davidhalter/jedi-vim'
+" disable autocompletion, cause we use deoplete for completion
+let g:jedi#completions_enabled = 0
+" open the go-to function in split, not another buffer
+let g:jedi#use_splits_not_buffers = "right"
+" }}}
+
 " vim-conda {{{
 " https://github.com/cjrh/vim-conda
 " Support python development using Conda env manager
@@ -1499,10 +1508,12 @@ Plug 'cjrh/vim-conda'
 Plug 'tweekmonster/impsort.vim'
 let g:impsort_textwidth = 104
 " so that the linter doesn't complain.
-" let g:impsort_lines_after_imports = 2
-" let g:impsort_start_nextline = 1
+let g:impsort_lines_after_imports = 2
+let g:impsort_start_nextline = 1
 " run impsort on save.
-autocmd BufWritePre *.py ImpSort!
+" Wed Nov 06 2019 11:37:33 - ImpSort messes with the Valence __init__.py
+" formatting.
+" autocmd BufWritePre *.py ImpSort!
 " }}}
 
 " vim-python-pep8-indent {{{
@@ -1678,6 +1689,7 @@ Plug 'elzr/vim-json'
 augroup ft_json
     au!
     au BufRead,BufNewFile *.json setlocal foldmethod=syntax
+    autocmd FileType json syntax match Comment +\/\/.\+$+
 augroup END
 " }}}
 
@@ -1937,13 +1949,13 @@ nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
 
 " Preview a hunks changes
-nmap <Leader>hv <Plug>GitGutterPreviewHunk
+nmap <Leader>hv <Plug>(GitGutterPreviewHunk)
 
 " text objects that operate on hunks
-omap ih <Plug>GitGutterTextObjectInnerPending
-omap ah <Plug>GitGutterTextObjectOuterPending
-xmap ih <Plug>GitGutterTextObjectInnerVisual
-xmap ah <Plug>GitGutterTextObjectOuterVisual
+omap ih <Plug>(GitGutterTextObjectInnerPending)
+omap ah <Plug>(GitGutterTextObjectOuterPending)
+xmap ih <Plug>(GitGutterTextObjectInnerVisual)
+xmap ah <Plug>(GitGutterTextObjectOuterVisual)
 
 " have gitgutter ignore whitespace
 let g:gitgutter_diff_args = '-w'
@@ -2147,6 +2159,7 @@ Plug 'weilbith/nerdtree_choosewin-plugin'
 " https://github.com/tomasr/molokai
 " A modified version of molokai for Vim.
 Plug 'tomasr/molokai'
+Plug 'fmoralesc/molokayo'
 
 " }}}
 
