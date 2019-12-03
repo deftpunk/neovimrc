@@ -18,6 +18,8 @@
 "   https://github.com/ncm2/float-preview.nvim/issues/1#issuecomment-470524243
 "
 " http://liuchengxu.org/vista.vim/ - a new and improved tagbar using LSP.
+" Mon Dec 02 2019 22:22:37 - I can never get this to display properly with
+" python code.
 "
 " https://gitlab.com/HiPhish/repl.nvim
 " https://github.com/svermeulen/vim-subversive - operator motions to quickly
@@ -486,7 +488,7 @@ command! -bang -nargs=* Rg
 " search lines in buffer.
 nmap <leader>s :BLines<cr>
 " list open buffers.
-nmap <leader>b :Buffers<cr>
+nmap <leader>i :Buffers<cr>
 " search files.
 nmap <leader>f :Files<cr>
 nmap <leader>F :Gfiles<cr>
