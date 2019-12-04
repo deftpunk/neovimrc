@@ -2346,7 +2346,17 @@ let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
 " 4. Edit Profiles in iTerm2 and change to Roboto Nerd font
 " NOTE: vim-devicons has to be installed last in order to work properly with airline, etc.
 Plug 'ryanoasis/vim-devicons'
+" loading the plugin
+let g:webdevicons_enable = 1
+" adding the flags to NERDTree
+let g:webdevicons_enable_nerdtree = 1
+" Force extra padding in NERDTree so that the filetype icons line up vertically
+let g:WebDevIconsNerdTreeGitPluginForceVAlign = 1
+if has('macunix')
+    let g:WebDevIconsOS = 'Darwin'
+endif
 " }}}
+
 " }}}
 
 " Conclude plugin initialization.
