@@ -107,8 +107,8 @@ if has('nvim')
     let $VISUAL = 'nvr -cc split --remote-wait'
 endif
 
-let g:python3_host_prog="/usr/local/bin/python3"
 let g:python_host_prog="/usr/local/bin/python"
+let g:python3_host_prog="/usr/local/bin/python3"
 
 " THis is a generic - and somewhat lazy - usage of path.  You can be much more
 " specific.
@@ -1020,16 +1020,16 @@ let g:prosession_on_startup = 1
 "
 " I got around it by moving $HOME/miniconda3/bin to the front of PATH.
 
-Plug 'SirVer/ultisnips'
-" expand via tab.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+" Plug 'SirVer/ultisnips'
+" " expand via tab.
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 
-" vim-snippets
-" https://github.com/honza/vim-snippets
-Plug 'honza/vim-snippets'
+" " vim-snippets
+" " https://github.com/honza/vim-snippets
+" Plug 'honza/vim-snippets'
 " }}}
 
 " vim-fat-finger {{{
@@ -1541,11 +1541,6 @@ Plug 'l04m33/vlime', {'rtp': 'vim/'}
 "   * :GoAddTags + :GoRemoveTags - modify/update field tags in a structs.
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 let g:go_version_warning = 0
-if has('macunix')
-    let g:go_bin_path="/Users/ebodine/workspace/bin/"
-elseif has('unix')
-    let g:go_bin_path="/home/ebodine/workspace/bin/"
-endif
 
 " deoplete-go
 " https://github.com/zchee/deoplete-go
