@@ -95,11 +95,6 @@
 
 " Options -------------------------------------------------------- {{{
 
-" So that the shape of the cursor changes in tmux depending on normal or
-" insert mode.  Unnfortunately I have to make the cursor shape or italics show
-" up properly in iTerm or tmux on MacOSX.
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-
 " neovim-remote
 " Avoid nested neovim processes by using neovim-remote. This should have been
 " installed prior to Neovim.
@@ -107,8 +102,13 @@ if has('nvim')
     let $VISUAL = 'nvr -cc split --remote-wait'
 endif
 
-let g:python_host_prog="/usr/local/bin/python"
-let g:python3_host_prog="/usr/local/bin/python3"
+if has('macunix')
+	let g:python3_host_prog="/usr/local/bin/python3"
+	let g:python_host_prog="/usr/local/bin/python"
+elseif has('unix')
+	let g:python3_host_prog="/usr/bin/python3"
+	let g:python_host_prog="/usr/bin/python"
+endif
 
 " THis is a generic - and somewhat lazy - usage of path.  You can be much more
 " specific.
@@ -204,7 +204,7 @@ if has('macunix')
     endif
     execute "set undodir=".s:mac_directory
 elseif has('unix')
-    let s:unix_directory = "/home/ebodine/tmp/neovim-undo-dir"
+    let s:unix_directory = "/home/erickb/tmp/neovim-undo-dir"
     if !isdirectory(s:unix_directory)
 	call mkdir(s:unix_directory, "", 0700)
     endif
@@ -553,7 +553,7 @@ Plug 'tpope/tpope-vim-abolish'
 if has('macunix')
     let g:abolish_save_file="/Users/ebodine/.config/nvim/abolish-abbreviations.vim"
 elseif has('unix')
-    let g:abolish_save_file="/home/ebodine/.config/nvim/abolish-abbreviations.vim"
+    let g:abolish_save_file="/home/erickb/.config/nvim/abolish-abbreviations.vim"
 endif
 " }}}
 
@@ -589,7 +589,7 @@ let g:ale_linters = {
 if has('macunix')
     let g:ale_python_flake8_options = '--config=/Users/ebodine/.flake8'
 elseif has('unix')
-    let g:ale_python_flake8_options = '--config=/home/ebodine/.flake8'
+    let g:ale_python_flake8_options = '--config=/home/erickb/.flake8'
 endif
 
 let g:ale_emit_conflict_warnings = 0
@@ -683,10 +683,10 @@ vnoremap <silent> <Leader>K y:<C-U>call Dasht(getreg(0))<Return>
 " https://github.com/Shougo/deoplete.nvim
 " Dark powered async completion framework for neovim
 " Python, Rust, Go, Clojure all have their own versions of this plugin.
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " NOTE: Feb 15, 2018  9:12 am - Had to comment out NVIM_LISTEN_ADDRESS in ~/.zshrc
 " https://github.com/Shougo/deoplete.nvim/issues/646
-let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_at_startup = 1
 " }}}
 
 " vim-eunuch {{{
@@ -947,7 +947,7 @@ let g:scratch_height=25
 if has('macunix')
     let g:scratch_persistence_file='/Users/ebodine/tmp/neovimrc/neovim-scratch.txt'
 elseif has('unix')
-    let g:scratch_persistence_file='/home/ebodine/tmp/neovimrc/neovim-scratch.txt'
+    let g:scratch_persistence_file='/home/erickb/tmp/neovimrc/neovim-scratch.txt'
 endif
 nmap <leader>fs :Scratch<cr>
 " }}}
@@ -1542,10 +1542,11 @@ Plug 'l04m33/vlime', {'rtp': 'vim/'}
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 let g:go_version_warning = 0
 
-" deoplete-go
-" https://github.com/zchee/deoplete-go
-" deoplete.nvim source for Go. Asynchronous Go completion for Neovim.
-Plug 'zchee/deoplete-go', {'do': 'make'}
+if has('macunix')
+    let g:go_bin_path="/Users/ebodine/workspace/bin/"
+elseif has('unix')
+    let g:go_bin_path="/home/erickb/workspace/bin/"
+endif
 
 " }}}
 
@@ -1588,8 +1589,8 @@ Plug 'alaviss/nim.nvim'
 
 " deoplete-jedi {{{
 " https://github.com/deoplete-plugins/deoplete-jedi
-Plug 'deoplete-plugins/deoplete-jedi'
-let g:deoplete#sources#jedi#show_docstring = 1
+"Plug 'deoplete-plugins/deoplete-jedi'
+"let g:deoplete#sources#jedi#show_docstring = 1
 " }}}
 
 " jedi-vim {{{
@@ -1602,11 +1603,11 @@ let g:deoplete#sources#jedi#show_docstring = 1
 "     <leader>n: show the usage of a name in current file
 "     <leader>r: rename a name
 "
-Plug 'davidhalter/jedi-vim'
+"Plug 'davidhalter/jedi-vim'
 " disable autocompletion, cause we use deoplete for completion
-let g:jedi#completions_enabled = 0
+"let g:jedi#completions_enabled = 0
 " open the go-to function in split, not another buffer
-let g:jedi#use_splits_not_buffers = "right"
+"let g:jedi#use_splits_not_buffers = "right"
 " }}}
 
 " vim-conda {{{
