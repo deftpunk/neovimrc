@@ -2474,6 +2474,8 @@ nnoremap <expr> du &diff ? ":diffupdate!<cr>" : echo "No in diff"
 " Use Q to play macro normally and over visual selections.
 xnoremap Q :'<,'>:normal @q<CR>
 
+nnoremap <leader>= gqq<cr>
+
 " Equalize the vertical, horizontal splits.  Equalize closing a window.
 nnoremap <C-w>v <C-w>v <C-w>=
 nnoremap <C-w>s <C-w>s <C-w>=
