@@ -21,6 +21,9 @@
 " Mon Dec 02 2019 22:22:37 - I can never get this to display properly with
 " python code.
 "
+" https://github.com/liuchengxu/vim-clap - a more performant finder/searcher
+" Sat Feb 01 2020 22:47:43 - bcommit & commits still not implemented...
+"
 " https://gitlab.com/HiPhish/repl.nvim
 " https://github.com/svermeulen/vim-subversive - operator motions to quickly
 " replace text.
@@ -500,19 +503,12 @@ nmap <leader>r :Rg<cr>
 nnoremap <leader>he :Helptags<cr>
 " }}}
 
-" Clap {{{
-" https://github.com/liuchengxu/vim-clap
-" Another fuzzy completion/navigation plugin.
-" NOTE: Mon Dec 02 2019 11:36:50 - not quite featureful yet.
-" Plug 'liuchengxu/vim-clap'
-" }}}
-
 " vim-easymotion {{{
 " Moving around in a buffer like ace-jump and avy.
 " https://github.com/easymotion/vim-easymotion
 Plug 'easymotion/vim-easymotion'
-nmap <leader><leader>s <Plug>(easymotion-s)
-nmap <leader><leader>l <Plug>(easymotion-bd-tl)
+let g:EasyMotion_do_mapping = 0
+nmap gs <Plug>(easymotion-overwin-f2)
 " }}}
 
 " ListToggle {{{
@@ -752,7 +748,7 @@ Plug 'tpope/vim-commentary'
 "         the commandline.
 "       - ripgrep support
 "       - Asynchronous on Neovim without using Dispatch.
-"       - Farundo doesn't always undo - known bug
+"       - undo doesn't always undo - known bug
 "   2. FlyGrep.vim - https://github.com/wsdjeg/FlyGrep.vim
 "       - No Edit mode
 "   3. vim-ags - https://github.com/gabesoft/vim-ags
@@ -928,28 +924,23 @@ let g:quickrun_config.python = {'command': 'python'}
 "  20% of the screen, configurable via g:scratch_height and g:scratch_top).
 "  The window automatically closes when inactive (and its contents will be
 "  available the next time it is opened).
-
-"  gs - in normal mode opens the scratch window and enters insert mode. The
-"  scratch window closes when you leave insert mode. This is especially
-"  useful for quick notes.
-"  gs - in visual mode pastes the current selection (character-wise,
-"  line-wise or block-wise) into the scratch buffer.
-
+"
 "  Both above mappings have a gS variant that clears the scratch buffer before
 "  opening it. Note also that the auto-closing features require hidden to be
 "  set (and can be disabled via the g:scratch_autohide option).
-
+"
 "  By default the contents of the scratch window are lost when leaving Vim. To
 "  enable cross-session persistence, set the g:scratch_persistence_file option
 "  to a valid file path.
 Plug 'mtth/scratch.vim'
 let g:scratch_height=25
+let g:scratch_no_mappings = 1
+
 if has('macunix')
     let g:scratch_persistence_file='/Users/ebodine/tmp/neovimrc/neovim-scratch.txt'
 elseif has('unix')
     let g:scratch_persistence_file='/home/erickb/tmp/neovimrc/neovim-scratch.txt'
 endif
-nmap <leader>fs :Scratch<cr>
 " }}}
 
 " vim-scriptease {{{
@@ -1396,6 +1387,7 @@ Plug 'RRethy/vim-illuminate'
 hi link illuminatedWord Visual
 " toggle word illumination.
 let g:Illuminate_highlightUnderCursor = 0
+let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python', 'go', 'clojure', 'rust']
 nnoremap <leader>it :IlluminationToggle<cr>
 " }}}
 
