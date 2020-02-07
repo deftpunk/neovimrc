@@ -2448,6 +2448,10 @@ cmap <c-e> <end>
 " Remap VIM 0 to first non-blank character
 map 0 ^
 
+" Some mappings for next/previous buffers.
+nmap gb :bnext<cr>
+nmap gB :bprev<cr>
+
 " Omni completion remap
 inoremap <C-l> <C-x><C-l>
 " Delete the previous word.
