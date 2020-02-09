@@ -298,14 +298,6 @@ call plug#begin('~/.config/nvim/plugged')
 "   - Argument text objects
 Plug 'wellle/targets.vim'
 
-" argtextobj.vim {{{
-" https://github.com/vim-scripts/argtextobj.vim
-" Text objects for function arguments.
-"   aa - an argument
-"   ia - inner argument
-" Plug 'vim-scripts/argtextobj.vim'
-" }}}
-
 " vim-indent-object {{{
 " https://github.com/michaeljsmith/vim-indent-object
 "   Mapping              Description
@@ -372,82 +364,6 @@ Plug 'chaoren/vim-wordmotion'
 "    - tags but requires ctags
 "    - MRU is a different command - no mixed results, that I can see.
 "    - Lines+BLines Does work with jumplist.
-
-" fruzzy {{{
-" https://github.com/raghur/fruzzy
-" Freaky fast fuzzy finder for (denite.nvim/CtrlP matcher) for vim/neovim
-" 01/21/2019 - Got a pretty fast speed up using fruzzy with CtrlP.
-Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
-" optional - but recommended - see below
-let g:fruzzy#usenative = 1
-let g:fruzzy#sortonempty = 1 " default value
-" }}}
-
-" The active fork of CtrlP {{{
-" https://github.com/ctrlpvim/ctrlp.vim
-"
-" Fri Oct 27, 2017 11:36:42am - Try out using cpsm as a matcher
-" https://github.com/nixprime/cpsm
-" NOTE: Didn't work out so well
-"
-" Use the silver searcher in deference to what ctrlp normally does.
-" 3/23/2016 - commented this out because it wasn't working for some reason.
-" 10/4/2016 - giving this another shot with a modified Ag cmdline.
-" let g:ctrlp_user_command='ag %s -i --nocolor --nogroup --hidden
-"                             \ --ignore .git
-"                             \ --ignore .hg
-"                             \ --ignore .DS_store
-"                             \ --ignore "**/*.pyc"
-"                             \ -g ""'
-" let g:ctrlp_root_markers = ['makepythontags']
-" let g:ctrlp_extensions=['smarttabs']
-
-Plug 'ctrlpvim/ctrlp.vim'
-
-set grepprg=rg\ --color=never
-let g:ctrlp_user_command='rg --files %s'
-let g:ctrlp_use_caching=0
-let g:ctrlp_match_func = {'match': 'fruzzy#ctrlp#matcher'}
-let g:ctrlp_match_current_file = 1 " to include current file in matches
-let g:ctrlp_match_window = 'bottom,order:ttb,max:25,results:25'
-
-let g:ctrlp_prompt_mappings = {
-    \ 'PrtSelectMove("n")':   ['<c-n>', '<down>'],
-    \ 'PrtSelectMove("p")':   ['<c-p>', '<up>'],
-    \ }
-
-" Show tags (ctags) for current file.
-" https://github.com/tacahiroy/ctrlp-funky
-Plug 'tacahiroy/ctrlp-funky'
-let g:ctrlp_funky_syntax_highlight=1
-let g:ctrlp_funky_after_jump = {
-    \ 'default' : 'zxzz',
-    \ 'python'  : 'zOzz'
-    \}
-let g:ctrlp_funky_cache_dir='~/.config/nvim/.cache/ctrlp-funky'
-" Only Funky can give you tags without generating something via ctags.  The
-" BTags and Tags functions in fzf.vim can't do it.
-" NOTE: 8/24/2017 - Its still a bit slow.
-nnoremap <leader>ci :CtrlPFunky<cr>
-
-" CtrlPtjump - doesn't work without a tags file, so i deleted it - Sep 24, 2018
-
-" cmdline, yankring + menu
-" https://github.com/sgur/ctrlp-extensions.vim
-Plug 'sgur/ctrlp-extensions.vim'
-
-" marks - local and global
-Plug 'mattn/ctrlp-mark'
-
-" Show and exec command history from CtrlP
-" Adds cmd history (what you see in g:) and search history
-" (what you see in g/) to ctrlp so you can quickly re-run commands or searches.
-" https://github.com/ompugao/ctrlp-history
-Plug 'ompugao/ctrlp-history'
-nnoremap <silent><C-p><C-h> :CtrlPCmdHistory<CR>
-nnoremap <silent><C-p><C-s> :CtrlPSearchHistory<CR>
-
-" }}}
 
 " FZF {{{
 " https://github.com/junegunn/fzf.vim
