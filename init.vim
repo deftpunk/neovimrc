@@ -601,19 +601,6 @@ vnoremap <silent> <Leader>K y:<C-U>call Dasht(getreg(0))<Return>
 "let g:deoplete#enable_at_startup = 1
 " }}}
 
-" vim-eunuch {{{
-" https://github.com/tpope/vim-eunuch
-" Some vim sugar for Unix commands that need it the most, e.g.
-" :Remove - delete buffer and file on disk
-" :Move - rename buffer and file on disk
-" :Rename - same as above but relative fo file's curent directory.
-" :SudoWrite - Write file w/ sudo
-" :SudoEdit - Edit a file w/ sudo
-" NOTE: Wed Nov 22, 2017 2:58:32pm - The Sudo* functions are not working(?) on
-" Mac ... not sure if this is Mac or vim-eunuch
-Plug 'tpope/vim-eunuch'
-" }}}
-
 " Folding {{{
 
 " FastFold {{{
