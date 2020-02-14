@@ -10,6 +10,11 @@
 " Poor mans ipython.
 " https://www.reddit.com/r/neovim/comments/axilbq/using_nvim_as_python_ide_via_pynvim/ehu2fa2
 "
+" Sat Feb 08 2020 21:24:57 - removing dasht
+" " https://github.com/sunaku/vim-dasht
+" Was not as intuitive as I would have liked, as a result, I never really used
+" it.
+"
 " Mon Apr 1, 2019 6:05:34pm - mostly usablem not yet entirely stable.
 " Sat Aug 17 2019 21:05:52 - coc.vim not fully functional.
 " coc.vim - https://github.com/neoclide/coc.nvim - better(?) completion w/ LSP
@@ -574,23 +579,6 @@ nnoremap <leader>k :Bdelete<cr>
 Plug 'raimondi/delimitMate'
 " }}}
 
-" vim-dasht {{{
-" https://github.com/sunaku/vim-dasht
-" Look up Dash documentation locally - https://github.com/sunaku/dasht
-" Install dasht & then install docsets:
-"   1. brew update; brew install dasht
-"   2. dasht-docsets-install bash
-" When in Python, also search NumPy, SciPy, and Pandas:
-" let g:dasht_filetype_docsets['python'] = ['(num|sci)py', 'pandas']
-Plug 'sunaku/vim-dasht'
-" create window beside current one
-let g:dasht_results_window = 'vnew'
-" search word under cursor in related docsets
-nnoremap <silent> <leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
-" search visual selection in related docsets
-vnoremap <silent> <Leader>K y:<C-U>call Dasht(getreg(0))<Return>
-" }}}
-
 " deoplete {{{
 " https://github.com/Shougo/deoplete.nvim
 " Dark powered async completion framework for neovim
@@ -914,16 +902,16 @@ let g:prosession_on_startup = 1
 "
 " I got around it by moving $HOME/miniconda3/bin to the front of PATH.
 
-" Plug 'SirVer/ultisnips'
-" " expand via tab.
-" let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsJumpForwardTrigger="<tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-" let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+Plug 'SirVer/ultisnips'
+" expand via tab.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 
-" " vim-snippets
-" " https://github.com/honza/vim-snippets
-" Plug 'honza/vim-snippets'
+" vim-snippets
+" https://github.com/honza/vim-snippets
+Plug 'honza/vim-snippets'
 " }}}
 
 " vim-fat-finger {{{
@@ -938,24 +926,6 @@ Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 " }}}
 
-" vim-sandwich {{{
-" https://github.com/machakann/vim-sandwich
-" Replacement for vim-surround; uses text objects to surround/sandwich things.
-" The set of operator and textobject plugins to search/select/edit sandwiched textobjects.
-"   add:
-"   Press sa{motion/textobject}{addition}. For example, a key sequence
-"   saiw( makes foo to (foo).
-"
-"   delete:
-"   Press sdb or sd{deletion}. For example, key sequences sdb or
-"   sd( makes (foo) to foo. sdb searches a set of surrounding automatically.
-"
-"   replace:
-"   Press srb{addition} or sr{deletion}{addition}.
-"   For example, key sequences srb" or sr(" makes (foo) to "foo".
-Plug 'machakann/vim-sandwich'
-" }}}
-
 " vim-slash {{{
 " https://github.com/junegunn/vim-slash
 " Enhancing in-buffer search experience.
@@ -963,6 +933,13 @@ Plug 'machakann/vim-sandwich'
 "   - star-search: highlighting without moving.
 Plug 'junegunn/vim-slash'
 noremap <plug>(slash-after) zz
+" }}}
+
+" vim-surround {{{
+" https://github.com/tpope/vim-surround
+" Surrounding things in parens, brackets, quotes, etc. - works with repeat.vim
+" cs, ds, yss
+Plug 'tpope/vim-surround'
 " }}}
 
 " tagbar - a class outline viewer {{{
@@ -1919,13 +1896,6 @@ nnoremap <silent> <leader>gm :MerginalToggle<CR>
 " |i_CTRL-X_CTRL-O| to omni-complete GitHub issues or project collaborator
 " usernames when editing a commit message.
 Plug 'tpope/vim-rhubarb'
-" }}}
-
-" vim-fubitive {{{
-" https://github.com/tommcdo/vim-fubitive
-" Add bitbucket support for Gbrowse - yeah!
-" Fri Sep 06 2019 15:37:26 - doesn't recognize ngage bitbucket ... boo!
-Plug 'tommcdo/vim-fubitive'
 " }}}
 
 " Add/Stage the current file.
