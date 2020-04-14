@@ -282,6 +282,7 @@ augroup non_utf8_file_warn
 augroup END
 "}}}
 
+" ntrw {{{
 " Use built in file browser (netrw) instead of NERDTree
 " (https://shapeshed.com/vim-netrw/)
 " :he netrw
@@ -297,7 +298,9 @@ let g:netrw_banner = 0
 let g:netrw_browse_split = 4
 " Open files on the right
 " let g:netrw_altv = 1
+
 nnoremap <leader>vt :Vexplore<cr>
+" }}}
 
 " vim-plug - Plugin management {{{
 " https://github.com/junegunn/vim-plug
@@ -1217,13 +1220,6 @@ let test#neovim#term_position = "bottomright"
 let test#python#runner = 'pytest'
 " }}}
 
-" vim-sexp {{{
-" https://github.com/guns/vim-sexp
-" Precision editing of S-expressions in Clojure, Common Lisp
-Plug 'guns/vim-sexp', {'for': 'clojure'}
-
-" Make the sexp mappings easier in the beginning.
-Plug 'tpope/vim-sexp-mappings-for-regular-people'
 " }}}
 
 " vim-illuminate {{{
@@ -1307,21 +1303,21 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Conjure
 " https://github.com/Olical/conjure
-Plug 'Olical/conjure', { 'tag': 'v2.1.1', 'do': 'bin/compile'  }
-let g:conjure_log_direction = "horizontal"
-let g:conjure_log_blacklist = ["up", "ret", "ret-multiline", "load-file", "eval"]
+" Plug 'Olical/conjure', { 'tag': 'v2.1.1', 'do': 'bin/compile'  }
+" let g:conjure_log_direction = "horizontal"
+" let g:conjure_log_blacklist = ["up", "ret", "ret-multiline", "load-file", "eval"]
 
-" vim-replant & vim-fireplace
-" https://github.com/SevereOverfl0w/vim-replant
-" https://github.com/tpope/vim-fireplace
-" These make use of CIDER-nrepl & refactor-nrepl middleware for their
-" functionality.  These should be in :plugins in your ~/.lein/profiles.clj
-" file.
-Plug 'SevereOverfl0w/vim-replant', { 'do': ':UpdateRemotePlugins' }
-Plug 'tpope/vim-fireplace'
+" " vim-replant & vim-fireplace
+" " https://github.com/SevereOverfl0w/vim-replant
+" " https://github.com/tpope/vim-fireplace
+" " These make use of CIDER-nrepl & refactor-nrepl middleware for their
+" " functionality.  These should be in :plugins in your ~/.lein/profiles.clj
+" " file.
+" Plug 'SevereOverfl0w/vim-replant', { 'do': ':UpdateRemotePlugins' }
+" Plug 'tpope/vim-fireplace'
 
 " Evaluate Clojure buffers on load
-autocmd BufRead *.clj try | silent! Require | catch /^Fireplace/ | endtry
+" autocmd BufRead *.clj try | silent! Require | catch /^Fireplace/ | endtry
 
 " vim-clojure-static
 " https://github.com/guns/vim-clojure-static
@@ -1331,6 +1327,32 @@ Plug 'guns/vim-clojure-static'
 " https://github.com/guns/vim-clojure-highlight
 " Extended clojure highlighting
 Plug 'guns/vim-clojure-highlight'
+
+" vim-sexp
+" https://github.com/guns/vim-sexp
+" Precision editing of S-expressions in Clojure, Common Lisp
+Plug 'guns/vim-sexp', {'for': 'clojure'}
+
+" Make the sexp mappings easier in the beginning.
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
+
+" vim-iced
+" https://github.com/liquidz/vim-iced
+" https://liquidz.github.io/vim-iced/#_getting_started
+" :IcedJackIn
+"
+" External plugins:
+" vim-iced-kaocha
+" - Provides some commands for testing with kaocha.
+" vim-iced-project-namespaces
+" - Provides :IcedBrowseNamespace command for jumping to namespace in your project.
+" vim-iced-function-list
+" - Provides :IcedBrowseFunction command for jumping to functions in current namespace.
+" vim-iced-coc-source
+" - Provides auto completion by coc.nvim.
+Plug 'liquidz/vim-iced', {'for': 'clojure'}
+let g:iced_enable_default_key_mappings = v:true
+
 " }}}
 
 " Common Lisp {{{
