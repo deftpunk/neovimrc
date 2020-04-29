@@ -1353,6 +1353,8 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'liquidz/vim-iced', {'for': 'clojure'}
 let g:iced_enable_default_key_mappings = v:true
 
+Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure'}
+
 " }}}
 
 " Common Lisp {{{
@@ -1837,7 +1839,7 @@ nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gl :0Glog<CR>
 nnoremap <silent> <leader>gp :Gpush<CR>
 nnoremap <silent> <leader>gr :Gremove<CR>
-nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gg :Gstatus<CR>
 nnoremap <silent> <leader>gu :Gpull<CR>
 " Browse the file online in the repository browser, e.g. github or bitbucket.
 nnoremap <silent> <leader>gx :Gbrowse<CR>
