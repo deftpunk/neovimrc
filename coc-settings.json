@@ -10,19 +10,6 @@
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": false,
 
-//  "python.condaPath"
 
-  // Clojure configuration.
-   "languageserver": {
-    "clojure-lsp": {
-      "command": "bash",
-      "args": ["-c", "cd /Users/case/dev/lsp/ && lein run"],
-      "filetypes": ["clojure"],
-      "rootPatterns": ["project.clj"],
-      "additionalSchemes": ["jar", "zipfile"],
-      "trace.server": "verbose",
-      "initializationOptions": {
-      }
-    }
-  }
+  "coc.source.iced.enable": true,
 }

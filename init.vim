@@ -10,6 +10,11 @@
 " Poor mans ipython.
 " https://www.reddit.com/r/neovim/comments/axilbq/using_nvim_as_python_ide_via_pynvim/ehu2fa2
 "
+" Sat Feb 08 2020 21:24:57 - removing dasht
+" " https://github.com/sunaku/vim-dasht
+" Was not as intuitive as I would have liked, as a result, I never really used
+" it.
+"
 " Mon Apr 1, 2019 6:05:34pm - mostly usablem not yet entirely stable.
 " Sat Aug 17 2019 21:05:52 - coc.vim not fully functional.
 " coc.vim - https://github.com/neoclide/coc.nvim - better(?) completion w/ LSP
@@ -20,6 +25,9 @@
 " http://liuchengxu.org/vista.vim/ - a new and improved tagbar using LSP.
 " Mon Dec 02 2019 22:22:37 - I can never get this to display properly with
 " python code.
+"
+" https://github.com/liuchengxu/vim-clap - a more performant finder/searcher
+" Sat Feb 01 2020 22:47:43 - bcommit & commits still not implemented...
 "
 " https://gitlab.com/HiPhish/repl.nvim
 " https://github.com/svermeulen/vim-subversive - operator motions to quickly
@@ -78,6 +86,8 @@
 "
 " Need to see if this will bring Emacs style abbreviations, e.g. C-x a i g
 " https://github.com/omrisarig13/vim-auto-abbrev
+"
+" https://github.com/jeetsukumaran/vim-pythonsense
 "
 " Finished:
 " Thursday Jan 3, 2019
@@ -272,6 +282,26 @@ augroup non_utf8_file_warn
 augroup END
 "}}}
 
+" ntrw {{{
+" Use built in file browser (netrw) instead of NERDTree
+" (https://shapeshed.com/vim-netrw/)
+" :he netrw
+" TODO: Investigate https://github.com/tpope/vim-vinegar to enhance netrw
+let g:netrw_banner = 0
+" Make the browser 25% of the width of the editor
+let g:netrw_winsize = 25
+" Show directory as an expandable tree
+let g:netrw_liststyle = 3
+" Disable the banner at the top of the buffer
+let g:netrw_banner = 0
+" Open files in the previous window (e.g. not the netrw file browser window)
+let g:netrw_browse_split = 4
+" Open files on the right
+" let g:netrw_altv = 1
+
+nnoremap <leader>vt :Vexplore<cr>
+" }}}
+
 " vim-plug - Plugin management {{{
 " https://github.com/junegunn/vim-plug
 " Make sure you use single quotes when specifying URLs
@@ -294,14 +324,6 @@ call plug#begin('~/.config/nvim/plugged')
 "   - Separator text objects
 "   - Argument text objects
 Plug 'wellle/targets.vim'
-
-" argtextobj.vim {{{
-" https://github.com/vim-scripts/argtextobj.vim
-" Text objects for function arguments.
-"   aa - an argument
-"   ia - inner argument
-" Plug 'vim-scripts/argtextobj.vim'
-" }}}
 
 " vim-indent-object {{{
 " https://github.com/michaeljsmith/vim-indent-object
@@ -370,82 +392,6 @@ Plug 'chaoren/vim-wordmotion'
 "    - MRU is a different command - no mixed results, that I can see.
 "    - Lines+BLines Does work with jumplist.
 
-" fruzzy {{{
-" https://github.com/raghur/fruzzy
-" Freaky fast fuzzy finder for (denite.nvim/CtrlP matcher) for vim/neovim
-" 01/21/2019 - Got a pretty fast speed up using fruzzy with CtrlP.
-Plug 'raghur/fruzzy', {'do': { -> fruzzy#install()}}
-" optional - but recommended - see below
-let g:fruzzy#usenative = 1
-let g:fruzzy#sortonempty = 1 " default value
-" }}}
-
-" The active fork of CtrlP {{{
-" https://github.com/ctrlpvim/ctrlp.vim
-"
-" Fri Oct 27, 2017 11:36:42am - Try out using cpsm as a matcher
-" https://github.com/nixprime/cpsm
-" NOTE: Didn't work out so well
-"
-" Use the silver searcher in deference to what ctrlp normally does.
-" 3/23/2016 - commented this out because it wasn't working for some reason.
-" 10/4/2016 - giving this another shot with a modified Ag cmdline.
-" let g:ctrlp_user_command='ag %s -i --nocolor --nogroup --hidden
-"                             \ --ignore .git
-"                             \ --ignore .hg
-"                             \ --ignore .DS_store
-"                             \ --ignore "**/*.pyc"
-"                             \ -g ""'
-" let g:ctrlp_root_markers = ['makepythontags']
-" let g:ctrlp_extensions=['smarttabs']
-
-Plug 'ctrlpvim/ctrlp.vim'
-
-set grepprg=rg\ --color=never
-let g:ctrlp_user_command='rg --files %s'
-let g:ctrlp_use_caching=0
-let g:ctrlp_match_func = {'match': 'fruzzy#ctrlp#matcher'}
-let g:ctrlp_match_current_file = 1 " to include current file in matches
-let g:ctrlp_match_window = 'bottom,order:ttb,max:25,results:25'
-
-let g:ctrlp_prompt_mappings = {
-    \ 'PrtSelectMove("n")':   ['<c-n>', '<down>'],
-    \ 'PrtSelectMove("p")':   ['<c-p>', '<up>'],
-    \ }
-
-" Show tags (ctags) for current file.
-" https://github.com/tacahiroy/ctrlp-funky
-Plug 'tacahiroy/ctrlp-funky'
-let g:ctrlp_funky_syntax_highlight=1
-let g:ctrlp_funky_after_jump = {
-    \ 'default' : 'zxzz',
-    \ 'python'  : 'zOzz'
-    \}
-let g:ctrlp_funky_cache_dir='~/.config/nvim/.cache/ctrlp-funky'
-" Only Funky can give you tags without generating something via ctags.  The
-" BTags and Tags functions in fzf.vim can't do it.
-" NOTE: 8/24/2017 - Its still a bit slow.
-nnoremap <leader>ci :CtrlPFunky<cr>
-
-" CtrlPtjump - doesn't work without a tags file, so i deleted it - Sep 24, 2018
-
-" cmdline, yankring + menu
-" https://github.com/sgur/ctrlp-extensions.vim
-Plug 'sgur/ctrlp-extensions.vim'
-
-" marks - local and global
-Plug 'mattn/ctrlp-mark'
-
-" Show and exec command history from CtrlP
-" Adds cmd history (what you see in g:) and search history
-" (what you see in g/) to ctrlp so you can quickly re-run commands or searches.
-" https://github.com/ompugao/ctrlp-history
-Plug 'ompugao/ctrlp-history'
-nnoremap <silent><C-p><C-h> :CtrlPCmdHistory<CR>
-nnoremap <silent><C-p><C-s> :CtrlPSearchHistory<CR>
-
-" }}}
-
 " FZF {{{
 " https://github.com/junegunn/fzf.vim
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
@@ -500,19 +446,12 @@ nmap <leader>r :Rg<cr>
 nnoremap <leader>he :Helptags<cr>
 " }}}
 
-" Clap {{{
-" https://github.com/liuchengxu/vim-clap
-" Another fuzzy completion/navigation plugin.
-" NOTE: Mon Dec 02 2019 11:36:50 - not quite featureful yet.
-" Plug 'liuchengxu/vim-clap'
-" }}}
-
 " vim-easymotion {{{
 " Moving around in a buffer like ace-jump and avy.
 " https://github.com/easymotion/vim-easymotion
 Plug 'easymotion/vim-easymotion'
-nmap <leader><leader>s <Plug>(easymotion-s)
-nmap <leader><leader>l <Plug>(easymotion-bd-tl)
+let g:EasyMotion_do_mapping = 0
+nmap gs <Plug>(easymotion-overwin-f2)
 " }}}
 
 " ListToggle {{{
@@ -524,11 +463,6 @@ let g:lt_quickfix_list_toggle_map = '<leader>cq'
 let g:lt_height = 15
 " }}}
 
-" Visual Star Search
-" Allow for * and # searches to occur on the current visual selection.
-" https://github.com/nelstrom/vim-visual-star-search
-Plug 'nelstrom/vim-visual-star-search'
-
 " }}}
 
 " General Utilities -------------------------------------------------------- {{{
@@ -537,7 +471,13 @@ Plug 'nelstrom/vim-visual-star-search'
 " https://github.com/tpope/tpope-vim-abolish
 " Abbreviate multiple variants of words
 "
-" Coercion
+" Abbreviate:
+" :Abolish {despa,sepe}rat{e,es,ed,ing,ely,ion,ions,or}  {despe,sepa}rat{}
+"
+" Substitution:
+" :%Subvert/facilit{y,ies}/building{,s}/g
+"
+" Coercion:
 " Press crs (coerce to snake_case).
 " MixedCase (crm),
 " camelCase (crc),
@@ -603,20 +543,6 @@ let g:ale_list_window_size = 15
 Plug 'kana/vim-arpeggio'
 " }}}
 
-" vim-asterisk {{{
-" https://github.com/haya14busa/vim-asterisk
-" Provides improved * motions.
-Plug 'haya14busa/vim-asterisk'
-nmap * <Plug>(asterisk-*)
-nmap # <Plug>(asterisk-#)
-map g*  <Plug>(asterisk-g*)
-map g#  <Plug>(asterisk-g#)
-map z*  <Plug>(asterisk-z*)
-map gz* <Plug>(asterisk-gz*)
-map z#  <Plug>(asterisk-z#)
-map gz# <Plug>(asterisk-gz#)
-" }}}
-
 " vim-auto-abbrev {{{
 " https://github.com/omrisarig13/vim-auto-abbrev
 " TODO: Look at changing/modifying the mapping.
@@ -655,51 +581,17 @@ Plug 'moll/vim-bbye'
 nnoremap <leader>k :Bdelete<cr>
 " }}}
 
+" dash.vim {{{
+" https://github.com/rizzatti/dash.vim
+" Look up documentation and other info in Dash.app
+Plug 'rizzatti/dash.vim'
+" }}}
+
 " delimitMate {{{
 " auto quotes, parens, brackets
 " https://github.com/raimondi/delimitMate
 " NOTE: Another pairs plugin to try - https://github.com/jiangmiao/auto-pairs
 Plug 'raimondi/delimitMate'
-" }}}
-
-" vim-dasht {{{
-" https://github.com/sunaku/vim-dasht
-" Look up Dash documentation locally - https://github.com/sunaku/dasht
-" Install dasht & then install docsets:
-"   1. brew update; brew install dasht
-"   2. dasht-docsets-install bash
-" When in Python, also search NumPy, SciPy, and Pandas:
-" let g:dasht_filetype_docsets['python'] = ['(num|sci)py', 'pandas']
-Plug 'sunaku/vim-dasht'
-" create window beside current one
-let g:dasht_results_window = 'vnew'
-" search word under cursor in related docsets
-nnoremap <silent> <leader>K :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
-" search visual selection in related docsets
-vnoremap <silent> <Leader>K y:<C-U>call Dasht(getreg(0))<Return>
-" }}}
-
-" deoplete {{{
-" https://github.com/Shougo/deoplete.nvim
-" Dark powered async completion framework for neovim
-" Python, Rust, Go, Clojure all have their own versions of this plugin.
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" NOTE: Feb 15, 2018  9:12 am - Had to comment out NVIM_LISTEN_ADDRESS in ~/.zshrc
-" https://github.com/Shougo/deoplete.nvim/issues/646
-"let g:deoplete#enable_at_startup = 1
-" }}}
-
-" vim-eunuch {{{
-" https://github.com/tpope/vim-eunuch
-" Some vim sugar for Unix commands that need it the most, e.g.
-" :Remove - delete buffer and file on disk
-" :Move - rename buffer and file on disk
-" :Rename - same as above but relative fo file's curent directory.
-" :SudoWrite - Write file w/ sudo
-" :SudoEdit - Edit a file w/ sudo
-" NOTE: Wed Nov 22, 2017 2:58:32pm - The Sudo* functions are not working(?) on
-" Mac ... not sure if this is Mac or vim-eunuch
-Plug 'tpope/vim-eunuch'
 " }}}
 
 " Folding {{{
@@ -752,7 +644,7 @@ Plug 'tpope/vim-commentary'
 "         the commandline.
 "       - ripgrep support
 "       - Asynchronous on Neovim without using Dispatch.
-"       - Farundo doesn't always undo - known bug
+"       - undo doesn't always undo - known bug
 "   2. FlyGrep.vim - https://github.com/wsdjeg/FlyGrep.vim
 "       - No Edit mode
 "   3. vim-ags - https://github.com/gabesoft/vim-ags
@@ -798,50 +690,6 @@ Plug 'farmergreg/vim-lastplace'
 " re-align text around a chosen character (which will often be equals).
 Plug 'tommcdo/vim-lion'
 let g:lion_squeeze_spaces = 1
-" }}}
-
-" NERDTree {{{
-" https://github.com/scrooloose/nerdtree.git
-Plug 'https://github.com/scrooloose/nerdtree.git'
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-let g:NERDTreeUpdateOnCursorHold = 0
-let g:NERDTreeUpdateOnWrite      = 0
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ 'Ignored'   : '☒',
-    \ "Unknown"   : "?"
-    \ }
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
-let g:NERDTreeShowBookmarks=1
-nnoremap <leader>nt :NERDTreeToggle<cr>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" https://bluz71.github.io/2017/05/21/vim-plugins-i-like.html
-" One inconvenience is that NERDTree, by default, will not refresh itself when
-" one enters the file-tree window. For instance, it won’t display new files
-" not created within NERDTree unless a manual refresh is executed. This can be
-" overcome with the following auto-refreshing snippet:
-function! NERDTreeRefresh()
-    if &filetype == "nerdtree"
-        silent exe substitute(mapcheck("R"), "<CR>", "", "")
-    endif
-endfunction
-
-autocmd BufEnter * call NERDTreeRefresh()
-
-" nerdtree-syntax-highlight
-" https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
-" This is intended to be used with vim-devicons to add color to icons or
-" entire labels
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " }}}
 
 " open-browser {{{
@@ -928,28 +776,23 @@ let g:quickrun_config.python = {'command': 'python'}
 "  20% of the screen, configurable via g:scratch_height and g:scratch_top).
 "  The window automatically closes when inactive (and its contents will be
 "  available the next time it is opened).
-
-"  gs - in normal mode opens the scratch window and enters insert mode. The
-"  scratch window closes when you leave insert mode. This is especially
-"  useful for quick notes.
-"  gs - in visual mode pastes the current selection (character-wise,
-"  line-wise or block-wise) into the scratch buffer.
-
+"
 "  Both above mappings have a gS variant that clears the scratch buffer before
 "  opening it. Note also that the auto-closing features require hidden to be
 "  set (and can be disabled via the g:scratch_autohide option).
-
+"
 "  By default the contents of the scratch window are lost when leaving Vim. To
 "  enable cross-session persistence, set the g:scratch_persistence_file option
 "  to a valid file path.
 Plug 'mtth/scratch.vim'
 let g:scratch_height=25
+let g:scratch_no_mappings = 1
+
 if has('macunix')
     let g:scratch_persistence_file='/Users/ebodine/tmp/neovimrc/neovim-scratch.txt'
 elseif has('unix')
     let g:scratch_persistence_file='/home/erickb/tmp/neovimrc/neovim-scratch.txt'
 endif
-nmap <leader>fs :Scratch<cr>
 " }}}
 
 " vim-scriptease {{{
@@ -1044,24 +887,6 @@ Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 " }}}
 
-" vim-sandwich {{{
-" https://github.com/machakann/vim-sandwich
-" Replacement for vim-surround; uses text objects to surround/sandwich things.
-" The set of operator and textobject plugins to search/select/edit sandwiched textobjects.
-"   add:
-"   Press sa{motion/textobject}{addition}. For example, a key sequence
-"   saiw( makes foo to (foo).
-"
-"   delete:
-"   Press sdb or sd{deletion}. For example, key sequences sdb or
-"   sd( makes (foo) to foo. sdb searches a set of surrounding automatically.
-"
-"   replace:
-"   Press srb{addition} or sr{deletion}{addition}.
-"   For example, key sequences srb" or sr(" makes (foo) to "foo".
-Plug 'machakann/vim-sandwich'
-" }}}
-
 " vim-slash {{{
 " https://github.com/junegunn/vim-slash
 " Enhancing in-buffer search experience.
@@ -1069,6 +894,13 @@ Plug 'machakann/vim-sandwich'
 "   - star-search: highlighting without moving.
 Plug 'junegunn/vim-slash'
 noremap <plug>(slash-after) zz
+" }}}
+
+" vim-surround {{{
+" https://github.com/tpope/vim-surround
+" Surrounding things in parens, brackets, quotes, etc. - works with repeat.vim
+" cs, ds, yss
+Plug 'tpope/vim-surround'
 " }}}
 
 " tagbar - a class outline viewer {{{
@@ -1388,6 +1220,8 @@ let test#neovim#term_position = "bottomright"
 let test#python#runner = 'pytest'
 " }}}
 
+" }}}
+
 " vim-illuminate {{{
 " https://github.com/RRethy/vim-illuminate
 " Selectively illuminating other uses of the current word under the cursor.
@@ -1396,6 +1230,7 @@ Plug 'RRethy/vim-illuminate'
 hi link illuminatedWord Visual
 " toggle word illumination.
 let g:Illuminate_highlightUnderCursor = 0
+let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python', 'go', 'clojure', 'rust']
 nnoremap <leader>it :IlluminationToggle<cr>
 " }}}
 
@@ -1444,19 +1279,6 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 
 " }}}
 
-" Lisp languages {{{
-"
-" Support for the Lisp family of languages, e.g. Clojure, CL, Scheme, Ratchet,
-" etc.
-
-" vim-sexp
-" https://github.com/guns/vim-sexp
-" Precision editing of S-expressions in Clojure, Common Lisp
-Plug 'guns/vim-sexp', {'for': 'clojure'}
-
-" Make the sexp mappings easier in the beginning.
-Plug 'tpope/vim-sexp-mappings-for-regular-people'
-
 " Clojure {{{
 
 " Install Java:
@@ -1481,21 +1303,21 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people'
 
 " Conjure
 " https://github.com/Olical/conjure
-Plug 'Olical/conjure', { 'tag': 'v2.1.1', 'do': 'bin/compile'  }
-let g:conjure_log_direction = "horizontal"
-let g:conjure_log_blacklist = ["up", "ret", "ret-multiline", "load-file", "eval"]
+" Plug 'Olical/conjure', { 'tag': 'v2.1.1', 'do': 'bin/compile'  }
+" let g:conjure_log_direction = "horizontal"
+" let g:conjure_log_blacklist = ["up", "ret", "ret-multiline", "load-file", "eval"]
 
-" vim-replant & vim-fireplace
-" https://github.com/SevereOverfl0w/vim-replant
-" https://github.com/tpope/vim-fireplace
-" These make use of CIDER-nrepl & refactor-nrepl middleware for their
-" functionality.  These should be in :plugins in your ~/.lein/profiles.clj
-" file.
-Plug 'SevereOverfl0w/vim-replant', { 'do': ':UpdateRemotePlugins' }
-Plug 'tpope/vim-fireplace'
+" " vim-replant & vim-fireplace
+" " https://github.com/SevereOverfl0w/vim-replant
+" " https://github.com/tpope/vim-fireplace
+" " These make use of CIDER-nrepl & refactor-nrepl middleware for their
+" " functionality.  These should be in :plugins in your ~/.lein/profiles.clj
+" " file.
+" Plug 'SevereOverfl0w/vim-replant', { 'do': ':UpdateRemotePlugins' }
+" Plug 'tpope/vim-fireplace'
 
 " Evaluate Clojure buffers on load
-autocmd BufRead *.clj try | silent! Require | catch /^Fireplace/ | endtry
+" autocmd BufRead *.clj try | silent! Require | catch /^Fireplace/ | endtry
 
 " vim-clojure-static
 " https://github.com/guns/vim-clojure-static
@@ -1505,6 +1327,34 @@ Plug 'guns/vim-clojure-static'
 " https://github.com/guns/vim-clojure-highlight
 " Extended clojure highlighting
 Plug 'guns/vim-clojure-highlight'
+
+" vim-sexp
+" https://github.com/guns/vim-sexp
+" Precision editing of S-expressions in Clojure, Common Lisp
+Plug 'guns/vim-sexp', {'for': 'clojure'}
+
+" Make the sexp mappings easier in the beginning.
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
+
+" vim-iced
+" https://github.com/liquidz/vim-iced
+" https://liquidz.github.io/vim-iced/#_getting_started
+" :IcedJackIn
+"
+" External plugins:
+" vim-iced-kaocha
+" - Provides some commands for testing with kaocha.
+" vim-iced-project-namespaces
+" - Provides :IcedBrowseNamespace command for jumping to namespace in your project.
+" vim-iced-function-list
+" - Provides :IcedBrowseFunction command for jumping to functions in current namespace.
+" vim-iced-coc-source
+" - Provides auto completion by coc.nvim.
+Plug 'liquidz/vim-iced', {'for': 'clojure'}
+let g:iced_enable_default_key_mappings = v:true
+
+Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure'}
+
 " }}}
 
 " Common Lisp {{{
@@ -1520,8 +1370,6 @@ Plug 'guns/vim-clojure-highlight'
 "    interact with it in the other direction.
 " 2. The start up is really simple, no having to start anything first.
 Plug 'l04m33/vlime', {'rtp': 'vim/'}
-" }}}
-
 " }}}
 
 " Golang {{{
@@ -1572,44 +1420,6 @@ Plug 'alaviss/nim.nvim'
 
 " Python {{{
 
-" Fri Aug 16 2019 16:55:35 - disabled coc.vim because the functionality
-" compared to deoplete+jedi is just not there yet.
-
-" Setup: Using ipython in a terminal:
-" - The biggest problem is creating multiline (more than 2 lines) code in
-"   ipython.
-"   Create an ipython config file to turn on vi mode:
-"      echo "c.TerminalInteractiveShell.editing_mode = 'vi'" \
-"      >>~/.ipython/profile_default/ipython_config.py
-" - You need to have miniconda in the PATH and have installed ipython
-" - You need to `source activate <env>` to get the correct environment.
-" - Configure your terminal binding to use <leader><ESC> to Escape to Normal
-"   mode.  You can then use <Esc>o to create a new line in ipython.
-" - Start up ipython in a terminal and enjoy.
-
-" deoplete-jedi {{{
-" https://github.com/deoplete-plugins/deoplete-jedi
-"Plug 'deoplete-plugins/deoplete-jedi'
-"let g:deoplete#sources#jedi#show_docstring = 1
-" }}}
-
-" jedi-vim {{{
-" https://github.com/davidhalter/jedi-vim
-" The Jedi Python library for vim
-" Move the cursor to the class or method you want to check, then press the
-" various supported shortcut provided by jedi-vim:
-"     <leader>d: go to definition
-"     K: check documentation of class or method
-"     <leader>n: show the usage of a name in current file
-"     <leader>r: rename a name
-"
-"Plug 'davidhalter/jedi-vim'
-" disable autocompletion, cause we use deoplete for completion
-"let g:jedi#completions_enabled = 0
-" open the go-to function in split, not another buffer
-"let g:jedi#use_splits_not_buffers = "right"
-" }}}
-
 " vim-conda {{{
 " https://github.com/cjrh/vim-conda
 " Support python development using Conda env manager
@@ -1639,10 +1449,9 @@ Plug 'Vimjas/vim-python-pep8-indent'
 " }}}
 
 " Syntax highlighting {{{
-" PaperColor scheme targets this syntax file specifically
-" https://github.com/hdima/python-syntax/
-Plug 'https://github.com/hdima/python-syntax/'
-let python_highlight_all = 1
+" https://github.com/numirias/semshi
+" Much improved semantic highlighting for Python.
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 " }}}
 
 " SimpylFold {{{
@@ -1681,7 +1490,7 @@ let g:requirements#detect_filename_pattern = 'freeze'
 
 " vim-ruby
 " https://github.com/vim-ruby/vim-ruby
-" Ruby configuration
+" Ruby configuration.  Also covers Vagrantfiles.
 Plug 'vim-ruby/vim-ruby'
 
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
@@ -1724,20 +1533,13 @@ let g:deoplete#sources#rust#documentation_max_height=30
 
 " Web development - Javascript, CSS, HTML, etc. {{{
 
-" vim-hexokinase
-" https://github.com/rrethy/vim-hexokinase
-" Asynchronously highlight color codes - better than Colorizer.
-Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-let g:Hexokinase_highlighters = [ 'virtual' ]
-let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript']
-
 " HTML {{{
 
 " html5.vim
 " https://github.com/othree/html5.vim
-Plug 'othree/html5.vim'
-let g:html5_rdfa_attributes_complete = 0
-let g:html5_aria_attributes_complete = 0
+" Plug 'othree/html5.vim'
+" let g:html5_rdfa_attributes_complete = 0
+" let g:html5_aria_attributes_complete = 0
 " }}}
 
 " }}}
@@ -2026,13 +1828,6 @@ nnoremap <silent> <leader>gm :MerginalToggle<CR>
 Plug 'tpope/vim-rhubarb'
 " }}}
 
-" vim-fubitive {{{
-" https://github.com/tommcdo/vim-fubitive
-" Add bitbucket support for Gbrowse - yeah!
-" Fri Sep 06 2019 15:37:26 - doesn't recognize ngage bitbucket ... boo!
-Plug 'tommcdo/vim-fubitive'
-" }}}
-
 " Add/Stage the current file.
 nnoremap <silent> <leader>ga :Git add .<cr>
 nnoremap <silent> <leader>gb :Gblame<CR>
@@ -2044,7 +1839,7 @@ nnoremap <silent> <leader>gd :Gdiff<CR>
 nnoremap <silent> <leader>gl :0Glog<CR>
 nnoremap <silent> <leader>gp :Gpush<CR>
 nnoremap <silent> <leader>gr :Gremove<CR>
-nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gg :Gstatus<CR>
 nnoremap <silent> <leader>gu :Gpull<CR>
 " Browse the file online in the repository browser, e.g. github or bitbucket.
 nnoremap <silent> <leader>gx :Gbrowse<CR>
@@ -2407,8 +2202,8 @@ nnoremap ZQ <Nop>
 " A test to see if i could map the MacOSX Command key
 " Friday July 6 2018 - Is working in Vimr
 " Saturday December 29, 2018 - Won't work in iTerm2
+" Thu Feb 20 2020 13:55:08 - The Command key (Super key) still not seen.
 " nnoremap <D-l> :echo "testing"<cr>
-inoremap <D-l> :echo "testing"<cr>
 
 " Edit Neovim configuration file.
 nnoremap <silent> <leader>ec :e $MYVIMRC<cr>
@@ -2455,6 +2250,10 @@ cmap <c-e> <end>
 
 " Remap VIM 0 to first non-blank character
 map 0 ^
+
+" Some mappings for next/previous buffers.
+nmap gb :bnext<cr>
+nmap gB :bprev<cr>
 
 " Omni completion remap
 inoremap <C-l> <C-x><C-l>
