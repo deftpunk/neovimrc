@@ -1020,16 +1020,16 @@ let g:prosession_on_startup = 1
 "
 " I got around it by moving $HOME/miniconda3/bin to the front of PATH.
 
-" Plug 'SirVer/ultisnips'
-" " expand via tab.
-" let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsJumpForwardTrigger="<tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-" let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+Plug 'SirVer/ultisnips'
+" expand via tab.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 
-" " vim-snippets
-" " https://github.com/honza/vim-snippets
-" Plug 'honza/vim-snippets'
+" vim-snippets
+" https://github.com/honza/vim-snippets
+Plug 'honza/vim-snippets'
 " }}}
 
 " vim-fat-finger {{{
