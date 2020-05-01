@@ -5,10 +5,12 @@
   // Python configuration.
   "python.jediEnabled": false,
   "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": ["--config=/home/erickb/.flake8"],
   "python.linting.mypyEnabled": true,
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": false,
-  "python.condaPath"
+
+//  "python.condaPath"
 
   // Clojure configuration.
    "languageserver": {
