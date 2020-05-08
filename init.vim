@@ -594,6 +594,18 @@ Plug 'rizzatti/dash.vim'
 Plug 'raimondi/delimitMate'
 " }}}
 
+" DirDiff - diff directories {{{
+" https://github.com/will133/vim-dirdiff
+" Usage
+"   :DirDiff <dir1> <dir2>
+"   To open DirDiff from the command line, run vim -c \"DirDiff dir1 dir2\"
+Plug 'will133/vim-dirdiff'
+" Exclude python compiled files & some image files that i dont care about.
+let g:DirDiffExcludes="*.pyc,*.class,*.exe,*.swp,*.pyo,*.jpg,*.jpeg"
+" Ignore whitespace differences and ignore the .git/ directory.
+let g:DirDiffAddArgs="-w --exclude=direxclude -r .git"
+" }}}
+
 " Folding {{{
 
 " FastFold {{{
