@@ -704,6 +704,50 @@ Plug 'tommcdo/vim-lion'
 let g:lion_squeeze_spaces = 1
 " }}}
 
+" NERDTree {{{
+" https://github.com/scrooloose/nerdtree.git
+Plug 'https://github.com/scrooloose/nerdtree.git'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+let g:NERDTreeUpdateOnCursorHold = 0
+let g:NERDTreeUpdateOnWrite      = 0
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let g:NERDTreeShowBookmarks=1
+nnoremap <leader>nt :NERDTreeToggle<cr>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" https://bluz71.github.io/2017/05/21/vim-plugins-i-like.html
+" One inconvenience is that NERDTree, by default, will not refresh itself when
+" one enters the file-tree window. For instance, it won’t display new files
+" not created within NERDTree unless a manual refresh is executed. This can be
+" overcome with the following auto-refreshing snippet:
+function! NERDTreeRefresh()
+    if &filetype == "nerdtree"
+        silent exe substitute(mapcheck("R"), "<CR>", "", "")
+    endif
+endfunction
+
+autocmd BufEnter * call NERDTreeRefresh()
+
+" nerdtree-syntax-highlight
+" https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
+" This is intended to be used with vim-devicons to add color to icons or
+" entire labels
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" }}}
+
 " open-browser {{{
 " https://github.com/tyru/open-browser.vim
 " Open a broser from Neovim - I mostly use this to start a web search from
