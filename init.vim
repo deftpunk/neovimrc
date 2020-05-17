@@ -1587,19 +1587,6 @@ let g:deoplete#sources#rust#documentation_max_height=30
 
 " }}}
 
-" Web development - Javascript, CSS, HTML, etc. {{{
-
-" HTML {{{
-
-" html5.vim
-" https://github.com/othree/html5.vim
-" Plug 'othree/html5.vim'
-" let g:html5_rdfa_attributes_complete = 0
-" let g:html5_aria_attributes_complete = 0
-" }}}
-
-" }}}
-
 " vim-polyglot {{{
 " Various language packs for vim.
 " https://github.com/sheerun/vim-polyglot
@@ -1750,27 +1737,7 @@ Plug 'hashivim/vim-vagrant'
 
 " Version Control -------------------------------------------------- {{{
 
-" Mercurial {{{
-" Unfortunately, I have to use both Mercurial & Git at work.
-
-" vim-lawrencium
-" https://github.com/ludovicchabant/vim-lawrencium
-" https://bolt80.com/lawrencium/
-" The fugitive for Mercurial
-Plug 'ludovicchabant/vim-lawrencium'
-nnoremap <silent> <leader>hs :Hgstatus<CR>
-nnoremap <silent> <leader>hl :Hg log --limit 5 -v<CR>
-nnoremap <silent> <leader>hc :Hgcommit<CR>
-
-" vim-mercenary
-" A mercurial wrapper that implements HGblame, HGdiff {rev}, HGshow {rev} and
-" HGcat {rev} {path}
-" https://github.com/jlfwong/vim-mercenary
-Plug 'jlfwong/vim-mercenary'
-
-" }}}
-
-" vim-fugitive + vim-merginal + vim-rhubarb - Git management  {{{
+" vim-fugitive + vim-merginal - Git management  {{{
 
 " Git porcelain in Neovim/Vim comes primarily in the form of
 " vim-fugitive, vim-magit & vim-gina.  Unfortunately, none are of the caliber
@@ -1786,6 +1753,8 @@ Plug 'jlfwong/vim-mercenary'
 "
 " Vim Fugitive Vim Rhubarb GV Merginal:
 "   -
+
+" TODO: Get vim-fubitive (Bitbucket repos) & vim-rhubarb working together.
 
 " vim-fugitive {{{
 " https://github.com/tpope/vim-fugitive
@@ -1875,15 +1844,6 @@ Plug 'idanarye/vim-merginal'
 nnoremap <silent> <leader>gm :MerginalToggle<CR>
 " }}}
 
-" vim-rhubarb {{{
-" GitHub extension for fugitive
-" https://github.com/tpope/vim-rhubarb
-" Provides :Gbrowse functionality as well as being able to use
-" |i_CTRL-X_CTRL-O| to omni-complete GitHub issues or project collaborator
-" usernames when editing a commit message.
-Plug 'tpope/vim-rhubarb'
-" }}}
-
 " Add/Stage the current file.
 nnoremap <silent> <leader>ga :Git add .<cr>
 nnoremap <silent> <leader>gb :Gblame<CR>
@@ -1897,8 +1857,6 @@ nnoremap <silent> <leader>gp :Gpush<CR>
 nnoremap <silent> <leader>gr :Gremove<CR>
 nnoremap <silent> <leader>gg :Gstatus<CR>
 nnoremap <silent> <leader>gu :Gpull<CR>
-" Browse the file online in the repository browser, e.g. github or bitbucket.
-nnoremap <silent> <leader>gx :Gbrowse<CR>
 nnoremap <silent> <leader>gw :Gwrite<CR>
 
 " }}}
@@ -1939,18 +1897,6 @@ let g:gitgutter_sign_modified_removed = "✖"
 " Refresh GitGutter signs after fugitive commit.
 " https://github.com/airblade/vim-gitgutter/issues/502
 autocmd BufWritePost,WinEnter * GitGutter
-" }}}
-
-" gv - view git commits {{{
-" https://github.com/junegunn/gv.vim
-Plug 'junegunn/gv.vim'
-
-" commit browser for repo
-nnoremap <silent> <leader>gva :GV<cr>
-" commit browser for current file only
-nnoremap <silent> <leader>gvc :GV!<cr>
-" commit browser for current file in location list.
-nnoremap <silent> <leader>gvl :GV?<cr>
 " }}}
 
 " flog {{{
