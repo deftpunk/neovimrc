@@ -1387,7 +1387,7 @@ Plug 'guns/vim-clojure-highlight'
 " vim-sexp
 " https://github.com/guns/vim-sexp
 " Precision editing of S-expressions in Clojure, Common Lisp
-Plug 'guns/vim-sexp', {'for': 'clojure'}
+Plug 'guns/vim-sexp', {'for': ['clojure', 'lisp']}
 
 " Make the sexp mappings easier in the beginning.
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
@@ -1956,6 +1956,23 @@ Plug 'rbong/vim-flog'
 Plug 'rhysd/git-messenger.vim'
 nmap <leader>gm <Plug>(git-messenger)
 " }}}
+
+" vim-twiggy {{{
+" https://github.com/sodapopcan/vim-twiggy
+" Git branch management for Vim - similar to Merginal
+" Invoke Twiggy with :Twiggy
+Plug 'sodapopcan/vim-twiggy'
+" }}}
+
+function! s:changebranch(branch)
+    execute 'Git checkout' . a:branch
+    call feedkeys("i")
+endfunction
+
+command! -bang Gbranch call fzf#run({
+            \ 'source': 'git branch -a --no-color | grep -v "^\* " ',
+            \ 'sink': function('s:changebranch')
+            \ })
 
 " }}}
 
