@@ -11,5 +11,5 @@
   "python.linting.pylintEnabled": false,
 
 
-  "coc.source.iced.enable": true,
+  "coc.source.iced.enable": true
 }
