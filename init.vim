@@ -272,26 +272,6 @@ augroup END
 
 "}}}
 
-" ntrw {{{
-" Use built in file browser (netrw) instead of NERDTree
-" (https://shapeshed.com/vim-netrw/)
-" :he netrw
-" TODO: Investigate https://github.com/tpope/vim-vinegar to enhance netrw
-let g:netrw_banner = 0
-" Make the browser 25% of the width of the editor
-let g:netrw_winsize = 25
-" Show directory as an expandable tree
-let g:netrw_liststyle = 3
-" Disable the banner at the top of the buffer
-let g:netrw_banner = 0
-" Open files in the previous window (e.g. not the netrw file browser window)
-let g:netrw_browse_split = 4
-" Open files on the right
-" let g:netrw_altv = 1
-
-nnoremap <leader>vt :Vexplore<cr>
-" }}}
-
 " vim-plug - Plugin management {{{
 " https://github.com/junegunn/vim-plug
 " Make sure you use single quotes when specifying URLs
