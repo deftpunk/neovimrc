@@ -270,13 +270,6 @@ augroup autoSaveAndRead
     autocmd CursorHold * silent! checktime
 augroup END
 
-" display a message when the current file is not utf-8 encoded
-" note that we need to use `unsilent` command here because of this issue:
-" https://github.com/vim/vim/issues/4379
-augroup non_utf8_file_warn
-    autocmd!
-    autocmd BufRead * if &fileencoding != 'utf-8' |unsilent echomsg 'file not in utf-8 format!' | endif
-augroup END
 "}}}
 
 " ntrw {{{
