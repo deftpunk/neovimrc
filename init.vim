@@ -223,8 +223,12 @@ endif
 
 set undofile
 
-" Automatically reload files that have changed.
+" Automatically reload files that have changed outside of Vim/Neovim.
 set autoread
+
+" Automatically write files.
+set autowrite
+set autowriteall
 
 " Substitute all matches on a line instead of just one - this means that
 " supplying 'g' will now only make a single substitution.
@@ -254,18 +258,11 @@ let g:maplocalleader = ','
 
 autocmd BufEnter * :syntax sync fromstart
 
-" Turn off line numbers for help files.
-" autocmd FileType help setlocal nonumber norelativenumber
-
 " Automatically equalize splits when Vim is resized.
 autocmd VimResized * wincmd =
 
 " Enable functional autosave and autoread behaviour.
 " https://bluz71.github.io/2017/05/15/vim-tips-tricks.html
-" autoread - When a file has been changed outside of Vim but not inside it,
-" automatically read it again.
-set autoread
-
 " checktime - Check if any buffers were changed outside of Vim.
 augroup autoSaveAndRead
     autocmd!
@@ -429,6 +426,12 @@ command! -bang -nargs=* Rg
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
+
+" Enable per-command history
+" - History files will be stored in the specified directory
+" - When set, CTRL-N and CTRL-P will be bound to 'next-history' and
+"   'previous-history' instead of 'down' and 'up'.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 " Mappings:
 " search lines in buffer.
@@ -605,6 +608,10 @@ let g:DirDiffExcludes="*.pyc,*.class,*.exe,*.swp,*.pyo,*.jpg,*.jpeg"
 " Ignore whitespace differences and ignore the .git/ directory.
 let g:DirDiffAddArgs="-w --exclude=direxclude -r .git"
 " }}}
+
+" vim-eunuch
+" https://github.com/tpope/vim-eunuch
+Plug 'tpope/vim-eunuch'
 
 " Folding {{{
 
@@ -919,12 +926,12 @@ let g:prosession_on_startup = 1
 "
 " I got around it by moving $HOME/miniconda3/bin to the front of PATH.
 
-Plug 'SirVer/ultisnips'
-" expand via tab.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+" Plug 'SirVer/ultisnips'
+" " expand via tab.
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 
 " vim-snippets
 " https://github.com/honza/vim-snippets
@@ -1097,6 +1104,18 @@ autocmd FileType vim autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 " as VSCode
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 " inoremap <silent><expr> <TAB>
