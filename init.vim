@@ -530,37 +530,12 @@ Plug 'omrisarig13/vim-auto-abbrev'
 let g:auto_abbrev_file_path = '~/.config/nvim/abbreviates'
 " }}}
 
-" vim-autosave {{{
-" https://github.com/907th/vim-auto-save
-" Automatically saves changes to disk without having to use :w (or any binding
-" to it) every time a buffer has been modified or based on your preferred
-" events.
-"
-" By default AutoSave will save every time something has been changed in normal
-" mode and when the user leaves insert mode. This configuration is a mix
-" between save as often as possible and try to avoid breaking other plugins
-" that depend on filewrite-events.
-Plug '907th/vim-auto-save'
-
-" Enable AutoSave on Vim startup
-let g:auto_save = 1
-" Do not display the auto-save notification
-let g:auto_save_silent = 1
-let g:auto_save_events = ["InsertLeave", "TextChanged", "FocusLost"]
-" }}}
-
 " vim-bbye - {{{
 " https://github.com/moll/vim-bbye
 " Handle deleting buffers and closing files.
 Plug 'moll/vim-bbye'
 " Buffer delete
 nnoremap <leader>k :Bdelete<cr>
-" }}}
-
-" dash.vim {{{
-" https://github.com/rizzatti/dash.vim
-" Look up documentation and other info in Dash.app
-Plug 'rizzatti/dash.vim'
 " }}}
 
 " delimitMate {{{
