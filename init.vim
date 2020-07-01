@@ -637,7 +637,7 @@ Plug 'tpope/vim-commentary'
 Plug 'Yggdroot/indentLine'
 let g:indentLine_char = '┆'
 let g:indentLine_indentLevel = 6
-let g:indentLine_fileType = ['python', 'perl', 'go']
+let g:indentLine_fileType = ['python', 'perl', 'go', 'rust', 'nim']
 " }}}
 
 " vim-lastplace {{{
