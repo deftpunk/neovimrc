@@ -680,6 +680,18 @@ let g:NERDTreeIndicatorMapCustom = {
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeShowBookmarks=1
+
+" Sort naturally, e.g. z11.txt follows z10.txt NOT after z100.txt
+let NERDTreeNaturalSort=1
+" Turn off the ? help at the top.
+let NERDTreeMinimalUI=1
+" SHow hidden files/directories, can be toggled with I in NERDTree
+let NERDTreeShowHidden=1
+" Automatically remove a buffer when a file is deleted in NERDTree
+let NERDTreeAutoDeleteBuffer=1
+
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.o$', '\.pyo$', '\.class$', '\.swp$']
+
 nnoremap <leader>nt :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -777,33 +789,6 @@ let $PYTHONUNBUFFERED=1
 Plug 'thinca/vim-quickrun'
 let g:quickrun_config = {}
 let g:quickrun_config.python = {'command': 'python'}
-" }}}
-
-" scratch.vim {{{
-" https://github.com/mtth/scratch.vim
-" An unobtrusive scratch window.
-"
-"  :Scratch opens a scratch buffer in a new window (by default using the top
-"  20% of the screen, configurable via g:scratch_height and g:scratch_top).
-"  The window automatically closes when inactive (and its contents will be
-"  available the next time it is opened).
-"
-"  Both above mappings have a gS variant that clears the scratch buffer before
-"  opening it. Note also that the auto-closing features require hidden to be
-"  set (and can be disabled via the g:scratch_autohide option).
-"
-"  By default the contents of the scratch window are lost when leaving Vim. To
-"  enable cross-session persistence, set the g:scratch_persistence_file option
-"  to a valid file path.
-Plug 'mtth/scratch.vim'
-let g:scratch_height=25
-let g:scratch_no_mappings = 1
-
-if has('macunix')
-    let g:scratch_persistence_file='/Users/ebodine/tmp/neovimrc/neovim-scratch.txt'
-elseif has('unix')
-    let g:scratch_persistence_file='/home/erickb/tmp/neovimrc/neovim-scratch.txt'
-endif
 " }}}
 
 " vim-scriptease {{{
@@ -2044,15 +2029,27 @@ Plug 'fmoralesc/molokayo'
 " https://github.com/vim-airline/vim-airline
 Plug 'vim-airline/vim-airline'
 Plug 'https://github.com/paranoida/vim-airlineish'
-" Plug 'vim-airline/vim-airline-themes'
 
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
+
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'" enable integration with ale
+" enable integration with ale
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#tab_nr_type = 1
+" always show tabs
+let g:airline#extensions#tabline#show_tabs = 1
+
+let g:airline#extensions#branch#empty_message = 'No Source Control'
+let g:airline#extensions#branch#displayed_head_limit = 15
+" hides the fugitive://**// part of the buffer names
+let g:airline#extensions#fugitiveline#enabled = 1
+
 let g:airline#extensions#ale#enabled=1
 let g:airline#extensions#tagbar#enabled=1
+let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
+let g:airline#extensions#quickfix#location_text = 'LocationList'
 
 " need to enable this for vim-devicons
 let g:airline_powerline_fonts = 1
