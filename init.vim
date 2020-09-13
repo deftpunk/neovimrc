@@ -1488,12 +1488,22 @@ autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 " :CocInstall coc-rls
 
 " deoplete-rust {{{
+" Use Racer (https://github.com/racer-rust/racer) for code completion and
+" navigation.
+"
 " Install racer
 " $ cargo +nightly install racer
 "
 " Install the Rust src
 " $ rustup component add rust-src
 "
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Enable deoplete autocompletion in Rust files
+let g:deoplete#enable_at_startup = 1
+" customise deoplete maximum candidate window length
+call deoplete#custom#source('_', 'max_menu_width', 80)
+
 Plug 'sebastianmarkow/deoplete-rust'
 let g:deoplete#sources#rust#racer_binary='/Users/ebodine/.cargo/bin/racer'
 let g:deoplete#sources#rust#rust_source_path='/Users/ebodine/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src'
@@ -1501,6 +1511,18 @@ let g:deoplete#sources#rust#show_duplicates=1
 let g:deoplete#sources#rust#documentation_max_height=30
 " }}}
 
+" Some Rust configuration.
+let g:rustfmt_autosave=1
+let g:racer_experimental_completer=1
+
+au FileType rust set makeprg=cargo\ build\ -j\ 4
+au FileType rust nmap <leader>et :!cargo test<cr>
+au FileType rust nmap <leader>er :!RUST_BACKTRACE=1 cargo run<cr>
+au FileType rust nmap <leader>ec :terminal cargo build -j 4<cr>
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gv <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gk <Plug>(rust-doc)
 " }}}
 
 " Vimscript {{{
@@ -1782,6 +1804,28 @@ nnoremap <silent> <leader>gw :Gwrite<CR>
 
 " }}}
 
+" Conflicted {{{
+" https://github.com/christoomey/vim-conflicted
+" Conflicted is a Vim plugin that aids in resolving git merge and rebase
+" conflicts.  Provides a few wrapper commands and a streamlined workflow to
+" make resolving conflicts much more straightforward.
+"
+" Let's say you just pulled code from the project's master branch on github
+" and you got a merge conflict error. To resolve it, you can run the
+" :Conflicted command that this plugin offers. This command creates a
+" three-way diff and puts the results in three vertical split windows. The
+" left split is upstream changes, the middle split is working changes, and the
+" right split is local changes. You can either accept upstream diff or the
+" local diff to resolve the conflict. Conflicted offers two key mappings for
+" quickly accepting the right diff. The dgu command will use the upstream diff
+" and dgl will use the local diff. To resolve the next conflict, use the
+" :GitNextConflict command. If there are no more conflicts, vim will exit, and
+" you can git commit the resolved files.
+Plug 'christoomey/vim-conflicted'
+
+
+" }}}
+
 " vim-gitgutter - show git diff in the gutter {{{
 " https://github.com/airblade/vim-gitgutter
 Plug 'airblade/vim-gitgutter'
@@ -1883,7 +1927,6 @@ nmap <leader>gm <Plug>(git-messenger)
 " Git branch management for Vim - similar to Merginal
 " Invoke Twiggy with :Twiggy
 Plug 'sodapopcan/vim-twiggy'
-" }}}
 
 function! s:changebranch(branch)
     execute 'Git checkout' . a:branch
@@ -1894,6 +1937,7 @@ command! -bang Gbranch call fzf#run({
             \ 'source': 'git branch -a --no-color | grep -v "^\* " ',
             \ 'sink': function('s:changebranch')
             \ })
+" }}}
 
 " }}}
 
