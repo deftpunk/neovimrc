@@ -549,7 +549,6 @@ Plug 'raimondi/delimitMate'
 " https://github.com/will133/vim-dirdiff
 " Usage
 "   :DirDiff <dir1> <dir2>
-"   To open DirDiff from the command line, run vim -c \"DirDiff dir1 dir2\"
 Plug 'will133/vim-dirdiff'
 " Exclude python compiled files & some image files that i dont care about.
 let g:DirDiffExcludes="*.pyc,*.class,*.exe,*.swp,*.pyo,*.jpg,*.jpeg"
@@ -663,9 +662,9 @@ let g:lion_squeeze_spaces = 1
 " https://github.com/scrooloose/nerdtree.git
 Plug 'https://github.com/scrooloose/nerdtree.git'
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-let g:NERDTreeUpdateOnCursorHold = 0
-let g:NERDTreeUpdateOnWrite      = 0
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusUpdateOnCursorHold = 0
+let g:NERDTreeGitStatusUpdateOnWrite      = 0
+let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ "Modified"  : "✹",
     \ "Staged"    : "✚",
     \ "Untracked" : "✭",
@@ -1502,7 +1501,8 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Enable deoplete autocompletion in Rust files
 let g:deoplete#enable_at_startup = 1
 " customise deoplete maximum candidate window length
-call deoplete#custom#source('_', 'max_menu_width', 80)
+" Sat Sep 26 2020 17:51:54 - Unknown function?
+" call deoplete#custom#source('_', 'max_menu_width', 80)
 
 Plug 'sebastianmarkow/deoplete-rust'
 let g:deoplete#sources#rust#racer_binary='/Users/ebodine/.cargo/bin/racer'
