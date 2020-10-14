@@ -1333,21 +1333,6 @@ Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure'}
 
 " }}}
 
-" Common Lisp {{{
-"
-" slimv
-" https://github.com/kovisoft/slimv
-" Plug 'kovisoft/slimv'
-
-" vlim
-" https://github.com/l04m33/vlime
-" Sat Sep 07 2019 21:02:40 -
-" 1. the REPL interaction only goes one way.  You can send things but not
-"    interact with it in the other direction.
-" 2. The start up is really simple, no having to start anything first.
-Plug 'l04m33/vlime', {'rtp': 'vim/'}
-" }}}
-
 " Golang {{{
 
 " https//golang.org
