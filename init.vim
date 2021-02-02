@@ -113,8 +113,8 @@ if has('nvim')
 endif
 
 if has('macunix')
-	let g:python3_host_prog="/usr/local/bin/python3"
-	let g:python_host_prog="/usr/local/bin/python"
+	let g:python3_host_prog="/Users/ebodine/miniconda3/bin/python3"
+	let g:python_host_prog="/Users/ebodine/miniconda3/bin/python"
 elseif has('unix')
 	let g:python3_host_prog="/usr/bin/python3"
 	let g:python_host_prog="/usr/bin/python"
@@ -208,7 +208,7 @@ set cpo+=n
 
 " Use persistent history
 if has('macunix')
-    let s:mac_directory = "/Users/ebodine/tmp/neovim-undo-dir"
+    let s:mac_directory = "/Users/ebodine/.config/nvim/neovim-undo-dir"
     if !isdirectory(s:mac_directory)
 	call mkdir(s:mac_directory, "", 0700)
     endif
@@ -422,22 +422,52 @@ nmap <leader>r :Rg<cr>
 nnoremap <leader>he :Helptags<cr>
 " }}}
 
+" https://github.com/nvim-telescope/telescope.nvim
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
 " vim-easymotion {{{
 " Moving around in a buffer like ace-jump and avy.
 " https://github.com/easymotion/vim-easymotion
-Plug 'easymotion/vim-easymotion'
-let g:EasyMotion_do_mapping = 0
-nmap gs <Plug>(easymotion-overwin-f2)
 " }}}
+Plug 'easymotion/vim-easymotion'
 
 " ListToggle {{{
 " Toggle location & quickfix windows.
 " https://github.com/Valloric/ListToggle
-Plug 'Valloric/ListToggle'
-let g:lt_location_list_toggle_map = '<leader>cl'
-let g:lt_quickfix_list_toggle_map = '<leader>cq'
-let g:lt_height = 15
 " }}}
+Plug 'Valloric/ListToggle'
+
+" nvim-gqf {{{
+" https://github.com/kevinhwang91/nvim-bqf
+" Make Neovim's quickfix window better.
+" }}}
+Plug 'kevinhwang91/nvim-bqf'
+
+" nvim-treesitter {{{
+" https://github.com/nvim-treesitter/nvim-treesitter
+" Provide a simple and easy way to use the interface for tree-sitter in
+" Neovim and to provide some basic functionality such as highlighting based
+" on it:
+" }}}
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" }}}
+"
+" Completion {{{
+
+" deoplete {{{
+" https://github.com/Shougo/deoplete.nvim
+" Dark powered asynchronous completion framework for neovim/Vim8
+" Need to make sure that pynvim is installed.
+" pip3 install --user --upgrade pynvim
+" }}}
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" deoplete-lsp
+" https://github.com/deoplete-plugins/deoplete-lsp
+Plug 'deoplete-plugins/deoplete-lsp'
 
 " }}}
 
@@ -809,38 +839,25 @@ Plug 'tpope/vim-repeat'
 
 " incsearch.vim - Incrementally highlight search pattern matches. {{{
 " https://github.com/haya14busa/incsearch.vim
+" }}}
 Plug 'haya14busa/incsearch.vim'
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 " g/ Search will NOT move the cursor.
 map g/ <Plug>(incsearch-stay)
 
-" incsearch-fuzzy.vim
-" https://github.com/haya14busa/incsearch-fuzzy.vim
-Plug 'haya14busa/incsearch-fuzzy.vim'
 
-nmap z/ <Plug>(incsearch-fuzzy-/)
-nmap z? <Plug>(incsearch-fuzzy-?)
-nmap zg/ <Plug>(incsearch-fuzzy-stay)<Paste>
-" }}}
-
-" Sessions - obssesion+prosession {{{
-
-" Obsession & Prosession together allow for saving off sessions by directory.
-
-" vim-obsession
+" vim-obsession {{{
 " Better manage the :mksession interface - see vim-prosession below.
 " https://github.com/tpope/vim-obsession
+" }}}
 Plug 'tpope/vim-obsession'
 
-" prosession
+" prosession {{{
 " Leverage vim-obsession to switch between multiple sessions cleanly
 " https://github.com/dhruvasagar/vim-prosession/
-Plug 'dhruvasagar/vim-prosession'
-let g:prosession_dir='~/tmp/neovimrc/sessions'
-let g:prosession_on_startup = 1
-
 " }}}
+Plug 'dhruvasagar/vim-prosession'
 
 " Snippets {{{
 " Using Ultisnips instead of neocomplete because neocomplete does not allow
@@ -857,30 +874,24 @@ let g:prosession_on_startup = 1
 " This causes problems on systems that have python & python3 installed.
 "
 " I got around it by moving $HOME/miniconda3/bin to the front of PATH.
-
-" Plug 'SirVer/ultisnips'
-" " expand via tab.
-" let g:UltiSnipsExpandTrigger="<tab>"
-" let g:UltiSnipsJumpForwardTrigger="<tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-" let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+" }}}
+Plug 'SirVer/ultisnips'
 
 " vim-snippets
 " https://github.com/honza/vim-snippets
-Plug 'honza/vim-snippets'
 " }}}
+Plug 'honza/vim-snippets'
 
 " vim-fat-finger {{{
 " https://github.com/chip/vim-fat-finger
 " Fix common misspellings and typos.  Supports over 4,000 common misspellings.
-Plug 'chip/vim-fat-finger'
 " }}}
+Plug 'chip/vim-fat-finger'
 
 " rainbow - rainbow parentheses improved {{{
 " https://github.com/luochen1990/rainbow
-Plug 'luochen1990/rainbow'
-let g:rainbow_active = 1
 " }}}
+Plug 'luochen1990/rainbow'
 
 " vim-slash {{{
 " https://github.com/junegunn/vim-slash
@@ -893,102 +904,28 @@ noremap <plug>(slash-after) zz
 
 " vim-surround {{{
 " https://github.com/tpope/vim-surround
-" Surrounding things in parens, brackets, quotes, etc. - works with repeat.vim
+" Surrounding things in parens, brackets, quotes, etc. "- works with repeat.vim
 " cs, ds, yss
+" }}}
 Plug 'tpope/vim-surround'
-" }}}
 
-" tagbar - a class outline viewer {{{
+" tagbar {{{
+" A class outline viewer
 " https://majutsushi.github.io/tagbar
-Plug 'majutsushi/tagbar'
-
-" In the CloseWindow() function there is a call to honor the defualt
-" equalalways setting.  As a result, when closing/toggling Tagbar, any window
-" sizing gets equalized
-set noequalalways
-
-let g:tagbar_sort = 0
-let g:tagbar_left = 0
-let g:tagbar_expand = 1
-let g:tagbar_width = 45
-let g:tagbar_iconchars = ['▸', '▾']
-let g:tagbar_show_linenumbers = 1
-
-" Use the ctags that homebrew installs rather than the stupid Xcode one.
-let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
-
-" Tagbar configuration for Golang
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-    \ }
-
-" Tagbar configuration for Groovy.  Requires a corresponding ~/.ctags config.
-" https://github.com/majutsushi/tagbar/wiki#groovy
-let g:tagbar_type_groovy = {
-    \ 'ctagstype' : 'groovy',
-    \ 'kinds'     : [
-        \ 'p:package:1',
-        \ 'c:classes',
-        \ 'i:interfaces',
-        \ 't:traits',
-        \ 'e:enums',
-        \ 'm:methods',
-        \ 'f:fields:1'
-    \ ]
-\ }
-
-" Tagbar configuration for Rust.
-let g:tagbar_type_rust = {
-    \ 'ctagstype': 'rust',
-    \ 'kinds': [
-        \ 'n:modules',
-        \ 's:structs',
-        \ 'i:traits',
-        \ 'c:impls',
-        \ 'f:functions',
-        \ 'g:enums',
-        \ 't:typedefs',
-        \ 'v:variables',
-        \ 'M:macros',
-        \ 'm:fields',
-        \ 'e:variants',
-        \ 'F:methods',
-    \ ]}
-
-nnoremap <leader>tt :TagbarToggle<CR>
-nnoremap <leader>to :TagbarOpen<CR>
 " }}}
+Plug 'majutsushi/tagbar'
 
 " traces {{{
 " https://github.com/markonm/traces.vim
 " A better way to highlight search+replace actions.  Works in more situations
 " than inccomand.
-Plug 'markonm/traces.vim'
 " }}}
+Plug 'markonm/traces.vim'
+
+" undotree {{{
+" https://github.com/mbbill/undotree
+" }}}
+Plug 'mbbill/undotree'
 
 " unimpaired - pairs of handy bracket mappings {{{
 " https://github.com/tpope/vim-unimpaired
@@ -1014,149 +951,149 @@ Plug 'markonm/traces.vim'
 "             hunk.  Try d[n inside a conflict.
 " ]n          Go to the next SCM conflict marker or diff/patch hunk.
 "             Try d]n inside a conflict.
-Plug 'tpope/vim-unimpaired'
 " }}}
+Plug 'tpope/vim-unimpaired'
 
 " vim-better-whitespace {{{
 " https://github.com/ntpeters/vim-better-whitespace
 " Cause trailing whitespace characters to be highlighted.  Also make stripping
 " whitespace painless.
-Plug 'ntpeters/vim-better-whitespace'
-autocmd FileType python autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
-autocmd FileType vim autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
 " }}}
+Plug 'ntpeters/vim-better-whitespace'
 
 " }}}
 
 " Software Development: Utilities {{{
 
+Plug 'neovim/nvim-lspconfig'
+
 " coc.nvim {{{
 " https://github.com/neoclide/coc.nvim
 " Intellisense engine for vim8 & neovim, full language server protocol support
 " as VSCode
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-let g:coc_snippet_next = '<tab>'
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 " inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
+"       \ pumvisible() ? coc#_select_confirm() :
+"       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
 "       \ <SID>check_back_space() ? "\<TAB>" :
 "       \ coc#refresh()
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " function! s:check_back_space() abort
 "   let col = col('.') - 1
 "   return !col || getline('.')[col - 1]  =~# '\s'
 " endfunction
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+" let g:coc_snippet_next = '<tab>'
+" " Use tab for trigger completion with characters ahead and navigate.
+" " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" " inoremap <silent><expr> <TAB>
+" "       \ pumvisible() ? "\<C-n>" :
+" "       \ <SID>check_back_space() ? "\<TAB>" :
+" "       \ coc#refresh()
+" " inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+" " function! s:check_back_space() abort
+" "   let col = col('.') - 1
+" "   return !col || getline('.')[col - 1]  =~# '\s'
+" " endfunction
 
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" " Use <c-space> to trigger completion.
+" inoremap <silent><expr> <c-space> coc#refresh()
 
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" " Coc only does snippet and additional edit on confirm.
+" " inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" " Or use `complete_info` if your vim support it, like:
+" " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" " Use `[g` and `]g` to navigate diagnostics
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+" " Remap keys for gotos
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
 
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" " Use K to show documentation in preview window
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
 
-" Remap for format selected region
-" xmap <leader>f  <Plug>(coc-format-selected)
-" nmap <leader>f  <Plug>(coc-format-selected)
+" " Highlight symbol under cursor on CursorHold
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+" " Remap for rename current word
+" nmap <leader>rn <Plug>(coc-rename)
 
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+" " Remap for format selected region
+" " xmap <leader>f  <Plug>(coc-format-selected)
+" " nmap <leader>f  <Plug>(coc-format-selected)
 
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-" nmap <leader>qf  <Plug>(coc-fix-current)
+" augroup mygroup
+"   autocmd!
+"   " Setup formatexpr specified filetype(s).
+"   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+"   " Update signature help on jump placeholder
+"   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+" augroup end
 
-" Create mappings for function text object, requires document symbols feature of languageserver.
-" xmap if <Plug>(coc-funcobj-i)
-" xmap af <Plug>(coc-funcobj-a)
-" omap if <Plug>(coc-funcobj-i)
-" omap af <Plug>(coc-funcobj-a)
+" " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+" xmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-" Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-" nmap <silent> <C-d> <Plug>(coc-range-select)
-" xmap <silent> <C-d> <Plug>(coc-range-select)
+" " Remap for do codeAction of current line
+" nmap <leader>ac  <Plug>(coc-codeaction)
+" " Fix autofix problem of current line
+" " nmap <leader>qf  <Plug>(coc-fix-current)
 
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
+" " Create mappings for function text object, requires document symbols feature of languageserver.
+" " xmap if <Plug>(coc-funcobj-i)
+" " xmap af <Plug>(coc-funcobj-a)
+" " omap if <Plug>(coc-funcobj-i)
+" " omap af <Plug>(coc-funcobj-a)
 
-" Use `:Fold` to fold current buffer
-" command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+" " Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+" " nmap <silent> <C-d> <Plug>(coc-range-select)
+" " xmap <silent> <C-d> <Plug>(coc-range-select)
 
-" use `:OR` for organize import of current buffer
-" command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+" " Use `:Format` to format current buffer
+" command! -nargs=0 Format :call CocAction('format')
 
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
-" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" " Use `:Fold` to fold current buffer
+" " command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
-" Using CocList
-" Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" " use `:OR` for organize import of current buffer
+" " command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" " Add status line support, for integration with other plugin, checkout `:h coc-status`
+" " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" " Using CocList
+" " Show all diagnostics
+" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" " Manage extensions
+" nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" " Show commands
+" nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" " Find symbol of current document
+" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" " Search workspace symbols
+" " nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" " Do default action for next item.
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" " Do default action for previous item.
+" " nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" " Resume latest coc list
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " }}}
 
 " Conflict marker highlighting. {{{
@@ -1182,31 +1119,21 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 "   themselves
 "   >>>>>>> deadbeef0123
 "
-Plug 'rhysd/conflict-marker.vim'
-" Don't use default mappings.
-" let g:conflict_marker_enable_mappings=0
 " }}}
+Plug 'rhysd/conflict-marker.vim'
 
 " vim-endwise {{{
 " https://github.com/tpope/vim-endwise
 " Primarily for Ruby but will also Vimscript, Shell and Lua
 " e.g. will put an -end- after your -if-
+" }}}
 Plug 'tpope/vim-endwise'
-" }}}
-
-" }}}
 
 " vim-illuminate {{{
 " https://github.com/RRethy/vim-illuminate
 " Selectively illuminating other uses of the current word under the cursor.
-Plug 'RRethy/vim-illuminate'
-" make the illumination stand out a bit more.
-hi link illuminatedWord Visual
-" toggle word illumination.
-let g:Illuminate_highlightUnderCursor = 0
-let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python', 'go', 'clojure', 'rust']
-nnoremap <leader>it :IlluminationToggle<cr>
 " }}}
+Plug 'RRethy/vim-illuminate'
 
 " }}}
 
@@ -1231,24 +1158,26 @@ autocmd FileType sh set tabstop=4 shiftwidth=4
 " Switch between header files and their partner files.
 Plug 'derekwyatt/vim-fswitch'
 " Switch to the file and load it into the current window >
-nmap <silent> <Leader>of :FSHere<cr>
- " Switch to the file and load it into the window on the right >
-nmap <silent> <Leader>ol :FSRight<cr>
- " Switch to the file and load it into a new window split on the right >
-nmap <silent> <Leader>oL :FSSplitRight<cr>
- " Switch to the file and load it into the window on the left >
-nmap <silent> <Leader>oh :FSLeft<cr>
- " Switch to the file and load it into a new window split on the left >
-nmap <silent> <Leader>oH :FSSplitLeft<cr>
- " Switch to the file and load it into the window above >
-nmap <silent> <Leader>ok :FSAbove<cr>
- " Switch to the file and load it into a new window split above >
-nmap <silent> <Leader>oK :FSSplitAbove<cr>
- " Switch to the file and load it into the window below >
-nmap <silent> <Leader>oj :FSBelow<cr>
- " Switch to the file and load it into a new window split below >
-nmap <silent> <Leader>oJ :FSSplitBelow<cr>
+" nmap <silent> <Leader>of :FSHere<cr>
+"  " Switch to the file and load it into the window on the right >
+" nmap <silent> <Leader>ol :FSRight<cr>
+"  " Switch to the file and load it into a new window split on the right >
+" nmap <silent> <Leader>oL :FSSplitRight<cr>
+"  " Switch to the file and load it into the window on the left >
+" nmap <silent> <Leader>oh :FSLeft<cr>
+"  " Switch to the file and load it into a new window split on the left >
+" nmap <silent> <Leader>oH :FSSplitLeft<cr>
+"  " Switch to the file and load it into the window above >
+" nmap <silent> <Leader>ok :FSAbove<cr>
+"  " Switch to the file and load it into a new window split above >
+" nmap <silent> <Leader>oK :FSSplitAbove<cr>
+"  " Switch to the file and load it into the window below >
+" nmap <silent> <Leader>oj :FSBelow<cr>
+"  " Switch to the file and load it into a new window split below >
+" nmap <silent> <Leader>oJ :FSSplitBelow<cr>
 
+" Additional C++ highlighting.
+" https://github.com/octol/vim-cpp-enhanced-highlight
 Plug 'octol/vim-cpp-enhanced-highlight'
 
 " }}}
@@ -1277,7 +1206,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Conjure
 " https://github.com/Olical/conjure
-" Plug 'Olical/conjure', { 'tag': 'v2.1.1', 'do': 'bin/compile'  }
+" Plug 'Olical/conjure', { 'tag': 'v4.7.0' }
 " let g:conjure_log_direction = "horizontal"
 " let g:conjure_log_blacklist = ["up", "ret", "ret-multiline", "load-file", "eval"]
 
@@ -1361,7 +1290,6 @@ endif
 
 " Groovy {{{
 " This is mainly for Jenkins pipeline files.
-
 " Some of the files we work with have ./<path> full path names in them, remove
 " it so that gf will work properly.
 autocmd FileType groovy setlocal includeexpr=substitute(v:filename,'\\.\/','','g')
@@ -1375,17 +1303,16 @@ autocmd FileType groovy setlocal includeexpr=substitute(v:filename,'\\.\/','','g
 "     <Plug>NimGoToDefBuf: Go to definition using the current buffer.
 "     <Plug>NimGoToDefSplit: Open the definition in a horizontal split.
 "     <Plug>NimGoToDefVSplit: Open the definition in a vertical split.
-Plug 'alaviss/nim.nvim'
-
 " }}}
+Plug 'alaviss/nim.nvim'
 
 " Python {{{
 
 " vim-conda {{{
 " https://github.com/cjrh/vim-conda
 " Support python development using Conda env manager
-Plug 'cjrh/vim-conda'
 " }}}
+Plug 'cjrh/vim-conda'
 
 " impsort.vim - sensibly sort imports {{{
 " https://github.com/tweekmonster/impsort.vim
@@ -1412,14 +1339,16 @@ Plug 'Vimjas/vim-python-pep8-indent'
 " Syntax highlighting {{{
 " https://github.com/numirias/semshi
 " Much improved semantic highlighting for Python.
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+" Mon Feb 01 2021 22:55:22 - Turned this off while trying out nvim-treesitter,
+" which works brilliantly so far.
+" Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 " }}}
 
 " SimpylFold {{{
 " No-BS Python code folding, used in conjunction with FastFold.
 " https://github.com/tmhedberg/SimpylFold
-Plug 'tmhedberg/SimpylFold'
 " }}}
+Plug 'tmhedberg/SimpylFold'
 
 " Python textobjects {{{
 " https://github.com/bps/vim-textobj-python
@@ -1482,32 +1411,30 @@ autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 " $ rustup component add rust-src
 "
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Enable deoplete autocompletion in Rust files
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 " customise deoplete maximum candidate window length
 " Sat Sep 26 2020 17:51:54 - Unknown function?
 " call deoplete#custom#source('_', 'max_menu_width', 80)
-
-Plug 'sebastianmarkow/deoplete-rust'
-let g:deoplete#sources#rust#racer_binary='/Users/ebodine/.cargo/bin/racer'
-let g:deoplete#sources#rust#rust_source_path='/Users/ebodine/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src'
-let g:deoplete#sources#rust#show_duplicates=1
-let g:deoplete#sources#rust#documentation_max_height=30
+" Plug 'sebastianmarkow/deoplete-rust'
+" let g:deoplete#sources#rust#racer_binary='/Users/ebodine/.cargo/bin/racer'
+" let g:deoplete#sources#rust#rust_source_path='/Users/ebodine/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src'
+" let g:deoplete#sources#rust#show_duplicates=1
+" let g:deoplete#sources#rust#documentation_max_height=30
 " }}}
 
 " Some Rust configuration.
-let g:rustfmt_autosave=1
-let g:racer_experimental_completer=1
+" let g:rustfmt_autosave=1
+" let g:racer_experimental_completer=1
 
 au FileType rust set makeprg=cargo\ build\ -j\ 4
 au FileType rust nmap <leader>et :!cargo test<cr>
 au FileType rust nmap <leader>er :!RUST_BACKTRACE=1 cargo run<cr>
 au FileType rust nmap <leader>ec :terminal cargo build -j 4<cr>
-au FileType rust nmap gd <Plug>(rust-def)
-au FileType rust nmap gs <Plug>(rust-def-split)
-au FileType rust nmap gv <Plug>(rust-def-vertical)
-au FileType rust nmap <leader>gk <Plug>(rust-doc)
+" au FileType rust nmap gd <Plug>(rust-def)
+" au FileType rust nmap gs <Plug>(rust-def-split)
+" au FileType rust nmap gv <Plug>(rust-def-vertical)
+" au FileType rust nmap <leader>gk <Plug>(rust-doc)
 " }}}
 
 " Vimscript {{{
@@ -1526,13 +1453,13 @@ au FileType rust nmap <leader>gk <Plug>(rust-doc)
 "
 " A best-of-breed collection of programming language syntax,indent,ftplugin
 " config files.
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 " I prefer my own configuration of Python, Markdown and Golang
-let g:polyglot_disabled = ['go', 'python', 'markdown']
-let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js=javascript', 'json=javascript', 'perl', 'php', 'python', 'ruby', 'sass', 'xml', 'html', 'vim']
+" let g:polyglot_disabled = ['go', 'python', 'markdown']
+" let g:markdown_fenced_languages = ['bash=sh', 'css', 'django', 'javascript', 'js=javascript', 'json=javascript', 'perl', 'php', 'python', 'ruby', 'sass', 'xml', 'html', 'vim']
 "
 " Rust & *.toml
-let g:autofmt_autosave = 1
+" let g:autofmt_autosave = 1
 " }}}
 
 " }}}
@@ -1983,17 +1910,6 @@ Plug 'christoomey/vim-tmux-navigator'
 " }}}
 
 " Appearances: {{{
-" Themes, airline, devicons, etc.
-
-if (has("nvim"))
-    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
-
-" Support for true color terminal.  This changes cterm colors to gui colors.
-" Used to be a env variable
-if (has("termguicolors"))
-    set termguicolors
-endif
 
 " winresizer {{{
 " https://github.com/simeji/winresizer
@@ -2117,7 +2033,140 @@ let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
 " 3. Unzip the font, click on Complete font to install
 " 4. Edit Profiles in iTerm2 and change to Roboto Nerd font
 " NOTE: vim-devicons has to be installed last in order to work properly with airline, etc.
+" }}}
 Plug 'ryanoasis/vim-devicons'
+
+" }}}
+
+" Conclude plugin initialization.
+call plug#end()
+filetype plugin indent on
+syntax enable
+
+" Plugin Configuration: {{{
+
+" vim-obsession & vim-prosession
+let g:prosession_dir='~/tmp/neovimrc/sessions'
+let g:prosession_on_startup = 1
+
+" ultisnips
+" expand via tab.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+
+" tagbar {{{
+" In the CloseWindow() function there is a call to honor the defualt
+" equalalways setting.  As a result, when closing/toggling Tagbar, any window
+" sizing gets equalized
+set noequalalways
+
+let g:tagbar_sort = 0
+let g:tagbar_left = 0
+let g:tagbar_expand = 1
+let g:tagbar_width = 45
+let g:tagbar_iconchars = ['▸', '▾']
+let g:tagbar_show_linenumbers = 1
+
+" Use the ctags that homebrew installs rather than the stupid Xcode one.
+let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
+
+" Tagbar configuration for Golang
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+    \ }
+
+" Tagbar configuration for Groovy.  Requires a corresponding ~/.ctags config.
+" https://github.com/majutsushi/tagbar/wiki#groovy
+let g:tagbar_type_groovy = {
+    \ 'ctagstype' : 'groovy',
+    \ 'kinds'     : [
+        \ 'p:package:1',
+        \ 'c:classes',
+        \ 'i:interfaces',
+        \ 't:traits',
+        \ 'e:enums',
+        \ 'm:methods',
+        \ 'f:fields:1'
+    \ ]
+\ }
+
+" Tagbar configuration for Rust.
+let g:tagbar_type_rust = {
+    \ 'ctagstype': 'rust',
+    \ 'kinds': [
+        \ 'n:modules',
+        \ 's:structs',
+        \ 'i:traits',
+        \ 'c:impls',
+        \ 'f:functions',
+        \ 'g:enums',
+        \ 't:typedefs',
+        \ 'v:variables',
+        \ 'M:macros',
+        \ 'm:fields',
+        \ 'e:variants',
+        \ 'F:methods',
+    \ ]}
+
+nnoremap <leader>tt :TagbarToggle<CR>
+nnoremap <leader>to :TagbarOpen<CR>
+" }}}
+
+" rainbow parentheses
+let g:rainbow_active = 1
+
+" vim-better-whitespace
+autocmd FileType python,rust,clojure,vim,go autocmd BufEnter <buffer> EnableStripWhitespaceOnSave
+
+" vim-illuminate
+" make the illumination stand out a bit more.
+hi link illuminatedWord Visual
+" toggle word illumination.
+let g:Illuminate_highlightUnderCursor = 0
+let g:Illuminate_ftwhitelist = ['vim', 'sh', 'python', 'go', 'clojure', 'rust']
+nnoremap <leader>it :IlluminationToggle<cr>
+
+" Toggle location list
+let g:lt_location_list_toggle_map = '<leader>cl'
+let g:lt_quickfix_list_toggle_map = '<leader>cq'
+let g:lt_height = 15
+
+" undotree
+let g:undotree_WindowLayout = 2
+let g:undotree_DiffpanelHeight = 15
+nmap <leader>ut :UndoTreeToggle<cr>
+
+" deoplete {{{
+let g:deoplete#enable_at_startup = 1
+" }}}
+
+" vim-devicons {{{
 " loading the plugin
 let g:webdevicons_enable = 1
 " adding the flags to NERDTree
@@ -2129,15 +2178,39 @@ if has('macunix')
 endif
 " }}}
 
+" nvim-lspconfig
+" https://github.com/neovim/nvim-lspconfig
+" lua << EOF
+" require'lspconfig'.pyright.setup{}
+" EOF
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { "c", "rust" },  -- list of language that will be disabled
+  },
+}
+EOF
+
+" vim-easymotion
+let g:EasyMotion_do_mapping = 0
+nmap gs <Plug>(easymotion-overwin-f2)
+
 " }}}
 
-" Conclude plugin initialization.
-call plug#end()
-filetype plugin indent on
-syntax enable
+" Appearances Configuration: {{{
 
-" Appearances: {{{
-" colorschemes and the like
+if (has("nvim"))
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+
+" Support for true color terminal.  This changes cterm colors to gui colors.
+" Used to be a env variable
+if (has("termguicolors"))
+    set termguicolors
+endif
 
 " NOTE: This has to be after the `plug#end & syntax enable` above.
 set background=dark
@@ -2246,7 +2319,7 @@ inoremap <C-d> <C-o>x
 " Quit vimdiff using q but also don't mess with macro.
 nnoremap <expr> q &diff ? ":diffoff!\<bar>only\<cr>" : "q"
 " Use du instead of the more verbose :diffupdate
-nnoremap <expr> du &diff ? ":diffupdate!<cr>" : echo "No in diff"
+nnoremap <expr> du &diff ? ":diffupdate!<cr>" : echo "Not in diff"
 
 " Help specific bindings.
 " Check out ftplugins/help.vim
@@ -2282,7 +2355,7 @@ Arpeggioinoremap jk <Esc>:
 Arpeggionnoremap jk :
 Arpeggiocnoremap jk <Esc>
 
-" Miscellaneous functions }}}
+" Miscellaneous Functions: {{{
 
 " Clean up At2 response output that is in JSON but is too messy for json.tool
 " to handle directly.
@@ -2294,7 +2367,7 @@ endfunction
 
 " }}}
 
-" Appbreviations {{{
+" Appbreviations: {{{
 " NOTE: You can make filetype/bufferlocal abbreviations by adding the
 "       following to a ftplugin/<filetype>.vim file:
 "   	  iab <buffer> ebx erick.bodine
