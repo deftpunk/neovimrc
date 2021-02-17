@@ -457,19 +457,21 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 "
 " Completion {{{
 
-" deoplete {{{
-" https://github.com/Shougo/deoplete.nvim
-" Dark powered asynchronous completion framework for neovim/Vim8
-" Need to make sure that pynvim is installed.
-" pip3 install --user --upgrade pynvim
-" }}}
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" " deoplete {{{
+" " https://github.com/Shougo/deoplete.nvim
+" " Dark powered asynchronous completion framework for neovim/Vim8
+" " Need to make sure that pynvim is installed.
+" " pip3 install --user --upgrade pynvim
+" Tue Feb 16 2021 17:06:12 - commented out this is a nvim-lspconfig
+" dependency.
+" " }}}
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-" deoplete-lsp
-" https://github.com/deoplete-plugins/deoplete-lsp
-Plug 'deoplete-plugins/deoplete-lsp'
+" " deoplete-lsp
+" " https://github.com/deoplete-plugins/deoplete-lsp
+" Plug 'deoplete-plugins/deoplete-lsp'
 
-" }}}
+" " }}}
 
 " General Utilities -------------------------------------------------------- {{{
 
@@ -965,7 +967,7 @@ Plug 'ntpeters/vim-better-whitespace'
 
 " Software Development: Utilities {{{
 
-Plug 'neovim/nvim-lspconfig'
+" Plug 'neovim/nvim-lspconfig'
 
 " coc.nvim {{{
 " https://github.com/neoclide/coc.nvim
