@@ -126,9 +126,6 @@ set path=.,**
 
 set hidden
 
-" good encoding
-set encoding=utf-8
-
 " Turn off sounds, bells and blinking cursors
 set visualbell t_vb=
 set noerrorbells
@@ -182,8 +179,7 @@ let g:clipboard = {
 " no irritating swapfile.
 set noswapfile
 
-" Search incremently + dont keep the highlight around.
-set incsearch
+" Search is incremental by default but dont keep the highlight around.
 set nohlsearch
 
 " When a bracket is inserted, briefly jump to the matching one.  The time to
@@ -222,9 +218,6 @@ elseif has('unix')
 endif
 
 set undofile
-
-" Automatically reload files that have changed outside of Vim/Neovim.
-set autoread
 
 " Automatically write files.
 set autowrite
@@ -524,24 +517,24 @@ Plug 'powerman/vim-plugin-AnsiEsc'
 
 " Ale - async syntax checking {{{
 " https://github.com/w0rp/ale
-Plug 'w0rp/ale'
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '≈'
-let g:ale_linters = {
-\    'python': ['flake8'],
-\    'rust': [ 'cargo', 'rls', 'rustc', 'clippy', 'rustfmt' ],
-\    'clojure': ['clj-kondo', 'joker'],
-\}
+" Plug 'w0rp/ale'
+" let g:ale_sign_error = '✗'
+" let g:ale_sign_warning = '≈'
+" let g:ale_linters = {
+" \    'python': ['flake8', 'pylint'],
+" \    'rust': [ 'cargo', 'rls', 'rustc', 'clippy', 'rustfmt' ],
+" \    'clojure': ['clj-kondo', 'joker'],
+" \}
 
-" Python flake8 + Ale
-if has('macunix')
-    let g:ale_python_flake8_options = '--config=/Users/ebodine/.flake8'
-elseif has('unix')
-    let g:ale_python_flake8_options = '--config=/home/erickb/.flake8'
-endif
+" " Python flake8 + Ale
+" if has('macunix')
+"     let g:ale_python_flake8_options = '--config=/Users/ebodine/.flake8'
+" elseif has('unix')
+"     let g:ale_python_flake8_options = '--config=/home/erickb/.flake8'
+" endif
 
-let g:ale_emit_conflict_warnings = 0
-let g:ale_list_window_size = 15
+" let g:ale_emit_conflict_warnings = 0
+" let g:ale_list_window_size = 15
 " }}}
 
 " arpeggio {{{
@@ -2043,7 +2036,9 @@ Plug 'ryanoasis/vim-devicons'
 
 " Conclude plugin initialization.
 call plug#end()
-filetype plugin indent on
+
+" This is supposed to be enabled by default but my Python syntax highlighting
+" looks like garbage if I remove this line.
 syntax enable
 
 " Plugin Configuration: {{{
@@ -2216,7 +2211,6 @@ if (has("termguicolors"))
 endif
 
 " NOTE: This has to be after the `plug#end & syntax enable` above.
-set background=dark
 colorscheme molokai
 let g:airline_theme='airlineish'
 
