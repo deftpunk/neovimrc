@@ -681,13 +681,13 @@ let g:indentLine_fileType = ['python', 'perl', 'go', 'rust', 'nim']
 Plug 'farmergreg/vim-lastplace'
 " }}}
 
-" vim-lion {{{
-" https://github.com/tommcdo/vim-lion
-" Align text around a given character.
-" I find it easiest to select a visual region and then invoke gl<character> to
-" re-align text around a chosen character (which will often be equals).
-Plug 'tommcdo/vim-lion'
-let g:lion_squeeze_spaces = 1
+" vim-easy-align {{{
+" https://github.com/junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 " }}}
 
 " NERDTree {{{
