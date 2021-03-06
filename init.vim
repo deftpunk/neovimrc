@@ -1950,7 +1950,10 @@ Plug 'weilbith/nerdtree_choosewin-plugin'
 " https://github.com/tomasr/molokai
 " A modified version of molokai for Vim.
 Plug 'tomasr/molokai'
-Plug 'fmoralesc/molokayo'
+
+" challenger_deep
+" https://github.com/challenger-deep-theme/vim
+Plug 'challenger-deep-theme/vim'
 
 " }}}
 
