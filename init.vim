@@ -1214,7 +1214,9 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " 4. conjure
 
 " vim-iced
-" Plug 'liquidz/vim-iced', {'for': 'clojure'}
+" :IcedJackIn
+Plug 'liquidz/vim-iced', {'for': 'clojure'}
+let g:iced_enable_default_key_mappings = v:true
 
 " Conjure
 " https://github.com/Olical/conjure
