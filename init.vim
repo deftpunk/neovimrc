@@ -2063,6 +2063,14 @@ Plug 'ryanoasis/vim-devicons'
 
 " }}}
 
+" vimwiki {{{
+"
+Plug 'vimwiki/vimwiki'
+let g:vimwiki_list = [{'path': '~/MyStuff/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.wiki'}]
+
+" }}}
+
 " Conclude plugin initialization.
 call plug#end()
 
