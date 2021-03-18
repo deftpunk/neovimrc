@@ -1540,7 +1540,7 @@ endfunction
 " 2. Some bindings for just logfiles.
 augroup ft_log
 	autocmd! ft_log
-    	autocmd BufRead,BufNewFile *.log setlocal foldmethod=manual
+	autocmd BufRead,BufNewFile *.log setlocal foldmethod=manual
 	autocmd BufRead *.log if getline(1) =~ '^\[\[34m' | :call AnsiEsc | endif
 	autocmd Filetype log nmap <buffer> <silent> <localleader>lj :call LogJson()<cr>
 augroup END
