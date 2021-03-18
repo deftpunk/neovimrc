@@ -1853,8 +1853,8 @@ nmap <leader>gm <Plug>(git-messenger)
 Plug 'sodapopcan/vim-twiggy'
 
 function! s:changebranch(branch)
-    execute 'Git checkout' . a:branch
-    call feedkeys("i")
+	execute 'Git checkout' . a:branch
+	call feedkeys("i")
 endfunction
 
 command! -bang Gbranch call fzf#run({
@@ -1970,6 +1970,14 @@ Plug 'tomasr/molokai'
 " challenger_deep
 " https://github.com/challenger-deep-theme/vim
 Plug 'challenger-deep-theme/vim'
+
+" sonokai
+" https://github.com/sainnhe/sonokai
+" Includes an airline theme along with the colorscheme
+Plug 'sainnhe/sonokai'
+let g:sonokai_style = 'atlantis'
+let g:sonokai_enable_italic = 1
+let g:sonokai_diagnostic_text_highlight = 1
 
 " }}}
 
@@ -2230,8 +2238,12 @@ if (has("termguicolors"))
 endif
 
 " NOTE: This has to be after the `plug#end & syntax enable` above.
-colorscheme molokai
-let g:airline_theme='airlineish'
+" colorscheme molokai
+" let g:airline_theme='airlineish'
+
+colorscheme sonokai
+
+let g:airline_theme='sonokai'
 
 " comments should always be in italics
 highlight Comment cterm=italic
