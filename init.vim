@@ -427,6 +427,10 @@ nmap <leader>r :Rg<cr>
 nnoremap <leader>he :Helptags<cr>
 " }}}
 
+" vim-clap
+" https://github.com/liuchengxu/vim-clap
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+
 " https://github.com/nvim-telescope/telescope.nvim
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
