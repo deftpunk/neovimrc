@@ -362,6 +362,10 @@ Plug 'chaoren/vim-wordmotion'
 "    - tags but requires ctags
 "    - MRU is a different command - no mixed results, that I can see.
 "    - Lines+BLines Does work with jumplist.
+"
+" 5. vim-clap
+"
+" 6. telescope
 
 " FZF {{{
 " https://github.com/junegunn/fzf.vim
