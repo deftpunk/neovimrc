@@ -7,6 +7,14 @@
 " Some plugins to check out in the future & notes on comparing classes of
 " plugins.
 "
+" figlet: adein/vim-figlet
+"
+" nvim-jqx
+" https://github.com/gennaro-tedesco/nvim-jqx
+"
+" ultest - more/better unit test running
+" https://github.com/rcarriga/vim-ultest
+
 " Poor mans ipython.
 " https://www.reddit.com/r/neovim/comments/axilbq/using_nvim_as_python_ide_via_pynvim/ehu2fa2
 "
