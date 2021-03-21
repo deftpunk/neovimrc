@@ -1025,7 +1025,8 @@ Plug 'ntpeters/vim-better-whitespace'
  " Remap keys for gotos
  nmap <silent> gd <Plug>(coc-definition)
  nmap <silent> gy <Plug>(coc-type-definition)
- nmap <silent> gi <Plug>(coc-implementation)
+ " this gets in the way of default 'gi' -> go to last insert.
+ " nmap <silent> gi <Plug>(coc-implementation)
  nmap <silent> gr <Plug>(coc-references)
  nmap <silent> gl :exe 'CocList outline'<cr>
 
