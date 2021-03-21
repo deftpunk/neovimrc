@@ -1276,6 +1276,10 @@ Plug 'liquidz/vim-iced-coc-source', {'for': 'clojure'}
 
 " }}}
 
+" Common Lisp {{{
+Plug 'kovisoft/slimv'
+" }}}
+
 " Golang {{{
 
 " https//golang.org
