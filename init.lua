@@ -278,6 +278,41 @@ require("lazy").setup({
 
     -- General Utilities {{{
 
+    -- vim-abolish {{{
+    -- https://github.com/tpope/tpope-vim-abolish
+    -- Abbreviate multiple variants of words
+    --
+    -- Abbreviate:
+    -- :Abolish {despa,sepe}rat{e,es,ed,ing,ely,ion,ions,or}  {despe,sepa}rat{}
+    --
+    -- Substitution:
+    -- :%Subvert/facilit{y,ies}/building{,s}/g
+    --
+    -- Coercion:
+    -- Press crs (coerce to snake_case).
+    -- MixedCase (crm),
+    -- camelCase (crc),
+    -- snake_case (crs),
+    -- UPPER_CASE (cru),
+    -- dash-case (cr-),
+    -- dot.case (cr.),
+    -- space case (cr<space>),
+    -- and Title Case (crt) are all just 3 keystrokes away.
+    -- These commands support repeat.vim.
+    {
+      'tpope/tpope-vim-abolish',
+      config = function()
+        vim.cmd[[
+          if has('macunix')
+              let g:abolish_save_file="~/.config/nvim/abolish-abbreviations.vim"
+          elseif has('unix')
+              let g:abolish_save_file="/home/erickb/.config/nvim/abolish-abbreviations.vim"
+          endif
+        ]]
+      end,
+    },
+    -- }}}
+
 	-- Beacon
 	-- Highlight where your cursor is when you move around.
 	-- https://github.com/DanilaMihailov/beacon.nvim
@@ -488,13 +523,16 @@ require("lazy").setup({
     -- '<leader>al' - call AutoAbbrevAddCurrentLhsWord
     -- '<leader>ar' - call AutoAbbrevAddCurrentRhsWord
     -- '<leader>ae' - call AutoAbbrevReload
-	-- https://github.com/omrisarig13/vim-auto-abbrev
-	-- {
- --      'omrisarig13/vim-auto-abbrev',
- --      config = function()
- --        vim.cmd[[let g:auto_abbrev_file_path = '~/.config/nvim/abbreviates']]
- --      end,
- --    },
+    -- Had to change from `config = function()` to `init = function()` in order
+    -- to get the file path read at the right time.
+	{
+      'omrisarig13/vim-auto-abbrev',
+      init = function()
+        vim.cmd[[
+          let g:auto_abbrev_file_path = '/Users/bodine/MyStuff/neovimrc/abbreviates'
+          ]]
+      end,
+    },
     -- }}}
 
     -- AnsiEsc {{{
