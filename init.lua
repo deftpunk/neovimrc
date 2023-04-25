@@ -41,7 +41,7 @@ vim.opt.colorcolumn={'80','100'}
 vim.opt.cursorline = true
 
 -- copy/paste from clipboard
-vim.o.clipboard=unnamedplus
+vim.o.clipboard='unnamedplus'
 
 -- Some env variables 
 vim.env.VISUAL = 'nvr -cc split --remote-wait'
@@ -147,12 +147,12 @@ require("lazy").setup({
       config = function()
         -- https://github.com/p00f/nvim-ts-rainbow/issues/30#issuecomment-850991264
         local parsers = require("nvim-treesitter.parsers")
-        local enabled_list = {"clojure",  "commonlisp", "fennel", "go", "markdown", "python", "ruby", "rust"}
+        local enabled_list = {"clojure",  "commonlisp", "fennel", "go", "markdown", "markdown_inline", "python", "ruby", "rust"}
 
         -- cmd("hi rainbowcol1 guifg=#ff3393")
 
         require('nvim-treesitter.configs').setup {
-          ensure_installed = { "python", "html", "c", "cmake", "lua", "go", "clojure", "json", "commonlisp", "bash", "dockerfile", "markdown", "ruby", "rust", "toml", "vim", "yaml" },
+          ensure_installed = { "python", "html", "c", "cmake", "lua", "go", "clojure", "json", "commonlisp", "bash", "dockerfile", "markdown", "markdown_inline",  "ruby", "rust", "toml", "vim", "yaml" },
           highlight = {
             enable = true,
           },
@@ -415,6 +415,24 @@ require("lazy").setup({
         vim.g.netrw_nogx = 1
         vim.keymap.set('n','gx','<Plug>(openbrowser-smart-search)')
         vim.keymap.set('v','gx','<Plug>(openbrowser-smart-search)')
+      end,
+    },
+    -- }}}
+
+    -- Sort.nvim {{{
+    -- Line-wise and delimiter sorting.
+    {
+      'sQVe/sort.nvim',
+
+      -- Optional setup for overriding defaults.
+      config = function()
+        require("sort").setup({
+          -- Input configuration here.
+        })
+        vim.cmd([[
+          nnoremap <silent> go <Cmd>Sort<CR>
+          vnoremap <silent> go <Esc><Cmd>Sort<CR>
+        ]])
       end,
     },
     -- }}}
@@ -772,7 +790,8 @@ require("lazy").setup({
         cmp.setup({
             snippet = {
               expand = function(args)
-                luasnip.lsp_expand(args.body)
+                require'luasnip'.lsp_expand(args.body)
+                -- luasnip.lsp_expand(args.body)
               end,
             },
             formatting = {
@@ -802,15 +821,15 @@ require("lazy").setup({
               documentation = cmp.config.window.bordered(),
             },
             sources = {
-              { name = 'conjure' },
-              { name = 'nvim_lua' },
-              { name = 'path' },
-              { name = 'buffer', keyword_length = 3 },
-              { name = 'nvim_lsp', max_item_count = 50, keyword_length = 1 },
-              { name = 'nvim_lsp_signature_help'},
-              { name = 'treesitter', max_item_count = 10 },
-              { name = 'luasnip', keyword_length = 2 },
-              { name = 'crates' },
+              -- { name = 'conjure' },
+              -- { name = 'nvim_lua' },
+              -- { name = 'path' },
+              -- { name = 'buffer', keyword_length = 3 },
+              { name = 'luasnip' },
+              -- { name = 'nvim_lsp', max_item_count = 50, keyword_length = 1 },
+              -- { name = 'nvim_lsp_signature_help'},
+              -- { name = 'treesitter', max_item_count = 10 },
+              -- { name = 'crates' },
             },
             mapping = {
               ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
@@ -886,7 +905,6 @@ require("lazy").setup({
 
     -- }}}
 
-
     -- lspsaga {{{
     -- https://github.com/glepnir/lspsaga.nvim
     -- Highly performant LSP UI based on Neovim's built-in LSP.
@@ -913,6 +931,19 @@ require("lazy").setup({
         end,
     },
     -- }}}
+
+    -- lsp-lines {{{
+    {
+      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+      config = function()
+        vim.diagnostic.config({
+            virtual_text = false,
+          })
+        require("lsp_lines").setup()
+        vim.keymap.set("n", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
+      end,
+    } ,
+   -- }}}
 
    -- mason & mason-lspconfig {{{
    -- Install and manage LSP servers with mason
@@ -978,7 +1009,39 @@ require("lazy").setup({
 
     -- end Software Development }}}
 
+
     -- Source Control - git and what else?? {{{
+
+    -- diffview.nvim {{{
+    -- https://github.com/sindrets/diffview.nvim
+    -- Make diffs much better, not just visually.
+    -- There are actions, hooks, modes and mode keymaps...
+    --
+    -- 'git log' equivalent -> :DiffviewFileHistory %
+    {
+      'sindrets/diffview.nvim',
+      dependencies = {'nvim-lua/plenary.nvim'},
+    },
+    -- }}}
+
+    -- fugitive
+    -- https://github.com/tpope/vim-fugitive
+    -- Pretty basic git support.
+    {
+      "tpope/vim-fugitive",
+    },
+
+    -- rhubarb.vim
+    -- https://github.com/tpope/vim-rhubarb
+    -- Support for Github in fugitive - i am changing it to support HPE's github enterprise.
+    {
+      "tpope/vim-rhubarb",
+      config = function()
+        vim.cmd[[
+          let g:github_enterprise_urls = ['https://github.hpe.com']
+        ]]
+      end,
+    },
 
     -- git-messenger
     -- https://github.com/rhysd/git-messenger.vim
@@ -997,18 +1060,6 @@ require("lazy").setup({
       "rhysd/git-messenger.vim",
       vim.keymap.set('n', '<leader>gm', ':GitMessenger<cr>')
     },
-
-    -- diffview.nvim {{{
-    -- https://github.com/sindrets/diffview.nvim
-    -- Make diffs much better, not just visually.
-    -- There are actions, hooks, modes and mode keymaps...
-    --
-    -- 'git log' equivalent -> :DiffviewFileHistory %
-    {
-      'sindrets/diffview.nvim',
-      dependencies = {'nvim-lua/plenary.nvim'},
-    },
-    -- }}}
 
     -- Super fast git decorations.
     -- Integrates with vim-fugitive, repeat (repeat) staging, trouble.nvim
@@ -1242,7 +1293,7 @@ require("lazy").setup({
       },
       config = function()
         require("obsidian").setup({
-            dir = "~/Documents/FirstVault",
+            dir = "~/WorkStuff/WorkVault",
             completion = {
               nvim_cmp = true,
             }
