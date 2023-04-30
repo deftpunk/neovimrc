@@ -48,6 +48,12 @@ vim.env.VISUAL = 'nvr -cc split --remote-wait'
 vim.env.PYTHONUNBUFFERED = 1
 vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
 
+-- Fri Apr 28 2023 11:10:41 -> put this in to try and get undercurl properly working on iTerm
+vim.cmd([[
+  let &t_Cs = "\e[4:3m"
+  let &t_Ce = "\e[4:0m"
+  ]])
+
 -- }}}
 
 -- lazy.nvim {{{
@@ -85,7 +91,7 @@ require("lazy").setup({
       priority = 1000, -- make sure to load this before all the other start plugins
       config = function()
           -- load the colorscheme here
-          vim.cmd([[colorscheme tokyonight]])
+          vim.cmd([[colorscheme tokyonight-night]])
       end,
     },
 
@@ -336,7 +342,6 @@ require("lazy").setup({
       config = function()
         require('indent_blankline').setup({
             show_current_context = true,
-            show_current_context_start = true,
           })
       end,
     },
@@ -707,29 +712,6 @@ require("lazy").setup({
     },
     -- }}}
 
-    -- conflict-marker {{{
-    -- https://github.com/rhysd/conflict-marker.vim
-    -- Highlight, jump and resolve conflict markers quickly.
-    {
-      'rhysd/conflict-marker.vim',
-      config = function()
-
-        -- Change the highlighting so tht we can see more contrast.
-        -- disable the default highlight group
-        vim.g.conflict_marker_highlight_group = ''
-        -- Include text after begin and end markers
-        vim.g.conflict_marker_begin = '^<<<<<<< .*$'
-        vim.g.conflict_marker_end   = '^>>>>>>> .*$'
-        -- change some of the highlighting.
-        vim.cmd('hi ConflictMarkerBegin guibg=#2f7366')
-        vim.cmd('hi ConflictMarkerOurs guibg=#2e5049')
-        vim.cmd('hi ConflictMarkerTheirs guibg=#344f69')
-        vim.cmd('hi ConflictMarkerEnd guibg=#2f628e')
-        vim.cmd('hi ConflictMarkerCommonAncestorsHunk guibg=#754a81')
-      end,
-    },
-    -- }}}
-
     -- Comment.nvim {{{
     -- https://github.com/numToStr/Comment.nvim
     -- Comment/Uncomment plugin - successor to kommentary.
@@ -970,17 +952,30 @@ require("lazy").setup({
     },
     -- }}}
 
+    -- toggle-lsp-diagnostics.nvim
+    -- https://github.com/WhoIsSethDaniel/toggle-lsp-diagnostics.nvim
+    -- What it says.
+    {
+      "https://github.com/WhoIsSethDaniel/toggle-lsp-diagnostics.nvim",
+      config = function()
+        require('toggle_lsp_diagnostics').init()
+        vim.keymap.set("n", "<leader>td", "<cmd>ToggleDiag<cr>", { silent = true })
+      end,
+    },
+
     -- lsp-lines {{{
+    -- https://github.com/ErichDonGubler/lsp_lines.nvim
     {
       "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
       config = function()
+        -- remove the regular diagnostic virtual text since its just duplication.
         vim.diagnostic.config({
             virtual_text = false,
           })
         require("lsp_lines").setup()
         vim.keymap.set("n", "<leader>tl", require("lsp_lines").toggle, { desc = "Toggle lsp_lines" })
       end,
-    } ,
+    },
    -- }}}
 
    -- mason & mason-lspconfig {{{
