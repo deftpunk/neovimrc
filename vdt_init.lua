@@ -2,21 +2,68 @@
 
 -- init.lua based on lazy and not packer.
 --
--- Some notes {{{
-
--- Run without sources config/plugins/etc.
 -- $ nvim --clean
 
--- }}}
+-- Some sensible defaults {{{
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
 
-require('core/options')  -- Options
-require('core/autocmds') -- Autocommands
+vim.opt.termguicolors = true
+vim.opt.syntax = 'on'
+vim.opt.errorbells = false
+vim.opt.smartcase = true
+vim.opt.showmode = false
+vim.bo.swapfile = false
+vim.opt.backup = false
+vim.opt.undodir = vim.fn.stdpath('config') .. '/undodir'
+vim.opt.undofile = true
+vim.opt.incsearch = true
+vim.opt.hidden = true
+vim.opt.completeopt = {'menu','menuone','noselect'}
+vim.opt.listchars:append('trail:•,extends:❯,precedes:❮')
+vim.bo.autoindent = true
+vim.bo.smartindent = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.wo.number = true
+vim.wo.relativenumber = false
+vim.wo.signcolumn = 'yes'
+vim.wo.wrap = false
+
+
+
+vim.opt.guifont='RobotoMono_Nerd_Font:h14:b:i:u:s'
+-- Show colored columns so I know how far I've typed without looking down at the
+-- statusline all the time.
+-- Changed the last column to 100 as Clojure, Common Lisp & Rust use that as a
+-- max column length guide.
+vim.opt.colorcolumn={'80','100'}
+vim.opt.cursorline = true
+
+-- copy/paste from clipboard
+vim.o.clipboard='unnamedplus'
+
+-- Some env variables 
+vim.env.VISUAL = 'nvr -cc split --remote-wait'
+vim.env.PYTHONUNBUFFERED = 1
+vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
+
+-- Fri Apr 28 2023 11:10:41 -> put this in to try and get undercurl properly working on iTerm
+vim.cmd([[
+  let &t_Cs = "\e[4:3m"
+  let &t_Ce = "\e[4:0m"
+  ]])
+
+-- }}}
 
 -- lazy.nvim {{{
 -- https://github.com/folke/lazy.nvim
 -- The Lazy Package Manager.
 -- :Lazy check [plugins] - Check for updates and show the log (git fetch).
--- :Lazy clean - Clean plugins that are no longer needed. :Lazy install [plugins] - Install missing plugins.
+-- :Lazy clean - Clean plugins that are no longer needed.
+-- :Lazy install [plugins] - Install missing plugins.
 -- :Lazy update [plugins] - Update plugins.
 -- :Lazy log - Show recent updates.
 -- :Lazy profile - plugin bootup profiler
@@ -47,19 +94,29 @@ require("lazy").setup({
       lazy = false, -- make sure we load this during startup if it is your main colorscheme
       priority = 1000, -- make sure to load this before all the other start plugins
       config = function()
-        require("tokyonight").setup({
-          style = "night",
-          -- Lighten the comments so that I can see them better.
-          on_colors = function(colors)
-            colors.comment = "#7982ab"
-          end
-	})
           -- load the colorscheme here
-          -- FIX: Change the comment font - "Brush Script MT"; the hi cmd isn't working
-          vim.cmd([[
-            colorscheme tokyonight-night
-            hi Comment font='Zapfino'
-            ]])
+          vim.cmd([[colorscheme tokyonight-night]])
+      end,
+    },
+    -- }}}
+
+    -- nightfox colorscheme {{{
+    -- https://github.com/EdenEast/nightfox.nvim
+    -- TODO: Turn this on for just HPE VDT - don't forget lualine.
+    {
+      "EdenEast/nightfox.nvim",
+      lazy = false,
+      priority = 1000,
+      config = function()
+        require('nightfox').setup({
+            options = {
+              dim_inactive = true,
+            },
+            styles = {
+              comments = "italic",
+            },
+          })
+        -- vim.cmd([[colorscheme nightfox]])
       end,
     },
     -- }}}
@@ -72,6 +129,7 @@ require("lazy").setup({
         dependencies = { 'kyazdani42/nvim-web-devicons' },
         config = function()
           require('lualine').setup {
+            -- options = { theme  = 'evil_lualine' },
             options = { theme  = 'tokyonight' },
           }
         end,
@@ -122,10 +180,12 @@ require("lazy").setup({
       config = function()
         -- https://github.com/p00f/nvim-ts-rainbow/issues/30#issuecomment-850991264
         local parsers = require("nvim-treesitter.parsers")
-        local enabled_list = {"clojure",  "commonlisp", "fennel", "go", "lua", "markdown", "markdown_inline", "Python", "ruby", "rust"}
+        local enabled_list = {"clojure",  "commonlisp", "fennel", "go", "markdown", "markdown_inline", "python", "ruby", "rust"}
+
+        -- cmd("hi rainbowcol1 guifg=#ff3393")
 
         require('nvim-treesitter.configs').setup {
-          ensure_installed = { "Python", "html", "c", "cmake", "lua", "go", "clojure", "json", "commonlisp", "bash", "dockerfile", "markdown", "markdown_inline",  "ruby", "rust", "toml", "vim", "yaml" },
+          ensure_installed = { "python", "html", "c", "cmake", "lua", "go", "clojure", "json", "commonlisp", "bash", "dockerfile", "markdown", "markdown_inline",  "ruby", "rust", "toml", "vim", "yaml" },
           highlight = {
             enable = true,
           },
@@ -150,34 +210,27 @@ require("lazy").setup({
       end,
     },
 
-    -- nvim-treesiter-context {{{
+    -- nvim-treesiter-context
     -- Show function context at the top of the file.
     -- https://github.com/nvim-treesitter/nvim-treesitter-context
     {'nvim-treesitter/nvim-treesitter-context'},
-    -- }}}
 
-    -- nvim-treesitter-textobjects {{{
-    -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-    -- TODO: take a look at creating our own textobjects
-    -- import lines beginning & ending in Python
-    {'nvim-treesitter/nvim-treesitter-textobjects'},
-    -- }}}
+    {'mrjones2014/nvim-ts-rainbow'},
 
     -- }}}
 
     -- Telescope {{{
 
+
     -- Telescope
     -- https://github.com/nvim-telescope/telescope.nvim
-    -- https://github.com/debugloop/telescope-undo.nvim
     {'nvim-lua/popup.nvim'},
     {
       'nvim-telescope/telescope.nvim',
       dependencies = {
         'nvim-lua/plenary.nvim',
-        'BurntSushi/ripgrep',
-        "debugloop/telescope-undo.nvim"
-    },
+        'BurntSushi/ripgrep'
+      },
       config = function()
 
         require('telescope').setup {
@@ -187,11 +240,6 @@ require("lazy").setup({
             }
           },
           extensions = {
-            dash = {
-              file_type_keywords = {
-                Python = { 'python3' },
-              },
-            },
             file_browser = {
               theme = "ivy",
               hijack_netrw = true,
@@ -202,14 +250,7 @@ require("lazy").setup({
                 override_file_sorter = true,     -- override the file sorter
                 case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
                 -- the default case_mode is "smart_case"
-              },
-              undo = {
-                side_by_side = true,
-                layout_strategy = "vertical",
-                layout_config = {
-                  preview_height = 0.8,
-                },
-              },
+              }
             }
           }
           require('telescope').load_extension('fzf')
@@ -240,13 +281,8 @@ require("lazy").setup({
           vim.keymap.set('n', '<leader>i', '<cmd>Telescope buffers<cr>')
           vim.keymap.set('n', '<leader>r', '<cmd>Telescope live_grep<cr>')
           vim.keymap.set('n', '<leader>s', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
-
-          require("telescope").load_extension("undo")
-          vim.keymap.set('n', '<leader>u', '<cmd>Telescope undo<cr>')
       end,
     },
-
-    -- TODO: telescope_live_grep_args
 
     -- telescope-fzf-native.nvim
     -- https://github.com/nvim-telescope/telescope-fzf-native.nvim
@@ -331,32 +367,9 @@ require("lazy").setup({
     {
       'lukas-reineke/indent-blankline.nvim',
       config = function()
-        local highlight = {
-            "RainbowRed",
-            "RainbowYellow",
-            "RainbowBlue",
-            "RainbowOrange",
-            "RainbowGreen",
-            "RainbowViolet",
-            "RainbowCyan",
-        }
-
-          local hooks = require "ibl.hooks"
-          -- create the highlight groups in the highlight setup hook, so they are reset
-          -- every time the colorscheme changes
-          hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-            vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-            vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-            vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-            vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-            vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-            vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-            vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
-          end)
-
-          -- require("ibl").setup { indent = { highlight = highlight } }
-          require("ibl").setup()
-
+        require('indent_blankline').setup({
+            show_current_context = true,
+          })
       end,
     },
     -- }}}
@@ -395,9 +408,7 @@ require("lazy").setup({
     -- marks.nvim {{{
     -- https://github.com/chentoast/marks.nvim
     -- View marks in the sign column + preview them.
-
-    -- TODO: Make 'gm' mapping to show local marks via Telescope
-
+    --
     -- Mappings:
     -- ============================
     -- mx              Set mark x
@@ -424,82 +435,15 @@ require("lazy").setup({
     },
     -- }}}
 
-    -- Neotree {{{
-    -- https://github.com/nvim-neo-tree/neo-tree.nvim
-    --
-    -- Tracking ticket for document_symbols feature.
-    -- https://github.com/nvim-neo-tree/neo-tree.nvim/issues/879
-    {
-      "nvim-neo-tree/neo-tree.nvim",
-      branch = "v3.x",
-      dependencies = { 
-       "nvim-lua/plenary.nvim",
-       "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-       "MunifTanjim/nui.nvim",
-      },
-      config = function()
-
-         -- Unless you are still migrating, remove the deprecated commands from v1.x
-         vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-         require("neo-tree").setup({
-           close_if_last_window = true,
-           sources = {
-               "filesystem",
-               "git_status",
-               "document_symbols",
-           },
-         })
-         vim.keymap.set('n', '<leader>tn', '<cmd>Neotree filesystem reveal toggle<cr>')
-         vim.keymap.set('n', '<leader>tg', '<cmd>Neotree git_status toggle position=float<cr>')
-      end,
-    },
-    -- }}}
-
-    -- nvim-surround {{{
-    -- https://github.com/kylechui/nvim-surround
-    -- An improved(?) Lua version of vim-surround from tpope - if it doesn't
-    -- work, i'll just go back
-    {
-        "kylechui/nvim-surround",
-        version = "*", -- Use for stability; omit to use `main` branch for the latest features
-        event = "VeryLazy",
-        config = function()
-            require("nvim-surround").setup({
-                -- Configuration here, or leave empty to use defaults
-            })
-        end
-    },
-    -- }}}
-
     -- numb.nvim {{{
     -- https://github.com/nacro90/numb.nvim
-    -- Peeking the buffer while entering command :{number}
+    -- numb.nvim is a Neovim plugin that peeks lines of the buffer in
+    -- non-obtrusive way when you do ':<linenumber>'
     {
       'nacro90/numb.nvim',
       config = function()
         require('numb').setup()
       end,
-    },
-    -- }}}
-
-    -- TODO: pretty-fold.nvim vs nvim-ufo??
-
-    -- pretty-fold.nvim {{{
-    -- https://github.com/anuvyklack/pretty-fold.nvim
-    {
-      'anuvyklack/pretty-fold.nvim',
-       config = function()
-        require('pretty-fold').setup{
-           keep_indentation = false,
-           fill_char = '•',
-           sections = {
-              left = {
-                 '+', function() return string.rep('-', vim.v.foldlevel) end,
-                 ' ', 'number_of_folded_lines', ':', 'content',
-              }
-           }
-        }
-       end,
     },
     -- }}}
 
@@ -537,14 +481,10 @@ require("lazy").setup({
         require('nvim-window').setup({
           normal_hl = 'NvimWindowLetter',
           hint_hl = 'Bold',
-          border = 'single',
-          -- keep the chars on the home row.
-          chars = {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';'}
+          border = 'none'
         })
         vim.keymap.set("n", "<leader>-", "<cmd>:lua require('nvim-window').pick()<cr>")
-        vim.cmd[[
-          hi NvimWindowLetter guifg=#ff3393 guibg=#1e2030 font='Impact:h14'
-        ]]
+
       end,
     },
     -- }}}
@@ -557,24 +497,6 @@ require("lazy").setup({
         vim.g.netrw_nogx = 1
         vim.keymap.set('n','gx','<Plug>(openbrowser-smart-search)')
         vim.keymap.set('v','gx','<Plug>(openbrowser-smart-search)')
-      end,
-    },
-    -- }}}
-
-    -- nvim-colorizer.lua {{{
-    -- Show the color of the rgb code.
-    -- https://github.com/NvChad/nvim-colorizer.lua
-    {
-      'NvChad/nvim-colorizer.lua',
-      config = function()
-        require('colorizer').setup({
-            filetypes = {
-              'lua',
-              'css',
-              'vim',
-              html = { mode = 'foreground', }
-            },
-          })
       end,
     },
     -- }}}
@@ -611,7 +533,6 @@ require("lazy").setup({
     -- https://github.com/akinsho/toggleterm.nvim
     {
       'akinsho/toggleterm.nvim',
-      version = '*',
       config = function()
         require('toggleterm').setup({
             winbar = {
@@ -624,7 +545,6 @@ require("lazy").setup({
     -- }}}
 
     -- }}}
-
     -- vim-active-numbers {{{
 	-- https://github.com/AssailantLF/vim-active-numbers
     -- Only turn on line numbers in the active window.
@@ -657,9 +577,9 @@ require("lazy").setup({
       init = function()
         vim.cmd[[
           if has('macunix')
-              let g:auto_abbrev_file_path="~/.config/nvim/abbreviates"
+              let g:abolish_save_file="~/Users/bodine/MyStuff/neovimrc/abbreviates"
           elseif has('unix')
-              let g:auto_abbrev_file_path="/auto/homecxo.nas03/bodine/Downloads/neovimrc/abbreviates"
+              let g:abolish_save_file="/auto/homecxo.nas03/bodine/Downloads/neovimrc/abbreviates"
           endif
           ]]
       end,
@@ -694,7 +614,7 @@ require("lazy").setup({
       config = function()
         require('illuminate').configure({
             delay = 250,
-            filetypes_allowlist = {"clojure", "commonlisp", "go", "lua", "Python", "rust" },
+            filetypes_allowlist = {"clojure", "commonlisp", "go", "lua", "python", "rust" },
           })
       end,
     },
@@ -728,7 +648,6 @@ require("lazy").setup({
 
     -- vim-strip-trailing-whitespace {{{
     -- https://github.com/axelf4/vim-strip-trailing-whitespace
-    -- NOTE: Tue Jun 06 2023 12:07:27 - Conflicts with Neogit, commenting out for now.
     -- {'axelf4/vim-strip-trailing-whitespace'},
     -- }}}
 
@@ -754,7 +673,6 @@ require("lazy").setup({
     },
     -- }}}
 
-    -- TODO: Implement keybindings.
     -- yanky.nvim {{{
     -- https://github.com/gbprod/yanky.nvim
     -- Yank ring, yank history
@@ -772,6 +690,36 @@ require("lazy").setup({
 
     -- }}}
 
+    -- Neotree {{{
+    -- https://github.com/nvim-neo-tree/neo-tree.nvim
+    --
+    -- Tracking ticket for document_symbols feature.
+    -- https://github.com/nvim-neo-tree/neo-tree.nvim/issues/879
+    {
+      "nvim-neo-tree/neo-tree.nvim",
+      branch = "v2.x",
+      dependencies = { 
+       "nvim-lua/plenary.nvim",
+       "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+       "MunifTanjim/nui.nvim",
+      },
+      config = function()
+
+         -- Unless you are still migrating, remove the deprecated commands from v1.x
+         vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+         require("neo-tree").setup({
+           close_if_last_window = true,
+           sources = {
+               "filesystem",
+               "git_status",
+               "document_symbols",
+           },
+         })
+         vim.keymap.set('n', '<leader>tn', '<cmd>Neotree filesystem reveal toggle<cr>')
+         vim.keymap.set('n', '<leader>tg', '<cmd>Neotree git_status toggle position=float<cr>')
+      end,
+    },
+
     -- end General Utilities }}}
 
     -- Software Development {{{
@@ -780,9 +728,6 @@ require("lazy").setup({
     -- https://github.com/stevearc/aerial.nvim
     -- Symbol outline viewer and symbol navigation thru Telescope integration.
     -- Uses treesitter, LSP, markdown, manual in order to find symbols.
-    --
-    -- symbols-outline.nvim has preview & can turn off line numbers BUT the
-    -- preview isn't accuate.
     {
       'stevearc/aerial.nvim',
       config = function()
@@ -791,8 +736,6 @@ require("lazy").setup({
               max_width = 75,
               min_width = 50,
             },
-            highlight_on_hover = true,
-            show_guides = true,
             default_direction = "right",
             post_jump_cmd = "normal! zt",
             -- A list of all symbols to display.
@@ -800,6 +743,18 @@ require("lazy").setup({
             -- To see all available values, see :help SymbolKind
             -- Setting to false shows all of the symbols... maybe makes things slow??
             filter_kind = false,
+            -- filter_kind = {
+            --   "Class",
+            --   "Constructor",
+            --   "Enum",
+            --   "Function",
+            --   "Interface",
+            --   "Module",
+            --   "Method",
+            --   "Namespace",
+            --   "Package",
+            --   "Struct",
+            -- },
           })
 
         vim.keymap.set('n', '<leader>tt', '<cmd>AerialToggle<cr>')
@@ -824,20 +779,14 @@ require("lazy").setup({
     },
     -- }}}
 
-    -- TODO: Investigate if there is a dedocs plugin for neovim - and if there is a 
-    -- way to set global bookmarks that could be recalled.
-        
     -- dash.nvim {{{
     -- Query the Dash.app with telescope
-    --   :Telescope dash search
-    -- OR
-    -- Query the word under the cursor.  
-    --   :DashWord
     -- https://github.com/mrjones2014/dash.nvim
-    {
-        'mrjones2014/dash.nvim',
-        build = 'make install',
-    },
+    -- {
+    --     'mrjones2014/dash.nvim',
+    --     cond = [[vim.fn.has('macunix')]],
+    --     build = 'make install',
+    -- },
     -- }}}
 
     -- Comment.nvim {{{
@@ -864,7 +813,7 @@ require("lazy").setup({
     -- hlargs {{{
     -- https://github.com/m-demare/hlargs.nvim
     -- Highlight argument definitions and usages
-    -- supported languages: go, lua, Python, ruby, rust
+    -- supported languages: go, lua, python, ruby, rust
     {
         'm-demare/hlargs.nvim',
         dependencies = { 'nvim-treesitter/nvim-treesitter' },
@@ -874,69 +823,7 @@ require("lazy").setup({
     },
     -- }}}
 
-    -- iron.nvim {{{
-    -- A REPL in Neovim...
-    -- https://github.com/Vigemus/iron.nvim
-    {
-      'Vigemus/iron.nvim',
-      config = function()
-        local iron = require("iron.core")
-        iron.setup {
-          config = {
-            repl_definition = {
-              python = {
-                command = {"ipython"}
-              }
-            },
-            repl_open_cmd = require('iron.view').bottom(45),
-          },
-         keymaps = {
-            send_motion = "<space>sc",
-            visual_send = "<space>sc",
-            send_file = "<space>sf",
-            send_line = "<space>sl",
-            send_until_cursor = "<space>su",
-            send_mark = "<space>sm",
-            mark_motion = "<space>mc",
-            mark_visual = "<space>mc",
-            remove_mark = "<space>md",
-            cr = "<space>s<cr>",
-            interrupt = "<space>s<space>",
-            exit = "<space>sq",
-            clear = "<space>cl",
-          }, 
-        }
-
-        -- iron also has a list of commands, see :h iron-commands for all available commands
-        vim.keymap.set('n', '<space>rs', '<cmd>IronRepl<cr>')
-        vim.keymap.set('n', '<space>rr', '<cmd>IronRestart<cr>')
-        vim.keymap.set('n', '<space>rf', '<cmd>IronFocus<cr>')
-        vim.keymap.set('n', '<space>rh', '<cmd>IronHide<cr>')
-      end,
-    },
-    -- }}}
-
     -- LSP, nvim-cmp & snippets {{{
-
-    -- lsp-overloads {{
-    -- https://github.com/Issafalcon/lsp-overloads.nvim
-    -- Using mainly for method overloads - shows different signaatures.
-    --
-    -- keymaps = {
-    --      next_signature = "<C-j>",
-    --      previous_signature = "<C-k>",
-    --      next_parameter = "<C-l>",
-    --      previous_parameter = "<C-h>",
-    --      close_signature = "<A-s>"
-    --    },
-    --
-    -- ** The configuration is done in on_attach function below.
-    {
-      'Issafalcon/lsp-overloads.nvim',
-    },
-    -- }}
-
-    -- nvim-lspconfig {{{
     {
       'neovim/nvim-lspconfig',
       event = 'BufReadPre',
@@ -944,23 +831,10 @@ require("lazy").setup({
         local lspconfig = require("lspconfig")
 
         local on_attach = function(client, bufnr)
-        if client.server_capabilities.signatureHelpProvider then
-            require('lsp-overloads').setup(client, {
-                keymaps = {
-                  close_signature = "C-x C-c",
-                }
-              })
-          end
 
-        local bufopts = { noremap=true, silent=true, buffer=bufnr }
+          local bufopts = { noremap=true, silent=true, buffer=bufnr }
           vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
         end
-
-        -- put a box around LspInfo
-        local _border = "single"
-        require('lspconfig.ui.windows').default_options = {
-          border = _border
-        }
 
         -- Python server setup
         lspconfig.pyright.setup({
@@ -972,7 +846,6 @@ require("lazy").setup({
           })
       end,
     },
-    -- }}}
 
     -- nvim-cmp {{{
     --
@@ -1050,8 +923,8 @@ require("lazy").setup({
               -- { name = 'path' },
               -- { name = 'buffer', keyword_length = 3 },
               { name = 'luasnip' },
-              { name = 'nvim_lsp', max_item_count = 50, keyword_length = 1 },
-              { name = 'nvim_lsp_signature_help'},
+              -- { name = 'nvim_lsp', max_item_count = 50, keyword_length = 1 },
+              -- { name = 'nvim_lsp_signature_help'},
               -- { name = 'treesitter', max_item_count = 10 },
               -- { name = 'crates' },
             },
@@ -1156,13 +1029,12 @@ require("lazy").setup({
     },
     -- }}}
 
-    -- toggle-lsp-diagnostics.nvim {{{
+    -- toggle-lsp-diagnostics.nvim
     -- https://github.com/WhoIsSethDaniel/toggle-lsp-diagnostics.nvim
     -- What it says.
     {
       "https://github.com/WhoIsSethDaniel/toggle-lsp-diagnostics.nvim",
       config = function()
-        -- remove the regular diagnostic virtual text since its just duplication.
         vim.diagnostic.config({
             virtual_text = false,
           })
@@ -1170,11 +1042,6 @@ require("lazy").setup({
         vim.keymap.set("n", "<leader>td", "<cmd>ToggleDiag<cr>", { silent = true })
       end,
     },
-    -- }}}
-
-    -- nvim-lightbulb {{{
-    
-    -- }}}
 
     -- lsp-lines {{{
     -- https://github.com/ErichDonGubler/lsp_lines.nvim
@@ -1206,7 +1073,6 @@ require("lazy").setup({
       'williamboman/mason-lspconfig.nvim',
       config = function()
         require("mason-lspconfig").setup({
-            -- TODO: When getting back to clojure/nim, re-enable
             ensure_installed = { "pyright", "rust_analyzer" }
             -- ensure_installed = { "clojure_lsp", "nimls", "pyright", "rust_analyzer" }
           })
@@ -1223,7 +1089,7 @@ require("lazy").setup({
         'nvim-treesitter/nvim-treesitter',
         'antoinemadec/FixCursorHold.nvim',
         'rouge8/neotest-rust',
-        'nvim-neotest/neotest-Python',
+        'nvim-neotest/neotest-python',
       },
       lazy = true
     },
@@ -1240,6 +1106,7 @@ require("lazy").setup({
     -- todo-comments {{{
     -- https://www.github.com/folke/todo-comments.nvim
     -- See all of the TODO/FIXME/NOTE ... comments in a file.
+    -- NOTE: Maybe use trouble... :TodoTrouble
     {
       'folke/todo-comments.nvim',
       config = function()
@@ -1249,9 +1116,6 @@ require("lazy").setup({
           },
         }
 
-        -- TodoTrouble mapping is global in your current directory.
-        vim.keymap.set('n', 'gr', '<cmd>TodoTrouble<cr>')
-        -- TODO: THis is global, make it just for the current buffer.
         vim.keymap.set('n', '<leader>tc', '<cmd>TodoTelescope<cr>')
       end,
     },
@@ -1259,7 +1123,16 @@ require("lazy").setup({
 
     -- end Software Development }}}
 
+
     -- Source Control - git and what else?? {{{
+
+    -- agitator.nvim {{{
+    -- https://github.com/emmanueltouzery/agitator.nvim
+    -- Some git-related funcitons, e.g. blame, git find file, search in git branch, git timemachine 
+    {
+      "FabijanZulj/blame.nvim"
+    },
+    -- }}}
 
     -- diffview.nvim {{{
     -- https://github.com/sindrets/diffview.nvim
@@ -1296,7 +1169,7 @@ require("lazy").setup({
     -- https://github.com/TimUntersberger/neogit
     -- A kind of magit clone
     {
-      'NeogitOrg/neogit',
+      'TimUntersberger/neogit',
       dependencies = { 'nvim-lua/plenary.nvim' },
       config = function()
         require('neogit').setup({
@@ -1311,7 +1184,7 @@ require("lazy").setup({
       end,
     },
 
-    -- git-messenger
+    -- git-messenger {{{
     -- https://github.com/rhysd/git-messenger.vim
     -- View commit info @ line in a popup window.
     -- Popup window mappings
@@ -1337,7 +1210,9 @@ require("lazy").setup({
         vim.keymap.set('n', '<leader>gm', ':GitMessenger<cr>')
       end,
     },
+    -- }}}
 
+    -- gitsigns.nvim {{{
     -- Super fast git decorations.
     -- Integrates with vim-fugitive, repeat (repeat) staging, trouble.nvim
     -- https://github.com/lewis6991/gitsigns.nvim
@@ -1357,6 +1232,7 @@ require("lazy").setup({
         }
       end,
     },
+    -- }}}
 
     -- octo.nvim {{{
     -- https://github.com/pwntester/octo.nvim
@@ -1376,6 +1252,10 @@ require("lazy").setup({
       config = function() require('octo').setup() end,
     },
     -- }}}
+
+    -- vim-fugitive {{
+        { 'tpope/vim-fugitive' },
+    -- }}
 
     -- end of Source Control }}}
 
@@ -1414,6 +1294,7 @@ require("lazy").setup({
 
     -- }}}
 
+
     -- Nim {{{
     {
       'alaviss/nim.nvim',
@@ -1430,7 +1311,7 @@ require("lazy").setup({
     -- vim-pythonsense {{{
     -- https://github.com/jeetsukumaran/vim-pythonsense
     --
-    -- Text objects, keymaps specific to using Python - superior to vim-textobj-Python.
+    -- Text objects, keymaps specific to using Python - superior to vim-textobj-python.
     --
     -- Python Text Objects
     -- "ac" : Outer class text object. This includes the entire class, including the
@@ -1534,81 +1415,7 @@ require("lazy").setup({
 
     -- }}}
 
-    -- Markdown {{{
-
-    -- headlines {{{
-    -- https://github.com/lukas-reineke/headlines.nvim
-    -- For markdown neorg
-    {
-        'lukas-reineke/headlines.nvim',
-        dependencies = "nvim-treesitter/nvim-treesitter",
-        config = true, -- or `opts = {}`
-    },
-    -- }}}
-
-    -- markdown-preview {{{
-    -- https://github.com/iamcco/markdown-preview.nvim
-    {
-      'iamcco/markdown-preview.nvim',
-      config = function()
-        vim.cmd[[
-          let g:mkdp_refresh_slow = 1
-        ]]
-      end,
-    },
-    -- }}}
-
-    -- glow.nvim {{{
-    -- https://github.com/ellisonleao/glow.nvim
-    -- Preview markdown code directly in neovim terminal via charm's glow
-    {
-      "ellisonleao/glow.nvim", 
-      config = function()
-        require('glow').setup({
-            glow_path = "/opt/homebrew/bin/glow",
-          })
-      end,
-    },
-    -- }}}
-
-    -- }}} 
-
-    -- neorg {{{
-    -- https://github.com/nvim-neorg/neorg
-    {
-      "nvim-neorg/neorg",
-      build = ":Neorg sync-parsers", -- update the treesitter parsers
-      ft = 'norg', -- lazy load on filetype
-      cmd = 'Neorg', -- lazy load on command
-      priority = 30, -- makes neorg load after treesitter
-      dependencies = { "nvim-lua/plenary.nvim" },
-      opts = {
-          load = {
-            ["core.defaults"] = {}, -- Loads default behaviour
-            ["core.concealer"] = {
-              config = {
-                init_open_folds = "always",
-              }
-            }, -- Adds pretty icons to your documents
-            ["core.dirman"] = { -- Manages Neorg workspaces
-              config = {
-                workspaces = {
-                  work = "~/Neorg/work",
-                  home = "~/Neorg/home",
-                },
-              },
-            },
-          },
-        },
-      keys = {
-        { "<leader>ni", "<cmd>Neorg index<cr>", desc="Neorg Index"},
-      },
-    },
-    -- }}}
-
-    -- }}}
-
-    -- Obsidian {{{
+    -- Obsidian + Markdown {{{
     -- https://github.com/epwalsh/obsidian.nvim
     -- :ObsidianBacklinks - for getting a location list of references to the current buffer.
     -- :ObsidianToday - to create a new daily note.
@@ -1649,6 +1456,7 @@ require("lazy").setup({
 
     -- }}}
 
+
 })
 
 -- }}}
@@ -1684,9 +1492,6 @@ vim.keymap.set('n', '<c-j>', '<c-w>j')
 vim.keymap.set('n', '<c-k>', '<c-w>k')
 vim.keymap.set('n', '<c-l>', '<c-w>l')
 
--- Tue Nov 28 2023 21:38:24 -> Neovim + kitty terminal looks like it maps Super(D) keys!!
--- vim.keymap.set('n', '<D-l>', '<c-w>l')
-
 
 -- Remap for dealing with word wrap
 -- vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
@@ -1715,6 +1520,14 @@ vim.keymap.set('c', '<C-e>', '<end>')
 -- Terminal Maps {{{
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 
+-- Start in Insert mode when opening a terminal buffer.
+-- Don't show weird characters.
+-- Turn off line numbers in the terminal buffer.
+-- https://vi.stackexchange.com/questions/22307/neovim-go-into-insert-mode-when-clicking-in-a-terminal-in-a-pane
+vim.cmd('autocmd! TermOpen term://* startinsert!')
+vim.cmd('autocmd! TermEnter term://* startinsert!')
+vim.cmd('autocmd! TermOpen * setlocal listchars= nonumber norelativenumber')
+
 -- }}}
 
 -- Leader Keymaps {{{
@@ -1740,11 +1553,6 @@ vim.keymap.set('n', '<leader><leader>l', 'zz')
 -- The fill-paragraph equivalent.
 vim.keymap.set('n', '<leader>=', 'gqq')
 
--- Toggle search highlight.
-vim.keymap.set('n', '<leader>th',
-	[[ (&hls && v:hlsearch ? ':nohls' : ':set hls')."\n" <BAR> redraw<CR>]],
-	{ silent = true, expr = true }
-)
 -- }}}
 
 -- Arpeggio
@@ -1760,6 +1568,7 @@ Arpeggiocnoremap jk <Esc>
 -- Abbreviations {{{
 
 vim.cmd('iab ydate <c-r>=strftime("%a %b %d %Y %T")<cr>')
+
 -- }}}
 
 -- Investigate {{{
@@ -1780,6 +1589,10 @@ vim.cmd('iab ydate <c-r>=strftime("%a %b %d %Y %T")<cr>')
 -- nmac427/guess-indent.nvim
 
 -- https://github.com/kdheepak/lazygit.nvim
+-- https://github.com/TimUntersberger/neogit
+
+-- Markdown
+-- https://github.com/ellisonleao/glow.nvim
 
 -- delta is a "diff"(?) viewing program...
 -- https://github.com/dandavison/delta

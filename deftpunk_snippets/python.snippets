@@ -1,0 +1,28 @@
+snippet #!
+    #!/usr/bin/env python
+
+snippet imx
+	import ${0:module}
+
+snippet mainx
+    def main():
+        """ Main entrypoint. """
+        pass
+
+    if __name__ == '__main__':
+        ${0:main()}
+
+snippet nox
+# NOTE: ${1}${0}
+
+snippet todx
+# TODO: ${1}${0}
+
+snippet bugx
+# BUG: ${1}${0}
+
+snippet dax
+    @dataclass
+    class ${1:Class}:
+        ${2:Attribute}: ${3:Type} ${0}
+
