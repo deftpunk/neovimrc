@@ -8,7 +8,9 @@ vim.opt.errorbells = false
 vim.opt.smartcase = true
 vim.opt.showmode = false
 vim.bo.swapfile = false
-vim.opt.backup = false
+-- vim.opt.backup = true
+-- $HOME is not being expanded <shrug>
+-- vim.opt.backupdir = "$HOME/MyStuff/neovimrc/backups"
 vim.opt.undodir = vim.fn.stdpath('config') .. '/undodir'
 vim.opt.undofile = true
 vim.opt.incsearch = true
@@ -47,7 +49,7 @@ vim.opt.cursorline = true
 -- copy/paste from clipboard
 vim.o.clipboard='unnamedplus'
 
--- Some env variables 
+-- Some env variables
 -- Do 'pip install neovim-remote' to install nvr
 vim.env.VISUAL = 'nvr -cc split --remote-wait'
 vim.env.PYTHONUNBUFFERED = 1
