@@ -432,7 +432,7 @@ require("lazy").setup({
     {
       "nvim-neo-tree/neo-tree.nvim",
       branch = "v3.x",
-      dependencies = { 
+      dependencies = {
        "nvim-lua/plenary.nvim",
        "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
        "MunifTanjim/nui.nvim",
@@ -513,7 +513,7 @@ require("lazy").setup({
         vim.o.foldcolumn = '1' -- '0' is not bad
         vim.o.foldlevel = 250 -- Using ufo provider need a large value, feel free to decrease the value
         vim.o.foldlevelstart = 99
-        vim.o.foldenable = true
+        -- vim.o.foldenable = true
 
         require('ufo').setup({
             provider_selector = function(bufnr, filetype, buftype)
@@ -638,7 +638,7 @@ require("lazy").setup({
     -- }}}
 
     -- vim-arpeggio {{{
-    -- https://github.com/kana/vim-arpeggio 
+    -- https://github.com/kana/vim-arpeggio
     -- Define 2 or more keymappings together, e.g. 'jk' together maps to ':'
     {'kana/vim-arpeggio'},
     -- }}}
@@ -824,14 +824,14 @@ require("lazy").setup({
     },
     -- }}}
 
-    -- TODO: Investigate if there is a dedocs plugin for neovim - and if there is a 
+    -- TODO: Investigate if there is a dedocs plugin for neovim - and if there is a
     -- way to set global bookmarks that could be recalled.
-        
+
     -- dash.nvim {{{
     -- Query the Dash.app with telescope
     --   :Telescope dash search
     -- OR
-    -- Query the word under the cursor.  
+    -- Query the word under the cursor.
     --   :DashWord
     -- https://github.com/mrjones2014/dash.nvim
     {
@@ -904,7 +904,7 @@ require("lazy").setup({
             interrupt = "<space>s<space>",
             exit = "<space>sq",
             clear = "<space>cl",
-          }, 
+          },
         }
 
         -- iron also has a list of commands, see :h iron-commands for all available commands
@@ -1173,7 +1173,7 @@ require("lazy").setup({
     -- }}}
 
     -- nvim-lightbulb {{{
-    
+
     -- }}}
 
     -- lsp-lines {{{
@@ -1495,7 +1495,7 @@ require("lazy").setup({
     -- }}}
 
     -- }}}
-    
+
     -- Rust {{{
 
     -- https://rsdlt.github.io/posts/rust-nvim-ide-guide-walkthrough-development-debug/#better-coding-experience
@@ -1571,7 +1571,7 @@ require("lazy").setup({
     },
     -- }}}
 
-    -- }}} 
+    -- }}}
 
     -- neorg {{{
     -- https://github.com/nvim-neorg/neorg
@@ -1720,7 +1720,7 @@ vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 -- Leader Keymaps {{{
 
 -- Go to tab by number
-vim.keymap.set('n','<leader>1','1gt') 
+vim.keymap.set('n','<leader>1','1gt')
 vim.keymap.set('n','<leader>2','2gt')
 vim.keymap.set('n','<leader>3','3gt')
 vim.keymap.set('n','<leader>4','4gt')
