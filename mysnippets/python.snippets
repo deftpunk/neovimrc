@@ -103,6 +103,10 @@ snippet ldx
 log.debug("${1}")${0}
 endsnippet
 
+snippet ltx
+log.debug("TESTING: ${1}")${0}
+endsnippet
+
 snippet ifmx
 if '__name__' == '__main__':
 	${0}
@@ -186,9 +190,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter,
                                      epilog="")
-    
+
     parser.add_argument('--verbose', help="Increase logging verbosity.", action="store_true")
-    
+
     args = parser.parse_args()
 
     # Configure logging.

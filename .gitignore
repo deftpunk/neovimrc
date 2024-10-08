@@ -29,3 +29,6 @@ vim_keys*
 # Tags
 tags
 Tags
+
+.shada
+.swapfiles/

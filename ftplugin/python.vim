@@ -61,3 +61,7 @@ endfunction
 nnoremap <buffer> <silent> <leader>ii :call PythonImportBeginning()<cr>
 nnoremap <buffer> <silent> <leader>im :call PythonDefMain()<cr>
 nnoremap <buffer> <silent> <leader>io :call PythonOptionParser()<cr>
+
+
+iabbrev <buffer> true True
+iabbrev <buffer> false False

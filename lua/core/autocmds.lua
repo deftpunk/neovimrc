@@ -2,6 +2,11 @@
 local augroup = vim.api.nvim_create_augroup   -- Create/get autocommand group
 local autocmd = vim.api.nvim_create_autocmd   -- Create autocommand
 
+ autocmd( {"InsertLeave", "InsertEnter"},
+{ pattern = "*", callback = function()
+if vim.api.nvim_buf_line_count(0) > 10000 then vim.cmd("TSToggle highlight") end
+end })
+
 -- Disable line length (color column) for some filetypes
 augroup('setLineLength', { clear = true })
 autocmd('Filetype', {
@@ -22,25 +27,25 @@ autocmd('Filetype', {
 
 -- windows to close with "q"
 autocmd("FileType", {
-  pattern = { "help", "startuptime", "qf", "lspinfo" }, 
-  command = [[nnoremap <buffer><silent> q :close<CR>]] 
+  pattern = { "help", "startuptime", "qf", "lspinfo" },
+  command = [[nnoremap <buffer><silent> q :close<CR>]]
 })
 autocmd("FileType", {
-  pattern = "man", 
-  command = [[nnoremap <buffer><silent> q :quit<CR>]] 
+  pattern = "man",
+  command = [[nnoremap <buffer><silent> q :quit<CR>]]
 })
 
 -- show cursor line only in active window
 augroup("CursorLine", { clear = true })
-autocmd({ "InsertLeave", "WinEnter" }, { 
+autocmd({ "InsertLeave", "WinEnter" }, {
   group = cursorGrp,
-  pattern = "*", 
-  command = "set cursorline" 
+  pattern = "*",
+  command = "set cursorline"
 })
 autocmd({ "InsertEnter", "WinLeave" }, {
   group = cursorGrp,
-  pattern = "*", 
-  command = "set nocursorline" 
+  pattern = "*",
+  command = "set nocursorline"
 })
 
 -- Terminal settings
@@ -55,11 +60,21 @@ autocmd({'TermOpen', 'TermEnter'}, {
   command = 'startinsert'
 })
 
--- Close terminal buffer on process exit
--- FIX: This is not working as expected when Ctrl-d in the shell.
-autocmd('BufLeave', {
-  pattern = 'term://*',
-  command = 'stopinsert'
+-- Save the lasplace in a buffer.
+-- https://www.reddit.com/r/neovim/comments/1052d98/comment/j39bgco/?utm_source=share&utm_medium=web2x&context=3
+local lastplace = vim.api.nvim_create_augroup("LastPlace", {})
+augroup('lastplace', { clear = true })
+autocmd("BufReadPost", {
+    group = lastplace,
+    pattern = { "*" },
+    desc = "remember last cursor place",
+    callback = function()
+        local mark = vim.api.nvim_buf_get_mark(0, '"')
+        local lcount = vim.api.nvim_buf_line_count(0)
+        if mark[1] > 0 and mark[1] <= lcount then
+            pcall(vim.api.nvim_win_set_cursor, 0, mark)
+        end
+    end,
 })
 
 -- Remove trailing whitespace.
