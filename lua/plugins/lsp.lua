@@ -58,6 +58,7 @@ return {
 
   -- lsp-lines {{{
   -- https://github.com/ErichDonGubler/lsp_lines.nvim
+  -- Renders diagnostics using virtual lines on top of the real line of code.
   {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     config = function()
@@ -74,24 +75,24 @@ return {
   -- https://github.com/glepnir/lspsaga.nvim
   -- Highly performant LSP UI based on Neovim's built-in LSP.
   {
-      "glepnir/lspsaga.nvim",
-      event = "BufRead",
-      dependencies = {
-        'kyazdani42/nvim-web-devicons',
-        'nvim-treesitter/nvim-treesitter',
-      },
-      config = function()
-        require("lspsaga").setup({
-            preview = {
-              lines_above = 2,
-              lines_below = 12,
-            },
-            scroll_preview = {
-              scroll_down = "<C-f>",
-              scroll_up = "<C-b>",
-            },
-          })
-      end,
+    "glepnir/lspsaga.nvim",
+    event = "BufRead",
+    dependencies = {
+      'kyazdani42/nvim-web-devicons',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    config = function()
+      require("lspsaga").setup({
+        preview = {
+          lines_above = 2,
+          lines_below = 12,
+        },
+        scroll_preview = {
+          scroll_down = "<C-f>",
+          scroll_up = "<C-b>",
+        },
+      })
+    end,
   },
   -- }}}
 
