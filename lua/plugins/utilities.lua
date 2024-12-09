@@ -1,5 +1,38 @@
 return {
 
+  -- bigfile.nvim {{{
+  -- https://github.com/LunarVim/bigfile.nvim
+  -- Automatically disable certain features if the opened file is really big.
+  -- Everythingˆs configurable.
+  {
+    'LunarVim/bigfile.nvim',
+    config = function()
+      require("bigfile").setup({
+        filesize = 4, -- size of the file in MiB, rounds to the closest MiB
+        features = {
+          "indent_blankline",
+          "illuminate",
+          "lsp",
+          "treesitter",
+          "vimopts",
+        },
+
+      -- detect really long python files explicitly
+      pattern = function(bufnr, filesize_mib)
+        -- you can't use `nvim_buf_line_count` because this runs on BufReadPre
+        local file_contents = vim.fn.readfile(vim.api.nvim_buf_get_name(bufnr))
+        local file_length = #file_contents
+        local filetype = vim.filetype.match({ buf = bufnr })
+        if file_length > 15000 and filetype == "python" then
+          return true
+        end
+      end
+
+      })
+    end
+  },
+    -- }}}
+
   -- bufdelete {{{
   -- https://github.com/famiu/bufdelete.nvim
   -- Delete buffers without trashing my window layout.
@@ -253,6 +286,104 @@ return {
   },
   -- }}}
 
+  -- repolink.nvim
+  -- https://github.com/9seconds/repolink.nvim
+  -- Helps you to link a file or a line range in a file to some URL that you
+  -- can use to share with your colleagues.
+  {
+    "9seconds/repolink.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim"
+    },
+    cmd = {
+      "RepoLink"
+    },
+
+    config = function()
+      require("repolink").setup({
+        -- your configuration goes here.
+        -- keep empty object if you are fine with defaults
+        url_builders = {
+          ["github.hpe.com"] = require("repolink").url_builder_for_github("https://github.hpe.com"),
+        },
+      })
+    end,
+  },
+
+  -- nvim-possession.nvim & scope.nvim {{{
+  -- https://github.com/tiagovla/scope.nvim
+  -- https://github.com/gennaro-tedesco/nvim-possession
+  -- Session management & limit it to tabs with scope.nvim
+  {
+    "gennaro-tedesco/nvim-possession",
+    lazy = false,
+    dependencies = {
+        {
+            "tiagovla/scope.nvim",
+            lazy = false,
+            config = true,
+        },
+        { "ibhagwan/fzf-lua" },
+    },
+    init = function()
+      local possession = require("nvim-possession")
+        vim.keymap.set("n", "<leader>pl", function()
+            possession.list()
+        end, { desc = "List saved nvim-possession sessions." })
+        vim.keymap.set("n", "<leader>pn", function()
+            possession.new()
+        end, { desc = "Create new nvim-possession session." })
+        vim.keymap.set("n", "<leader>pu", function()
+            possession.update()
+        end, { desc = "Update the current nvim-possession session." })
+        vim.keymap.set("n", "<leader>pd", function()
+            possession.delete()
+        end, { desc = "Delete the current nvim-possession session." })
+    end,
+    config = function()
+        require("nvim-possession").setup({
+            autoload = true,
+            autoswitch = {
+                enable = true,
+            },
+            save_hook = function()
+                vim.cmd([[ScopeSaveState]]) -- Scope.nvim saving
+            end,
+            post_hook = function()
+                vim.cmd([[ScopeLoadState]]) -- Scope.nvim loading
+            end,
+        })
+    end,
+  },
+  -- }}}
+
+  -- scratch.nvim {{{
+  -- https://github.com/LintaoAmons/scratch.nvim
+  -- Create temporary files.
+  {
+    'LintaoAmons/scratch.nvim',
+    event = "VeryLazy",
+    dependencies = {
+      "ibhagwan/fzf-lua",
+      "stevearc/dressing.nvim",
+    },
+    config = function()
+      require("scratch").setup({
+        scratch_file_dir = "~/WorkStuff/hpe_home",
+        window_cmd = "rightbelow vsplit",
+        use_telescope = false,
+        file_picker = "fzf_lua",
+        filetypes = { "md" },
+      })
+    end,
+    keys = {
+      { "<leader>cs", ":Scratch<cr>", mode = {"n"}, desc = "Create new scratch file in scratch_file_dir" },
+      { "<leader>cn", ":ScratchWithName<cr>", mode = {"n"}, desc = "Create new scratch file w/ name." },
+      { "<leader>cf", ":ScratchOpenFzf<cr>", mode = {"n"}, desc = "Use fzf to open scratch file." },
+    },
+  },
+  -- }}}
+
   -- Sort.nvim {{{
   -- Line-wise and delimiter sorting NOT alignment.
   {
@@ -280,22 +411,6 @@ return {
     end,
   },
 
-  -- trim.nvim {{{
-  -- https://github.com/cappyzawa/trim.nvim
-  -- Trim trailing whitespace and lines.
-  -- We'll see if this plugin for trimming whitespace won't screw with other plugins.
-  -- {
-  --   'cappyzawa/trim.nvim',
-  --   config = function()
-  --     require("trim").setup({
-  --       ft_blocklist = {"zsh"},
-  --       highlight = true,
-  --       -- highlight_bg = '#ff0000', -- anything besides 'red isn't recognized.
-  --     })
-  --   end,
-  -- },
-  -- }}}
-
   -- vim-cool {{{
   -- https://github.com/romainl/vim-cool
   -- Vim-cool disables search highlighting when you are done searching and
@@ -317,7 +432,6 @@ return {
           'lsp',
           'treesitter',
         },
-        delay = 250,
         filetypes_allowlist = { "clojure", "commonlisp", "go", "help", "lua", "nim", "Python", "rust" },
         large_file_cutoff = 25000,
       })
