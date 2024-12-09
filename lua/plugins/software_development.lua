@@ -23,6 +23,7 @@ return {
 
   -- indent-blankline {{{
   -- https://github.com/lukas-reineke/indent-blankline.nvim
+  -- Highlight indentation guides.
   {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
@@ -49,17 +50,20 @@ return {
         vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
       end)
 
+      vim.g.rainbow_delimiters = { highlight = highlight }
       require("ibl").setup({
-        scope = { enabled = true },
+        scope = { highlight = highlight },
+        -- scope = { enabled = true },
       })
+      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
   },
   -- }}}
 
   -- neotest {{{
   -- Run tests from within neovim
-  -- TODO: Clean up keymaps for calling tests and displaying output.
   -- https://github.com/nvim-neotest/neotest
+  -- TODO: Clean up keymaps for calling tests and displaying output.
   {
     'nvim-neotest/neotest',
     dependencies = {
@@ -123,6 +127,7 @@ return {
 
   -- nvim-lint {{{
   -- https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file
+  -- An asynchronous linter plugin complementary to the built-in Language Server Protocol support.
   {
     'mfussenegger/nvim-lint',
     event = {
@@ -153,7 +158,6 @@ return {
       }
 
       -- TODO: finish off the custom ruff linter.
-
       -- Args for ruff
       local ruff_linter = lint.linters.ruff
       ruff_linter.args = {
@@ -191,18 +195,23 @@ return {
 
   -- plugin-readme {{{
   -- https://github.com/selectnull/plugin-readme.nvim
-        --
-        {
-          "selectnull/plugin-readme.nvim",
-          dependencies = {
-            "nvim-telescope/telescope.nvim",
-          },
-          config = function()
-            local readme = require "plugin-readme"
-            vim.keymap.set("n", "<leader>hp", readme.select_plugin, {})
-          end,
-        },
-    -- }}}
+  -- When you mess with the Neovim configuration (instead of working), it's
+  -- often needed to read the plugin documentation. This plugin attempts to
+  -- make that easier.
+  --
+  -- List all installed plugins and preview their README file. Press ENTER and
+  -- open the plugin github repository in a browser
+  {
+    "selectnull/plugin-readme.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      local readme = require "plugin-readme"
+      vim.keymap.set("n", "<leader>hp", readme.select_plugin, {})
+    end,
+  },
+  -- }}}
 
   -- todo-comments {{{
   -- https://www.github.com/folke/todo-comments.nvim

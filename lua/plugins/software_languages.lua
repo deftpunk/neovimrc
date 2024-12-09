@@ -1,12 +1,19 @@
 return {
 
-  -- Clojure {{{
-
+  -- Conjure
+  -- An interactive environment for evaluating code within your program
+  --
+  -- Quickstarts for CL, Clojure (nREPL & babashka)
+  -- https://github.com/Olical/conjure/wiki/Quick-start:-Common-Lisp-(Swank)
+  -- https://github.com/Olical/conjure/wiki/Quick-start:-Clojure
+  -- https://github.com/Olical/conjure/wiki/Quick-start:-Clojure-(babashka)
   {
     'Olical/conjure',
     ft = { "clojure", "python" },
     lazy = true,
   },
+
+  -- Clojure {{{
 
   -- {
   --   'liquidz/vim-iced',
