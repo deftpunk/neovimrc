@@ -55,6 +55,26 @@ return {
   },
   -- }}}
 
+  -- telescope-lazy-plugins.nvim {{{
+  -- https://github.com/polirritmico/telescope-lazy-plugins.nvim
+  -- Quickly access the configuration of plugins managed by lazy
+  {
+    "polirritmico/telescope-lazy-plugins.nvim",
+    keys = {
+      {
+        "<leader>hc",
+        ":Telescope lazy_plugins<cr>",
+        mode = {"n"},
+        silent = true,
+        desc = "Access the configuration of plugins."
+      },
+    },
+    config = function()
+      require("telescope").load_extension("lazy_plugins")
+    end
+  },
+    -- }}}
+
   -- telescope-heading.nvim {{{
   -- https://github.com/crispgm/telescope-heading.nvim
   -- Headings for Markdown, Restructured Text & help files.
@@ -76,6 +96,21 @@ return {
       require("telescope").load_extension('heading')
     end,
   },
+
+  -- telescope-git-file-history.nvim {{{
+  -- https://github.com/isak102/telescope-git-file-history.nvim
+  {
+    "isak102/telescope-git-file-history.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "tpope/vim-fugitive"
+    },
+    config = function(_, opts)
+      require("telescope").load_extension("git_file_history")
+    end,
+  },
+  -- }}}
+
   -- }}}
 
 
