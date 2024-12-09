@@ -2,9 +2,10 @@
 local augroup = vim.api.nvim_create_augroup   -- Create/get autocommand group
 local autocmd = vim.api.nvim_create_autocmd   -- Create autocommand
 
+-- Toggle treesitter highlighting if the buffer has more than 10K lines.
  autocmd( {"InsertLeave", "InsertEnter"},
 { pattern = "*", callback = function()
-if vim.api.nvim_buf_line_count(0) > 10000 then vim.cmd("TSToggle highlight") end
+if vim.api.nvim_buf_line_count(0) > 10001 then vim.cmd("TSToggle highlight") end
 end })
 
 -- Disable line length (color column) for some filetypes
