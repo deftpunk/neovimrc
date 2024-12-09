@@ -38,7 +38,6 @@ return {
     config = function()
       vim.o.showtabline = 2  -- always display the tabline.
       require('tabby').setup({
-        preset = 'active_wins_at_tail',
         lualine_theme = 'tokyonight',
         nerdfront = true,
       })
