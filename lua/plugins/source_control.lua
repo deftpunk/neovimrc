@@ -106,14 +106,70 @@ return {
   },
   -- }}}
 
+  -- gitgraph.nvim {{{
+  -- https://github.com/isakbm/gitgraph.nvim
+  -- View a git graph of the current repo.
+  {
+    'isakbm/gitgraph.nvim',
+    dependencies = {
+      'sindrets/diffview.nvim',
+    },
+    opts = {
+      symbols = {
+        merge_commit = 'M',
+        commit = '*',
+      },
+      format = {
+        timestamp = '%H:%M:%S %d-%m-%Y',
+        fields = { 'hash', 'timestamp', 'author', 'branch_name', 'tag' },
+      },
+      hooks = {
+        -- Use Diffview
+        -- Check diff of a commit.
+        on_select_commit = function(commit)
+          vim.notify('DiffviewOpen ' .. commit.hash .. '^!')
+          vim.cmd(':DiffviewOpen ' .. commit.hash .. '^!')
+        end,
+        -- Check diff from commit a -> commit b
+        on_select_range_commit = function(from, to)
+          vim.notify('DiffviewOpen ' .. from.hash .. '~1..' .. to.hash)
+          vim.cmd(':DiffviewOpen ' .. from.hash .. '~1..' .. to.hash)
+        end,
+      },
+    },
+    keys = {
+      { "<leader>gh",
+        function()
+          require('gitgraph').draw({}, { all = true, max_count = 5000 })
+        end,
+        desc = "GitGraph - Draw",
+      },
+    },
+  },
+  -- }}}
+
   -- gitsigns.nvim {{{
+  -- https://github.com/lewis6991/gitsigns.nvim
   -- Super fast git decorations.
   -- Integrates with vim-fugitive, repeat (repeat) staging, trouble.nvim
-  -- https://github.com/lewis6991/gitsigns.nvim
   {
     'lewis6991/gitsigns.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
+
+      -- Traverse different change hunks.
+      local prev_hunk = function()
+        require("gitsigns").prev_hunk({ navigation_message = false })
+        vim.cmd([[normal! zz]])
+      end
+      vim.keymap.set("n", "gk", prev_hunk)
+
+      local next_hunk = function()
+        require("gitsigns").next_hunk({ navigation_message = false })
+        vim.cmd([[normal! zz]])
+      end
+      vim.keymap.set("n", "gj", next_hunk)
+
       require('gitsigns').setup {
         watch_gitdir = {
           interval = 1000,
