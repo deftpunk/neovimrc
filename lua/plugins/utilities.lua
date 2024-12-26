@@ -114,50 +114,6 @@ return {
   },
   -- }}}
 
-  -- neovim-project {{{
-  -- https://github.com/coffebar/neovim-project
-  -- Neovim project plugin simplifies project management by maintaining project
-  -- history and providing quick access to saved sessions via Telescope. It runs on
-  -- top of the Neovim Session Manager, which is needed to store all open tabs and
-  -- buffers for each project.
-  --
-  --     ✅ Start where you left off last time.
-  --     ✅ Switch from project to project in second.
-  --     ✅ Sessions and history can be synced across your devices (rsync, Syncthing, Nextcloud, Dropbox, etc.)
-  --     ✅ Find all your projects by glob patterns defined in config.
-  --     ✅ Autosave neo-tree.nvim expanded directories and buffers order in barbar.nvim.
-  --
-  -- Neovim project manager will add these commands:
-  --
-  --     :Telescope neovim-project discover - find a project based on patterns.
-  --     :Telescope neovim-project history - select a project from your recent history.
-  --     :NeovimProjectLoadRecent - open the previous session.
-  --     :NeovimProjectLoadHist - opens the project from the history providing a project dir.
-  --     :NeovimProjectLoad - opens the project from all your projects providing a project dir.
-  --
-  -- History is sorted by access time. "Discover" keeps order as you have in the config.
-  -- Telescope mappings
-  -- Use Ctrl+d in Telescope to delete the project's session and remove it from the history.
-  -- {
-  --   "coffebar/neovim-project",
-  --   opts = {
-  --     projects = { -- define project roots
-  --     },
-  --   },
-  --   init = function()
-  --     -- enable saving the state of plugins in the session
-  --     vim.opt.sessionoptions:append("globals") -- save global variables that start with an uppercase letter and contain at least one lowercase letter.
-  --   end,
-  --   dependencies = {
-  --     { "nvim-lua/plenary.nvim" },
-  --     { "nvim-telescope/telescope.nvim"},
-  --     { "Shatur/neovim-session-manager" },
-  --   },
-  --   lazy = false,
-  --   priority = 100,
-  -- },
-  -- }}}
-
   -- numb.nvim {{{
   -- https://github.com/nacro90/numb.nvim
   -- Peeking the buffer while entering command :{number}
@@ -286,29 +242,28 @@ return {
   },
   -- }}}
 
-  -- repolink.nvim
-  -- https://github.com/9seconds/repolink.nvim
-  -- Helps you to link a file or a line range in a file to some URL that you
-  -- can use to share with your colleagues.
-  {
-    "9seconds/repolink.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim"
-    },
-    cmd = {
-      "RepoLink"
-    },
+  -- TODO: resty.nvim vs rest.nvim
 
-    config = function()
-      require("repolink").setup({
-        -- your configuration goes here.
-        -- keep empty object if you are fine with defaults
-        url_builders = {
-          ["github.hpe.com"] = require("repolink").url_builder_for_github("https://github.hpe.com"),
-        },
-      })
-    end,
+  -- rest.nvim {{{
+  -- https://github.com/rest-nvim/rest.nvim
+  -- A very fast, powerful, extensible and asynchronous Neovim HTTP client written in Lua.
+  -- {
+  --   'rest-nvim/rest.nvim',
+  --   -- first load extension
+  --   require("telescope").load_extension("rest")
+  --   -- then use it, you can also use the `:Telescope rest select_env` command
+  --   require("telescope").extensions.rest.select_env()
+  -- },
+  -- }}}
+
+  -- resty.nvim {{{
+  -- https://github.com/lima1909/resty.nvim
+  -- A fast and easy-to-use HTTP REST client for neovim, completely in lua.
+  {
+    'lima1909/resty.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
   },
+  -- }}}
 
   -- nvim-possession.nvim & scope.nvim {{{
   -- https://github.com/tiagovla/scope.nvim
