@@ -26,6 +26,19 @@ return {
         options = {
           theme  = 'tokyonight',
         },
+        sections = {
+          -- lualine_a = ...
+          -- lualine_b = ...
+          lualine_c = {
+              { "filename", path = 1 },
+              {
+                  require("nvim-possession").status,
+                  cond = function()
+                      return require("nvim-possession").status() ~= nil
+                  end,
+              },
+          },
+        },
       }
     end,
   },
@@ -92,7 +105,7 @@ return {
     'AssailantLF/vim-active-numbers',
     config = function()
       vim.g.active_number = 1
-      vim.g.actnum_exclude = { "help", "neo-tree", "fugitive", "terminal" }
+      vim.g.actnum_exclude = { "help", "neo-tree", "fugitive", "terminal", "lazy" }
     end,
   },
   -- }}}
