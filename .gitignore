@@ -25,6 +25,9 @@ __Scratch__
 neovim-scratch.txt
 vim-keys*
 vim_keys*
+*.orig
+*.bak
+*.backup
 
 # Tags
 tags
