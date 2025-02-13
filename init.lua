@@ -22,12 +22,7 @@ require('core/colorscheme')
 require('core/keymaps')
 require('core/abbreviations')
 
--- Scratch pad: https://github.com/LintaoAmons/scratch.nvim
 -- global bookmarks: https://github.com/LintaoAmons/bookmarks.nvim
-
--- Task running
--- https://github.com/catgoose/do-the-needful.nvim
---   - requires Tmux
 
 -- TODO: Investigate (nvr) https://github.com/mhinz/neovim-remote
 -- if [[ ! -z "$NVIM" ]]; then
@@ -88,7 +83,7 @@ require('core/abbreviations')
 -- https://github.com/piersolenski/telescope-import.nvim
 -- https://github.com/dhruvmanila/browser-bookmarks.nvim
 -- https://github.com/crispgm/telescope-heading.nvim
---
+
 -- Investigate: {{{
 --
 -- https://github.com/haya14busa/vim-edgemotion
@@ -106,8 +101,7 @@ require('core/abbreviations')
 -- https://github.com/NvChad/nvterm
 --
 -- Source Control (git):
--- https://github.com/ruifm/gitlinker.nvim
---
+
 -- split resizing and navigation
 
 -- Different autosave plugins
@@ -118,11 +112,3 @@ require('core/abbreviations')
 -- Should I ever have the need for guessing indentation
 -- nmac427/guess-indent.nvim
 -- }}}
-
---
--- DONE: Tried out tardis.nvim -> not an improvement over other plugins.
--- DONE: Tried out SuperBo/fugit2.nvim
---       - very fast
---       - installation was a pain, had to create /usr/local/opt/lib, copy libgit2.dynlib into despite using the libgit2_path option under opts
---       - the GitHub integration with tiny-git didn't work
---       - fewer features than Neogit
