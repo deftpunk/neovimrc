@@ -68,7 +68,7 @@ return {
     'AssailantLF/vim-active-numbers',
     config = function()
       vim.g.active_number = 1
-      vim.g.actnum_exclude = { "help", "neo-tree", "fugitive", "terminal", "lazy" }
+      vim.g.actnum_exclude = { "help", "neo-tree", "DiffviewFiles", "DiffviewFilePanel", "fugitive", "iron", "terminal", "lazy" }
     end,
   },
   -- }}}

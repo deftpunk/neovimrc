@@ -2,7 +2,7 @@
 
 -- Leader & localleader
 vim.g.mapleader = " "
-vim.g.maplocalleader = ","
+vim.g.maplocalleader = ";"
 
 -- Folding
 -- These values are set for nvim-ufo.
@@ -16,6 +16,7 @@ vim.o.foldlevelstart = 99
 vim.o.laststatus = 1
 -- FIX: this is causing an issue for some reason
 -- vim.o.fillchars:append { eob = "~" }
+vim.o.showtabline = 2  -- always display the tabline.
 
 vim.o.termguicolors = true
 vim.o.syntax = 'on'
@@ -89,6 +90,18 @@ vim.o.clipboard='unnamedplus'
 vim.env.VISUAL = 'nvr -cc split --remote-wait'
 vim.env.PYTHONUNBUFFERED = 1
 vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
+
+-- This is for nvim-possession and scope.nvim -> see utilities.lua
+vim.opt.sessionoptions = { -- required
+  "blank",
+  "buffers",
+  "tabpages",
+  "globals",
+  "curdir",
+  "terminal",
+  "winsize",
+  "help",
+}
 
 -- Fri Apr 28 2023 11:10:41 -> put this in to try and get undercurl properly working on iTerm
 vim.cmd([[

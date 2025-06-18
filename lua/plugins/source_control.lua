@@ -12,6 +12,18 @@ return {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope.nvim',
     },
+    keys = {
+      -- Toggle a side-by-side blame buffer - modify the format to show the short summary.
+      { "<leader>gb", function() require('agitator').git_blame_toggle({ sidebar_width=35, formatter=function(r)
+          local default_row = string.format('%02d-%02d-%02d %s', r.date.year, r.date.month, r.date.day, r.author)
+          return default_row .. " => " .. r.summary; end}) end, desc = "Toggle a side-by-side git buffer blame." },
+      { "<leader>gd",
+        function()
+          local commit_sha = require"agitator".git_blame_commit_for_line()
+          vim.cmd("DiffviewOpen " .. commit_sha .. "^.." .. commit_sha)
+        end,
+        desc = "Display the commit for the current line of code." },
+    },
   },
   -- }}}
 
@@ -54,6 +66,42 @@ return {
   {
     'sindrets/diffview.nvim',
     dependencies = {'nvim-lua/plenary.nvim'},
+    config = function ()
+      require("diffview").setup({
+        view = {
+          default = {
+            winbar_info = true,
+          },
+          merge_tool = {
+            layout = "diff4_mixed",
+          },
+        },
+        file_panel = {
+          win_config = {
+            width = 45,
+          },
+        },
+      })
+    end
+  },
+  -- }}}
+
+  -- gh.nvim {{{
+  -- https://github.com/ldelossa/gh.nvim
+  -- Interactive review of PRs on GitHub.
+  {
+      "ldelossa/gh.nvim",
+      dependencies = {
+          {
+          "ldelossa/litee.nvim",
+          config = function()
+              require("litee.lib").setup()
+          end,
+          },
+      },
+      config = function()
+          require("litee.gh").setup()
+      end,
   },
   -- }}}
 
@@ -81,6 +129,9 @@ return {
       })
 
     end,
+    keys = {
+      { "<leader>gg", ":Neogit<cr>", mode = {"n"}, desc = "Neogit" },
+    },
   },
   -- }}}
 
@@ -88,21 +139,32 @@ return {
   -- https://github.com/f-person/git-blame.nvim
   -- Show a blame message for the line as well as some other useful commands.
   --
-  -- :GitBlameOpenCommitURL opens the commit URL of commit under the cursor.
-  -- Tested to work with GitHub and GitLab.
-  --
   -- :GitBlameToggle toggles git blame on/off,
   -- :GitBlameCopySHA copies the SHA hash of current line's commit into the system's clipboard.
   -- :GitBlameCopyCommitURL copies the commit URL of current line's commit into the system clipboard.
   -- :GitBlameOpenFileURL opens the file in the default browser.
-  -- :GitBlameCopyFileURL copies the file URL into the system clipboard.
+  --
+  -- :GitBlameCopyFileURL WE DON'T USE THIS ONE BECAUSE repolink.nvim provides a URL for selections as well.
   --
   -- TODO: set some of the config variables, e.g. use a different highlight group.
   {
     "f-person/git-blame.nvim",
+    event = "VeryLazy",
     config = function()
-      require('gitblame').setup{}
+      -- For some reason this works but opts = { enabled = false } DOESNT?
+      vim.cmd[[
+        let g:gitblame_enabled = 0
+      ]]
+      require('gitblame').setup()
     end,
+    keys = {
+      { "<leader>tb", ":GitBlameToggle<cr>", desc = "Toggle the inline blame." },
+      { "<leader>gl", ":GitBlameCopyFileURL<cr>", desc = "Copy the File URL to clipboard." },
+      { "<leader>gc", ":GitBlameCopyCommitURL<cr>", desc = "Copy the Commit URL to clipboard." },
+      { "<leader>gof", ":GitBlameOpenFileURL<cr>", desc = "Open file URL in browser." },
+      { "<leader>goc", ":GitBlameOpenCommitURL<cr>", desc = "Open commit Sha URL in browser." },
+      { "<leader>gs", ":GitBlameCopySHA<cr>", desc = "Copy current line's SHA in clipboard." },
+    },
   },
   -- }}}
 
@@ -138,12 +200,46 @@ return {
       },
     },
     keys = {
-      { "<leader>gh",
+      { "<leader>gr",
+        function()
+          require('gitgraph').draw({}, { all = false, max_count = 1000 })
+        end,
+        desc = "GitGraph - Draw just this branch.",
+      },
+      { "<leader>gR",
         function()
           require('gitgraph').draw({}, { all = true, max_count = 5000 })
         end,
         desc = "GitGraph - Draw",
       },
+    },
+    symbols = {
+      merge_commit = '',
+      commit = '',
+      merge_commit_end = '',
+      commit_end = '',
+
+      -- Advanced symbols
+      GVER = '',
+      GHOR = '',
+      GCLD = '',
+      GCRD = '╭',
+      GCLU = '',
+      GCRU = '',
+      GLRU = '',
+      GLRD = '',
+      GLUD = '',
+      GRUD = '',
+      GFORKU = '',
+      GFORKD = '',
+      GRUDCD = '',
+      GRUDCU = '',
+      GLUDCD = '',
+      GLUDCU = '',
+      GLRDCL = '',
+      GLRDCR = '',
+      GLRUCL = '',
+      GLRUCR = '',
     },
   },
   -- }}}
@@ -197,16 +293,21 @@ return {
   -- r	Toggle word diff hunks only in current file of the commit
   -- R	Toggle all word diff hunks of current commit
   -- ?	Show mappings help
+  -- TODO: Thu Jan 30 2025 15:54:26 - check https://github.com/lsig/messenger.nvim .  Move if it matches functionality.
   {
     "rhysd/git-messenger.vim",
     config = function()
       vim.cmd[[
+        let g:git_messenger_no_default_mappings=v:true
         let g:git_messenger_always_into_popup=v:true
         let g:git_messenger_include_dir="current"
         let g:git_messenger_floating_win_opts = { 'border': 'single'}
         let g:git_messenger_popup_content_margins = v:false
       ]]
     end,
+    keys = {
+      { "<leader>gm", ":GitMessenger<cr>", mode = {'n'}, desc = "GitMessenger" },
+    },
   },
   -- }}}
 
@@ -218,8 +319,14 @@ return {
   -- Add Review PRs
   -- * NEEDS GitHub CLI installed *
   -- TODO: bindings for Octo
+  --
+  -- Tue Feb 18 2025 16:58:21
+  -- Pinning to a specific commit since octo.nvim + gh have updated but HPE hasn't updated the version.
+  -- https://github.com/pwntester/octo.nvim/issues/685
   {
     'pwntester/octo.nvim',
+    commit = 'f09ff9413652e3c06a6817ba6284591c00121fe0',
+    pin = true,
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-telescope/telescope.nvim',
@@ -227,7 +334,14 @@ return {
     },
     cmd = 'Octo',
     config = function() require('octo').setup() end,
+
   },
   -- }}}
+
+  {
+    'fredeeb/tardis.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = true,
+},
 
 }

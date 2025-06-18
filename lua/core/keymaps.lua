@@ -19,26 +19,7 @@ map({'n', 'v', 's', 'x', 'o', 'i', 'l', 'c', 't'},
 -- Plugin Keymaps {{{
 
 -- TodoTrouble mapping is global in your current directory.
-map('n', 'gr', '<cmd>TodoTrouble<cr>', { desc = "Open Todo list in Trouble." })
-
--- FzfLua bindings
-map('n', '<leader>ff', "<cmd>lua require('fzf-lua').files()<CR>", { silent = true, desc = "FzfLua find files." })
-map('n', '<leader>fr', "<cmd>lua require('fzf-lua').oldfiles()<CR>", { silent = true, desc = "FzfLua recent files." })
-map('n', '<leader>i', "<cmd>lua require('fzf-lua').buffers()<CR>", { silent = true, desc = "FzfLua open buffers." })
-map('n', '<D-i>', "<cmd>lua require('fzf-lua').buffers()<CR>", { silent = true, desc = "FzfLua open buffers." })
-
-map('n', '<leader>r', "<cmd>lua require('fzf-lua').grep()<CR>", { silent = true, desc = "FzfLua ripgrep the current project." })
-map('n', '<leader>s', "<cmd>lua require('fzf-lua').blines()<CR>", { silent = true, desc = "FzfLua search lines in buffer." })
-
-map('n', '<leader>cr', "<cmd>lua require('fzf-lua').resume()<cr>", { silent = true, desc = "Resume FzfLua." })
-
--- Source Control related bindings.
-map('n', '<leader>gg', ':Neogit<cr>', { desc = "Neogit." })
-map('n', '<leader>gd', ':DiffviewOpen<cr>', { desc = "Diffview." })
-map('n', '<leader>gl', ':Neogit log<cr>', { desc = "Neogit - git log." })
-map('n', '<leader>gL', ':DiffviewFileHistory %<cr>', { desc = "DiffviewFileHistory for the current file." })
-map('n', '<leader>gm', ':GitMessenger<cr>', { desc = "Git Messenger."})
-map("n", "<leader>gs", ":Gitsigns toggle_current_line_blame<cr>", { silent = true, desc = "Toggle current line blame."})
+-- map('n', 'gr', '<cmd>TodoTrouble<cr>', { desc = "Open Todo list in Trouble." })
 
 -- argwrapping with trevJ
 map('n', 'gw', "<cmd>lua require('trevj').format_at_cursor()<cr>.", { desc = "Wrap arguments." })
@@ -58,11 +39,6 @@ map('n', '<leader>tg', '<cmd>Neotree git_status toggle position=float<cr>')
 
 -- ToggleTerm
 map('n', '<leader>tt', '<cmd>exe v:count1 . "ToggleTerm size=25 direction=horizontal"<CR>', { silent = true, desc = "Toggle a Terminal" })
-
--- flash
-map('n', 'gs', function()
-  require('flash').jump() end,
-{ desc = "Flash" })
 
 -- Using ufo provider need remap `zR` and `zM`.
 map('n', 'zR', require('ufo').openAllFolds, { desc = "nvim-ufo: Open all folds."})
@@ -144,6 +120,13 @@ map('n', '<leader>w', ':w<cr>', { desc = "Save the current buffer." })
 map('n', '<leader><leader>l', 'zz')
 map('n', '<D-l>', 'zz')
 
+-- Source the lua file that we are in.
+map('n','<leader><leader>x', '<cmd>source %<cr>')
+-- Run the current line of lua
+map('n','<leader>x', ':.lua<cr>')
+-- Run some lua on the cmdline.
+map('v','<leader>x', ':lua<cr>')
+
 -- Open another instance of Neovide from w/in Neovide.
 -- Fri Sep 27 2024 09:57:44 - This doesn't work as well as hoped.  It opens a
 -- 2nd+ Neovide but you can only access/use the successive ones opened??
@@ -152,7 +135,7 @@ map('n', '<D-l>', 'zz')
 -- end
 
 -- The fill-paragraph equivalent.
-map('n', '<leader>=', 'gqq')
+map('n', '<leader=', 'gqq')
 
 -- Toggle search highlight.
 map('n', '<leader>th',

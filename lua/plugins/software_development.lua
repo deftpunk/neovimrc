@@ -1,3 +1,5 @@
+-- vim: nu fdm=marker
+
 return {
 
   -- Comment.nvim {{{
@@ -13,11 +15,58 @@ return {
   -- Use with text-objects
   -- Supports pre and post hooks
   -- Ignore certain lines, powered by Lua regex
+  --
+  -- NORMAL mode
+  -- `gcc` - Toggles the current line using linewise comment
+  -- `[count]gcc` - Toggles the number of line given as a prefix-count using linewise
+  -- `[count]gbc` - Toggles the number of line given as a prefix-count using blockwise
+  -- `gc[count]{motion}` - (Op-pending) Toggles the region using linewise comment
+  --
+  -- VISUAL mode
+  -- gc - Toggles the region using linewise comment.
+  --
+  -- EXTRA
+  -- gco - Insert comment to the next line & enters INSERT mode.
+  -- gc0 - Insert comment to the previous line & enters INSERT mode.
+  -- gcA - Insert comment to the end of the current line & enters INSERT mode.
   {
     'numToStr/Comment.nvim',
     config = function()
-      require('Comment').setup()
+      require('Comment').setup({
+        -- TODO: figure out the mapping.
+        -- ignore = '^$',  -- ignore empty lines.
+        -- toggler = {
+        --   line = '<leader>cc',
+        --   block = '<leader>bc',
+        -- },
+        -- opleader = {
+        --   line = '<leader>c',
+        --   block = '<leader>b',
+        -- },
+      })
     end,
+  },
+  -- }}}
+
+  -- comment-box.nvim {{{
+  -- https://github.com/LudoPinelli/comment-box.nvim
+  -- Make comment boxes, lines & other things to make comments "pop" better.
+  --
+  -- Select existing line/paragraph
+  -- :CBllbox1
+  --
+  -- Title comment:
+  -- type title in INSERT mode
+  -- Visually select
+  -- :CBllline6
+  --
+  -- Simple line separator:
+  -- :CBllline
+  {
+    'LudoPinelli/comment-box.nvim',
+    keys = {
+      { "<leader>cl", ":CBllline", mode = { "n" }, desc = "Simple line separator." },
+    },
   },
   -- }}}
 
@@ -56,6 +105,51 @@ return {
         -- scope = { enabled = true },
       })
       hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+    end,
+  },
+  -- }}}
+
+  -- iron.nvim {{{
+  -- https://github.com/Vigemus/iron.nvim
+  -- Interactive REPLs over Neovim -> get a REPL
+  -- NOTE: Mon Feb 03 2025 09:17:28 - trying this out for ipython/python instead of Conjure.
+  {
+    'Vigemus/iron.nvim',
+    config = function(plugins, opts)
+
+      local iron = require('iron.core')
+      local view = require('iron.view')
+      local common = require('iron.fts.common')
+
+      iron.setup {
+        config = {
+          scratch_repl = true,
+          repl_definition = {
+            python = require('iron.fts.python').ipython,
+          },
+          repl_open_cmd = "vertical botright 80 split",
+        },
+        keymaps = {
+          toggle_repl = "<space>rr",
+          restart_repl = "<space>rR", -- calls `IronRestart` to restart the repl
+          send_motion = "<space>sc",
+          visual_send = "<space>sc",
+          send_file = "<space>sf",
+          send_line = "<space>sl",
+          send_paragraph = "<space>sp",
+          send_until_cursor = "<space>su",
+          send_mark = "<space>sm",
+          send_code_block = "<space>sb",
+          send_code_block_and_move = "<space>sn",
+          mark_motion = "<space>mc",
+          mark_visual = "<space>mc",
+          remove_mark = "<space>md",
+          cr = "<space>s<cr>",
+          interrupt = "<space>s<space>",
+          exit = "<space>sq",
+          clear = "<space>cl",
+        },
+      }
     end,
   },
   -- }}}
@@ -208,7 +302,7 @@ return {
     },
     config = function()
       local readme = require "plugin-readme"
-      vim.keymap.set("n", "<leader>hp", readme.select_plugin, {})
+      vim.keymap.set("n", "<leader>hp", readme.select_plugin, { silent = true, desc = "Telescope Preview/Goto the plugin README files & help docs." })
     end,
   },
   -- }}}
@@ -224,7 +318,7 @@ return {
           alt = { "FIXME", "BUG", "FIXIT", "ISSUE", "XXX", "FIX", "TESTING", "ERICK" },
         },
         NOTE = {
-          alt = { "NOTE", "INFO", "DONE" },
+          alt = { "NOTE", "INFO", "DONE", "DISCUSS" },
         },
         highlight = {
           max_line_len = 200,

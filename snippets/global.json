@@ -1,0 +1,5 @@
+{
+  "Variables":    { "prefix": "va", "body": "Runtime: $VIMRUNTIME\n"    },
+  "HPE email": { "prefix": "eb", "body": "erick.bodine@hpe.com" }
+}
+

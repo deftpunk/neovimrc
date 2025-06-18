@@ -73,7 +73,73 @@ return {
       require("telescope").load_extension("lazy_plugins")
     end
   },
-    -- }}}
+  -- }}}
+
+  -- telescope-hierarchy.nvim {{{
+  -- https://github.com/jmacadie/telescope-hierarchy.nvim
+  -- :Telescope hierarchy incoming_calls opens a Telescope window. It finds all
+  -- incoming calls (i.e. other functions) of the function under the current
+  -- cursor. Recursive searches are only done on request when the function node
+  -- is first attempted to be expanded.
+  --
+  -- :Telescope hierarchy outgoing_calls will do the same but in the other
+  -- direction, so find the definition location of all functions the current
+  -- function calls.
+  --
+  -- Don't worry about committing to the right 'direction', the plugin can also
+  -- toggle the direction it is looking in whilst the Telescope session is
+  -- running. This means switching from functions that call the current
+  -- function to functions the current function calls (incoming -> outgoing)
+  -- and vice versa. See below in the keymaps for how to do this.
+  --
+  -- The finder window is opened in normal mode, since filtering the results
+  -- tree doesn't make much sense.
+  --
+  -- The following keymaps are set:
+  -- Key 	Action
+  -- e, l or → 	Expand the current node: this will recursively find all
+  -- incoming calls of the current node. It will only go the next level deep
+  -- though
+  --
+  -- c, h or ← 	Collapse the current node: the child calls are still found,
+  -- just hidden in the finder window
+  --
+  -- E 	Expand the current node 5 layers: Like e but will go through up to 5
+  -- layers recursively. This could in theory be adapted to any depth you want,
+  -- see expand_all_to() in actions
+  --
+  -- t 	Toggle the expanded state of the current node
+  --
+  -- s 	Switch the direction of the Call hierarchy and toggle between incoming
+  -- and outgoing calls
+  --
+  -- d 	Goto the definition of the current node, not the place it is being
+  -- called, which is what Telescope shows
+  --
+  -- CR 	Navigate to the function call shown
+  --
+  -- q or ESC 	Quit the Telescope finder
+  {
+    "jmacadie/telescope-hierarchy.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    keys = {
+      { "<leader>li",
+        "<cmd>Telescope hierarchy incoming_calls<cr>",
+        desc = "LSP: Search [i]ncoming calls.",
+      },
+      {
+        "<leader>lo",
+        "<cmd>Telescope hierarchy outgoing_calls<cr>",
+        desc = "LSP: Search [o]utgoing calls.",
+      },
+    },
+    config = function(_,opts)
+      require("telescope").setup(opts)
+      require("telescope").load_extension('hierarchy')
+    end,
+
+  },
+  -- }}}
 
   -- telescope-heading.nvim {{{
   -- https://github.com/crispgm/telescope-heading.nvim

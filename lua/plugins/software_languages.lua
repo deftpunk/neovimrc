@@ -11,7 +11,66 @@ return {
     'Olical/conjure',
     ft = { "clojure", "python" },
     lazy = true,
+    config = function()
+      vim.cmd[[
+        let g:conjure_log_wrap=v:true
+      ]]
+    end,
   },
+
+  -- FIXME: Mon Apr 07 2025 17:19:59 -> THis is not working w/ 0.11 for some reason.
+  -- nvim-treesitter-sexp {{{
+  -- https://github.com/PaterJason/nvim-treesitter-sexp
+  -- {
+  --   'PaterJason/nvim-treesitter-sexp',
+  --   config = function()
+  --     require("treesitter-sexp").setup {
+  --       -- Enable/disable
+  --       enabled = true,
+  --       -- Move cursor when applying commands
+  --       set_cursor = true,
+  --       -- Set to false to disable all keymaps
+  --       keymaps = {
+  --         -- Set to false to disable keymap type
+  --         commands = {
+  --           -- Set to false to disable individual keymaps
+  --           swap_prev_elem = "<e",
+  --           swap_next_elem = ">e",
+  --           swap_prev_form = "<f",
+  --           swap_next_form = ">f",
+  --           promote_elem = "<LocalLeader>O",
+  --           promote_form = "<LocalLeader>o",
+  --           splice = "<LocalLeader>@",
+  --           slurp_left = "<(",
+  --           slurp_right = ">)",
+  --           barf_left = ">(",
+  --           barf_right = "<)",
+  --           insert_head = "<I",
+  --           insert_tail = ">I",
+  --         },
+  --         motions = {
+  --           form_start = "(",
+  --           form_end = ")",
+  --           prev_elem = "[e",
+  --           next_elem = "]e",
+  --           prev_elem_end = "[E",
+  --           next_elem_end = "]E",
+  --           prev_top_level = "[[",
+  --           next_top_level = "]]",
+  --         },
+  --         textobjects = {
+  --           inner_elem = "ie",
+  --           outer_elem = "ae",
+  --           inner_form = "if",
+  --           outer_form = "af",
+  --           inner_top_level = "iF",
+  --           outer_top_level = "aF",
+  --         },
+  --       },
+  --     }
+  --   end,
+  -- },
+  -- }}}
 
   -- Clojure {{{
 
@@ -42,6 +101,65 @@ return {
   -- }}}
 
   -- Common Lisp {{{
+  -- https://gitlab.com/HiPhish/quicklisp.nvim
+  -- }}}
+
+  -- CSV {{{
+
+  -- csvview.nvim {{{
+  -- https://github.com/hat0uma/csvview.nvim
+  {
+    'hat0uma/csvview.nvim',
+    opts = {
+      parser = {
+        comments = { "#", "//" },
+        quote_char = '"',
+        display_mode = "border",
+        sticky_header = {
+          enabled = true,
+          separator = "-",
+        },
+      },
+      keymaps = {
+        -- Text objects for selecting fields
+        textobject_field_inner = { "if", mode = { "o", "x" } },
+        textobject_field_outer = { "af", mode = { "o", "x" } },
+        -- Excel-like navigation:
+        -- Use <Tab> and <S-Tab> to move horizontally between fields.
+        -- Use <Enter> and <S-Enter> to move vertically between rows and place the cursor at the end of the field.
+        -- Note: In terminals, you may need to enable CSI-u mode to use <S-Tab> and <S-Enter>.
+        jump_next_field_end = { "<Tab>", mode = { "n", "v" } },
+        jump_prev_field_end = { "<S-Tab>", mode = { "n", "v" } },
+        jump_next_row = { "<Enter>", mode = { "n", "v" } },
+        jump_prev_row = { "<S-Enter>", mode = { "n", "v" } },
+      },
+    },
+    cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+  },
+  -- }}}
+
+  -- rainbow_csv.nvim {{{
+  -- https://github.com/cameron-wags/rainbow_csv.nvim?tab=readme-ov-file
+  -- {
+  --   'cameron-wags/rainbow_csv.nvim',
+  --   config = true,
+  --   ft = {
+  --       'csv',
+  --       'tsv',
+  --       'csv_semicolon',
+  --       'csv_whitespace',
+  --       'csv_pipe',
+  --       'rfc_csv',
+  --       'rfc_semicolon'
+  --   },
+  --   cmd = {
+  --       'RainbowDelim',
+  --       'RainbowDelimSimple',
+  --       'RainbowDelimQuoted',
+  --       'RainbowMultiDelim'
+  --   }
+  -- },
+  -- }}}
 
   -- }}}
 
@@ -92,6 +210,15 @@ return {
   -- }}}
 
   -- Rust {{{
+
+  -- rustaceanvim {{{
+  -- https://github.com/mrcjkb/rustaceanvim
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^6', -- Recommended
+    lazy = false, -- This plugin is already lazy
+  },
+  -- }}}
 
   -- }}}
 

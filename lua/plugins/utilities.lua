@@ -1,4 +1,20 @@
+-- vim: nu fdm=marker
 return {
+
+  -- auto-save.nvim {{{
+  -- https://github.com/okuuva/auto-save.nvim
+  -- Automatically save changed buffers in neovim.
+  {
+    'okuuva/auto-save.nvim',
+    version = '^1.0.0', -- see https://devhints.io/semver, alternatively use '*' to use the latest tagged release
+    cmd = "ASToggle", -- optional for lazy loading on command
+    event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
+    opts = {
+      -- your config goes here
+      -- or just leave it empty :)
+    },
+  },
+  -- }}}
 
   -- bigfile.nvim {{{
   -- https://github.com/LunarVim/bigfile.nvim
@@ -66,6 +82,11 @@ return {
         },
       },
     },
+    keys = {
+      { "gs", mode = { "n", "x", "o" }, function() require('flash').jump() end, desc = "Flash jump." },
+      -- selection base on treesitter parent+nodes
+      { "gS", mode = { "n", "x", "o" }, function() require('flash').treesitter() end, desc = "Flash treesitter." },
+    },
   },
   -- }}}
 
@@ -89,7 +110,7 @@ return {
   -- https://github.com/nvim-neo-tree/neo-tree.nvim
   --
   -- Tracking ticket for document_symbols feature.
-  -- https://github.com/nvim-neo-tree/neo-tree.nvim/issues/879
+  -- https://github.com/nvim-neo-tree/neo-tree.nvim
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -98,6 +119,7 @@ return {
       "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
     },
+    lazy = false,
     config = function()
 
       -- Unless you are still migrating, remove the deprecated commands from v1.x
@@ -108,6 +130,11 @@ return {
           "filesystem",
           "git_status",
           "document_symbols",
+        },
+        filesystem = {
+          filtered_items = {
+            hide_dotfiles = false,
+          },
         },
       })
     end,
@@ -202,9 +229,10 @@ return {
         -- keep the chars on the home row.
         chars = {'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';'}
       })
+      -- Make this stand out a little more.
       -- NOTE: Thu Feb 22 2024 10:02:33 font is not recongnized; at least the size 'h' isn't.
       vim.cmd[[
-      hi NvimWindowLetter guifg=#ff3393 guibg=#1e2030 font='Impact:h22'
+      hi NvimWindowLetter guifg=#ff3393 guibg=#000000 font='Impact:h22'
       ]]
     end,
   },
@@ -232,6 +260,49 @@ return {
     } end,
   },
   -- }}}
+
+  -- lazydocker.nvim {{{
+  -- https://github.com/mgierada/lazydocker.nvim
+  -- https://github.com/jesseduffield/lazydocker
+  --
+  -- Run lazydocker inside of a floating window.
+  --
+  -- keybindings for lazydocker: https://github.com/jesseduffield/lazydocker/blob/master/docs/keybindings/Keybindings_en.md
+  {
+    "mgierada/lazydocker.nvim",
+    dependencies = { "akinsho/toggleterm.nvim" },
+    config = function()
+      require("lazydocker").setup({
+        border = "curved", -- valid options are "single" | "double" | "shadow" | "curved"
+      })
+    end,
+    event = "BufRead",
+    keys = {
+      {
+        "<leader>ld",
+        function()
+          require("lazydocker").open()
+        end,
+        desc = "Open Lazydocker floating window",
+      },
+    },
+  },
+  -- }}}
+
+  -- mini.align {{{
+  -- https://github.com/echasnovski/mini.align
+  -- Align text interactively and w/ preview.
+  -- Start alignment w/ `ga` or `gA` then add alignment char.
+  {
+    'echasnovski/mini.align',
+    version = false,
+    config = function()
+      require('mini.align').setup()
+    end,
+  },
+  -- }}}
+
+  -- TODO: Is this useful?
 
   -- Recover.vim {{{
   -- https://github.com/chrisbra/Recover.vim
@@ -269,6 +340,8 @@ return {
   -- https://github.com/tiagovla/scope.nvim
   -- https://github.com/gennaro-tedesco/nvim-possession
   -- Session management & limit it to tabs with scope.nvim
+  -- NOTE: Bug in neovim related to active terminal in saved sessions: https://github.com/neovim/neovim/issues/4895
+  -- mention in nvim-possession -> https://github.com/gennaro-tedesco/nvim-possession/issues/32#issuecomment-1746871516
   {
     "gennaro-tedesco/nvim-possession",
     lazy = false,
@@ -282,7 +355,7 @@ return {
     },
     init = function()
       local possession = require("nvim-possession")
-        vim.keymap.set("n", "<leader>pl", function()
+        vim.keymap.set("n", "<leader>pp", function()
             possession.list()
         end, { desc = "List saved nvim-possession sessions." })
         vim.keymap.set("n", "<leader>pn", function()
@@ -297,7 +370,8 @@ return {
     end,
     config = function()
         require("nvim-possession").setup({
-            autoload = true,
+            autoload = false,
+            autoprompt = true,
             autoswitch = {
                 enable = true,
             },
@@ -312,34 +386,38 @@ return {
   },
   -- }}}
 
-  -- scratch.nvim {{{
-  -- https://github.com/LintaoAmons/scratch.nvim
-  -- Create temporary files.
+  -- snacks.nvim
+  -- https://github.com/folke/snacks.nvim
+  -- A collection of small QoL
   {
-    'LintaoAmons/scratch.nvim',
-    event = "VeryLazy",
-    dependencies = {
-      "ibhagwan/fzf-lua",
-      "stevearc/dressing.nvim",
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      bigfile = { enabled = false },      -- LunarVim/bigfile offers more granularity.
+      dashboard = { enabled = false },    -- needs to work w/ nvim-possession + scope to be useful.
+      dim = { enabled = false },          -- TODO: workout how to toggle.
+      git = { enabled = false },          -- other plugins work better.
+      gitbrowse = { enabled = false },    -- Octo.nvim does it better.
+      indent = { enabled = false },       -- TODO: investigate vs indent-blanckline.nvim
+      input = { enabled = true },
+      lazygit = { enabled = true },       -- TODO: compare w/ https://github.com/kdheepak/lazygit.nvim
+      notifier = { enabled = true },
+      quickfile = { enabled = true },
+      scroll = { enabled = true },
+      statuscolumn = { enabled = true },
+      words = { enabled = true },
     },
-    config = function()
-      require("scratch").setup({
-        scratch_file_dir = "~/WorkStuff/hpe_home",
-        window_cmd = "rightbelow vsplit",
-        use_telescope = false,
-        file_picker = "fzf_lua",
-        filetypes = { "md" },
-      })
-    end,
     keys = {
-      { "<leader>cs", ":Scratch<cr>", mode = {"n"}, desc = "Create new scratch file in scratch_file_dir" },
-      { "<leader>cn", ":ScratchWithName<cr>", mode = {"n"}, desc = "Create new scratch file w/ name." },
-      { "<leader>cf", ":ScratchOpenFzf<cr>", mode = {"n"}, desc = "Use fzf to open scratch file." },
+      { "<leader>gz", function() Snacks.lazygit() end, desc = "Snacks lazygit" },
     },
   },
-  -- }}}
 
   -- Sort.nvim {{{
+  -- https://github.com/sQVe/sort.nvim
   -- Line-wise and delimiter sorting NOT alignment.
   {
     'sQVe/sort.nvim',
@@ -356,6 +434,12 @@ return {
   -- vim-startuptime {{{
   -- https://github.com/dstein64/vim-startuptime
   -- View startup event timing information.
+  --
+  -- Launch vim-startuptime with :StartupTime.
+  -- Press K on events to get additional information.
+  -- Press gf on sourcing events to load the corresponding file in a new split.
+  -- The key sequences above can be customized (:help startuptime-configuration).
+  -- Times are in milliseconds.
   {
     "dstein64/vim-startuptime",
     -- lazy-load on a command
@@ -364,6 +448,9 @@ return {
     init = function()
       vim.g.startuptime_tries = 10
     end,
+    keys = {
+      { "<leader>hs", ":StartupTime", mode = {"n"}, desc = "View startup event timing information." },
+    },
   },
 
   -- vim-cool {{{
@@ -391,6 +478,11 @@ return {
         large_file_cutoff = 25000,
       })
     end,
+    keys = {
+      -- TODO: this doesn't work for some reason.
+      { "C-n", mode = { "n" }, function() require('illuminate').goto_next_reference() end,
+        desc = "Illuminate Goto next illuminated reference."},
+    },
   },
   -- }}}
 
@@ -410,6 +502,97 @@ return {
     "folke/which-key.nvim",
     config = function()
       require("which-key").setup()
+    end,
+  },
+  -- }}}
+
+  -- windows.nvim
+  -- https://github.com/anuvyklack/windows.nvim
+  -- This is like the C-b z "zoom" feature of tmux where you can zoom in on a
+  -- single window.
+  -- Automatically expand the width of the current window
+  -- Maximizes and restores the current window.
+  {
+    "anuvyklack/windows.nvim",
+    dependencies = {
+      "anuvyklack/middleclass",
+      "anuvyklack/animation.nvim"
+    },
+    config = function()
+      -- setup some animaation.
+      vim.o.winwidth = 10
+      vim.o.winminwidth = 10
+      vim.o.equalalways = false
+      require('windows').setup()
+    end,
+    keys = {
+      { "<C-w>z", "<Cmd>WindowsMaximize<cr>", mode = {"n"},
+      desc = "Maximize the current window or restore previous windows."},
+      -- Turn this off if we dont really are about the animation.
+      { "<C-w>=", "<Cmd>WindowsEqualize<cr>", mode = {"n"},
+      desc = "Make all windows (almost) equally high and wide (see :he CTRL-W_=)"},
+    },
+  },
+
+  -- arrow.nvim {{{
+  -- https://github.com/otavioschwanck/arrow.nvim
+  -- Arrow.nvim is a plugin made to bookmarks files (like harpoon) using a single UI (and single keymap).
+  {
+    "otavioschwanck/arrow.nvim",
+    dependencies = {
+      { "nvim-tree/nvim-web-devicons" },
+    },
+    opts = {
+      show_icons = true,
+      separate_by_branch = false, -- Bookmarks will be separated by git branch
+      leader_key = ',',           -- Recommended to be a single key - I already use ';' as my localleader
+      buffer_leader_key = 'm',    -- Per Buffer Mappings
+      per_buffer_config = {
+        lines = 2,
+      },
+    }
+  },
+  -- }}}
+
+  -- mini.splitjoin {{{
+  -- https://github.com/echasnovski/mini.splitjoin?tab=readme-ov-file
+  {
+    'echasnovski/mini.splitjoin',
+    version = false,
+    config = function()
+      require('mini.splitjoin').setup({
+        mappings = {
+          toggle = 'gj',
+        }
+      })
+    end,
+  },
+  -- }}}
+
+  -- mini.ai {{{
+  -- https://github.com/echasnovski/mini.ai
+  -- Extend and create a/i textobjects.
+  --
+  -- It enhances some builtin textobjects (like a(, a), a', and more), creates
+  -- new ones (like a*, a<Space>, af, a?, and more), and allows user to create
+  -- their own (like based on treesitter, and more).
+  --
+  -- Supports dot-repeat,
+  -- v:count, different search methods, consecutive application, and
+  -- customization via Lua patterns or functions.
+  --
+  -- Has builtins for brackets,
+  -- quotes, function call, argument, tag, user prompt, and any
+  -- punctuation/digit/whitespace character.
+  --
+  -- Includes treesitter textobjects.
+  {
+    'echasnovski/mini.ai',
+    version = false,
+    config = function()
+      require('mini.ai').setup({
+        n_lines = 75,
+      })
     end,
   },
   -- }}}

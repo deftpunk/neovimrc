@@ -10,7 +10,8 @@ return {
           -- The bat_native previewer is a lot faster.
           preview = { default = 'bat_native' },
         },
-        -- TODO: Not picking up tokyonight colors??
+        -- Picking up tokyonight colors.
+        -- Installed and added https://github.com/0xTadash1/bat-into-tokyonight?tab=readme-ov-file to the bat config file - ~/.config/bar/config
         fzf_colors = true,
         files = {
           actions = {
@@ -25,7 +26,21 @@ return {
       { "<leader>dd", ":FzfLua diagnostics_document<cr>", mode = {"n"}, desc = "Show the diagnostics (errors, warnings, etc.) for the current buffer." },
       { "<leader>dw", ":FzfLua diagnostics_workspace<cr>", mode = {"n"}, desc = "Show the diagnostics (errors, warnings, etc.) for the workspace." },
       -- File,directory,windows,tabs
-      { "<leader>ft", ":FzfLua tabs<cr>", mode = {"n"}, desc = "Pick from the available tabs." },
+      { "<leader>ff", ":FzfLua files<cr>", mode = {"n"}, desc = "FzfLua find files." },
+      { "<leader>fo", ":FzfLua oldfiles<cr>", mode = {"n"}, desc = "FzfLua find recent files." },
+      { "<leader>ft", ":FzfLua tabs<cr>", mode = {"n"}, desc = "FzfLua pick from the available tabs." },
+      { "<leader>i", ":FzfLua buffers<cr>", mode = {"n"}, desc = "FzfLua pick from the available open buffers." },
+      { "<D-i>", ":FzfLua buffers<cr>", mode = {"n"}, desc = "FzfLua pick from the available open buffers." },
+      -- Help
+      { "<leader>hh", ":FzfLua command_history<cr>", mode = {"n"}, desc = "FzfLua run from command history." },
+      { "<leader>hm", ":FzfLua manpages<cr>", mode = {"n"}, desc = "FzfLua choose Man pages." },
+      { "<leader>ht", ":FzfLua helptags<cr>", mode = {"n"}, desc = "FzfLua choose Help tags." },
+      -- Search
+      { '<leader>r', "<cmd>lua require('fzf-lua').grep()<CR>", silent = true, desc = "FzfLua ripgrep the current project." },
+      -- { '<leader>s', "<cmd>lua require('fzf-lua').blines()<CR>", silent = true, desc = "FzfLua search lines in buffer." },
+      { '<leader>s', ":FzfLua grep_curbuf<cr>", mode = {"n"}, silent = true, desc = "FzfLua search lines in buffer." },
+      -- Resume last command
+      { '<leader>fr', "<cmd>lua require('fzf-lua').resume()<cr>", silent = true, desc = "Resume FzfLua." },
     },
   },
 
