@@ -30,6 +30,7 @@ return {
           "jsonls",
           "lua_ls",
           "markdown_oxide",
+          "markdown_toc",
           "nimlangserver",
           "pyright",
           "rust_analyzer",
@@ -77,8 +78,9 @@ return {
             })
         end
 
-      local bufopts = { noremap=true, silent=true, buffer=bufnr }
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+        -- Using FzfLua/Telescope for Lsp commands.
+        -- local bufopts = { noremap=true, silent=true, buffer=bufnr }
+        -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
       end
 
       -- put a box around LspInfo

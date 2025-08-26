@@ -12,20 +12,41 @@ return {
       config = true, -- or `opts = {}`
   },
   -- }}}
-  --
-  -- mdpreview.nvim {{{
-  -- https://github.com/mrjones2014/mdpreview.nvim
-  -- Preview Markdown in Neovim buffer using glow.
-  --
-  -- :Mdpreview opens preview window.
-  -- :Mdpreview! closes preview window. =q= in the window also closes it.
+
+  -- install without yarn or npm
   {
-    'mrjones2014/mdpreview.nvim',
-    ft = 'markdown', -- you can lazy load on markdown files only
-    -- requires the `terminal` filetype to render ASCII color and format codes
-    dependencies = { 'norcalli/nvim-terminal.lua', config = true },
+      "iamcco/markdown-preview.nvim",
+      cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+      ft = { "markdown" },
+      build = function()
+        require("lazy").load({ plugins = { "markdown-preview.nvim" } })
+        vim.fn["mkdp#util#install"]()
+      end,
+      config = function()
+        vim.cmd([[
+          function OpenMarkdownPreview (url)
+            execute "silent ! open -a Firefox -n --args --new-window " . a:url
+          endfunction
+          let g:mkdp_browserfunc = "OpenMarkdownPreview"
+        ]])
+      end,
+      keys = {
+          {
+            "<leader>mp",
+            ft = "markdown",
+            "<cmd>MarkdownPreviewToggle<cr>",
+            desc = "Markdown Preview",
+          },
+        },
   },
-  -- }}}
+
+  --render-markdown.nvim
+  --https://github.com/MeanderingProgrammer/render-markdown.nvim
+  {
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    opts = {},
+  },
 
   -- markdown.nvim {{{
   -- https://github.com/tadmccorkle/markdown.nvim

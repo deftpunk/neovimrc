@@ -9,7 +9,24 @@ return {
     config = function()
       -- https://github.com/p00f/nvim-ts-rainbow/issues/30#issuecomment-850991264
       local parsers = require("nvim-treesitter.parsers")
-      local enabled_list = { "bash", "clojure",  "commonlisp", "fennel", "gitcommit","gitignore", "go", "lua", "markdown", "markdown_inline", "python", "ruby", "rust", "vimdoc"}
+
+      -- Enabled for rainbow mode.
+      local enabled_list = {
+        "bash",
+        "clojure",
+        "commonlisp",
+        "fennel",
+        "gitcommit",
+        "gitignore",
+        "go",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "ruby",
+        "rust",
+        "vimdoc",
+      }
 
       require('nvim-treesitter.configs').setup {
         ensure_installed = {

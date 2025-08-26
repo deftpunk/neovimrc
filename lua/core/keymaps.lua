@@ -143,6 +143,9 @@ map('n', '<leader>th',
 	{ silent = true, expr = true, desc = "Toggle search highlight." })
 -- }}}
 
+local telescope_builtin = require('telescope.builtin')
+map('n', '<leader>s', telescope_builtin.current_buffer_fuzzy_find, { desc = 'FzfLua search lines in buffer.' })
+
 -- Normal Mode Maps {{{
 
 -- Disable some bindings that I find annoying & potentially dangerous if hit accidentally.

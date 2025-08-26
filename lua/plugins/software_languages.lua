@@ -78,6 +78,29 @@ return {
   --   'liquidz/vim-iced',
   -- },
 
+  -- nvim-paredit
+  -- https://github.com/julienvincent/nvim-paredit
+  -- s-expression editing experience comparible to paredit on Emacs.
+  --
+  -- Provides:
+  --    - Treesitter based lisp structural editing, cursor motions and text object selections
+  --    - Dot-repeatable keybindings
+  --    - Language extensibility
+  --    - Programmable API
+  -- TODO: Tue Aug 05 2025 16:09:05 - need to uncomment and compare to vim-sexp
+  -- {
+  --   "julienvincent/nvim-paredit",
+  --   config = function()
+  --     local paredit = require("nvim-paredit")
+  --     paredit.setup({
+  --       filetypes = {"clojure", "lisp"},
+  --       keys = {
+  --         ["<localleader>r"] = { paredit.api.raise_form, "Raise form" },
+  --       },
+  --     })
+  --   end
+  -- },
+
   -- vim-repeat
   -- https://github.com/tpope/vim-repeat
   -- Repeat various actions.

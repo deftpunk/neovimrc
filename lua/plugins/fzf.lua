@@ -36,11 +36,15 @@ return {
       { "<leader>hm", ":FzfLua manpages<cr>", mode = {"n"}, desc = "FzfLua choose Man pages." },
       { "<leader>ht", ":FzfLua helptags<cr>", mode = {"n"}, desc = "FzfLua choose Help tags." },
       -- Search
-      { '<leader>r', "<cmd>lua require('fzf-lua').grep()<CR>", silent = true, desc = "FzfLua ripgrep the current project." },
-      -- { '<leader>s', "<cmd>lua require('fzf-lua').blines()<CR>", silent = true, desc = "FzfLua search lines in buffer." },
-      { '<leader>s', ":FzfLua grep_curbuf<cr>", mode = {"n"}, silent = true, desc = "FzfLua search lines in buffer." },
+      { '<leader>r', "<cmd>lua require('fzf-lua').live_grep()<CR>", silent = true, desc = "FzfLua ripgrep the current project." },
+      { '<leader>s', "<cmd>lua require('fzf-lua').lgrep_curbuf()<CR>", silent = true, desc = "FzfLua search lines in buffer." },
+      -- { '<leader>s', ":FzfLua grep_curbuf<cr>", mode = {"n"}, silent = true, desc = "FzfLua search lines in buffer." },
+      -- { '<leader>s', "<cmd>lua require('fzf-lua').grep_curbuf()<cr>", mode = {"n"}, silent = true, desc = "FzfLua search lines in buffer." },
       -- Resume last command
       { '<leader>fr', "<cmd>lua require('fzf-lua').resume()<cr>", silent = true, desc = "Resume FzfLua." },
+      -- Lsp commands
+      { 'gd' , ":FzfLua lsp_definitions<cr>", mode = {"n"}, desc = "(LSP) goto definition."},
+      { 'gr' , ":FzfLua lsp_references<cr>", mode = {"n"}, desc = "(LSP) goto references."},
     },
   },
 

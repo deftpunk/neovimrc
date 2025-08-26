@@ -45,7 +45,7 @@ vim.opt.cursorline = true
 -- copy/paste from clipboard
 vim.o.clipboard='unnamedplus'
 
--- Some env variables 
+-- Some env variables
 vim.env.VISUAL = 'nvr -cc split --remote-wait'
 vim.env.PYTHONUNBUFFERED = 1
 vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
@@ -558,7 +558,7 @@ require("lazy").setup({
     -- }}}
 
     -- vim-arpeggio {{{
-    -- https://github.com/kana/vim-arpeggio 
+    -- https://github.com/kana/vim-arpeggio
     -- Define 2 or more keymappings together, e.g. 'jk' together maps to ':'
     {'kana/vim-arpeggio'},
     -- }}}
@@ -698,7 +698,7 @@ require("lazy").setup({
     {
       "nvim-neo-tree/neo-tree.nvim",
       branch = "v2.x",
-      dependencies = { 
+      dependencies = {
        "nvim-lua/plenary.nvim",
        "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
        "MunifTanjim/nui.nvim",
@@ -831,9 +831,8 @@ require("lazy").setup({
         local lspconfig = require("lspconfig")
 
         local on_attach = function(client, bufnr)
-
-          local bufopts = { noremap=true, silent=true, buffer=bufnr }
-          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap=true, silent=true, buffer=bufnr, desc = "LSP: Go to definition" })
+          vim.keymap.set('n', 'gr', vim.lsp.buf.references, { noremap=true, silent=true, buffer=bufnr, desc = "LSP: Go to references" })
         end
 
         -- Python server setup
@@ -1128,7 +1127,7 @@ require("lazy").setup({
 
     -- agitator.nvim {{{
     -- https://github.com/emmanueltouzery/agitator.nvim
-    -- Some git-related funcitons, e.g. blame, git find file, search in git branch, git timemachine 
+    -- Some git-related funcitons, e.g. blame, git find file, search in git branch, git timemachine
     {
       "FabijanZulj/blame.nvim"
     },
@@ -1376,7 +1375,7 @@ require("lazy").setup({
     -- }}}
 
     -- }}}
-    
+
     -- Rust {{{
 
     -- https://rsdlt.github.io/posts/rust-nvim-ide-guide-walkthrough-development-debug/#better-coding-experience
@@ -1533,7 +1532,7 @@ vim.cmd('autocmd! TermOpen * setlocal listchars= nonumber norelativenumber')
 -- Leader Keymaps {{{
 
 -- Go to tab by number
-vim.keymap.set('n','<leader>1','1gt') 
+vim.keymap.set('n','<leader>1','1gt')
 vim.keymap.set('n','<leader>2','2gt')
 vim.keymap.set('n','<leader>3','3gt')
 vim.keymap.set('n','<leader>4','4gt')
