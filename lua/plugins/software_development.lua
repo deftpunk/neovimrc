@@ -154,6 +154,9 @@ return {
   },
   -- }}}
 
+  -- TODO: nvim-dap
+  -- TODO: debugmaster.nvim
+
   -- neotest {{{
   -- Run tests from within neovim
   -- https://github.com/nvim-neotest/neotest

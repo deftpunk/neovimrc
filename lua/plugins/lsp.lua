@@ -61,13 +61,13 @@ return {
   -- Basic client LSP configurations for Neovim.
   {
     'neovim/nvim-lspconfig',
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-    },
+    -- dependencies = {
+    --   'hrsh7th/cmp-nvim-lsp',
+    -- },
     event = 'BufReadPre',
     config = function()
       local lspconfig = require("lspconfig")
-      local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+      -- local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
       local on_attach = function(client, bufnr)
       if client.server_capabilities.signatureHelpProvider then
@@ -93,13 +93,13 @@ return {
       -- https://clojure-lsp.io/settings/
       lspconfig.clojure_lsp.setup({
         on_attach = on_attach,
-        capabilities = lsp_capabilities
+        -- capabilities = lsp_capabilities
       })
 
       -- Lua
       --
       lspconfig.lua_ls.setup({
-        capabilities = lsp_capabilities,
+        -- capabilities = lsp_capabilities,
       })
 
       -- Python {{{
@@ -107,7 +107,7 @@ return {
       -- Ruff server setup
       lspconfig.ruff.setup({
         on_attach = on_attach,
-        capabilities = lsp_capabilities,
+        -- capabilities = lsp_capabilities,
         init_options = {
           settings = {
             logLevel = 'debug',
@@ -118,7 +118,7 @@ return {
       -- Pyright server setup.
       lspconfig.pyright.setup({
           on_attach = on_attach,
-        capabilities = lsp_capabilities,
+          -- capabilities = lsp_capabilities,
           settings = {
             disableOrganizeImports = true,
           },
