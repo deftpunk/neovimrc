@@ -18,8 +18,10 @@ sessionslast_session.vim
 autoload/
 plugged/
 undo-dir/
+undodir/
 .swapfiles/
 .backups/
+.shada
 
 # Scratch
 __Scratch__
