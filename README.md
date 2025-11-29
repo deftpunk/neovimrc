@@ -36,6 +36,9 @@ Install the following packages via =brew install=
    - ctags
    * fzf
    - fd
+   - jq
+   - curl
+   - pandoc
 
 ### Git Configuration
   - symlink global configuration files:
