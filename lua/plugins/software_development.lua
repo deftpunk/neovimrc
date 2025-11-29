@@ -201,25 +201,89 @@ return {
   },
   -- }}}
 
-  -- nvim-devdocs {{{
-  -- https://github.com/luckasRanarison/nvim-devdocs
-  {
-    "luckasRanarison/nvim-devdocs",
+  -- Devdocs.nvim {{{
+  -- https://github.com/maskudo/devdocs.nvim
+  -- A devdocs client for neovim.
+    {
+     "maskudo/devdocs.nvim",
+    lazy = false,
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-      "nvim-treesitter/nvim-treesitter",
+      "folke/snacks.nvim",
+    },
+    cmd = { "DevDocs" },
+    keys = {
+      {
+        "<leader>ho",
+        mode = "n",
+        "<cmd>DevDocs get<cr>",
+        desc = "Get Devdocs",
+      },
+      {
+        "<leader>hi",
+        mode = "n",
+        "<cmd>DevDocs install<cr>",
+        desc = "Install Devdocs",
+      },
+      {
+        "<leader>hv",
+        mode = "n",
+        function()
+          local devdocs = require("devdocs")
+          local installedDocs = devdocs.GetInstalledDocs()
+          vim.ui.select(installedDocs, {}, function(selected)
+            if not selected then
+              return
+            end
+            local docDir = devdocs.GetDocDir(selected)
+            -- prettify the filename as you wish
+            Snacks.picker.files({ cwd = docDir })
+          end)
+        end,
+        desc = "Get Devdocs",
+      },
+      {
+        "<leader>hd",
+        mode = "n",
+        "<cmd>DevDocs delete<cr>",
+        desc = "Delete Devdoc",
+      }
     },
     opts = {
-      wrap = true,
-      dir_path = vim.fn.stdpath("data") .. "~/MyStuff/neovimrc/devdocs",
-      float_win = {
-        height = 35,
+      ensure_installed = {
+        "go",
+        "nim",
+        "rust",
+        -- some docs such as lua require version number along with the language name
+        -- check `DevDocs install` to view the actual names of the docs
+        "clojure~1.11",
+        "lua~5.1",
+        "openjdk~21",
+        "python~3.14",
+        "python~3.12",
       },
-      previewer_cmd = "glow",
-      cmd_args = { "-s", "dark", "-w", "80" },
-    }
+    },
   },
+  -- }}}
+
+  -- nvim-devdocs {{{
+  -- https://github.com/luckasRanarison/nvim-devdocs
+  -- {
+  --   "luckasRanarison/nvim-devdocs",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "nvim-telescope/telescope.nvim",
+  --     "nvim-treesitter/nvim-treesitter",
+  --   },
+  --   opts = {
+  --     wrap = true,
+  --     dir_path = vim.fn.stdpath("data") .. "~/MyStuff/neovimrc/devdocs",
+  --     float_win = {
+  --       height = 35,
+  --     },
+  --     previewer_cmd = "glow",
+  --     cmd_args = { "-s", "dark", "-w", "80" },
+  --   }
+  -- },
   -- }}}
 
   -- nvim-lint {{{
