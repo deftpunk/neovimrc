@@ -32,6 +32,7 @@ return {
           let g:mkdp_browserfunc = "OpenMarkdownPreview"
         ]])
       end,
+      -- TODO: Is mp a mapped key in markdown-plus?
       keys = {
           {
             "<leader>mp",
