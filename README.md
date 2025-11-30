@@ -8,26 +8,12 @@ Neovim (https://neovim.io/) - the future of Vim.
 
 # My Configuration
 
-My dark powered Neovim configuration.  I use a lot of plugins, that is how I
-choose to use Neovim, as is my perogative to do so.  If you choose a different
-way, that is your prerogative but I find "purity" tool discussions dull.
+I happen to use a lot of plugins, that is how I choose to use Neovim, as is my perogative to do so.  If you choose a different way, that is your prerogative; I also happen to find "purity" tool discussions dull.
 
-# OS Configuration
+## External Dependencies
 
-## Mac OS X
+Install the following packages via =brew install=, package manager or manual installation procedures:
 
-### Setup Xcode
-  1. Install Xcode
-  2. Install the cmdline tools: =xcode-select --install=
-
-### Change ITerm Preferences
-  Profiles -> Keys -> Left option key acts as +Esc
-
-### External Dependencies
-Install the following packages via =brew install=
-   - gls
-   - coreutils
-   - cask
    - ripgrep
    - ispell
    - git
@@ -39,38 +25,41 @@ Install the following packages via =brew install=
    - jq
    - curl
    - pandoc
+   - The nvim-dap-ui icons & various LSP engines require `npm` (sigh)
+       - `npm i @vscode/codicons`
 
 ### Git Configuration
+
   - symlink global configuration files:
+
+```
   $ ln -s tmp/yah/gitignore_global .gitignore_global
   $ ln -s tmp/yah/gitconfig .gitconfig
 
-### Setup Python
-This is the Python for Neovim, not the one for Python development. So DO NOT have miniconda in
-the PATH or PYTHONPATH.
-  1. brew install python@2
-  2. brew install python3
-  3. pip2 install neovim --upgrade
-  4. pip3 install neovim --upgrade
-  5. pip3 install neovim-remote
-  6. pip3 install jedi, ipython, requests
+```
+# OS Configuration
 
+## Mac OS X
+
+### OS specific dependencies
+
+- gls
+- coreutils
+- cask
+
+#### Setup Xcode
+
+  1. Install Xcode
+  2. Install the cmdline tools: =xcode-select --install=
+
+#### Karibiner-elements
+
+I use Karibiner-elements to map `caps lock` to both control and escape.  If I hold the `caps lock` key then `Ctrl` is sent, just tapping it sends `Esc`
 
 ## Linux Setup
 
-### Install Rust:
-
-  1. curl https://sh.rustup.rs -sSf | sh
-  2. source ~/.cargo/env
-
-### Install Ripgrep:
-
-  1. cargo install ripgrep
-
-### Install Python:
-
-  1. sudo apt-get -y install python-pip
-
+- Install various external dependencies mentioned above.
+- Install neovim & neovide using manual install methods from respective websites.
 
 # Neovim Install
 
@@ -83,23 +72,11 @@ EDITOR=nvim and =git commit= is called.
 
 = nvr --remote file1 file2 =
 
-## Install Neovim
+## Install Neovim & Neovide
 
 1. Use brew to install neovim
-   $ brew update && brew install neovim
+   $ brew update && brew install neovim neovide
 2. Clone my Neovim configuration.
-
-## Install Plugin Manager
-
-Install vim-plug (https://github.com/junegunn/vim-plug) BEFORE RUNNING NEOVIM
-  1. $ curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-## Install Vimr
-
-Grab binary download from http://vimr.org/
-  1. Copy CLI tool
-  2. Set zsh interactive - so that environment variables are picked up.
 
 # FAQ: Troubleshooting, Debugging & Profiling
 
@@ -140,25 +117,3 @@ $ neovim -u NONE
 
 ## Debugging the init file:
 $ `nvim -V20 2>&1 | tee logfile`
-
-## Vim startup profiling, optimization etc.
-https://coderwall.com/p/sdva9q/how-to-detect-plugins-slowing-vim-down
-
-## Vim Neovim General Reference:
-
-https://github.com/mhinz/vim-galore
-http://spacevim.org/documentation/ - useful to mine for ideas.
-
-## General Plugin And Vimscript Development:
-
-VimConf18 - Effective Modern Vim Scripting:
-https://www.youtube.com/watch?v=J5BX1FXnKBw&t=0s&list=PLx8bw5NQypsnlh5K5LZAaFvAdxfGpt2iq&index=9
-
-vital.vim - https://github.com/vim-jp/vital.vim - vim utility functions.
-
-https://vimconf.org/2018/slides/Effective_Modern_Vim_scripting_at_vimconf2018_for_PDF.pdf
-
-$ echo set runtimepath+=~/vim-amake >> ~/.vimrc
-$ mkdir ~/vim-amake && cd ~/vim-amake
-$ mkdir plugin autoload doc
-$ touch plugin/amake.vim autoload/amake.vim doc/amake.txt README.md

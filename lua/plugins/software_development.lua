@@ -158,6 +158,10 @@ return {
 
   -- lazydev.nvim {{{
   -- https://github.com/folke/lazydev.nvim
+  -- lazydev.nvim is a plugin that properly configures LuaLS for editing your
+  -- Neovim config by lazily updating your workspace libraries.
+  --
+  -- I am primarily using it as a dependency for nvim-dap, nvim-dap-ui
   {
     "folke/lazydev.nvim",
     ft = "lua", -- only load on lua files
@@ -166,6 +170,7 @@ return {
         -- See the configuration section for more details
         -- Load luvit types when the `vim.uv` word is found
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        "nvim-dap-ui",
       },
     },
   },
