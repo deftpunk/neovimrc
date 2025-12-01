@@ -1,6 +1,32 @@
 -- This is for all kinds of completion, e.g. telescope/fzf-lua, snippets, nvim-cmp, etc.
 return {
 
+  -- copilot.lua {{{
+  -- https://github.com/zbirenbaum/copilot.lua
+  -- Copilot completion with blink.
+  --
+  -- Once copilot is running, run :Copilot auth to start the authentication process.
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        auth_provider_url = "https://github.hpe.com",
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+        filetypes = {
+          python = true,  -- allow specific python filetype.
+          ["*"] = false,  -- disable for all other filetypes.
+        },
+        workspace_folders = {
+          "/Users/bodine/WorkStuff/",
+        },
+      })
+    end,
+  },
+  -- }}}
+
   -- mini.snippets {{{
   -- https://github.com/echasnovski/mini.snippets
   -- friendly-snippets
@@ -34,6 +60,7 @@ return {
     -- optional: provides snippets for the snippet source
     dependencies = {'rafamadriz/friendly-snippets',
                     'echasnovski/mini.snippets',
+                    'fang2hou/blink-copilot',
                   },
     -- use a release tag to download pre-built binaries
     version = '1.*',
@@ -111,6 +138,7 @@ return {
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
+        -- default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
       },
 
       -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
