@@ -6,11 +6,11 @@ return {
   --   Background highlighting for code blocks
   --   Whole window separator for horizontal line
   --   Bar for Quotes
-  {
-      'lukas-reineke/headlines.nvim',
-      dependencies = "nvim-treesitter/nvim-treesitter",
-      config = true, -- or `opts = {}`
-  },
+  -- {
+  --     'lukas-reineke/headlines.nvim',
+  --     dependencies = "nvim-treesitter/nvim-treesitter",
+  --     config = true, -- or `opts = {}`
+  -- },
   -- }}}
 
   -- install without yarn or npm
@@ -30,6 +30,7 @@ return {
           let g:mkdp_browserfunc = "OpenMarkdownPreview"
         ]])
       end,
+      -- TODO: Is mp a mapped key in markdown-plus?
       keys = {
           {
             "<leader>mp",
@@ -40,6 +41,22 @@ return {
         },
   },
 
+  -- markdown-plus {{{
+  -- https://github.com/YousefHadder/markdown-plus.nvim
+  {
+    "yousefhadder/markdown-plus.nvim",
+    ft = "markdown",
+    config = function()
+      require("markdown-plus").setup({
+        enabled = true,
+        callouts = {
+          custom_types = { "WARNING", "DEBUG", "TODO", "IMPORTANT" },
+        },
+      })
+    end,
+  },
+  -- }}}
+
   --render-markdown.nvim
   --https://github.com/MeanderingProgrammer/render-markdown.nvim
   {
@@ -47,9 +64,4 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
     opts = {},
   },
-
-  -- markdown.nvim {{{
-  -- https://github.com/tadmccorkle/markdown.nvim
-  -- Adds keybindings for navigating, table of contents, lists, links inside a markdown file, e.g.
-  -- }}}
 }

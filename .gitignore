@@ -17,8 +17,11 @@ sessionslast_session.vim
 
 autoload/
 plugged/
-neovim-undo-dir/
+undo-dir/
 undodir/
+.swapfiles/
+.backups/
+.shada
 
 # Scratch
 __Scratch__
