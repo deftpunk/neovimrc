@@ -7,7 +7,7 @@ vim.g.maplocalleader = ";"
 -- Folding
 -- These values are set for nvim-ufo.
 vim.o.foldcolumn = '1' -- '0' is not bad
-vim.o.foldlevel = 250 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 -- Setting to true will close all folds.
 -- vim.o.foldenable = true
