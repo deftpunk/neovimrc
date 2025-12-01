@@ -46,10 +46,7 @@ require('core/abbreviations')
 -- https://github.com/stevearc/oil.nvim
 
 -- TODO: neoscroll
--- TODO: Software languages
--- TODO: LSP + mason + cmp + etc.
 -- goto-preview
--- lsp_signature -> comes along w/ cmp
 -- TODO: snippets
 -- TODO: auto-session + fzf-lua+possession
 -- TODO: vim-repeat
@@ -71,7 +68,8 @@ require('core/abbreviations')
 -- https://github.com/rafi/vim-config/blob/master/lua/rafi/plugins/editor.lua#L19
 -- TODO: A better window picker?: https://github.com/s1n7ax/nvim-window-picker
 -- Another one: https://github.com/ten3roberts/window-picker.nvim
--- TODO: http REST client: rest-nvim/rest.nvim'
+-- TODO: http REST client:
+--         rest-nvim/rest.nvim'
 --
 -- winbar/breadcrumbs:
 -- https://dotfyle.com/plugins/SmiteshP/nvim-navic
