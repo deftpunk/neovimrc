@@ -9,49 +9,57 @@ return {
   -- Install and manage LSP servers with mason
   -- Use :MasonInstall <lsp server> to install LSP servers.
   {
-    'williamboman/mason.nvim',
-    dependencies = {
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
-      'williamboman/mason-lspconfig.nvim',
-    },
-    config = function()
-      -- Make the border thinner.
-      require("mason").setup({ ui = { border = 'single' } })
-
-      -- Install LSP servers.
-      require("mason-lspconfig").setup({
-        automatic_installation = true,
-        ensure_installed = {
-          "bashls",
-          "clojure_lsp",
-          "codelldb",       -- Rust debugger
-          "dockerls",
-          "gopls",
-          "groovyls",
-          "jsonls",
-          "lua_ls",
-          "markdown_oxide",
-          "markdown_toc",
-          "nimlangserver",
-          "pyright",
-          "rust_analyzer",
-          "ruff",
-          "taplo",
-          "yamlls"
-        }
-      })
-
-      -- Install linters/formatters and other tools.
-      local mason_tool_installer = require("mason-tool-installer")
-      mason_tool_installer.setup({
-        ensure_installed = {
-          "isort",
-          "pylint",
-          "ruff",
-          "shellcheck",
+    "mason-org/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = {
+      "bashls",
+      "clojure_lsp",
+      -- "codelldb",       -- Rust debugger
+      "dockerls",
+      "gopls",
+      "groovyls",
+      "jsonls",
+      "lua_ls",
+      "markdown_oxide",
+      -- "markdown_toc",
+      -- "nimlangserver",
+      "basedpyright",
+      "rust_analyzer",
+      "ruff",
+      "taplo",          -- toml
+      "yamlls"
         },
-      })
-    end,
+    },
+    dependencies = {
+      { "mason-org/mason.nvim", opts = { ui = { border = 'single' } } },
+      "neovim/nvim-lspconfig",
+    },
+    automatic_enable = {
+      -- These we will enable manually with lspconfig
+      exclude = {
+        'pyright',
+        'basedpyright',
+        'ruff',           -- no need to use w/ basedpyright.
+      },
+    },
+  },
+  -- }}}
+
+  -- mason-tool-installer {{{
+  -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
+  -- Install linters/formatters and other tools.
+  {
+      "WhoIsSethDaniel/mason-tool-installer.nvim",
+      config = function()
+        require("mason-tool-installer").setup({
+          ensure_installed = {
+            "isort",
+            "pylint",
+            "ruff",
+            "shellcheck",
+          },
+        })
+      end,
   },
   -- }}}
 
@@ -62,84 +70,121 @@ return {
   -- Basic client LSP configurations for Neovim.
   {
     'neovim/nvim-lspconfig',
-    -- dependencies = {
-    --   'hrsh7th/cmp-nvim-lsp',
-    -- },
-    event = 'BufReadPre',
     config = function()
-      local lspconfig = require("lspconfig")
-      -- local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      local on_attach = function(client, bufnr)
-      if client.server_capabilities.signatureHelpProvider then
-          require('lsp-overloads').setup(client, {
-              keymaps = {
-                close_signature = "C-x C-c",
-              }
-            })
-        end
-
-        -- Using FzfLua/Telescope for Lsp commands.
-        -- local bufopts = { noremap=true, silent=true, buffer=bufnr }
-        -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-      end
-
-      -- put a box around LspInfo
-      local _border = "single"
-      require('lspconfig.ui.windows').default_options = {
-        border = _border
-      }
-
-      -- Clojure
-      -- https://clojure-lsp.io/settings/
-      lspconfig.clojure_lsp.setup({
-        on_attach = on_attach,
-        -- capabilities = lsp_capabilities
-      })
-
-      -- Lua
-      --
-      lspconfig.lua_ls.setup({
-        -- capabilities = lsp_capabilities,
-      })
-
-      -- Python {{{
-
-      -- Ruff server setup
-      lspconfig.ruff.setup({
-        on_attach = on_attach,
-        -- capabilities = lsp_capabilities,
-        init_options = {
-          settings = {
-            logLevel = 'debug',
-          }
-        }
-      })
-
-      -- Pyright server setup.
-      lspconfig.pyright.setup({
-          on_attach = on_attach,
-          -- capabilities = lsp_capabilities,
-          settings = {
+      -- Python LSPs {{{
+      vim.lsp.config('basedpyright', {
+        settings = {
+          basedpyright = {
             disableOrganizeImports = true,
+            analysis = {
+              typeCheckingMode = "standard",
+            },
           },
-          root_dir = function(fname)
-            return lspconfig.util.root_pattern("pyrightconfig.json", ".git", "setup.py", "requirements.txt")(fname) or
-              lspconfig.util.path.dirname(fname)
-            end,
-        })
+        },
+      })
+      vim.lsp.enable('basedpyright')
 
-        lspconfig.nim_langserver.setup({
-          on_attach = on_attach,
-          settings = {
-            nim = {
-              nimsuggestPath = "~/.nimble/bin/nimlangserver"
-            }
-          }
-        })
+      vim.lsp.config('ruff', {
+        settings = {
+          lint = {
+            enable = false,
+          },
+        },
+      })
+      vim.lsp.enable('ruff')
       -- }}}
+
+      -- gopls {{{
+      vim.lsp.enable('gopls')
+      -- }}}
+
     end,
   },
+
+  -- }}}
+
+  -- nvim-lspconfig {{{
+  -- https://github.com/neovim/nvim-lspconfig
+  -- Basic client LSP configurations for Neovim.
+  -- {
+  --   'neovim/nvim-lspconfig',
+  --     event = 'BufReadPre',
+  --   config = function()
+  --     local lspconfig = vim.lsp.config()
+  --     -- local lspconfig = require("lspconfig")
+  --     -- local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+  --
+  --     local on_attach = function(client, bufnr)
+  --     if client.server_capabilities.signatureHelpProvider then
+  --         require('lsp-overloads').setup(client, {
+  --             keymaps = {
+  --               close_signature = "C-x C-c",
+  --             }
+  --           })
+  --       end
+  --
+  --       -- Using FzfLua/Telescope for Lsp commands.
+  --       -- local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  --       -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  --     end
+  --
+  --     -- put a box around LspInfo
+  --     local _border = "single"
+  --     require('lspconfig.ui.windows').default_options = {
+  --       border = _border
+  --     }
+  --
+  --     -- Clojure
+  --     -- https://clojure-lsp.io/settings/
+  --     lspconfig.clojure_lsp.setup({
+  --       on_attach = on_attach,
+  --       -- capabilities = lsp_capabilities
+  --     })
+  --
+  --     -- Lua
+  --     --
+  --     lspconfig.lua_ls.setup({
+  --       -- capabilities = lsp_capabilities,
+  --     })
+  --
+  --     -- Python {{{
+  --
+  --     -- Ruff server setup
+  --     lspconfig.ruff.setup({
+  --       on_attach = on_attach,
+  --       -- capabilities = lsp_capabilities,
+  --       init_options = {
+  --         settings = {
+  --           logLevel = 'debug',
+  --         }
+  --       }
+  --     })
+  --
+  --     -- Pyright server setup.
+  --     lspconfig.pyright.setup({
+  --         on_attach = on_attach,
+  --         -- capabilities = lsp_capabilities,
+  --         settings = {
+  --           disableOrganizeImports = true,
+  --         },
+  --         root_dir = function(fname)
+  --           return lspconfig.util.root_pattern("pyrightconfig.json", ".git", "setup.py", "requirements.txt")(fname) or
+  --             lspconfig.util.path.dirname(fname)
+  --           end,
+  --       })
+  --
+  --       lspconfig.nim_langserver.setup({
+  --         on_attach = on_attach,
+  --         settings = {
+  --           nim = {
+  --             nimsuggestPath = "~/.nimble/bin/nimlangserver"
+  --           }
+  --         }
+  --       })
+  --     -- }}}
+  --   end,
+  -- },
   -- }}}
 
   -- tiny-code-action.nvim {{{
