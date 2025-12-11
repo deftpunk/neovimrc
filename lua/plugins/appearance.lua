@@ -33,9 +33,7 @@ return {
         },
         sections = {
           lualine_a = {
-            'tabs',
-            tab_max_length = 50,
-            mode = 2,
+            { 'tabs', tab_max_length = 50, mode = 2 },
           },
           -- lualine_b = ...
           lualine_c = {
