@@ -53,9 +53,8 @@ return {
           "vimdoc",
           "yaml"
         },
-        highlight = {
-          enable = true,
-        },
+        highlight = { enable = true },
+        indent = { enable = true },
         rainbow = {
           enable = true,
           extended_mode = true,
