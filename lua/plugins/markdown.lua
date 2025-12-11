@@ -1,16 +1,20 @@
 return {
 
-  -- headlines {{{
-  -- https://github.com/lukas-reineke/headlines.nvim
-  --   Background highlighting for headlines
-  --   Background highlighting for code blocks
-  --   Whole window separator for horizontal line
-  --   Bar for Quotes
-  -- {
-  --     'lukas-reineke/headlines.nvim',
-  --     dependencies = "nvim-treesitter/nvim-treesitter",
-  --     config = true, -- or `opts = {}`
-  -- },
+  -- Markdown previewers {{{
+  -- https://github.com/iamcco/markdown-preview.nvim
+  --    Requires npm and yarn to install/preview.
+  --
+  -- https://github.com/brianhuster/live-preview.nvim
+  --    Supports KaTeX & Mermaid
+  --    No external dependencies or runtime (NodeJS)
+  --
+  -- https://github.com/yusukebe/gh-markdown-preview
+  --    No mermaid diagram support.
+  --    Have to run a server.
+  --
+  -- https://github.com/jannis-baum/vivify.vim
+  --     Have to have the Vivify server (which) is actually pretty good -
+  --        https://github.com/jannis-baum/Vivify
   -- }}}
 
   -- install without yarn or npm
