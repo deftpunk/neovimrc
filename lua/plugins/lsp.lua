@@ -260,7 +260,7 @@ return {
     'folke/trouble.nvim',
     dependencies = {"kyazdani42/nvim-web-devicons"},
     opts = {},
-    cmd = "Trouble",
+    cmd = { "Trouble" },
     keys = {
       -- {
       --   "<leader>xx",
@@ -283,6 +283,11 @@ return {
         desc = "LSP Definitions / references / ... (Trouble)",
       },
     },
+    -- config = function()
+    --   local config = require("fzf-lua.config")
+    --   local actions = require("trouble.sources.fzf").actions
+    --   config.defaults.actions.files["ctrl-t"] = actions.open
+    -- end
   },
   -- }}}
 
