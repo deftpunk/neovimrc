@@ -189,6 +189,9 @@ return {
 
   -- Golang {{{
 
+  -- a plugin for converting JSON to Go type annotations.
+  -- https://www.reddit.com/r/neovim/comments/1phmb1m/gophernvim_improve_golang_development_experience/
+
   -- go.nvim {{{
   -- https://github.com/ray-x/go.nvim
   -- A modern go neovim plugin.
@@ -202,22 +205,22 @@ return {
     opts = {
       -- lsp_keymaps = false,
       -- other options
+    },
+    config = function(lp, opts)
+      require("go").setup(opts)
+      local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*.go",
+        callback = function()
+        require('go.format').goimports()
+        end,
+        group = format_sync_grp,
+      })
+    end,
+    event = {"CmdlineEnter"},
+    ft = {"go", 'gomod'},
+    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
   },
-  config = function(lp, opts)
-    require("go").setup(opts)
-    local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = "*.go",
-      callback = function()
-      require('go.format').goimports()
-      end,
-      group = format_sync_grp,
-    })
-  end,
-  event = {"CmdlineEnter"},
-  ft = {"go", 'gomod'},
-  build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
-},
   -- }}}
 
   -- }}}
@@ -244,12 +247,11 @@ return {
   -- }}}
 
   -- venv-selector {{{
-  -- https://github.com/linux-cultist/venv-selector.nvim/tree/regexp
+  -- https://github.com/linux-cultist/venv-selector.nvim
   -- Selects Python virtual environments - venv, conda, etc.
-  -- *Use the regexp branch cuz its maintained.
   {
     'linux-cultist/venv-selector.nvim',
-    branch = 'regexp',
+    branch = 'main',
     dependencies = { 'neovim/nvim-lspconfig', 'nvim-telescope/telescope.nvim', 'mfussenegger/nvim-dap-python' },
     opts = {
       auto_refresh = true,
