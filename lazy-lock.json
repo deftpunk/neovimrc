@@ -100,6 +100,7 @@
   "telescope-lazy-plugins.nvim": { "branch": "main", "commit": "a257886555a6e8bf642d39f935b5399b04c8c424" },
   "telescope-undo.nvim": { "branch": "main", "commit": "928d0c2dc9606e01e2cc547196f48d2eaecf58e5" },
   "telescope.nvim": { "branch": "master", "commit": "e69b434b968a33815e2f02a5c7bd7b8dd4c7d4b2" },
+  "thethethe.nvim": { "branch": "main", "commit": "357580127cd291c8a813564eeaff07c09303084e" },
   "tiny-code-action.nvim": { "branch": "main", "commit": "188122ee2ea278eb74f55c6d39b5f6b5f8eefe8c" },
   "todo-comments.nvim": { "branch": "main", "commit": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668" },
   "toggleterm.nvim": { "branch": "main", "commit": "50ea089fc548917cc3cc16b46a8211833b9e3c7c" },

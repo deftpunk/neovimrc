@@ -597,4 +597,15 @@ return {
   },
   -- }}}
 
+  -- thethethe.nvim {{{
+  -- https://github.com/swaits/thethethe.nvim
+  {
+    "https://git.sr.ht/~swaits/thethethe.nvim",
+    lazy = true,
+    event = "VeryLazy",
+    opts = { },
+  },
+  -- }}}
+
+
 }
