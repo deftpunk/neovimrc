@@ -16,6 +16,8 @@ return {
   },
   -- }}}
 
+  -- TODO: See if there is a mini utility that does this as well.
+  --
   -- bigfile.nvim {{{
   -- https://github.com/LunarVim/bigfile.nvim
   -- Automatically disable certain features if the opened file is really big.
