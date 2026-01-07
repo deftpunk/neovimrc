@@ -170,34 +170,6 @@ return {
   },
   -- }}}
 
-  -- nvim-surround {{{
-  -- https://github.com/kylechui/nvim-surround
-  -- The three "core" operations of add/delete/change can be done with the keymaps
-  -- ys{motion}{char}, ds{char}, and cs{target}{replacement}, respectively. For the
-  -- following examples, * will denote the cursor position:
-  --
-  --     Old text                    Command         New text
-  -- --------------------------------------------------------------------------------
-  --     surr*ound_words             ysiw)           (surround_words)
-  --     *make strings               ys$"            "make strings"
-  --     [delete ar*ound me!]        ds]             delete around me!
-  --     remove <b>HTML t*ags</b>    dst             remove HTML tags
-  --     'change quot*es'            cs'"            "change quotes"
-  --     <b>or tag* types</b>        csth1<CR>       <h1>or tag types</h1>
-  --     delete(functi*on calls)     dsf             function calls
-  --
-  {
-    'kylechui/nvim-surround',
-    version = "*",
-    event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup({
-            -- Configuration here, or leave empty to use defaults
-        })
-    end,
-  },
-  -- }}}
-
   -- nvim-ufo {{{
   -- https://github.com/kevinhwang91/nvim-ufo
   -- faster folding.
@@ -443,7 +415,7 @@ return {
   {
     "dstein64/vim-startuptime",
     -- lazy-load on a command
-    cmd = "StartupTime",
+    cmd = {"StartupTime"},
     -- init is called during startup. Configuration for vim plugins typically should be set in an init function
     init = function()
       vim.g.startuptime_tries = 10
@@ -492,7 +464,17 @@ return {
   -- ]<space> - Add [count] blank lines below the cursor.
   -- [e - Exchange the current line with [count] lines above it.
   -- ]e - Exchange the current line with [count] lines below it.
-  {'tpope/vim-unimpaired'},
+  -- {'tpope/vim-unimpaired'},
+  -- }}}
+
+  -- unimpaired.nvim {{{
+  -- https://github.com/tummetott/unimpaired.nvim
+  -- A lua port of the famous vim-unimpaired by tpope.
+  -- I can more easily add/remove bindings with this version than the vim-unimpaired one.
+  {
+    'tummetott/unimpaired.nvim',
+    event = 'VeryLazy',
+  },
   -- }}}
 
   -- which-key {{{
@@ -597,8 +579,21 @@ return {
   },
   -- }}}
 
+  -- mini.surround {{{
+  -- https://github.com/nvim-mini/mini.surround
+  --
+  {
+    'nvim-mini/mini.surround',
+    version = false,
+    config = function()
+      require('mini.surround').setup()
+    end,
+  },
+  -- }}}
+
   -- thethethe.nvim {{{
   -- https://github.com/swaits/thethethe.nvim
+  -- a big load of abbreviations that are lazy loaded - need to add my own from Emacs.
   {
     "https://git.sr.ht/~swaits/thethethe.nvim",
     lazy = true,
@@ -607,5 +602,29 @@ return {
   },
   -- }}}
 
+  -- eunuch.vim {{{
+  -- https://github.com/tpope/vim-eunuch
+  -- Some handy file/buffer commands from tpope.
+  --
+  -- :Remove: Delete a file on disk without E211: File no longer available.
+  -- :Delete: Delete a file on disk and the buffer too.
+  -- :Move: Rename a buffer and the file on disk simultaneously.
+  --   See also :Rename, :Copy, and :Duplicate.
+  -- :Chmod: Change the permissions of the current file.
+  -- :Mkdir: Create a directory, defaulting to the parent of the current file.
+  -- :Cfind: Run find and load the results into the quickfix list.
+  -- :Clocate: Run locate and load the results into the quickfix list.
+  -- :Lfind/:Llocate: Like above, but use the location list.
+  -- :Wall: Write every open window. Handy for kicking off tools like guard.
+  -- :SudoWrite: Write a privileged file with sudo.
+  -- :SudoEdit: Edit a privileged file with sudo.
+  --
+  -- Typing a shebang line causes the file type to be re-detected. Additionally
+  -- the file will be automatically made executable (chmod +x) after the next write.
+  --
+  {
+    'tpope/vim-eunuch',
+  }
+  -- }}}
 
 }
