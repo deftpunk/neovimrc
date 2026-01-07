@@ -4,7 +4,8 @@ return {
   -- Conjure
   -- An interactive environment for evaluating code within your program
   --
-  -- Quickstarts for CL, Clojure (nREPL & babashka)
+  -- Quickstarts for Common-Lisp, Clojure (nREPL & babashka)
+  --
   -- https://github.com/Olical/conjure/wiki/Quick-start:-Common-Lisp-(Swank)
   -- https://github.com/Olical/conjure/wiki/Quick-start:-Clojure
   -- https://github.com/Olical/conjure/wiki/Quick-start:-Clojure-(babashka)
@@ -73,12 +74,6 @@ return {
   -- },
   -- }}}
 
-  -- Clojure {{{
-
-  -- {
-  --   'liquidz/vim-iced',
-  -- },
-
   -- nvim-paredit
   -- https://github.com/julienvincent/nvim-paredit
   -- s-expression editing experience comparible to paredit on Emacs.
@@ -124,10 +119,6 @@ return {
 
   -- }}}
 
-  -- Common Lisp {{{
-  -- https://gitlab.com/HiPhish/quicklisp.nvim
-  -- }}}
-
   -- CSV {{{
 
   -- csvview.nvim {{{
@@ -160,31 +151,6 @@ return {
     },
     cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
   },
-  -- }}}
-
-  -- rainbow_csv.nvim {{{
-  -- https://github.com/cameron-wags/rainbow_csv.nvim?tab=readme-ov-file
-  -- {
-  --   'cameron-wags/rainbow_csv.nvim',
-  --   config = true,
-  --   ft = {
-  --       'csv',
-  --       'tsv',
-  --       'csv_semicolon',
-  --       'csv_whitespace',
-  --       'csv_pipe',
-  --       'rfc_csv',
-  --       'rfc_semicolon'
-  --   },
-  --   cmd = {
-  --       'RainbowDelim',
-  --       'RainbowDelimSimple',
-  --       'RainbowDelimQuoted',
-  --       'RainbowMultiDelim'
-  --   }
-  -- },
-  -- }}}
-
   -- }}}
 
   -- Golang {{{
@@ -282,6 +248,4 @@ return {
   -- }}}
 
   -- }}}
-
-
 }
