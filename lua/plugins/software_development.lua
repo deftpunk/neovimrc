@@ -229,65 +229,37 @@ return {
   },
   -- }}}
 
-  -- Devdocs.nvim {{{
-  -- https://github.com/maskudo/devdocs.nvim
-    {
-     "maskudo/devdocs.nvim",
-    lazy = false,
+  -- 1. nvim-devdocs
+  --  Thu Jan 08 2026 12:18:01
+  --  archived.
+  --
+  -- 2. apidocs.nvim
+  --
+  -- devdocs.nvim
+  -- Thu Jan 08 2026 12:17:33
+  -- - used, shows raw markdown (ugly) and using it is clunky.
+  --
+  -- browse.nvim -> supports searching Devdocs
+
+  -- apidocs.nvim {{{
+  -- https://github.com/emmanueltouzery/apidocs.nvim
+  -- An integration of devdocs.io in neovim.
+  -- TODO: Why does this trigger a markdown-plus & bufdelete error?
+  {
+    'emmanueltouzery/apidocs.nvim',
     dependencies = {
-      "folke/snacks.nvim",
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-telescope/telescope.nvim', -- or, 'folke/snacks.nvim'
     },
-    cmd = { "DevDocs" },
+    cmd = { 'ApidocsSearch', 'ApidocsInstall', 'ApidocsOpen', 'ApidocsSelect', 'ApidocsUninstall' },
+    config = function()
+      require('apidocs').setup()
+      -- Picker will be auto-detected. To select a picker of your choice explicitly you can set picker by the configuration option 'picker':
+      -- require('apidocs').setup({picker = "snacks"})
+      -- Possible options are 'ui_select', 'telescope', and 'snacks'
+    end,
     keys = {
-      {
-        "<leader>ho",
-        mode = "n",
-        "<cmd>DevDocs get<cr>",
-        desc = "Get Devdocs",
-      },
-      {
-        "<leader>hi",
-        mode = "n",
-        "<cmd>DevDocs install<cr>",
-        desc = "Install Devdocs",
-      },
-      {
-        "<leader>hv",
-        mode = "n",
-        function()
-          local devdocs = require("devdocs")
-          local installedDocs = devdocs.GetInstalledDocs()
-          vim.ui.select(installedDocs, {}, function(selected)
-            if not selected then
-              return
-            end
-            local docDir = devdocs.GetDocDir(selected)
-            -- prettify the filename as you wish
-            Snacks.picker.files({ cwd = docDir })
-          end)
-        end,
-        desc = "Get Devdocs",
-      },
-      {
-        "<leader>hd",
-        mode = "n",
-        "<cmd>DevDocs delete<cr>",
-        desc = "Delete Devdoc",
-      }
-    },
-    opts = {
-      ensure_installed = {
-        "go",
-        "nim",
-        "rust",
-        -- some docs such as lua require version number along with the language name
-        -- check `DevDocs install` to view the actual names of the docs
-        "clojure~1.11",
-        "lua~5.1",
-        "openjdk~21",
-        "python~3.14",
-        "python~3.12",
-      },
+      { '<leader>sad', '<cmd>ApidocsOpen<cr>', desc = 'Search Api Doc' },
     },
   },
   -- }}}
