@@ -293,27 +293,6 @@ return {
   },
   -- }}}
 
-  -- nvim-devdocs {{{
-  -- https://github.com/luckasRanarison/nvim-devdocs
-  -- {
-  --   "luckasRanarison/nvim-devdocs",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "nvim-telescope/telescope.nvim",
-  --     "nvim-treesitter/nvim-treesitter",
-  --   },
-  --   opts = {
-  --     wrap = true,
-  --     dir_path = vim.fn.stdpath("data") .. "~/MyStuff/neovimrc/devdocs",
-  --     float_win = {
-  --       height = 35,
-  --     },
-  --     previewer_cmd = "glow",
-  --     cmd_args = { "-s", "dark", "-w", "80" },
-  --   }
-  -- },
-  -- }}}
-
   -- nvim-lint {{{
   -- https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file
   -- An asynchronous linter plugin complementary to the built-in Language Server Protocol support.

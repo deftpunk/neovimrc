@@ -187,8 +187,10 @@ return {
   -- }}}
 
   -- Golang {{{
-    --
+
   -- go.nvim {{{
+  -- https://github.com/ray-x/go.nvim
+  -- A modern go neovim plugin.
   {
   "ray-x/go.nvim",
   dependencies = {  -- optional packages

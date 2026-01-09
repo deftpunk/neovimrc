@@ -26,6 +26,7 @@ return {
           "clojure_lsp",
           "codelldb",       -- Rust debugger
           "dockerls",
+          "gopls",
           "groovyls",
           "jsonls",
           "lua_ls",
