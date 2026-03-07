@@ -2,16 +2,34 @@
 
 return {
 
-  -- telescope-import.nvim {{{
-  -- https://github.com/piersolenski/telescope-import.nvim
+  -- import.nvim {{{
+  -- https://github.com/piersolenski/import.nvim
   -- Import modules/packages
+  -- Supports:
+  --  Python
+  --  Go
+  --  Nim
+  --  Rust
+  --  Lua
   {
-    'piersolenski/telescope-import.nvim',
-    dependencies = 'nvim-telescope/telescope.nvim',
-    config = function()
-      require("telescope").load_extension("import")
-    end
+    'piersolenski/import.nvim',
+    dependencies = {
+      'ibhagwan/fzf-lua',
+    },
+    opts = {
+      picker = "fzf-lua",
+    },
+    keys = {
+      {
+        "<leader>;i",
+        function()
+          require("import").pick()
+        end,
+        desc = "Import",
+      },
+    },
   },
+
   -- }}}
 
   -- telescope-undo.nvim {{{
