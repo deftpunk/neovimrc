@@ -6,25 +6,25 @@ return {
   -- Supplies the following functionality:
   --   - side-by-side full file blame
   --   - timemachine
-  {
-    'emmanueltouzery/agitator.nvim',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-    },
-    keys = {
-      -- Toggle a side-by-side blame buffer - modify the format to show the short summary.
-      { "<leader>gb", function() require('agitator').git_blame_toggle({ sidebar_width=35, formatter=function(r)
-          local default_row = string.format('%02d-%02d-%02d %s', r.date.year, r.date.month, r.date.day, r.author)
-          return default_row .. " => " .. r.summary; end}) end, desc = "Toggle a side-by-side git buffer blame." },
-      { "<leader>gd",
-        function()
-          local commit_sha = require"agitator".git_blame_commit_for_line()
-          vim.cmd("DiffviewOpen " .. commit_sha .. "^.." .. commit_sha)
-        end,
-        desc = "Display the commit for the current line of code." },
-    },
-  },
+  -- {
+  --   'emmanueltouzery/agitator.nvim',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     'nvim-telescope/telescope.nvim',
+  --   },
+  --   keys = {
+  --     -- Toggle a side-by-side blame buffer - modify the format to show the short summary.
+  --     { "<leader>gb", function() require('agitator').git_blame_toggle({ sidebar_width=35, formatter=function(r)
+  --         local default_row = string.format('%02d-%02d-%02d %s', r.date.year, r.date.month, r.date.day, r.author)
+  --         return default_row .. " => " .. r.summary; end}) end, desc = "Toggle a side-by-side git buffer blame." },
+  --     { "<leader>gd",
+  --       function()
+  --         local commit_sha = require"agitator".git_blame_commit_for_line()
+  --         vim.cmd("DiffviewOpen " .. commit_sha .. "^.." .. commit_sha)
+  --       end,
+  --       desc = "Display the commit for the current line of code." },
+  --   },
+  -- },
   -- }}}
 
   -- advanced-git-search.nvim {{{
@@ -311,6 +311,37 @@ return {
   },
   -- }}}
 
+  -- gitlineage.nvim {{{
+  -- https://www.rahuljuliato.com/posts/nvim-gitlineage
+  --
+  -- Usage
+  --     Enter visual mode (v, V, or <C-v>)
+  --     Select the lines you want to inspect
+  --     Press <leader>gl (or your configured keymap)
+  --     A split window opens with the git history
+  --     Navigate using buffer keymaps:
+  --
+  -- | Key    | Action                                         |
+  -- | ------ | ---------------------------------------------- |
+  -- | `q`    | Close the history buffer                       |
+  -- | `]c`   | Jump to next commit                            |
+  -- | `[c`   | Jump to previous commit                        |
+  -- | `yc`   | Yank commit SHA (on commit line)               |
+  -- | `<CR>` | Open full commit diff (requires diffview.nvim) |
+  --
+  {
+    "lionyxml/gitlineage.nvim",
+    dependencies = {
+        "sindrets/diffview.nvim", -- for open_diff feature
+    },
+    config = function()
+        require("gitlineage").setup({
+          keymap = "<leader>ge",
+        })
+    end
+  },
+  -- }}}
+
   -- octo.nvim {{{
   -- https://github.com/pwntester/octo.nvim
   -- Edit GitHub issues and PRs
@@ -338,10 +369,29 @@ return {
   },
   -- }}}
 
+  -- tardis.nvim {{{
+  -- https://github.com/FredeHoey/tardis.nvim
+  -- Inspired by git-timemachine which I used in Emacs.
+  --
+  -- Options:
+  -- require('tardis-nvim').setup {
+--     keymap = {
+--         ["next"] = '<C-j>',             -- next entry in log (older)
+--         ["prev"] = '<C-k>',             -- previous entry in log (newer)
+--         ["quit"] = 'q',                 -- quit all
+--         ["revision_message"] = '<C-m>', -- show revision message for current revision
+--         ["commit"] = '<C-g>',           -- replace contents of origin buffer with contents of tardis buffer
+--     },
+--     settings = {
+--         initial_revisions = 10,         -- initial revisions to create buffers for
+--         max_revisions = 256,            -- max number of revisions to load
+--         show_commit_index = false,      -- append [index|total] to buffer names when browsing revisions
+--     },
+-- }
   {
-    'fredeeb/tardis.nvim',
+    'fredehoey/tardis.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = true,
 },
-
+-- }}}
 }
