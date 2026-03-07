@@ -474,15 +474,15 @@ return {
           'lsp',
           'treesitter',
         },
-        filetypes_allowlist = { "clojure", "commonlisp", "go", "help", "lua", "nim", "Python", "rust" },
+        -- filetypes_allowlist = { "clojure", "commonlisp", "go", "help", "lua", "nim", "Python", "rust" },
         large_file_cutoff = 25000,
       })
     end,
-    keys = {
-      -- TODO: this doesn't work for some reason.
-      { "C-n", mode = { "n" }, function() require('illuminate').goto_next_reference() end,
-        desc = "Illuminate Goto next illuminated reference."},
-    },
+    -- keys = {
+    --   -- TODO: this doesn't work for some reason.
+    --   { "C-n", mode = { "n" }, function() require('illuminate').goto_next_reference() end,
+    --     desc = "Illuminate Goto next illuminated reference."},
+    -- },
   },
   -- }}}
 
@@ -555,14 +555,15 @@ return {
   -- }}}
 
   -- mini.splitjoin {{{
-  -- https://github.com/echasnovski/mini.splitjoin?tab=readme-ov-file
+  -- https://github.com/nvim-mini/mini.splitjoin?tab=readme-ov-file
+  -- Split and join arguments.
   {
-    'echasnovski/mini.splitjoin',
+    'nvim-mini/mini.splitjoin',
     version = false,
     config = function()
       require('mini.splitjoin').setup({
         mappings = {
-          toggle = 'gj',
+          toggle = 'gJ',
         }
       })
     end,
