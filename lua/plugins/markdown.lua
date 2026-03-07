@@ -15,7 +15,8 @@ return {
   -- },
   -- }}}
 
-  -- install without yarn or npm
+  -- markdown-preview.nvim {{{
+  -- https://github.com/iamcco/markdown-preview.nvim
   {
       "iamcco/markdown-preview.nvim",
       cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -42,9 +43,13 @@ return {
           },
         },
   },
+  -- }}}
 
   -- markdown-plus {{{
   -- https://github.com/YousefHadder/markdown-plus.nvim
+  --
+  -- https://github.com/yousefhadder/markdown-plus.nvim/wiki/5.Keymaps
+  -- <leader>mx -> toggle checkboxes
   {
     "yousefhadder/markdown-plus.nvim",
     ft = "markdown",
