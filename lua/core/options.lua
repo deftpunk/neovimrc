@@ -60,7 +60,7 @@ if vim.g.neovide then
   -- the gap is function of the font and the OS window manager; most terminals
   -- automatically patch the fonts to make it look better.
   -- https://github.com/lukas-reineke/indent-blankline.nvim/issues/422
-  vim.o.guifont="JetBrainsMono Nerd Font:h12"
+  vim.o.guifont = { "JetBrainsMono Nerd Font", ":h12" }
   vim.g.neovide_remember_window_size = true
   vim.g.neovide_hide_mouse_when_typing = true
   vim.g.neovide_cursor_vfx_mode = "railgun"
