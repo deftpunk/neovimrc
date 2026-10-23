@@ -1,73 +1,38 @@
 -- vim: nu fdm=marker
-
 return {
 
-  -- Comment.nvim {{{
-  -- https://github.com/numToStr/Comment.nvim
-  -- Comment/Uncomment plugin - successor to kommentary.
-  --
-  -- Supports treesitter. Read more
-  -- Supports commentstring. Read :h comment.commentstring
-  -- Supports line (//) and block (/* */) comments
-  -- Dot (.) repeat support for gcc, gbc and friends
-  -- Count support for [count]gcc and [count]gbc
-  -- Left-right (gcw gc$) and Up-Down (gc2j gc4k) motions
-  -- Use with text-objects
-  -- Supports pre and post hooks
-  -- Ignore certain lines, powered by Lua regex
-  --
-  -- NORMAL mode
-  -- `gcc` - Toggles the current line using linewise comment
-  -- `[count]gcc` - Toggles the number of line given as a prefix-count using linewise
-  -- `[count]gbc` - Toggles the number of line given as a prefix-count using blockwise
-  -- `gc[count]{motion}` - (Op-pending) Toggles the region using linewise comment
-  --
-  -- VISUAL mode
-  -- gc - Toggles the region using linewise comment.
-  --
-  -- EXTRA
-  -- gco - Insert comment to the next line & enters INSERT mode.
-  -- gc0 - Insert comment to the previous line & enters INSERT mode.
-  -- gcA - Insert comment to the end of the current line & enters INSERT mode.
+  -- aerial.nvim {{{
+  -- https://github.com/stevearc/aerial.nvim
+  -- A code outline for symbols and quick navigation in the current buffer.
   {
-    'numToStr/Comment.nvim',
-    config = function()
-      require('Comment').setup({
-        -- TODO: figure out the mapping.
-        -- ignore = '^$',  -- ignore empty lines.
-        -- toggler = {
-        --   line = '<leader>cc',
-        --   block = '<leader>bc',
-        -- },
-        -- opleader = {
-        --   line = '<leader>c',
-        --   block = '<leader>b',
-        -- },
-      })
-    end,
+    "stevearc/aerial.nvim",
+    opts = {
+      backends = { "lsp", "treesitter", "markdown" },
+      layout = {
+        default_direction = "right",
+      },
+      autojump = true,
+      highlight_on_jump = 500,
+    },
   },
   -- }}}
 
-  -- comment-box.nvim {{{
-  -- https://github.com/LudoPinelli/comment-box.nvim
-  -- Make comment boxes, lines & other things to make comments "pop" better.
+  -- celeste_comment.nvim {{{
+  -- https://github.com/celeste3z/celeste_comment.nvim
+  -- VSCode/TextEdit style commenting.
   --
-  -- Select existing line/paragraph
-  -- :CBllbox1
-  --
-  -- Title comment:
-  -- type title in INSERT mode
-  -- Visually select
-  -- :CBllline6
-  --
-  -- Simple line separator:
-  -- :CBllline
-  {
-    'LudoPinelli/comment-box.nvim',
-    keys = {
-      { "<leader>cl", ":CBllline", mode = { "n" }, desc = "Simple line separator." },
-    },
-  },
+  -- Mappings:
+  --   gcc - Line comment current line (n)
+  --   gb/gbc - Block comment by motion/current line.
+  --   gc/gb<text_object)
+  --   gco - Insert comment below
+  --   gcO - Insert comment above.
+  { "celeste3z/celeste_comment.nvim",
+       lazy = false,
+       opts = {
+         keep_selection = "adjust | expand_block",
+       },
+     },
   -- }}}
 
   -- indent-blankline {{{
@@ -101,7 +66,11 @@ return {
 
       vim.g.rainbow_delimiters = { highlight = highlight }
       require("ibl").setup({
-        scope = { highlight = highlight },
+        scope = {
+          highlight = highlight,
+          show_start = false,
+          show_end = false,
+        },
         -- scope = { enabled = true },
       })
       hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
@@ -109,124 +78,20 @@ return {
   },
   -- }}}
 
-  -- iron.nvim {{{
-  -- https://github.com/Vigemus/iron.nvim
-  -- Interactive REPLs over Neovim -> get a REPL
-  -- NOTE: Mon Feb 03 2025 09:17:28 - trying this out for ipython/python instead of Conjure.
-  {
-    'Vigemus/iron.nvim',
-    config = function(plugins, opts)
-
-      local iron = require('iron.core')
-      local view = require('iron.view')
-      local common = require('iron.fts.common')
-
-      iron.setup {
-        config = {
-          scratch_repl = true,
-          repl_definition = {
-            python = require('iron.fts.python').ipython,
-          },
-          repl_open_cmd = "vertical botright 80 split",
-        },
-        keymaps = {
-          toggle_repl = "<space>rr",
-          restart_repl = "<space>rR", -- calls `IronRestart` to restart the repl
-          send_motion = "<space>sc",
-          visual_send = "<space>sc",
-          send_file = "<space>sf",
-          send_line = "<space>sl",
-          send_paragraph = "<space>sp",
-          send_until_cursor = "<space>su",
-          send_mark = "<space>sm",
-          send_code_block = "<space>sb",
-          send_code_block_and_move = "<space>sn",
-          mark_motion = "<space>mc",
-          mark_visual = "<space>mc",
-          remove_mark = "<space>md",
-          cr = "<space>s<cr>",
-          interrupt = "<space>s<space>",
-          exit = "<space>sq",
-          clear = "<space>cl",
-        },
-      }
-    end,
-  },
-  -- }}}
-
-  -- TODO: debugmaster.nvim?
-
-  -- lazydev.nvim {{{
-  -- https://github.com/folke/lazydev.nvim
-  -- lazydev.nvim is a plugin that properly configures LuaLS for editing your
-  -- Neovim config by lazily updating your workspace libraries.
-  --
-  -- I am primarily using it as a dependency for nvim-dap, nvim-dap-ui
-  {
-    "folke/lazydev.nvim",
-    ft = "lua", -- only load on lua files
-    opts = {
-      library = {
-        -- See the configuration section for more details
-        -- Load luvit types when the `vim.uv` word is found
-        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-        "nvim-dap-ui",
-      },
-    },
-  },
-  -- { "folke/neodev.nvim", enabled = false }, -- make sure to uninstall or disable neodev.nvim
-  -- }}}
-
-  -- nvim-dap & nvim-dap-ui {{{
-  -- https://github.com/rcarriga/nvim-dap-ui
-  {
-    "rcarriga/nvim-dap-ui",
-    dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
-  },
-    -- }}}
-
-  -- neotest {{{
-  -- Run tests from within neovim
-  -- https://github.com/nvim-neotest/neotest
-  -- TODO: Clean up keymaps for calling tests and displaying output.
-  {
-    'nvim-neotest/neotest',
-    dependencies = {
-      'nvim-neotest/nvim-nio',
-      'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      'antoinemadec/FixCursorHold.nvim',
-      -- test adapters.
-      'rouge8/neotest-rust',
-      'nvim-neotest/neotest-python',
-    },
-    lazy = true,
-    config = function()
-      require("neotest").setup({
-          adapters = {
-            -- https://github.com/nvim-neotest/neotest-python
-            require("neotest-python")({
-              runner = "pytest",
-              args = { "-svvv" },
-              dap = { justMyCode = false },
-            }),
-          },
-      })
-    end,
-  },
-  -- }}}
-
   -- Auto pairs {{{
   -- https://github.com/windwp/nvim-autopairs
+  -- What it says.  Also allows you to create/set custom rules for pairing.
   {
     'windwp/nvim-autopairs',
-    config = function()
-      require('nvim-autopairs').setup({
-          disable_filetype = { "TelescopePrompt" },
+      event ="InsertEnter",
+      config = true,
+      opt = {
           enable_check_bracket_line = false,
-        })
-    end,
-  },
+          disable_filetype = { "TelescopePrompt", "spectre_panel", "snacks_picker_input" },
+          map_c_h = false, -- Map the <C-h> key to delete a pair
+          map_c_w = false, -- map <c-w> to delete a pair if possible
+        },
+    },
   -- }}}
 
   -- 1. nvim-devdocs
@@ -244,7 +109,6 @@ return {
   -- apidocs.nvim {{{
   -- https://github.com/emmanueltouzery/apidocs.nvim
   -- An integration of devdocs.io in neovim.
-  -- TODO: Why does this trigger a markdown-plus & bufdelete error?
   {
     'emmanueltouzery/apidocs.nvim',
     dependencies = {
@@ -259,7 +123,7 @@ return {
       -- Possible options are 'ui_select', 'telescope', and 'snacks'
     end,
     keys = {
-      { '<leader>sad', '<cmd>ApidocsOpen<cr>', desc = 'Search Api Doc' },
+      { '<leader>hd', '<cmd>ApidocsOpen<cr>', desc = 'Search Api Doc' },
     },
   },
   -- }}}
@@ -311,22 +175,6 @@ return {
         callback = function()
           lint.try_lint()
         end,
-      })
-    end,
-  },
-  -- }}}
-
-  -- outline.nvim {{{
-  -- https://github.com/hedyhli/outline.nvim
-  -- Fork of symbol-outline which is now archived.
-  {
-    "hedyhli/outline.nvim",
-    config = function()
-      require("outline").setup({
-        -- symbols.filter = {
-        --   default = { 'String', exclude = true },
-        --   python = { 'Function', 'Class' },
-        -- },
       })
     end,
   },

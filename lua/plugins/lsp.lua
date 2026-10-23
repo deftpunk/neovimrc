@@ -61,6 +61,7 @@ return {
   --
   -- Put a file in after/lsp/<server>.lua to override/modify settings.
   { 'neovim/nvim-lspconfig' },
+
   -- }}}
 
   -- tiny-code-action.nvim {{{

@@ -1,6 +1,43 @@
 -- vim: nu fdm=marker
 return {
 
+  -- arrow.nvim {{{
+  -- https://github.com/otavioschwanck/arrow.nvim
+  -- Arrow.nvim is a plugin made to bookmarks files (like harpoon) using a single UI (and single keymap).
+  {
+    "otavioschwanck/arrow.nvim",
+    dependencies = {
+      { "nvim-tree/nvim-web-devicons" },
+    },
+    opts = {
+      show_icons = true,
+      separate_by_branch = false, -- Bookmarks will be separated by git branch
+      leader_key = ',',           -- Recommended to be a single key - I already use ';' as my localleader
+      buffer_leader_key = 'm',    -- Per Buffer Mappings
+      per_buffer_config = {
+        lines = 2,
+      },
+    }
+  },
+  -- }}}
+
+  -- atone.nvim {{{
+  -- https://github.com/XXiaoA/atone.nvim
+  -- Build on top of neovim's builtin :undotree
+  {
+    'XXiaoA/atone.nvim',
+    cmd = "Atone",
+    opts = {},
+    keys = {
+      {
+        "<leader>u",
+        "<cmd>Atone toggle<cr>",
+        desc = "Atone undotree toggle."
+      },
+    },
+  },
+  -- }}}
+
   -- auto-save.nvim {{{
   -- https://github.com/okuuva/auto-save.nvim
   -- Automatically save changed buffers in neovim.
@@ -9,10 +46,7 @@ return {
     version = '^1.0.0', -- see https://devhints.io/semver, alternatively use '*' to use the latest tagged release
     cmd = "ASToggle", -- optional for lazy loading on command
     event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
-    opts = {
-      -- your config goes here
-      -- or just leave it empty :)
-    },
+    opts = {},
   },
   -- }}}
 
@@ -276,6 +310,19 @@ return {
   },
   -- }}}
 
+  {
+  "AckslD/nvim-neoclip.lua",
+  dependencies = {
+    {'kkharji/sqlite.lua', module = 'sqlite'},
+    -- you'll need at least one of these
+    -- {'nvim-telescope/telescope.nvim'},
+    {'ibhagwan/fzf-lua'},
+  },
+  config = function()
+    require('neoclip').setup()
+  end,
+},
+
   -- TODO: Is this useful?
 
   -- Recover.vim {{{
@@ -484,10 +531,9 @@ return {
   -- Display keybindings.
   {
     "folke/which-key.nvim",
-    config = function()
-      require("which-key").setup()
-    end,
-  },
+      event = "VeryLazy",
+      opts = {},
+      },
   -- }}}
 
   -- windows.nvim
@@ -517,26 +563,6 @@ return {
       desc = "Make all windows (almost) equally high and wide (see :he CTRL-W_=)"},
     },
   },
-
-  -- arrow.nvim {{{
-  -- https://github.com/otavioschwanck/arrow.nvim
-  -- Arrow.nvim is a plugin made to bookmarks files (like harpoon) using a single UI (and single keymap).
-  {
-    "otavioschwanck/arrow.nvim",
-    dependencies = {
-      { "nvim-tree/nvim-web-devicons" },
-    },
-    opts = {
-      show_icons = true,
-      separate_by_branch = false, -- Bookmarks will be separated by git branch
-      leader_key = ',',           -- Recommended to be a single key - I already use ';' as my localleader
-      buffer_leader_key = 'm',    -- Per Buffer Mappings
-      per_buffer_config = {
-        lines = 2,
-      },
-    }
-  },
-  -- }}}
 
   -- mini.splitjoin {{{
   -- https://github.com/echasnovski/mini.splitjoin?tab=readme-ov-file
@@ -601,6 +627,45 @@ return {
     lazy = true,
     event = "VeryLazy",
     opts = { },
+  },
+  -- }}}
+
+  -- mistake.nvim {{{
+    -- https://github.com/omrisarig13/mistake.nvim
+    -- Spelling autocorrect.
+  {
+    'omrisarig13/mistake.nvim',
+    config = function()
+      local plugin = require 'mistake'
+      vim.defer_fn(function()
+        plugin.setup()
+      end, 500)
+
+      vim.keymap.set('n', '<leader>ma', plugin.add_entry, { desc = '[M]istake [A]dd entry' })
+      vim.keymap.set('n', '<leader>me', plugin.edit_entries, { desc = '[M]istake [E]dit entries' })
+      vim.keymap.set('n', '<leader>mc', plugin.add_entry_under_cursor, { desc = '[M]istake add [C]urrent word' })
+    end,
+  },
+  -- }}}
+
+  -- urlview.nvim {{{
+  -- https://github.com/axieax/urlview.nvim
+  -- 1. Find URLs in the buffer/file and use a picker to open them.
+  --    :Urlview
+  -- 2. Use picker to filter through URLs of plugins
+  {
+    "axieax/urlview.nvim",
+    lazy = true,
+    config = function()
+      require('urlview.nvim').setup({
+        default_action = "system",
+        default_picker = "fzf_lua",
+        jump = {
+          prev = "Ctrl-p",
+          next = "Ctrl-n",
+        },
+      })
+    end,
   },
   -- }}}
 

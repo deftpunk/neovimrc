@@ -85,7 +85,7 @@ return {
         -- preset = 'default'
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
         ["<C-e>"] = { "hide", "fallback" },
-        ["<CR>"] = { "accept", "fallback" },
+        ["<RET>"] = { "accept", "fallback" },
 
         ["<Tab>"] = {
             function(cmp)

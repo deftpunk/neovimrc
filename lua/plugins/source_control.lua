@@ -4,8 +4,7 @@ return {
   -- https://github.com/emmanueltouzery/agitator.nvim
   -- Works well with Neogit & Diffview
   -- Supplies the following functionality:
-  --   - side-by-side full file blame
-  --   - timemachine
+  --   - side-by-side full file blame - timemachine
   {
     'emmanueltouzery/agitator.nvim',
     dependencies = {
@@ -272,11 +271,14 @@ return {
           follow_files = true,
         },
         attach_to_untracked = true,
-        current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+        current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
         current_line_blame_formatter = '<author>@<author_time:%Y-%m-%d>: <summary>',
         max_file_length = 40000, -- Disable if file is longer than this (in lines)
       }
     end,
+    -- keys = {
+    --   {"<leader>gi", ":Gitsigns toggle_current_line_blame<cr>", mode = {'n'}, desc = "Gitsigns: toggle current line blame."},
+    -- },
   },
   -- }}}
 

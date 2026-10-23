@@ -71,6 +71,8 @@ require('core/abbreviations')
 -- TODO: http REST client:
 --         rest-nvim/rest.nvim'
 --
+-- https://github.com/gbprod/yanky.nvim
+--
 -- winbar/breadcrumbs:
 -- https://dotfyle.com/plugins/SmiteshP/nvim-navic
 -- https://github.com/utilyre/barbecue.nvim

@@ -5,54 +5,45 @@ return {
 	{
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
+    branch = 'main',
     event = { "BufReadPre", "BufNewFile" },
-    config = function()
-      -- https://github.com/p00f/nvim-ts-rainbow/issues/30#issuecomment-850991264
-      local parsers = require("nvim-treesitter.parsers")
-
-      -- Enabled for rainbow mode.
-      local enabled_list = {
+    init = function()
+      local ensure_installed = {
         "bash",
+        "c",
         "clojure",
+        "cmake",
         "commonlisp",
+        "dockerfile",
         "fennel",
         "gitcommit",
         "gitignore",
         "go",
+        "html",
+        "json",
         "lua",
         "markdown",
         "markdown_inline",
+        "nim",
+        "nim_format_string",
         "python",
+        "query",
         "ruby",
         "rust",
+        "toml",
         "vimdoc",
+        "yaml"
       }
-
-      require('nvim-treesitter.configs').setup {
-        ensure_installed = {
-          "bash",
-          "c",
-          "clojure",
-          "cmake",
-          "commonlisp",
-          "dockerfile",
-          "gitcommit",
-          "gitignore",
-          "go",
-          "html",
-          "json",
-          "lua",
-          "markdown",
-          "markdown_inline",
-          "nim",
-          "Python",
-          "query",
-          "ruby",
-          "rust",
-          "toml",
-          "vimdoc",
-          "yaml"
-        },
+      local alreadyInstalled = require('nvim-treesitter.config').get_installed()
+      local parsersToInstall = vim.iter(ensure_installed)
+        :filter(function(parser)
+          return not vim.tbl_contains(alreadyInstalled, parser)
+        end)
+        :totable()
+      require('nvim-treesitter').install(parsersToInstall)
+    end,
+    config = function()
+      require('nvim-treesitter.config').setup {
         highlight = { enable = true },
         indent = { enable = true },
         rainbow = {
@@ -60,17 +51,6 @@ return {
           extended_mode = true,
           max_file_lines = 25000,
           colors = {"#ab47bc", "#ec407a", "#42a5f5", "#ffab91", "#82e0aa", "#ff7043" },
-          -- Enable for certain filetypes.
-          disable = vim.tbl_filter(
-          function(p)
-            local disable = true
-            for _, lang in pairs(enabled_list) do
-              if p==lang then disable = false end
-            end
-            return disable
-          end,
-          parsers.available_parsers()
-          )
         }
       }
     end,
@@ -91,8 +71,9 @@ return {
   -- https://www.josean.com/posts/nvim-treesitter-and-textobjects
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
+    branch = 'main',
     config = function()
-      require("nvim-treesitter.configs").setup({
+      require("nvim-treesitter.config").setup({
         textobjects = {
           select = {
             enable = true,
@@ -181,23 +162,6 @@ return {
           },
         },
       })
-
-      -- Configured repeating movements with ; and , and also
-      -- maintain the built in vim functionality to use these keys to repeat f, F,
-      -- t and T movements. ; will go the direction you were moving previously and
-      -- , will go the opposite direction you were moving in.
-      local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
-
-      -- vim way: ; goes to the direction you were moving.
-      vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
-      vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
-
-      -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
-      vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
-      vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
-      vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
-      vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
-
     end,
   },
   -- }}}

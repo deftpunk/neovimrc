@@ -2,9 +2,11 @@
 
 Neovim (https://neovim.io/) - the future of Vim.
 
-> Vim the text editor has been loved by a generation of users.  This is the
-> next generation.
-- Shougo
+```
+ Vim the text editor has been loved by a generation of users.  This is the
+ next generation.
+ -- Shougo
+```
 
 # My Configuration
 
@@ -13,6 +15,12 @@ choose to use Neovim, as is my perogative to do so.  If you choose a different
 way, that is your prerogative but I find "purity" tool discussions dull.
 
 # OS Configuration
+
+## 0.12.x changes
+
+There were breaking nvim-treesitter changes.
+1. `brew install tree-sitter tree-sitter-cli`
+2. follow -> https://www.qu8n.com/posts/treesitter-migration-guide-for-nvim-0-12
 
 ## Mac OS X
 
@@ -31,7 +39,13 @@ Install the following packages via =brew install=
    - ripgrep
    - ispell
    - git
-   - bat
+   - bat - used for syntax aware preview
+       - Install tokyonight theme to match neovim one.
+```
+       $ git clone https://github.com/0xTadash1/bat-into-tokyonight
+       $ cd bat-into-tokyonight
+       $ ./bat-into-tokyonight
+```
    - tree
    - ctags
    * fzf
