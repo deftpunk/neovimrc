@@ -138,14 +138,8 @@ return {
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
         -- Sat Nov 29 2025  adding lazydev to your completion providers.
-        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
         providers = {
-          lazydev = {
-            name = "LazyDev",
-            module = "lazydev.integrations.blink",
-            -- make lazydev completions top priority.
-            score_offset = 100,
-          },
         },
       },
 
