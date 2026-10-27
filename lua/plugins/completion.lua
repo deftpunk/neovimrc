@@ -82,38 +82,13 @@ return {
       --
       -- See :h blink-cmp-config-keymap for defining your own keymap
       keymap = {
-        -- preset = 'default'
-        ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<C-e>"] = { "hide", "fallback" },
-        ["<RET>"] = { "accept", "fallback" },
-
-        ["<Tab>"] = {
-            function(cmp)
-                return cmp.select_next()
-            end,
-            "snippet_forward",
-            "fallback",
-        },
-        ["<S-Tab>"] = {
-            function(cmp)
-                return cmp.select_prev()
-            end,
-            "snippet_backward",
-            "fallback",
-        },
-
-        ["<Up>"] = { "select_prev", "fallback" },
-        ["<Down>"] = { "select_next", "fallback" },
-        ["<C-p>"] = { "select_prev", "fallback" },
-        ["<C-n>"] = { "select_next", "fallback" },
-        ["<C-k>"] = { "scroll_documentation_up", "fallback" },
-        ["<C-j>"] = { "scroll_documentation_down", "fallback" },
+        preset = 'enter',
       },
 
       appearance = {
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned
-        nerd_font_variant = 'mono'
+        nerd_font_variant = 'normal'
       },
 
       -- (Default) Only show the documentation popup when manually triggered

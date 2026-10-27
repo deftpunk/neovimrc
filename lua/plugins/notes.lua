@@ -16,7 +16,7 @@ return {
         scratch_file_dir = "~/WorkStuff/hpe_home",
         window_cmd = "rightbelow vsplit",
         use_telescope = false,
-        file_picker = "fzf_lua",
+        file_picker = "fzflua",
         filetypes = { "md" },
       })
     end,

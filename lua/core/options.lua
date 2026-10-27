@@ -91,16 +91,17 @@ vim.env.VISUAL = 'nvr -cc split --remote-wait'
 vim.env.PYTHONUNBUFFERED = 1
 vim.env.NVIM_TUI_ENABLE_TRUE_COLOR = 1
 
--- This is for nvim-possession and scope.nvim -> see utilities.lua
+-- This is for auto-session.nvim
 vim.opt.sessionoptions = { -- required
   "blank",
   "buffers",
+      "curdir",
+      "folds",
+      "help",
+      "localoptions",
   "tabpages",
-  "globals",
-  "curdir",
-  "terminal",
   "winsize",
-  "help",
+  "winpos",
 }
 
 -- Fri Apr 28 2023 11:10:41 -> put this in to try and get undercurl properly working on iTerm

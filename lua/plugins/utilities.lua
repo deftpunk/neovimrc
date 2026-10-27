@@ -50,6 +50,26 @@ return {
   },
   -- }}}
 
+  -- auto-session {{{
+  -- https://github.com/rmagatti/auto-session
+  -- Automatically save sessions.
+  {
+    "rmagatti/auto-session",
+    lazy = false,
+    opts = {
+      suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+      allowed_dirs = { "~/MyStuff", "~/WorkStuff" },
+      session_lens = {
+        picker = "fzf",
+        picker_opts = {
+          height = 0.8,
+          width = 0.50,
+        },
+      },
+    },
+  },
+  -- }}}
+
   -- TODO: See if there is a mini utility that does this as well.
   --
   -- bigfile.nvim {{{
@@ -354,56 +374,6 @@ return {
   {
     'lima1909/resty.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
-  },
-  -- }}}
-
-  -- nvim-possession.nvim & scope.nvim {{{
-  -- https://github.com/tiagovla/scope.nvim
-  -- https://github.com/gennaro-tedesco/nvim-possession
-  -- Session management & limit it to tabs with scope.nvim
-  -- NOTE: Bug in neovim related to active terminal in saved sessions: https://github.com/neovim/neovim/issues/4895
-  -- mention in nvim-possession -> https://github.com/gennaro-tedesco/nvim-possession/issues/32#issuecomment-1746871516
-  {
-    "gennaro-tedesco/nvim-possession",
-    lazy = false,
-    dependencies = {
-        {
-            "tiagovla/scope.nvim",
-            lazy = false,
-            config = true,
-        },
-        { "ibhagwan/fzf-lua" },
-    },
-    init = function()
-      local possession = require("nvim-possession")
-        vim.keymap.set("n", "<leader>pp", function()
-            possession.list()
-        end, { desc = "List saved nvim-possession sessions." })
-        vim.keymap.set("n", "<leader>pn", function()
-            possession.new()
-        end, { desc = "Create new nvim-possession session." })
-        vim.keymap.set("n", "<leader>pu", function()
-            possession.update()
-        end, { desc = "Update the current nvim-possession session." })
-        vim.keymap.set("n", "<leader>pd", function()
-            possession.delete()
-        end, { desc = "Delete the current nvim-possession session." })
-    end,
-    config = function()
-        require("nvim-possession").setup({
-            autoload = false,
-            autoprompt = true,
-            autoswitch = {
-                enable = true,
-            },
-            save_hook = function()
-                vim.cmd([[ScopeSaveState]]) -- Scope.nvim saving
-            end,
-            post_hook = function()
-                vim.cmd([[ScopeLoadState]]) -- Scope.nvim loading
-            end,
-        })
-    end,
   },
   -- }}}
 
