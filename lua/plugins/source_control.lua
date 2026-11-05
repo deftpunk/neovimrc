@@ -48,7 +48,7 @@ return {
       -- View commits in browser.
       "tpope/vim-rhubarb",
       -- Use the diffview diff instead of the fugitive one.
-      "sindrets/diffview.nvim",
+      "dlyongemallo/diffview.nvim",
     },
     keys = {
       { "<leader>ga", ":AdvancedGitSearch<cr>", mode = {"n"}, desc = "Advanced search of git log, commit & file content." },
@@ -201,7 +201,7 @@ return {
   {
     'isakbm/gitgraph.nvim',
     dependencies = {
-      'sindrets/diffview.nvim',
+      'dlyongemallo/diffview.nvim',
     },
     opts = {
       symbols = {
