@@ -205,8 +205,9 @@ return {
   -- See all of the TODO/FIXME/NOTE ... comments in a file.
   {
     'folke/todo-comments.nvim',
-    config = function()
-      require("todo-comments").setup{
+    opts = {
+      signs = true,
+      keywords = {
         FIX = {
           alt = { "FIXME", "BUG", "FIXIT", "ISSUE", "XXX", "FIX", "TESTING", "ERICK" },
         },
@@ -214,13 +215,14 @@ return {
           alt = { "NOTE", "INFO", "DONE", "DISCUSS" },
         },
         highlight = {
-          max_line_len = 200,
+          max_line_len = 205,
         },
-      }
-
-      -- TODO: THis is global, make it just for the current buffer.
-      vim.keymap.set('n', '<leader>dc', '<cmd>TodoTelescope<cr>')
-    end,
+      },
+    },
+    keys = {
+      -- By definition this is project wide.
+      { "<leader>dc", "<cmd>TodoFzfLua<cr>", desc = "TodoFzfLua: Todo comments in project."},
+    },
   },
   -- }}}
 

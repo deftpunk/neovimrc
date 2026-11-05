@@ -57,33 +57,61 @@ return {
   -- }}}
 
   -- diffview.nvim {{{
-  -- https://github.com/sindrets/diffview.nvim
+  -- https://github.com/dlyongemallo/diffview-plus.nvim
+  -- This is an actively maintained fork of the original diffview.nvim
+  --
   -- Make diffs much better, not just visually.
   -- There are actions, hooks, modes and mode keymaps...
   --
   -- 'git log' equivalent -> :DiffviewFileHistory %
   {
-    'sindrets/diffview.nvim',
-    dependencies = {'nvim-lua/plenary.nvim'},
-    config = function ()
-      require("diffview").setup({
-        view = {
-          default = {
-            winbar_info = true,
+    'dlyongemallo/diffview.nvim',
+        cmd = {
+          "DiffviewOpen",
+          "DiffviewToggle",
+          "DiffviewClose",
+          "DiffviewFileHistory",
+          "DiffviewLog",
+          "DiffviewDiffFiles",
+          "DiffviewDiffDirs",
+          "DiffviewFocusFiles",
+        },
+        opts = {
+          view = {
+            default = {
+              winbar_info = true,
+            },
+            merge_tool = {
+              layout = "diff4_mixed",
+            },
           },
-          merge_tool = {
-            layout = "diff4_mixed",
+          file_panel = {
+            win_config = {
+              width = 45,
+            },
           },
         },
-        file_panel = {
-          win_config = {
-            width = 45,
-          },
-        },
-      })
-    end
-  },
+      },
   -- }}}
+
+  -- diffchar.vim {{{
+  -- https://github.com/rickhowe/diffchar.vim
+  -- Enhances the builtin native diff by showing differences character by character.
+  {
+  'rickhowe/diffchar.vim',
+  config = function()
+    -- Use bold/underline on adjacent chars instead of virtual blank columns.
+    vim.g.DiffDelPosVisible = 1
+
+    -- Disable diffchar default keymaps.
+    -- See: https://github.com/rickhowe/diffchar.vim/issues/21
+    vim.cmd([[
+      nmap <leader>g <Nop>
+      nmap <leader>p <Nop>
+    ]])
+  end,
+},
+-- }}}
 
   -- gh.nvim {{{
   -- https://github.com/ldelossa/gh.nvim
@@ -250,22 +278,7 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-
-      -- Traverse different change hunks.
-      local prev_hunk = function()
-        require("gitsigns").prev_hunk({ navigation_message = false })
-        vim.cmd([[normal! zz]])
-      end
-      vim.keymap.set("n", "gk", prev_hunk)
-
-      local next_hunk = function()
-        require("gitsigns").next_hunk({ navigation_message = false })
-        vim.cmd([[normal! zz]])
-      end
-      vim.keymap.set("n", "gj", next_hunk)
-
-      require('gitsigns').setup {
+    opts = {
         watch_gitdir = {
           interval = 1000,
           follow_files = true,
@@ -274,8 +287,7 @@ return {
         current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
         current_line_blame_formatter = '<author>@<author_time:%Y-%m-%d>: <summary>',
         max_file_length = 40000, -- Disable if file is longer than this (in lines)
-      }
-    end,
+      },
     -- keys = {
     --   {"<leader>gi", ":Gitsigns toggle_current_line_blame<cr>", mode = {'n'}, desc = "Gitsigns: toggle current line blame."},
     -- },
@@ -339,11 +351,5 @@ return {
 
   },
   -- }}}
-
-  {
-    'fredeeb/tardis.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = true,
-},
 
 }

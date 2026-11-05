@@ -114,8 +114,6 @@ return {
       sources = {
         -- Sat Nov 29 2025  adding lazydev to your completion providers.
         default = { 'lsp', 'path', 'snippets', 'buffer' },
-        providers = {
-        },
       },
 
       -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
