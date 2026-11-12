@@ -2,13 +2,31 @@
 
 return {
 
+  -- nvim-lspconfig {{{
+  -- https://github.com/neovim/nvim-lspconfig
+  -- Basic client LSP configurations for Neovim.
+  -- Any changes that we add/override go in nvim/lsp/<server>.lua
+  --
+  -- Put a file in after/lsp/<server>.lua to override/modify settings.
+  --
+  -- NOTE: Config is here so that mason/mason-lspconfig pick up lspconfig.
+  { 'neovim/nvim-lspconfig' },
+  -- }}}
+
   -- mason.nvim {{{
   -- https://www.github.com/williamboman/mason.nvim
+  -- Allows you to easily manage external editor tooling such as LSP servers,
+  -- DAP servers, linters, formatters, etc.
   {
     "mason-org/mason.nvim",
     opts = {
       ui = {
         border = 'single',
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗"
+        }
       }
     }
   },
@@ -18,11 +36,11 @@ return {
   -- https://www.github.com/williamboman/mason-lspconfig.nvim
   {
     "mason-org/mason-lspconfig.nvim",
-    opts = {},
     dependencies = {
         "mason-org/mason.nvim",
         "neovim/nvim-lspconfig",
     },
+    opts = {},
   },
   -- }}}
 
@@ -52,16 +70,6 @@ return {
         }
       }
   },
-  -- }}}
-
-  -- nvim-lspconfig {{{
-  -- https://github.com/neovim/nvim-lspconfig
-  -- Basic client LSP configurations for Neovim.
-  -- Any changes that we add/override go in nvim/lsp/<server>.lua
-  --
-  -- Put a file in after/lsp/<server>.lua to override/modify settings.
-  { 'neovim/nvim-lspconfig' },
-
   -- }}}
 
   -- tiny-code-action.nvim {{{
@@ -160,19 +168,9 @@ return {
     opts = {},
     cmd = { "Trouble" },
     keys = {
-      -- {
-      --   "<leader>xx",
-      --   "<cmd>Trouble diagnostics toggle<cr>",
-      --   desc = "Diagnostics (Trouble)",
-      -- },
-      -- {
-      --   "<leader>xX",
-      --   "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-      --   desc = "Buffer Diagnostics (Trouble)",
-      -- },
       {
-        "<leader>cs",
-        "<cmd>Trouble symbols toggle focus=false<cr>",
+        "<leader>ls",
+        "<cmd>Trouble symbols toggle win.type=split win.position=bottom focus=true<cr>",
         desc = "Symbols (Trouble)",
       },
       {
@@ -188,7 +186,5 @@ return {
     -- end
   },
   -- }}}
-
-  {'RaafatTurki/corn.nvim'}
 
 }

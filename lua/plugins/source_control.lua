@@ -66,16 +66,7 @@ return {
   -- 'git log' equivalent -> :DiffviewFileHistory %
   {
     'dlyongemallo/diffview.nvim',
-        cmd = {
-          "DiffviewOpen",
-          "DiffviewToggle",
-          "DiffviewClose",
-          "DiffviewFileHistory",
-          "DiffviewLog",
-          "DiffviewDiffFiles",
-          "DiffviewDiffDirs",
-          "DiffviewFocusFiles",
-        },
+        version = "*",
         opts = {
           view = {
             default = {
