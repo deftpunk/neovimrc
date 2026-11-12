@@ -126,14 +126,14 @@ return {
   },
   -- }}}
 
-
   -- namu.nvim {{{
   -- https://github.com/bassamsdata/namu.nvim
   -- Jump to symbols in your code w/ live-preview, fuzzy finding + others.
   {
     "bassamsdata/namu.nvim",
-    config = function()
-      require("namu").setup({
+    cmd = "Namu",
+    main = "namu",
+    opts = {
         -- Enable the modules you want
         namu_symbols = {
           enable = true,
@@ -149,41 +149,21 @@ return {
             write_shada = false, -- If you open multiple nvim instances, then probably you need to enable this
           },
         },
-      })
-      -- === Suggested Keymaps: ===
-      vim.keymap.set("n", "<leader>ls",":Namu symbols<cr>" , {
-        desc = "LSP: Jump to LSP [s]ymbol",
-        silent = true,
-      })
-    end,
-  },
-  -- }}}
-
-  -- trouble.nvim {{{
-  -- A single panel for LSP Server errors & warnings.
-  -- https://www.github.com/folke/trouble.nvim
-  {
-    'folke/trouble.nvim',
-    dependencies = {"kyazdani42/nvim-web-devicons"},
-    opts = {},
-    cmd = { "Trouble" },
-    keys = {
-      {
-        "<leader>ls",
-        "<cmd>Trouble symbols toggle win.type=split win.position=bottom focus=true<cr>",
-        desc = "Symbols (Trouble)",
+      },
+      keys = {
+        {
+          "<leader>ls",
+          ":Namu symbols<cr>" ,
+          desc = "LSP: Jump to LSP [s]ymbol",
+          silent = true
       },
       {
-        "<leader>cl",
-        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-        desc = "LSP Definitions / references / ... (Trouble)",
+        "<leader>lw",
+        ":Namu workplace<cr>",
+        desc="LSP: Jump to workplace LSP symbols.",
+        silent=true
       },
     },
-    -- config = function()
-    --   local config = require("fzf-lua.config")
-    --   local actions = require("trouble.sources.fzf").actions
-    --   config.defaults.actions.files["ctrl-t"] = actions.open
-    -- end
   },
   -- }}}
 
