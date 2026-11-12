@@ -53,16 +53,4 @@ return {
   },
   -- }}}
 
-  -- vim-active-numbers {{{
-	-- https://github.com/AssailantLF/vim-active-numbers
-  -- Only turn on line numbers in the active window.
-	{
-    'AssailantLF/vim-active-numbers',
-    config = function()
-      vim.g.active_number = 1
-      vim.g.actnum_exclude = { "help", "neo-tree", "DiffviewFiles", "DiffviewFilePanel", "fugitive", "iron", "terminal", "lazy" }
-    end,
-  },
-  -- }}}
-
   }

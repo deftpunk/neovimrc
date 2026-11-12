@@ -22,6 +22,32 @@ require('core/colorscheme')
 require('core/keymaps')
 require('core/abbreviations')
 
+-- vim-activenumbers doesn't recognize trouble buffer type so doing
+-- this workaround instead.
+-- NOTE: Need to figure out how to make the "jigger" of window when
+--        switching windows.
+local filetypes = { "", "trouble" }
+local num_group = vim.api.nvim_create_augroup("ActiveWindowLineNumbers", { clear = true })
+
+vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+  group = num_group,
+  callback = function()
+    -- Exclude special buffers like terminals, file trees, or popups
+    if vim.list_contains(filetypes, vim.bo.buftype) then
+    -- if vim.bo.buftype == "" then
+      vim.opt_local.number = true
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
+  group = num_group,
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+  end,
+})
+
 -- global bookmarks: https://github.com/LintaoAmons/bookmarks.nvim
 
 -- TODO: Investigate (nvr) https://github.com/mhinz/neovim-remote
